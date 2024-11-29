@@ -1,9 +1,17 @@
 // import "./App.css";
+import GlobalStyled from "./styles/GlobalStyled";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PostList from "./pages/post/PostList";
 
 function App() {
   return (
     <>
-      <p>App.js 입니다.</p>
+      <GlobalStyled />
+      <Router>
+        <Routes>
+          <Route path="/post" element={<PostList />} />
+        </Routes>
+      </Router>
     </>
   );
 }

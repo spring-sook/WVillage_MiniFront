@@ -3,6 +3,18 @@ import styled, { createGlobalStyle } from "styled-components";
 export const headerHeight = "150px";
 export const navHeight = "50px";
 
+const GlobalStyled = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+export const Container = styled.div`
+  margin: 0 2%;
+`;
+
 // 헤더 스타일
 export const Header = styled.div`
   display: flex;
@@ -31,14 +43,6 @@ export const Header = styled.div`
     height: 100px;
     width: 100px;
     background-color: cadetblue;
-  }
-`;
-
-const GlobalStyled = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
   }
 `;
 

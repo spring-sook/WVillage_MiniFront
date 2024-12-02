@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 export const headerHeight = "150px";
 export const navHeight = "50px";
 
+// 전체 스타일
 const GlobalStyled = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -28,6 +29,11 @@ export const Header = styled.div`
     width: 100px;
     background-color: aliceblue;
   }
+  .logo-img {
+    height: 100px;
+    width: auto;
+    object-fit: contain; /* 이미지 비율에 맞게 맞추기 */
+  }
   .name {
     height: 100px;
     width: 200px;
@@ -51,25 +57,38 @@ export const Nav = styled.div`
   height: 50px;
   background-color: darkseagreen;
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   align-items: center;
   .tag {
-    margin-right: 50px;
-    margin-left: 50px;
+    margin: 0 50px;
     height: 40px;
     width: 100px;
-    background-color: lightgray;
+    background-color: lightblue;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 `;
 
 // 푸터 스타일
 export const Footer = styled.div`
-  height: 150px;
+  height: 180px;
   background-color: lightgray;
+  padding: 20px;
+  color: #494949;
+  h4 {
+    text-decoration: underline;
+  }
+  p {
+  }
 `;
 
 export default GlobalStyled;

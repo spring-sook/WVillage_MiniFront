@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginBox>
-        <h2>이메일과 비밀번호를 입력해주세요.</h2>
+        <h2>WVillage</h2>
         <Input
           type="email"
           placeholder="이메일"
@@ -34,13 +34,8 @@ const Login = () => {
         />
         <Button onClick={handleLogin}>로그인</Button>
 
-        <h3>비밀번호를 잊으셨나요?</h3>
-        <SubButton onClick={() => navigate("/passwordreset")}>
-          비밀번호 재설정
-        </SubButton>
-        <SubButton onClick={() => navigate("/signup")}>
-          새 계정 만들기
-        </SubButton>
+        <Link to="/passwordreset">비밀번호 재설정</Link>
+        <Link to="/signup">새 계정 만들기</Link>
       </LoginBox>
     </LoginContainer>
   );
@@ -74,22 +69,22 @@ const LoginBox = styled.div`
 `;
 
 const Input = styled.input`
-  width: 45%;
-  padding: 30px;
-  margin-bottom: 20px;
+  width: 50%;
+  padding: 20px;
   border: 3px solid #ccc;
   border-radius: 1px;
   text-align: center;
+  border-radius: 5px;
 `;
 
 const Button = styled.button`
-  width: 20%;
-  padding: 40px;
+  width: 50%;
+  padding: 30px;
   margin: 30px 0 20px 0;
   color: black;
   background-color: #95bfe5;
   border: none;
-  border-radius: 1px;
+  border-radius: 5px;
   font-size: medium;
   cursor: pointer;
   &:hover {
@@ -97,18 +92,18 @@ const Button = styled.button`
   }
 `;
 
-const SubButton = styled.button`
-  width: 30%;
-  padding: 15px;
-  margin: 10px 0;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
+const LinkContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-top: 20px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
   font-size: medium;
-  cursor: pointer;
   &:hover {
-    background-color: #0056b3;
+    text-decoration: underline;
   }
 `;
 

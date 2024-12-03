@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/main/Main";
 import PostList from "./pages/post/PostList";
 import Login from "./components/Login";
-// import PasswordReset from "./pages/PasswordReset";
-// import Signup from "./pages/Signup";
+import PasswordReset from "./components/PasswordReset";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -16,8 +16,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/main" element={<Main />} />
           <Route path="/post" element={<PostList />} />
-          {/* <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/signup" element={<Signup />} /> */}
+          <Route path="/passwordreset" element={<PasswordReset />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router>
     </>

@@ -6,8 +6,8 @@ import PostList from "./pages/post/PostList";
 import PostContent from "./pages/post/PostContent";
 import PostWrite from "./pages/post/PostWrite";
 import Login from "./components/Login";
-// import PasswordReset from "./pages/PasswordReset";
-// import Signup from "./pages/Signup";
+import PasswordReset from "./components/PasswordReset";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -20,8 +20,8 @@ function App() {
           <Route path="/post" element={<PostList />} />
           <Route path="/postContent" element={<PostContent />} />
           <Route path="/postWrite" element={<PostWrite />} />
-          {/* <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/signup" element={<Signup />} /> */}
+          <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router>
     </>

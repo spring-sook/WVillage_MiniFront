@@ -3,7 +3,6 @@ import GlobalStyled from "./styles/GlobalStyled";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/main/Main";
 import PostList from "./pages/post/PostList";
-import Main from "./pages/main/Main";
 import Login from "./components/Login";
 import PasswordReset from "./pages/PasswordReset";
 import Signup from "./pages/Signup";

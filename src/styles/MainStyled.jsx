@@ -26,7 +26,7 @@ export const BoxContainer = styled.div`
 export const Box = styled.div`
   margin: 0 10px; /* 간격을 조정 */
   height: 300px;
-  width: 200px;
+  width: 300px;
   border: 1px solid black;
   background-size: cover;
   background-position: center;
@@ -61,22 +61,55 @@ export const MainBanner = styled.div`
   justify-content: center;
   background-color: lightcyan;
   height: 500px;
-  .catch {
-    height: 170px;
-    width: 40vw;
-    margin: 20px;
-    background-color: transparent;
+  overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 설정 */
 
-    display: flex;
-    align-items: center;
-  }
+  .catch,
   .explain {
+    opacity: 0; /* 처음엔 텍스트가 보이지 않음 */
+    transform: translateX(50px); /* 텍스트를 왼쪽 밖으로 이동 */
+    animation-duration: 1.5s; /* 애니메이션 지속 시간 */
+    animation-timing-function: ease-out; /* 애니메이션 속도 */
+    animation-fill-mode: forwards; /* 애니메이션 종료 후 상태 유지 */
     height: 130px;
-    width: 40vw;
+    width: 35vw;
     margin: 20px;
     background-color: transparent;
-
     display: flex;
     align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .catch {
+    animation-name: slideInCatch;
+  }
+
+  .explain {
+    animation-name: slideInExplain;
+    animation-delay: 1s; /* 'explain'은 'catch'가 끝난 후 1초 뒤에 시작 */
+  }
+
+  /* catch 텍스트 애니메이션 */
+  @keyframes slideInCatch {
+    0% {
+      opacity: 0; /* 처음에 흐림 */
+      transform: translateX(50px); /* 왼쪽 밖으로 시작 */
+    }
+    100% {
+      opacity: 1; /* 마지막엔 선명해짐 */
+      transform: translateX(0); /* 원래 위치로 이동 */
+    }
+  }
+
+  /* explain 텍스트 애니메이션 */
+  @keyframes slideInExplain {
+    0% {
+      opacity: 0; /* 처음에 흐림 */
+      transform: translateX(50px); /* 왼쪽 밖으로 시작 */
+    }
+    100% {
+      opacity: 1; /* 마지막엔 선명해짐 */
+      transform: translateX(0); /* 원래 위치로 이동 */
+    }
   }
 `;

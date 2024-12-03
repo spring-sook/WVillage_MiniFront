@@ -47,7 +47,7 @@ const Main = () => {
 
           <BoxContainer
             style={{
-              transform: `translateX(-${currentIndex * 220}px)`, // 현재 인덱스를 기준으로 이동
+              transform: `translateX(-${currentIndex * 320}px)`, // 현재 인덱스를 기준으로 이동
             }}
           >
             {/* 앞부분 복제된 이미지들 */}
@@ -63,7 +63,6 @@ const Main = () => {
               <Box key={`right-${index}`} style={{ backgroundImage: image }} />
             ))}
           </BoxContainer>
-
           <Button onClick={goToNext}>▶</Button>
         </MainRecomm>
         <MainBanner>

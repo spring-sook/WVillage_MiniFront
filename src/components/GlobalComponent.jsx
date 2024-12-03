@@ -11,7 +11,7 @@ export const HeaderCom = () => {
       <div className="name">
         <h4>W.Village</h4>
       </div>
-      <div className="search">검색창</div>
+      <input type="text" className="search" placeholder="검색창" />
       <div className="my">마이페이지</div>
     </Header>
   );
@@ -20,9 +20,9 @@ export const HeaderCom = () => {
 export const NavCom = () => {
   return (
     <Nav>
-      <div className="tag">물건</div>
-      <div className="tag">사람</div>
-      <div className="tag">집</div>
+      <div className="tag">product</div>
+      <div className="tag">part-time</div>
+      <div className="tag">place</div>
     </Nav>
   );
 };

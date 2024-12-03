@@ -27,7 +27,6 @@ export const Header = styled.div`
   .logo {
     height: 100px;
     width: 100px;
-    background-color: aliceblue;
   }
   .logo-img {
     height: 100px;
@@ -37,14 +36,23 @@ export const Header = styled.div`
   .name {
     height: 100px;
     width: 200px;
-    background-color: bisque;
+    font-size: 45px;
+    color: #1b5e96;
+    display: flex;
+    justify-content: right;
+    align-items: center;
   }
   .search {
     height: 100px;
     flex-grow: 1;
-    height: 70px;
-    background-color: darkcyan;
+    font-size: 20px;
+    height: 50px;
+    border-radius: 50px;
+    border: 3px solid #1b5e96;
+    padding: 20px;
+    outline: none;
   }
+
   .my {
     height: 100px;
     width: 100px;
@@ -54,8 +62,8 @@ export const Header = styled.div`
 
 // nav 스타일
 export const Nav = styled.div`
-  height: 50px;
-  background-color: darkseagreen;
+  height: 40px;
+  background-color: #f5f6fa;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -63,7 +71,8 @@ export const Nav = styled.div`
     margin: 0 50px;
     height: 40px;
     width: 100px;
-    background-color: lightblue;
+    background-color: transparent;
+    color: #1b5e96;
 
     display: flex;
     justify-content: center;
@@ -81,7 +90,7 @@ export const Nav = styled.div`
 // 푸터 스타일
 export const Footer = styled.div`
   height: 180px;
-  background-color: lightgray;
+  background-color: #dddddd;
   padding: 20px;
   color: #494949;
   h4 {

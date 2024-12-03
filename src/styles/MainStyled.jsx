@@ -4,12 +4,24 @@ import styled from "styled-components";
 export const MainBody = styled.div`
   height: 920px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
 `;
 
 // 추천 배너
+export const RecommBox = styled.div`
+  height: 420px;
+  width: 100%;
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  position: relative;
+`;
+
 export const MainRecomm = styled.div`
   height: 420px;
+  width: 1300px;
   background-color: lightblue;
   display: flex;
   align-items: center;
@@ -21,12 +33,15 @@ export const MainRecomm = styled.div`
 export const BoxContainer = styled.div`
   display: flex;
   transition: transform 0.3s ease; /* 슬라이드 효과 */
+  width: ${(props) =>
+    props.slideWidth ||
+    "auto"}; /* 이미지가 몇 개 보일지에 맞게 동적으로 조정 */
 `;
 
 export const Box = styled.div`
   margin: 0 10px; /* 간격을 조정 */
   height: 300px;
-  width: 300px;
+  width: 320px;
   border: 1px solid black;
   background-size: cover;
   background-position: center;
@@ -59,8 +74,9 @@ export const MainBanner = styled.div`
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
-  background-color: lightcyan;
+  background-color: #d5e8f1;
   height: 500px;
+  width: 100%;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 설정 */
 
   .catch,

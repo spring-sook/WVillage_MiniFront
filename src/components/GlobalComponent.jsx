@@ -1,8 +1,11 @@
 import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
+import ImgDownloader from "../components/Profile";
 
 export const HeaderCom = () => {
+  const imagePath = "snow_village.webp";
+
   return (
     <Header>
       <Link to="/main" className="logo">
@@ -12,7 +15,9 @@ export const HeaderCom = () => {
         <h4>W.Village</h4>
       </div>
       <input type="text" className="search" placeholder="검색창" />
-      <div className="my">마이페이지</div>
+      <div className="usermy">
+        <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
+      </div>
     </Header>
   );
 };

@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/main/Main";
 import PostList from "./pages/post/PostList";
 import Login from "./components/Login";
-import PasswordReset from "./pages/PasswordReset";
-import Signup from "./pages/Signup";
+// import PasswordReset from "./pages/PasswordReset";
+// import Signup from "./pages/Signup";
 
 function App() {
   return (

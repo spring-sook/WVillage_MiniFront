@@ -300,11 +300,3 @@ export const PostContentBottom = styled.div`
     cursor: pointer;
   }
 `;
-
-export const ProfileImg = styled.img`
-  width: 50px; /* 이미지 너비 */
-  height: 50px; /* 이미지 높이 */
-  border-radius: 50%; /* 원형 */
-  object-fit: cover; /* 이미지 비율 유지 */
-  border: 2px solid #ccc; /* 선택적으로 테두리 추가 */
-`;

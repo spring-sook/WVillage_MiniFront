@@ -2,7 +2,6 @@ import { Container } from "../../styles/GlobalStyled";
 import {
   PostContentBottom,
   PostContentTop,
-  ProfileImg,
   ReserveButton,
 } from "../../styles/PostStyled";
 import DatePicker from "react-datepicker";

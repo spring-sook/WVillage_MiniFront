@@ -144,8 +144,14 @@ export const PostContentTop = styled.div`
 
   .post-content-img {
     width: 350px;
-    height: 350px;
+    height: 300px;
     background-color: #71db9a;
+  }
+
+  .post-content-user {
+    width: 350px;
+    height: 50px;
+    background-color: #f397ba;
   }
 
   .post-content-reserve {
@@ -174,11 +180,11 @@ export const PostContentTop = styled.div`
 
   .date-picker {
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
     /* border: 1px solid #aaa; */
     border-radius: 20px;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .react-datepicker__day--outside-month {
@@ -207,4 +213,63 @@ export const PostContentTop = styled.div`
   .input-date-picker:focus {
     outline: none; // 포커스 시 검은색 테두리 제거
   }
+
+  .post-reserve-button {
+    display: flex;
+    width: 100%;
+    height: 10%;
+    justify-content: center;
+    background-color: #71db9a;
+  }
+`;
+
+export const ReserveButton = styled.button`
+  width: 80%;
+  height: 100%;
+  font-size: 16px;
+  background-color: #95bfe5;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #1b5e96;
+    color: white;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+`;
+
+export const PostContentBottom = styled.div`
+  width: 100%;
+  min-height: 200px;
+  background-color: #56943a;
+
+  .bottom-menu {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20%;
+    font-size: 16px;
+    background-color: #f0cca0;
+  }
+
+  .line {
+    width: 1px;
+    height: 25px;
+    background-color: black;
+  }
+
+  p {
+    cursor: pointer;
+  }
+`;
+
+export const ProfileImg = styled.img`
+  width: 50px; /* 이미지 너비 */
+  height: 50px; /* 이미지 높이 */
+  border-radius: 50%; /* 원형 */
+  object-fit: cover; /* 이미지 비율 유지 */
+  border: 2px solid #ccc; /* 선택적으로 테두리 추가 */
 `;

@@ -16,8 +16,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/main" element={<Main />} />
           <Route path="/post" element={<PostList />} />
-          <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/signup" element={<Signup />} /> */}
         </Routes>
       </Router>
     </>

@@ -300,3 +300,39 @@ export const PostContentBottom = styled.div`
     cursor: pointer;
   }
 `;
+
+export const PostWriteContainer = styled.div`
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
+  background-color: bisque;
+`;
+
+export const PostWriteSelect = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  padding: 0 15px;
+
+  .post-write-dropbox {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .post-write-price {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+    text-align: right;
+    padding: 7px;
+  }
+
+  span {
+    font-size: 23px;
+    margin: 0 10px;
+  }
+`;

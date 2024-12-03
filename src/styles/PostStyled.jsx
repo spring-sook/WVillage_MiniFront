@@ -152,6 +152,22 @@ export const PostContentTop = styled.div`
     width: 350px;
     height: 50px;
     background-color: #f397ba;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .post-content-userinfo {
+    margin-left: 5px;
+  }
+
+  .post-content-nick {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .post-content-region {
+    font-size: 14px;
   }
 
   .post-content-reserve {
@@ -246,11 +262,15 @@ export const PostContentBottom = styled.div`
   width: 100%;
   min-height: 200px;
   background-color: #56943a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .bottom-menu {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20%;
+    width: 1200px;
+    padding: 10px 300px;
     font-size: 16px;
     background-color: #f0cca0;
   }

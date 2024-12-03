@@ -10,6 +10,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
+import { HeaderCom, NavCom, FooterCom } from "../../components/GlobalComponent";
 
 const PostList = () => {
   const [startDate, setStartDate] = useState("");
@@ -30,8 +31,8 @@ const PostList = () => {
 
   return (
     <Container>
-      <div className="header">여기는 Header</div>
-      <div className="nav">여기는 nav</div>
+      <HeaderCom />
+      <NavCom />
       <PostBody>
         <PostMainFilter>
           <p>
@@ -83,7 +84,7 @@ const PostList = () => {
           <PostDisplay></PostDisplay>
         </PostMainList>
       </PostBody>
-      <div className="footer">여기는 footer</div>
+      <FooterCom />
     </Container>
   );
 };

@@ -14,6 +14,7 @@ const GlobalStyled = createGlobalStyle`
 
 export const Container = styled.div`
   margin: 0 2%;
+  overflow: hidden;
 `;
 
 // 헤더 스타일

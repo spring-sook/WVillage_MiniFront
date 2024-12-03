@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { useState } from "react";
 import ImgDownloader from "../../components/Profile";
+import { HeaderCom, NavCom, FooterCom } from "../../components/GlobalComponent";
 
 const PostContent = () => {
   const [startDate, setStartDate] = useState("");
@@ -18,13 +19,17 @@ const PostContent = () => {
 
   return (
     <Container>
-      <div className="header">여기는 Header</div>
-      <div className="nav">여기는 nav</div>
+      <HeaderCom />
+      <NavCom />
       <PostContentTop>
         <div className="post-content-top-left">
           <div className="post-content-img">여기가 이미지</div>
           <div className="post-content-user">
             <ImgDownloader imgfile={imagePath} width="40px" height="40px" />
+            <div className="post-content-userinfo">
+              <p className="post-content-nick">coolcool</p>
+              <p className="post-content-region">여의동</p>
+            </div>
           </div>
         </div>
         <div className="post-content-reserve">
@@ -80,7 +85,7 @@ const PostContent = () => {
         </div>
         <div>여기가 제품 내용</div>
       </PostContentBottom>
-      <div className="footer">여기는 footer</div>
+      <FooterCom />
     </Container>
   );
 };

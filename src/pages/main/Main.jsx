@@ -5,6 +5,7 @@ import {
   BoxContainer,
   Box,
   Button,
+  RecommBox,
 } from "../../styles/MainStyled";
 import { Container } from "../../styles/GlobalStyled";
 import { HeaderCom, NavCom, FooterCom } from "../../components/GlobalComponent";
@@ -18,53 +19,65 @@ const Main = () => {
     'url("image2.jpg")',
     'url("image3.jpg")',
     'url("image4.jpg")',
+    'url("image5.jpg")',
+    'url("image6.jpg")',
+    'url("image7.jpg")',
+    'url("image8.jpg")',
   ];
-  const [currentIndex, setCurrentIndex] = useState(1); // 첫 번째 이미지부터 시작
-  // 왼쪽 버튼 클릭 시 이전 이미지로 이동 (무한 순환)
+  const boxWidth = 320; // 각 이미지의 너비
+  const margin = 10; // 이미지 사이의 여백
+  const [currentIndex, setCurrentIndex] = useState(0); // 초기값 0
+
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => {
-      // 첫 번째 이미지를 클릭하면 마지막 이미지로 이동
-      return prevIndex === 1 ? images.length : prevIndex - 1;
-    });
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
   };
 
-  // 오른쪽 버튼 클릭 시 다음 이미지로 이동 (무한 순환)
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => {
-      // 마지막 이미지를 클릭하면 첫 번째 이미지로 이동
-      return prevIndex === images.length ? 1 : prevIndex + 1;
-    });
+    if (currentIndex < images.length - 4) {
+      // 4개씩 보니까 마지막 인덱스는 images.length - 4
+      setCurrentIndex(currentIndex + 1);
+    }
   };
   return (
     <Container>
       <HeaderCom />
       <NavCom />
       <MainBody>
-        <MainRecomm>
-          <Button left onClick={goToPrevious}>
+        <RecommBox>
+          {/* 왼쪽 버튼 */}
+          <Button
+            left
+            onClick={goToPrevious}
+            disabled={currentIndex === 0} // 왼쪽 끝일 때 비활성화
+          >
             ◀
           </Button>
 
-          <BoxContainer
-            style={{
-              transform: `translateX(-${currentIndex * 320}px)`, // 현재 인덱스를 기준으로 이동
-            }}
+          <MainRecomm>
+            <BoxContainer
+              slideWidth={`${images.length * (boxWidth + margin)}px`}
+              style={{
+                transform: `translateX(-${
+                  currentIndex * (boxWidth + margin)
+                }px)`, // 이미지가 1개씩 이동
+              }}
+            >
+              {images.map((image, index) => (
+                <Box key={index} style={{ backgroundImage: image }} />
+              ))}
+            </BoxContainer>
+          </MainRecomm>
+
+          {/* 오른쪽 버튼 */}
+          <Button
+            onClick={goToNext}
+            disabled={currentIndex === images.length - 4} // 오른쪽 끝일 때 비활성화
           >
-            {/* 앞부분 복제된 이미지들 */}
-            {images.slice(0).map((image, index) => (
-              <Box key={`left-${index}`} style={{ backgroundImage: image }} />
-            ))}
-            {/* 실제 이미지들 */}
-            {images.map((image, index) => (
-              <Box key={index} style={{ backgroundImage: image }} />
-            ))}
-            {/* 뒷부분 복제된 이미지들 */}
-            {images.slice(0).map((image, index) => (
-              <Box key={`right-${index}`} style={{ backgroundImage: image }} />
-            ))}
-          </BoxContainer>
-          <Button onClick={goToNext}>▶</Button>
-        </MainRecomm>
+            ▶
+          </Button>
+        </RecommBox>
         <MainBanner>
           <div className="catch">
             <h1>어디서 Village?</h1>

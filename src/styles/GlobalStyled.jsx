@@ -53,11 +53,10 @@ export const Header = styled.div`
     padding: 20px;
     outline: none;
   }
-
-  .my {
-    height: 100px;
-    width: 100px;
-    background-color: cadetblue;
+  .usermy {
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 

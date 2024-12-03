@@ -19,10 +19,18 @@ export const HeaderCom = () => {
   };
 
   const handleSearch = () => {
-    console.log("검색어:", searchQuery);
-    // 여기에 실제 검색 로직을 추가하세요.
+    if (searchQuery.length < 2) {
+      alert("검색어는 2자리 이상 입력해 주세요."); // 길이가 2자 미만일 경우 팝업
+    } else {
+      console.log("검색어:", searchQuery);
+    }
   };
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // Enter 키가 눌렸을 때
+      handleSearch(); // 검색 함수 호출
+    }
+  };
   const imagePath = "snow_village.webp";
 
   return (
@@ -53,6 +61,7 @@ export const HeaderCom = () => {
             placeholder="검색어 입력"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} // 검색어 업데이트
+            onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
           />
           <button className="search-button" onClick={handleSearch}>
             <FaSearch /> {/* 검색 아이콘 */}

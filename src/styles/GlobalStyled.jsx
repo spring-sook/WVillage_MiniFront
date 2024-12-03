@@ -62,7 +62,7 @@ export const Header = styled.div`
 
   .selected-option {
     position: absolute; /* 검색창 내부에 배치 */
-    left: 50px; /* 검색창 내부 여백 */
+    left: 60px; /* 검색창 내부 여백 */
     top: 48%;
     transform: translateY(-50%);
     font-size: 20px;
@@ -72,8 +72,8 @@ export const Header = styled.div`
   }
   .divider {
     position: absolute;
-    left: 100px; /* 선택된 옵션 바로 옆에 배치 */
-    top: 45%;
+    left: 110px; /* 선택된 옵션 바로 옆에 배치 */
+    top: 43%;
     transform: translateY(-50%);
     color: #1b5e96;
     font-size: 20px;
@@ -84,8 +84,8 @@ export const Header = styled.div`
     font-size: 18px;
     height: 50px;
     border-radius: 50px;
-    border: 3px solid #1b5e96;
-    padding-left: 110px;
+    border: 2.5px solid #1b5e96;
+    padding-left: 120px;
     outline: none;
     width: 100%;
     box-sizing: border-box;

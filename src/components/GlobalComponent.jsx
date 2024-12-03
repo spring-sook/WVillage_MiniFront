@@ -2,8 +2,19 @@ import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
 import ImgDownloader from "../components/Profile";
+import { useState } from "react";
 
 export const HeaderCom = () => {
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("검색 옵션");
+  const toggleOptions = () => {
+    setShowOptions((prev) => !prev);
+  };
+  const selectOption = (option) => {
+    setSelectedOption(option); // 선택된 옵션 표시
+    setShowOptions(false); // 옵션 창 닫기
+  };
+
   const imagePath = "snow_village.webp";
 
   return (
@@ -16,22 +27,41 @@ export const HeaderCom = () => {
       </div>
       <Nav>
         <div className="tag">product</div>
+        <p>/</p>
         <div className="tag">part-time</div>
+        <p>/</p>
         <div className="tag">place</div>
       </Nav>
-      <input type="text" className="search" placeholder="검색창" />
+      <div className="search-container">
+        <button className="search-toggle" onClick={toggleOptions}>
+          ▼
+        </button>
+        <div className="search-wrapper">
+          <span className="selected-option">{selectedOption}</span>
+          <span className="divider">|</span>
+          <input
+            type="text"
+            className="search"
+            placeholder="검색어를 입력하세요"
+          />
+        </div>
+        {showOptions && (
+          <div className="search-options active">
+            <div className="options-list">
+              <p onClick={() => selectOption("전체")}>전체</p>
+              <p onClick={() => selectOption("물건")}>물건</p>
+              <p onClick={() => selectOption("알바")}>알바</p>
+              <p onClick={() => selectOption("장소")}>장소</p>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="usermy">
         <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
       </div>
     </Header>
   );
 };
-
-// export const NavCom = () => {
-//   return (
-
-//   );
-// };
 
 export const FooterCom = () => {
   return (

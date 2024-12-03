@@ -32,45 +32,110 @@ export const Header = styled.div`
   .logo-img {
     height: 100px;
     width: auto;
-    object-fit: contain; /* 이미지 비율에 맞게 맞추기 */
+    object-fit: contain;
   }
   .name {
     height: 100px;
-    width: 200px;
+    width: 250px;
+    padding-left: 10px;
     font-size: 45px;
     color: #1b5e96;
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .search-container {
+    position: relative;
+    flex-grow: 0.8;
+    display: flex;
     align-items: center;
   }
-  .search {
-    height: 100px;
+
+  .search-wrapper {
+    position: relative;
     flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .selected-option {
+    position: absolute; /* 검색창 내부에 배치 */
+    left: 55px; /* 검색창 내부 여백 */
+    top: 48%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    color: #1b5e96;
+    pointer-events: none; /* 클릭 불가능하게 설정 */
+  }
+  .divider {
+    position: absolute;
+    left: 100px; /* 선택된 옵션 바로 옆에 배치 */
+    top: 45%;
+    transform: translateY(-50%);
+    color: #1b5e96;
+    font-size: 20px;
+    pointer-events: none;
+  }
+
+  .search {
     font-size: 20px;
     height: 50px;
     border-radius: 50px;
     border: 3px solid #1b5e96;
-    padding: 20px;
+    padding-left: 110px;
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .usermy {
-    &:hover {
-      cursor: pointer;
-    }
+
+  .search-toggle {
+    position: absolute;
+    left: 10px; /* 검색창 왼쪽에 고정 */
+    top: 50%; /* 검색창의 세로 중심에 위치 */
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    background-color: #1b5e96;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .search-options {
+    position: absolute;
+    top: 105%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 10;
+    width: 150px;
+  }
+
+  .options-list p {
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .options-list p:hover {
+    background-color: #f0f0f0;
   }
 `;
 
 // nav 스타일
 export const Nav = styled.div`
   height: 40px;
-  background-color: #f5f6fa;
   display: flex;
   justify-content: right;
   align-items: center;
   .tag {
     margin: 0 50px;
     height: 40px;
-    width: 100px;
+    width: 80px;
     background-color: transparent;
     color: #1b5e96;
 
@@ -84,6 +149,9 @@ export const Nav = styled.div`
       text-decoration: underline;
       cursor: pointer;
     }
+  }
+  p {
+    color: #1b5e96;
   }
 `;
 

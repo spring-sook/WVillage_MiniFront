@@ -20,7 +20,7 @@ function App() {
           <Route path="/post" element={<PostList />} />
           <Route path="/postContent" element={<PostContent />} />
           <Route path="/postWrite" element={<PostWrite />} />
-          <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/passwordreset" element={<PasswordReset />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router>

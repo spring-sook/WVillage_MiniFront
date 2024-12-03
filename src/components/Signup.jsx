@@ -114,7 +114,7 @@ const SignupContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
 `;
 
 const SignupForm = styled.form`
@@ -155,7 +155,7 @@ const Label = styled.label`
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ffffff;
   border-radius: 5px;
   font-size: 14px;
 `;

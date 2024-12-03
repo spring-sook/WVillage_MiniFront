@@ -8,7 +8,7 @@ import {
   RecommBox,
 } from "../../styles/MainStyled";
 import { Container } from "../../styles/GlobalStyled";
-import { HeaderCom, NavCom, FooterCom } from "../../components/GlobalComponent";
+import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { useState } from "react";
 
 // 이미지가 더 추가될 수 있습니다
@@ -43,7 +43,7 @@ const Main = () => {
   return (
     <Container>
       <HeaderCom />
-      <NavCom />
+
       <MainBody>
         <RecommBox>
           {/* 왼쪽 버튼 */}

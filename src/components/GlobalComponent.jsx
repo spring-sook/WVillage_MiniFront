@@ -14,6 +14,11 @@ export const HeaderCom = () => {
       <div className="name">
         <h4>W.Village</h4>
       </div>
+      <Nav>
+        <div className="tag">product</div>
+        <div className="tag">part-time</div>
+        <div className="tag">place</div>
+      </Nav>
       <input type="text" className="search" placeholder="검색창" />
       <div className="usermy">
         <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
@@ -22,15 +27,11 @@ export const HeaderCom = () => {
   );
 };
 
-export const NavCom = () => {
-  return (
-    <Nav>
-      <div className="tag">product</div>
-      <div className="tag">part-time</div>
-      <div className="tag">place</div>
-    </Nav>
-  );
-};
+// export const NavCom = () => {
+//   return (
+
+//   );
+// };
 
 export const FooterCom = () => {
   return (

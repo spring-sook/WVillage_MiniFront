@@ -28,7 +28,7 @@ const PostContent = () => {
             <ImgDownloader imgfile={imagePath} width="40px" height="40px" />
             <div className="post-content-userinfo">
               <p className="post-content-nick">coolcool</p>
-              <p className="post-content-region">여의동</p>
+              <p className="post-content-region"></p>
             </div>
           </div>
         </div>

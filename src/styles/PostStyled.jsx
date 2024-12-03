@@ -312,23 +312,16 @@ export const PostWriteSelect = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
-  align-items: center;
-  margin: 10px 0;
-  padding: 0 15px;
-
-  .post-write-dropbox {
-    width: 200px;
-    height: 40px;
-    font-size: 16px;
-    text-align: center;
-  }
+  position: relative;
+  margin: 20px 0;
+  padding-left: 15px;
+  background-color: brown;
 
   .post-write-price {
-    width: 200px;
-    height: 40px;
-    font-size: 16px;
-    text-align: right;
-    padding: 7px;
+    display: flex;
+    position: absolute;
+    right: 15px;
+    bottom: 0;
   }
 
   span {

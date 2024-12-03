@@ -155,6 +155,7 @@ export const PostContentTop = styled.div`
     padding: 0 5px;
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   .post-content-userinfo {
@@ -166,8 +167,22 @@ export const PostContentTop = styled.div`
     font-weight: 600;
   }
 
+  .post-content-temp {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
   .post-content-region {
     font-size: 14px;
+  }
+
+  .temp-img {
+    height: 40px;
+    margin-right: 5px;
   }
 
   .post-content-reserve {

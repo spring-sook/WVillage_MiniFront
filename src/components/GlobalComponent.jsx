@@ -42,11 +42,11 @@ export const HeaderCom = () => {
         <h4>WVillage</h4>
       </div>
       <Nav>
-        <div className="tag">product</div>
+        <div className="tag">제품</div>
         <p>/</p>
-        <div className="tag">part-time</div>
+        <div className="tag">알바</div>
         <p>/</p>
-        <div className="tag">place</div>
+        <div className="tag">장소</div>
       </Nav>
       <div className="search-container">
         <button className="search-toggle" onClick={toggleOptions}>

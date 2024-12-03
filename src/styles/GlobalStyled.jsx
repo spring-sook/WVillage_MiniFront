@@ -36,7 +36,7 @@ export const Header = styled.div`
   }
   .name {
     height: 100px;
-    width: 250px;
+    width: 200px;
     padding-left: 10px;
     font-size: 45px;
     color: #1b5e96;
@@ -62,17 +62,17 @@ export const Header = styled.div`
 
   .selected-option {
     position: absolute; /* 검색창 내부에 배치 */
-    left: 60px; /* 검색창 내부 여백 */
+    left: 55px; /* 검색창 내부 여백 */
     top: 48%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     color: #1b5e96;
     pointer-events: none; /* 클릭 불가능하게 설정 */
   }
   .divider {
     position: absolute;
-    left: 110px; /* 선택된 옵션 바로 옆에 배치 */
+    left: 100px; /* 선택된 옵션 바로 옆에 배치 */
     top: 43%;
     transform: translateY(-50%);
     color: #1b5e96;
@@ -81,8 +81,8 @@ export const Header = styled.div`
   }
 
   .search {
-    font-size: 18px;
-    height: 50px;
+    font-size: 14px;
+    height: 40px;
     border-radius: 50px;
     border: 2.5px solid #1b5e96;
     padding-left: 120px;
@@ -120,42 +120,43 @@ export const Header = styled.div`
     position: absolute;
     top: 105%;
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #1b5e96;
     border-radius: 5px;
     z-index: 10;
-    width: 150px;
+    width: 120px;
   }
 
   .options-list p {
     padding: 5px;
     cursor: pointer;
     text-align: center;
+    font-size: 14px;
   }
 
   .options-list p:hover {
     background-color: #f0f0f0;
+  }
+  .usermy {
+    margin-right: 20px; /* 오른쪽 여백 추가 */
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
 // nav 스타일
 export const Nav = styled.div`
   height: 40px;
+  width: 100%; /* 컨테이너의 너비를 100%로 설정하여 창 크기에 맞게 조정 */
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+  max-width: 350px;
   align-items: center;
   .tag {
-    margin: 0 50px;
-    height: 40px;
-    width: 80px;
-    background-color: transparent;
     color: #1b5e96;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     font-weight: bold;
-
+    flex: 0.8;
+    text-align: center; /* 태그 내부의 텍스트를 중앙에 배치 */
     &:hover {
       text-decoration: underline;
       cursor: pointer;
@@ -169,14 +170,16 @@ export const Nav = styled.div`
 
 // 푸터 스타일
 export const Footer = styled.div`
-  height: 180px;
+  height: 150px;
   background-color: #dddddd;
   padding: 20px;
   color: #494949;
   h4 {
+    font-size: small;
     text-decoration: underline;
   }
   p {
+    font-size: smaller;
   }
 `;
 

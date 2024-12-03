@@ -3,16 +3,24 @@ import LogoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
 import ImgDownloader from "../components/Profile";
 import { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 export const HeaderCom = () => {
   const [showOptions, setShowOptions] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("검색 옵션");
+  const [selectedOption, setSelectedOption] = useState("전체");
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
+
   const toggleOptions = () => {
     setShowOptions((prev) => !prev);
   };
   const selectOption = (option) => {
     setSelectedOption(option); // 선택된 옵션 표시
     setShowOptions(false); // 옵션 창 닫기
+  };
+
+  const handleSearch = () => {
+    console.log("검색어:", searchQuery);
+    // 여기에 실제 검색 로직을 추가하세요.
   };
 
   const imagePath = "snow_village.webp";
@@ -23,7 +31,7 @@ export const HeaderCom = () => {
         <img src={LogoImg} alt="로고" className="logo-img" />
       </Link>
       <div className="name">
-        <h4>W.Village</h4>
+        <h4>WVillage</h4>
       </div>
       <Nav>
         <div className="tag">product</div>
@@ -42,8 +50,13 @@ export const HeaderCom = () => {
           <input
             type="text"
             className="search"
-            placeholder="검색어를 입력하세요"
+            placeholder="검색어 입력"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // 검색어 업데이트
           />
+          <button className="search-button" onClick={handleSearch}>
+            <FaSearch /> {/* 검색 아이콘 */}
+          </button>
         </div>
         {showOptions && (
           <div className="search-options active">

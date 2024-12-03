@@ -48,7 +48,7 @@ export const Header = styled.div`
 
   .search-container {
     position: relative;
-    flex-grow: 0.8;
+    flex-grow: 1;
     display: flex;
     align-items: center;
   }
@@ -62,7 +62,7 @@ export const Header = styled.div`
 
   .selected-option {
     position: absolute; /* 검색창 내부에 배치 */
-    left: 55px; /* 검색창 내부 여백 */
+    left: 50px; /* 검색창 내부 여백 */
     top: 48%;
     transform: translateY(-50%);
     font-size: 20px;
@@ -81,7 +81,7 @@ export const Header = styled.div`
   }
 
   .search {
-    font-size: 20px;
+    font-size: 18px;
     height: 50px;
     border-radius: 50px;
     border: 3px solid #1b5e96;
@@ -103,6 +103,17 @@ export const Header = styled.div`
     border-radius: 20px;
     cursor: pointer;
     z-index: 1;
+  }
+  .search-button {
+    position: absolute;
+    right: 15px;
+    top: 30%;
+    scale: 110%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #1b5e96;
   }
 
   .search-options {
@@ -152,6 +163,7 @@ export const Nav = styled.div`
   }
   p {
     color: #1b5e96;
+    margin: -10px;
   }
 `;
 

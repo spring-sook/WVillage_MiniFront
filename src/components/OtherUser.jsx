@@ -2,8 +2,11 @@
 import {Usermy} from "../styles/UserComstyled";
 import ImgDownloader from "./Profile";
 import {UserReviewRecord} from "./UserReviewRecord";
+import {ReportBtn} from "./ReportBtn";
+import {useState} from "react";
 
 export const OtherUser = () =>{
+  const [imagePath, setImagePath] = useState();
 
   return(
     <>

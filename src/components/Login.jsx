@@ -3,7 +3,19 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faLock,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
+
+const ICONS = {
+  user: faUser,
+  lock: faLock,
+  eye: faEye,
+  eyeSlash: faEyeSlash,
+};
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,19 +35,23 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginBox>
-        <LogoContainer>
+        <LogoContainer onClick={() => navigate("/main")}>
           <Logo src={logo} alt="로고" />
           <Title>WVillage</Title>
         </LogoContainer>
         <InputContainer>
-          <Input
-            type="email"
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <InputWrapper>
+            <Icon icon={ICONS.user} />
+            <Input
+              type="email"
+              placeholder="이메일"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </InputWrapper>
           <Divider />
-          <PasswordContainer>
+          <InputWrapper isLast>
+            <Icon icon={ICONS.lock} />
             <Input
               type={passwordVisible ? "text" : "password"}
               placeholder="비밀번호"
@@ -45,13 +61,15 @@ const Login = () => {
             <ToggleVisibility
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
-              <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+              <FontAwesomeIcon
+                icon={passwordVisible ? ICONS.eyeSlash : ICONS.eye}
+              />
             </ToggleVisibility>
-          </PasswordContainer>
+          </InputWrapper>
         </InputContainer>
         <Button onClick={handleLogin}>로그인</Button>
         <LinkContainer>
-          <StyledLink to="/passwordreset">아이디 찾기</StyledLink>
+          <StyledLink to="/Findmail">아이디 찾기</StyledLink>
           <StyledLink to="/passwordreset">비밀번호 재설정</StyledLink>
           <StyledLink to="/signup">회원가입</StyledLink>
         </LinkContainer>
@@ -87,8 +105,10 @@ const LoginBox = styled.div`
 `;
 const LogoContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
   margin-bottom: 60px;
+  cursor: pointer;
 `;
 
 const Logo = styled.img`
@@ -108,46 +128,50 @@ const Title = styled.h2`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 38%;
+  width: 40%;
   border: 1px solid #ccc;
   border-radius: 15px;
-  overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
 
   &:hover {
-    outline: none;
     border-color: #007bff;
     box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
-  }
-  &:focus-within {
-    border-color: #007bff;
-    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
-  }
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 20px;
-  text-align: left;
-  border: none;
-  outline: none;
-  font-size: 14px;
-
-  &::placeholder {
-    color: #aaa;
   }
 `;
 
 const Divider = styled.div`
   height: 1px;
   background-color: #ccc;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
 `;
 
-const PasswordContainer = styled.div`
+const InputWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding: 20px;
+  transition: background-color 0.3s ease;
   position: relative;
+`;
+const Icon = styled(FontAwesomeIcon)`
+  font-size: 15px;
+  margin-right: 10px;
+  color: #aaa;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 13px;
+
+  &::placeholder {
+    color: #aaa;
+  }
 `;
 
 const ToggleVisibility = styled.div`
@@ -167,14 +191,14 @@ const Button = styled.button`
   padding: 13px;
   margin: 60px 0 20px 0;
   color: #ffffff;
-  background-color: #95bfe5;
+  background-color: #a2d2ff;
   border: none;
   border-radius: 15px;
   font-size: large;
   font-weight: 1000;
   cursor: pointer;
   &:hover {
-    background-color: #a2d2ff;
+    background-color: #b4d8fa;
   }
 `;
 

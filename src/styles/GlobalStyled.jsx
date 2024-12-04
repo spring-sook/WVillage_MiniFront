@@ -124,6 +124,15 @@ export const Header = styled.div`
     border-radius: 5px;
     z-index: 10;
     width: 120px;
+
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .search-options.active {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .options-list p {

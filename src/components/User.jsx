@@ -1,5 +1,6 @@
 import ImgDownloader from "../components/Profile";
 import { Usermy } from "../styles/UserComstyled";
+import { Link } from "react-router-dom";
 
 export const User = () => {
   const imagePath = "snow_village.webp";
@@ -18,7 +19,9 @@ export const User = () => {
             <p>내 정보 수정</p>
             <p>즐겨찾기 게시물</p>
             <p>예약 리스트</p>
-            <p>포인트</p>
+            <Link to="/point">
+              <p>포인트</p>
+            </Link>
             <p>설정</p>
           </div>
         </div>

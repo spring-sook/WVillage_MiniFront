@@ -21,11 +21,12 @@ export const PointBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center; /* 세로로 중앙 정렬 */
-    gap: 100px; /* 요소들 사이의 간격을 줄임 */
+    gap: 10%; /* 요소들 사이의 간격을 줄임 */
 
     p {
       font-size: 18px;
       font-weight: bold;
+      width: 100px;
     }
 
     .point-display {
@@ -121,7 +122,7 @@ export const ChargeRefundContainer = styled.div`
   }
 
   input {
-    width: 40%;
+    width: 500px;
     padding: 10px;
     font-size: 16px;
     font-weight: bold;
@@ -153,7 +154,7 @@ export const AccountContainer = styled.div`
   select {
     padding: 10px;
     font-size: 16px;
-    width: 200%;
+    width: 500px;
     border-radius: 5px;
     border: 1px solid #ccc;
   }

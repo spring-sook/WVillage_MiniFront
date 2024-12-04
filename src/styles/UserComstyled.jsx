@@ -35,12 +35,22 @@ export const Usermy = styled.div`
     font-weight: bold;
     font-size: 20px;
     margin-top: 80px;
+
     p {
       margin: 30px;
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
+      text-decoration: none; /* 기본적으로 밑줄 제거 */
+      color: #1b5e96; /* 기본 텍스트 색상 */
+    }
+
+    /* 링크에 기본 스타일을 제거 */
+    a {
+      text-decoration: none; /* 링크의 기본 밑줄 제거 */
+      color: inherit; /* 부모 색상 적용 */
+    }
+
+    p:hover {
+      cursor: pointer;
+      text-decoration: underline; /* hover 시 밑줄 추가 */
     }
   }
 `;

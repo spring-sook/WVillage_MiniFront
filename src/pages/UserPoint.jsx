@@ -23,8 +23,17 @@ const UserPoint = () => {
   const [showModal, setShowModal] = useState(false); // 모달 열기/닫기
   const [newAccount, setNewAccount] = useState({ bank: "", accountNumber: "" }); // 새 계좌 정보
 
-  const handleChargeClick = () => setIsCharge(true);
-  const handleRefundClick = () => setIsCharge(false);
+  const handleChargeClick = () => {
+    setIsCharge(true);
+    setAccounts([]); // 충전 버튼 클릭 시 계좌 리스트 초기화
+    setAmount(""); // 포인트 입력란 초기화
+  };
+
+  const handleRefundClick = () => {
+    setIsCharge(false);
+    setAccounts([]); // 환급 버튼 클릭 시 계좌 리스트 초기화
+    setAmount(""); // 포인트 입력란 초기화
+  };
 
   // 충전 기능
   const handleCharge = () => {
@@ -34,9 +43,10 @@ const UserPoint = () => {
       return;
     }
     setBalance(balance + chargeAmount);
-    setAmount("");
+    setAmount(""); // 금액 초기화
+    setSelectedAccount(""); // 계좌 선택 초기화
+    setAccounts([]); // 추가된 계좌 리스트 초기화
   };
-
   // 환급 기능
   const handleRefund = () => {
     const refundAmount = parseFloat(amount);
@@ -45,7 +55,9 @@ const UserPoint = () => {
       return;
     }
     setBalance(balance - refundAmount);
-    setAmount("");
+    setAmount(""); // 금액 초기화
+    setSelectedAccount(""); // 계좌 선택 초기화
+    setAccounts([]); // 추가된 계좌 리스트 초기화
   };
 
   // 계좌 추가하기 버튼 클릭 시 모달 열기
@@ -97,27 +109,22 @@ const UserPoint = () => {
             </div>
 
             <ChargeBox>
-              {isCharge ? (
-                <ChargeRefundContainer>
-                  <p>충전할 포인트를 입력하세요</p>
-                  <input
-                    type="number"
-                    placeholder="충전할 포인트"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                </ChargeRefundContainer>
-              ) : (
-                <ChargeRefundContainer>
-                  <p>환급할 포인트를 입력하세요</p>
-                  <input
-                    type="number"
-                    placeholder="환급할 포인트"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                </ChargeRefundContainer>
-              )}
+              <ChargeRefundContainer>
+                <p>
+                  {isCharge
+                    ? "충전할 포인트를 입력하세요"
+                    : "환급할 포인트를 입력하세요"}
+                </p>
+                <input
+                  type="text" // input 타입을 text로 설정
+                  placeholder={isCharge ? "충전할 포인트" : "환급할 포인트"}
+                  value={amount}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자 외의 문자 제거
+                    setAmount(value); // 숫자만 상태에 저장
+                  }}
+                />
+              </ChargeRefundContainer>
 
               {/* 계좌 선택 */}
               <AccountContainer>
@@ -171,9 +178,10 @@ const UserPoint = () => {
               type="text"
               placeholder="계좌 번호"
               value={newAccount.accountNumber}
-              onChange={(e) =>
-                setNewAccount({ ...newAccount, accountNumber: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, "");
+                setNewAccount({ ...newAccount, accountNumber: value });
+              }}
             />
             <div className="button-container">
               <button onClick={handleAddAccount}>계좌 추가</button>

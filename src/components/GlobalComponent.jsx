@@ -57,7 +57,7 @@ export const HeaderCom = () => {
       </Nav>
       <div className="search-container">
         <button className="search-toggle" onClick={toggleOptions}>
-          ▼
+          {showOptions ? "▲" : "▼"} {/* showOptions 상태에 따라 기호 변경 */}
         </button>
         <div className="search-wrapper">
           <span className="selected-option">{selectedOption}</span>
@@ -74,16 +74,14 @@ export const HeaderCom = () => {
             <FaSearch /> {/* 검색 아이콘 */}
           </button>
         </div>
-        {showOptions && (
-          <div className="search-options active">
-            <div className="options-list">
-              <p onClick={() => selectOption("전체")}>전체</p>
-              <p onClick={() => selectOption("물건")}>물건</p>
-              <p onClick={() => selectOption("알바")}>알바</p>
-              <p onClick={() => selectOption("장소")}>장소</p>
-            </div>
+        <div className={`search-options ${showOptions ? "active" : ""}`}>
+          <div className="options-list">
+            <p onClick={() => selectOption("전체")}>전체</p>
+            <p onClick={() => selectOption("물건")}>물건</p>
+            <p onClick={() => selectOption("알바")}>알바</p>
+            <p onClick={() => selectOption("장소")}>장소</p>
           </div>
-        )}
+        </div>
       </div>
       <div className="usermy">
         <ImgDownloader imgfile={imagePath} width="60px" height="60px" />

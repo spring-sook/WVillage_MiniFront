@@ -8,6 +8,7 @@ import PostWrite from "./pages/post/PostWrite";
 import Login from "./components/Login";
 import PasswordReset from "./components/PasswordReset";
 import Signup from "./components/Signup";
+import Intro from "./pages/main/Intro";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/intro" element={<Intro />} />
           <Route path="/post" element={<PostList />} />
           <Route path="/postContent" element={<PostContent />} />
           <Route path="/postWrite" element={<PostWrite />} />

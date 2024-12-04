@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 //메인 크기
 export const MainBody = styled.div`
-  height: 920px;
+  height: 950px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,18 +11,18 @@ export const MainBody = styled.div`
 
 // 추천 배너
 export const RecommBox = styled.div`
-  height: 420px;
+  height: 450px;
   width: 100%;
-  background-color: lightblue;
+  background-color: #f5f6fa;
   display: flex;
   justify-content: center;
   position: relative;
 `;
 
 export const MainRecomm = styled.div`
-  height: 420px;
+  height: 450px;
   width: 1300px;
-  background-color: lightblue;
+  background-color: #f5f6fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,10 +41,15 @@ export const BoxContainer = styled.div`
 export const Box = styled.div`
   margin: 0 10px; /* 간격을 조정 */
   height: 300px;
-  width: 320px;
-  border: 1px solid black;
+  width: 305px;
+  border: 1px solid black; /*테두리 삭제?*/
+  box-shadow: 3px 3px 5px #707070;
   background-size: cover;
   background-position: center;
+  border-radius: 5% 0 5% 0;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Button = styled.button`
@@ -52,14 +57,13 @@ export const Button = styled.button`
   top: 50%;
   ${(props) => (props.left ? "left: 10px;" : "right: 10px;")}
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: transparent;
+  color: #145a86;
   border: none;
-  padding: 10px;
+  padding: 4px;
   cursor: pointer;
   z-index: 10;
-  border-radius: 50%;
-
+  scale: 110%;
   /* 비활성화된 버튼 스타일 */
   &:disabled {
     background-color: rgba(0, 0, 0, 0.2);
@@ -127,5 +131,28 @@ export const MainBanner = styled.div`
       opacity: 1; /* 마지막엔 선명해짐 */
       transform: translateX(0); /* 원래 위치로 이동 */
     }
+  }
+`;
+export const ChatWidget = styled.div`
+  position: fixed;
+  bottom: 40px;
+  right: 50px;
+  width: 60px;
+  height: 60px;
+  background-color: #1b5e96;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1000;
+
+  &:hover {
+    background-color: #145a86;
+  }
+  svg {
+    font-size: 24px;
   }
 `;

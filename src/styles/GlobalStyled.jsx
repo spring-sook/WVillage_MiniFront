@@ -137,7 +137,7 @@ export const Header = styled.div`
     background-color: #f0f0f0;
   }
   .usermy {
-    margin-right: 20px; /* 오른쪽 여백 추가 */
+    margin-right: 30px; /* 오른쪽 여백 추가 */
     &:hover {
       cursor: pointer;
     }

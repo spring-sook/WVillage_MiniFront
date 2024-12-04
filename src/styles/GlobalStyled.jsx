@@ -155,6 +155,7 @@ export const Nav = styled.div`
   .tag {
     color: #1b5e96;
     font-weight: bold;
+    text-decoration: none;
     flex: 0.8;
     text-align: center; /* 태그 내부의 텍스트를 중앙에 배치 */
     &:hover {

@@ -156,3 +156,78 @@ export const ChatWidget = styled.div`
     font-size: 24px;
   }
 `;
+// 인트로 스타일-------------------------------------------------------------------------------------------------------
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 왼쪽 정렬 유지 */
+  padding: 0 20px;
+
+  .logo-img {
+    width: 100px;
+  }
+
+  p {
+    padding: 10px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #1b5e96;
+  }
+
+  .menu-icon {
+    font-size: 30px;
+    color: #1b5e96;
+    cursor: pointer;
+    margin-left: auto; /* 오른쪽으로 밀어냄 */
+  }
+`;
+
+export const Sidebar = styled.div`
+  position: fixed;
+  right: ${(props) => (props.isOpen ? "0" : "-250px")}; /* 우측 끝 기준 */
+  height: calc(100% - 50px); /* 약간 아래로 내려오게 */
+  width: 250px;
+  background-color: #ffffff;
+  transition: right 0.5s ease; /* 부드럽게 열리고 닫히는 애니메이션 */
+  padding: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px 0 0 0;
+
+  .close-btn {
+    align-self: flex-end; /* 닫기 버튼을 오른쪽에 배치 */
+    font-size: 20px;
+    color: #1b5e96;
+    cursor: pointer;
+    margin-bottom: 20px;
+
+    &:hover {
+      color: #145a86;
+    }
+  }
+
+  .sidebar-item {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1b5e96;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+`;

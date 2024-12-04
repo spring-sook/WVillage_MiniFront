@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import PasswordReset from "./components/PasswordReset";
 import Signup from "./components/Signup";
 import Intro from "./pages/main/Intro";
+import UserPoint from "./pages/UserPoint";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/postWrite" element={<PostWrite />} />
           <Route path="/passwordreset" element={<PasswordReset />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/point" element={<UserPoint />} />
         </Routes>
       </Router>
     </>

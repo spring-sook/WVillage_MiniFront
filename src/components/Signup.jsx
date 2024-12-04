@@ -13,8 +13,9 @@ const ICONS = {
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(1); // 단계: 1 -> 기본정보, 2 -> 주소와 가입
   const [formData, setFormData] = useState({
+    name: "",
+    nickname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -26,15 +27,11 @@ const Signup = () => {
     addressDetail: "",
   });
 
-  const handleNextStep = () => {
-    if (step === 1) {
-      setStep(2);
-    } else {
-      alert("가입이 완료되었습니다.");
-      navigate("/"); // 로그인 페이지로 이동
-    }
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [errors, setErrors] = useState({}); // 유효성 검사 상태
 
+  // 입력 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -43,158 +40,272 @@ const Signup = () => {
     });
   };
 
+  // 유효성 검사 로직
+  const validateForm = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]+$/;
+
+    if (!formData.name.trim()) newErrors.name = "이름을 입력하세요.";
+    if (!formData.nickname.trim()) newErrors.nickname = "닉네임을 입력하세요.";
+    if (!emailRegex.test(formData.email))
+      newErrors.email = "유효한 이메일 주소를 입력하세요.";
+    if (formData.password.length < 8)
+      newErrors.password = "비밀번호는 최소 8자 이상이어야 합니다.";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
+    if (!formData.birthYear || !formData.birthMonth || !formData.birthDay)
+      newErrors.birthDate = "생년월일을 모두 선택하세요.";
+    if (!phoneRegex.test(formData.phone))
+      newErrors.phone = "전화번호는 숫자만 입력할 수 있습니다.";
+    if (!formData.address.trim()) newErrors.address = "주소를 입력하세요.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // 회원가입 핸들러
+  const handleSignup = () => {
+    if (!validateForm()) {
+      return;
+    }
+    alert("계정 생성이 완료되었습니다!");
+    navigate("/");
+  };
+
+  // 년/월/일 드롭다운 옵션 생성
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const years = [];
-    for (let year = currentYear - 100; year <= currentYear; year++) {
-      years.push(
-        <option key={year} value={year}>
-          {year}
-        </option>
-      );
-    }
-    return years;
-  };
-
-  const generateMonthOptions = () => {
-    return Array.from({ length: 12 }, (_, i) => (
-      <option key={i + 1} value={i + 1}>
-        {i + 1}
+    return Array.from({ length: 100 }, (_, i) => (
+      <option key={i} value={currentYear - i}>
+        {currentYear - i}
       </option>
     ));
   };
 
-  const generateDayOptions = () => {
-    return Array.from({ length: 31 }, (_, i) => (
+  const generateMonthOptions = () =>
+    Array.from({ length: 12 }, (_, i) => (
       <option key={i + 1} value={i + 1}>
         {i + 1}
       </option>
     ));
-  };
+
+  const generateDayOptions = () =>
+    Array.from({ length: 31 }, (_, i) => (
+      <option key={i + 1} value={i + 1}>
+        {i + 1}
+      </option>
+    ));
 
   return (
     <SignupContainer>
       <SignupBox>
         <Header>
-          <Logo src={logo} alt="로고" onClick={() => navigate("/main")} />
-          <Title>계정 만들기</Title>
+          <Logo src={logo} alt="로고" onClick={() => navigate("/intro")} />
+          <Title>회원가입</Title>
         </Header>
-        {step === 1 ? (
-          <StepOne>
-            <InputWrapper>
-              <Label>이메일</Label>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
+        <InputWrapper>
+          <InputLabel>이름</InputLabel>
+          <Input
+            type="text"
+            name="name"
+            placeholder="이름을 입력하세요"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>닉네임</InputLabel>
+          <Input
+            type="text"
+            name="nickname"
+            placeholder="닉네임을 입력하세요"
+            value={formData.nickname}
+            onChange={handleChange}
+          />
+          {errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>이메일</InputLabel>
+          <EmailContainer>
+            <Input
+              type="text"
+              name="email"
+              placeholder="이메일 주소"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <DomainSelect
+              name="domain"
+              value={formData.domain || "example.com"} // 기본값 설정
+              onChange={handleChange}
+            >
+              <option value="gmail.com">@gmail.com</option>
+              <option value="naver.com">@naver.com</option>
+              <option value="daum.net">@daum.net</option>
+            </DomainSelect>
+          </EmailContainer>
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>비밀번호</InputLabel>
+          <PasswordContainer>
+            <Input
+              type={passwordVisible ? "text" : "password"}
+              name="password"
+              placeholder="비밀번호 입력(문자,숫자,특수문자 포함 8~10자) "
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <ToggleVisibility
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              <FontAwesomeIcon
+                icon={passwordVisible ? ICONS.eyeSlash : ICONS.eye}
               />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>비밀번호</Label>
-              <Input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
+            </ToggleVisibility>
+          </PasswordContainer>
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>비밀번호 확인</InputLabel>
+          <PasswordContainer>
+            <Input
+              type={confirmPasswordVisible ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="비밀번호 재입력"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            <ToggleVisibility
+              onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+            >
+              <FontAwesomeIcon
+                icon={confirmPasswordVisible ? ICONS.eyeSlash : ICONS.eye}
               />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>비밀번호 확인</Label>
-              <Input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>생년월일</Label>
-              <BirthInputContainer>
-                <Select
-                  name="birthYear"
-                  value={formData.birthYear}
-                  onChange={handleChange}
-                >
-                  <option value="">년</option>
-                  {generateYearOptions()}
-                </Select>
-                <Select
-                  name="birthMonth"
-                  value={formData.birthMonth}
-                  onChange={handleChange}
-                >
-                  <option value="">월</option>
-                  {generateMonthOptions()}
-                </Select>
-                <Select
-                  name="birthDay"
-                  value={formData.birthDay}
-                  onChange={handleChange}
-                >
-                  <option value="">일</option>
-                  {generateDayOptions()}
-                </Select>
-              </BirthInputContainer>
-            </InputWrapper>
-            <InputWrapper>
-              <Label>전화번호</Label>
-              <Input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </InputWrapper>
-            <Button onClick={handleNextStep}>다음</Button>
-          </StepOne>
-        ) : (
-          <StepTwo>
-            <InputWrapper>
-              <Label>주소</Label>
-              <Input
-                type="text"
-                name="address"
-                placeholder="주소 입력"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>상세 주소</Label>
-              <Input
-                type="text"
-                name="addressDetail"
-                placeholder="상세 주소 입력"
-                value={formData.addressDetail}
-                onChange={handleChange}
-              />
-            </InputWrapper>
-            <ButtonContainer>
-              <PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
-              <Button onClick={handleNextStep}>가입하기</Button>
-            </ButtonContainer>
-          </StepTwo>
-        )}
+            </ToggleVisibility>
+          </PasswordContainer>
+          {errors.confirmPassword && (
+            <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
+          )}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>생년월일</InputLabel>
+          <BirthInputContainer>
+            <Select
+              name="birthYear"
+              value={formData.birthYear}
+              onChange={handleChange}
+            >
+              <option value="">년</option>
+              {generateYearOptions()}
+            </Select>
+            <Select
+              name="birthMonth"
+              value={formData.birthMonth}
+              onChange={handleChange}
+            >
+              <option value="">월</option>
+              {generateMonthOptions()}
+            </Select>
+            <Select
+              name="birthDay"
+              value={formData.birthDay}
+              onChange={handleChange}
+            >
+              <option value="">일</option>
+              {generateDayOptions()}
+            </Select>
+          </BirthInputContainer>
+          {errors.birthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>전화번호</InputLabel>
+          <Input
+            type="text"
+            name="phone"
+            placeholder="휴대폰 번호 입력 (`-`제외 11자리 입력)"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>주소</InputLabel>
+          <Input
+            type="text"
+            name="address"
+            placeholder="주소를 입력하세요"
+            value={formData.address}
+            onChange={handleChange}
+          />
+          {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>상세 주소</InputLabel>
+          <Input
+            type="text"
+            name="addressDetail"
+            placeholder="상세 주소를 입력하세요"
+            value={formData.addressDetail}
+            onChange={handleChange}
+          />
+        </InputWrapper>
+        <ButtonContainer>
+          <PreviousButton onClick={() => navigate(-1)}>이전</PreviousButton>
+          <Button onClick={handleSignup}>가입하기</Button>
+        </ButtonContainer>
       </SignupBox>
     </SignupContainer>
   );
 };
+
+const EmailContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const DomainSelect = styled.select`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+  font-style: normal;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+  }
+`;
+
+// 오류 메시지 스타일
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+`;
 
 const SignupContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh; /* 변경 */
   background-color: #f5f5f5;
+  padding: 40px; /* 유연한 레이아웃 */
 `;
 
 const SignupBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 100%;
+  max-width: 700px; /* 너비 고정 */
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -203,52 +314,31 @@ const SignupBox = styled.div`
 
 const Header = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const Logo = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: bold;
   color: #1b5e96;
+  margin-top: 10px;
+  text-align: center;
 `;
 
 const InputWrapper = styled.div`
   width: 100%;
   margin-bottom: 15px;
-  padding: 20px;
 `;
 
-const PasswordContainer = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
-`;
-
-const ToggleVisibility = styled.div`
-  position: absolute;
-  right: 10px;
-  font-size: 18px;
-  color: #aaa;
-  cursor: pointer;
-
-  &:hover {
-    color: #007bff;
-  }
-`;
-
-const Label = styled.label`
+const InputLabel = styled.label`
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
@@ -268,61 +358,67 @@ const Input = styled.input`
   }
 `;
 
+const PasswordContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
+const ToggleVisibility = styled.div`
+  position: absolute;
+  right: 15px;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
+  }
+`;
+
 const BirthInputContainer = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 60px;
 `;
 
 const Select = styled.select`
-  flex: 1;
-  padding: 10px;
+  padding: 18px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 14px;
+  position: center;
+  font-size: 12px;
 
   &:hover {
     border-color: #007bff;
     box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
   }
 `;
-const BirthInput = styled.input`
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-`;
-
-const AddressContainer = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const SearchButton = styled.button`
-  padding: 10px 20px;
-  background-color: #1b5e96;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #164d7f;
-  }
-`;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  gap: 20px;
+  width: 80%;
+  margin-top: 20px;
+`;
+
+const PreviousButton = styled.button`
+  padding: 10px 20px;
+  background-color: #ccc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #bbb;
+  }
 `;
 
 const Button = styled.button`
-  margin-top: 20px;
   padding: 10px 20px;
-  color: white;
   background-color: #1b5e96;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -331,22 +427,6 @@ const Button = styled.button`
   &:hover {
     background-color: #164d7f;
   }
-`;
-
-const PreviousButton = styled(Button)`
-  background-color: #a9a9a9;
-
-  &:hover {
-    background-color: #888;
-  }
-`;
-
-const StepOne = styled.div`
-  width: 100%;
-`;
-
-const StepTwo = styled.div`
-  width: 100%;
 `;
 
 export default Signup;

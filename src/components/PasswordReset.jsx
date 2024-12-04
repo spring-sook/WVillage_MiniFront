@@ -29,15 +29,9 @@ const PasswordReset = () => {
   return (
     <PasswordResetContainer>
       <PasswordResetBox>
-        <Header>
-          <BackButton onClick={() => navigate(-1)}>
-            {" "}
-            {/* 뒤로 가기 버튼 */}⬅
-          </BackButton>
-          <LogoContainer>
-            <Logo src={logo} alt="로고" />
-            <Title>비밀번호 변경</Title>
-          </LogoContainer>
+        <Header onClick={() => navigate(-1)}>
+          <Logo src={logo} alt="로고" />
+          <Title>비밀번호 변경</Title>
         </Header>
         <InputWrapper>
           <Label>이메일 입력</Label>
@@ -108,32 +102,14 @@ const PasswordReset = () => {
   );
 };
 
-const BackButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #1b5e96;
-  margin-right: 10px;
-
-  &:hover {
-    color: #164d7f;
-  }
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
 const PasswordResetContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 20px;
   background-color: #f5f5f5;
+  overflow: hidden;
 `;
 
 const PasswordResetBox = styled.div`
@@ -145,6 +121,12 @@ const PasswordResetBox = styled.div`
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 40px;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 15px;
+  }
 `;
 
 const Header = styled.div`
@@ -152,11 +134,13 @@ const Header = styled.div`
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
+  flex-direction: row;
 `;
 
 const Logo = styled.img`
   width: 50px;
   height: 50px;
+  cursor: pointer;
 `;
 
 const Title = styled.h1`

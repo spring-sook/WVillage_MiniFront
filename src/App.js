@@ -11,6 +11,7 @@ import Signup from "./components/Signup";
 import Intro from "./pages/main/Intro";
 import UserPoint from "./pages/UserPoint";
 import FindMail from "./components/FindMail";
+import PasswordReset2 from "./components/PasswordReset2";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/postContent" element={<PostContent />} />
           <Route path="/postWrite" element={<PostWrite />} />
           <Route path="/passwordreset" element={<PasswordReset />} />
+          <Route path="/passwordreset2" element={<PasswordReset2 />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/point" element={<UserPoint />} />
           <Route path="/findmail" element={<FindMail />} />

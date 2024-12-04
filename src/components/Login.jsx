@@ -144,11 +144,6 @@ const Divider = styled.div`
   height: 1px;
   background-color: #ccc;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    background-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
 `;
 
 const InputWrapper = styled.div`
@@ -206,7 +201,7 @@ const Button = styled.button`
 const LinkContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 35%;
+  width: 40%;
   margin-top: 30px;
 `;
 

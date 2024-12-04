@@ -99,10 +99,12 @@ const Signup = () => {
 
   return (
     <SignupContainer>
+      <LogoHeader>
+        <Logo src={logo} alt="로고" onClick={() => navigate("/intro")} />
+      </LogoHeader>
       <SignupBox>
         <Header>
-          <Logo src={logo} alt="로고" onClick={() => navigate("/intro")} />
-          <Title>회원가입</Title>
+          <Title>계정 만들기</Title>
         </Header>
         <InputWrapper>
           <InputLabel>이름</InputLabel>
@@ -261,6 +263,14 @@ const Signup = () => {
   );
 };
 
+const LogoHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  width: 100%;
+`;
+
 const EmailContainer = styled.div`
   display: flex;
   align-items: center;
@@ -295,9 +305,8 @@ const SignupContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh; /* 변경 */
-  background-color: #f5f5f5;
-  padding: 40px; /* 유연한 레이아웃 */
+  background-color: #ffffff;
+  padding: 40px;
 `;
 
 const SignupBox = styled.div`
@@ -305,10 +314,7 @@ const SignupBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 700px; /* 너비 고정 */
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   padding: 40px;
 `;
 
@@ -370,7 +376,6 @@ const ToggleVisibility = styled.div`
   font-size: 18px;
   color: #aaa;
   cursor: pointer;
-
   &:hover {
     color: #007bff;
   }

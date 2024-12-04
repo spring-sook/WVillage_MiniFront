@@ -83,8 +83,8 @@ const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
-  padding: 20px;
+  height: 80vh;
+  box-sizing: border-box;
 `;
 
 const LoginBox = styled.div`
@@ -94,8 +94,8 @@ const LoginBox = styled.div`
   align-items: center;
   gap: 0px;
   padding: 20px;
-  width: 1063px;
-  height: 1023px;
+  width: 100%;
+  max-width: 400px;
   background: white;
 
   @media (max-width: 1200px) {
@@ -113,14 +113,14 @@ const LogoAndTitle = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 `;
 
 const Title = styled.h2`
-  font-size: 3rem;
+  font-size: 65px;
   font-weight: bold;
-  height: 13%;
+  height: auto;
   color: #1b5e96;
   text-align: center;
   margin-bottom: 10px;
@@ -129,7 +129,7 @@ const Title = styled.h2`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 130%;
   border: 1px solid #ccc;
   border-radius: 15px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -149,12 +149,12 @@ const Divider = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 25px;
   transition: background-color 0.3s ease;
   position: relative;
 `;
 const Icon = styled(FontAwesomeIcon)`
-  font-size: 15px;
+  font-size: 20px;
   margin-right: 10px;
   color: #aaa;
 `;
@@ -183,15 +183,14 @@ const ToggleVisibility = styled.div`
 `;
 
 const Button = styled.button`
-  width: 40%;
-  padding: 13px;
+  width: 130%;
+  padding: 20px;
   margin: 60px 0 20px 0;
   color: #ffffff;
   background-color: #a2d2ff;
   border: none;
   border-radius: 15px;
   font-size: large;
-  font-weight: 1000;
   cursor: pointer;
   &:hover {
     background-color: #b4d8fa;
@@ -201,7 +200,7 @@ const Button = styled.button`
 const LinkContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 40%;
+  width: 120%;
   margin-top: 30px;
 `;
 

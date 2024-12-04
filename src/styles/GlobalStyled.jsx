@@ -137,9 +137,28 @@ export const Header = styled.div`
     background-color: #f0f0f0;
   }
   .usermy {
-    margin-right: 30px; /* 오른쪽 여백 추가 */
+    position: relative; /* 뱃지를 배치하기 위한 기준 */
+    margin-right: 50px; /* 오른쪽 여백 */
     &:hover {
       cursor: pointer;
+    }
+
+    .badge {
+      position: absolute;
+      top: -5px; /* 이미지 위로 살짝 올라오도록 조정 */
+      right: -5px; /* 이미지 우측으로 살짝 넘어가도록 조정 */
+      width: 20px;
+      height: 20px;
+      background-color: #df3232;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 50%; /* 원형으로 만들기 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5); /* 입체감 추가 */
+      z-index: 1; /* 이미지보다 위에 표시 */
     }
   }
 `;

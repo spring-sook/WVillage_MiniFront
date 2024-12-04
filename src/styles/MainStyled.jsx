@@ -66,7 +66,7 @@ export const Button = styled.button`
   scale: 110%;
   /* 비활성화된 버튼 스타일 */
   &:disabled {
-    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
     cursor: not-allowed;
   }
 `;

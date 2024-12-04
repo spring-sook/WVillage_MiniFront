@@ -9,6 +9,7 @@ export const HeaderCom = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState("전체");
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
+  const [hasNotification, setHasNotification] = useState(true); // 알림 상태
 
   const toggleOptions = () => {
     setShowOptions((prev) => !prev);
@@ -86,6 +87,8 @@ export const HeaderCom = () => {
       </div>
       <div className="usermy">
         <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
+        {hasNotification && <div className="badge">!</div>} {/* 알림 뱃지 */}
+        {/* !!!!db연결하며 상태관리 기능 추가 필요!!!! */}
       </div>
     </Header>
   );

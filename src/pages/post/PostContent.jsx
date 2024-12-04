@@ -12,28 +12,40 @@ import { useState } from "react";
 import Logo from "../../images/logo.png";
 import ImgDownloader from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
+import { GenerateExcludedTimes } from "../../components/PostComponent";
 
 const PostContent = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const hours = Array.from({ length: 24 }, (_, i) => `${i} : 00`); // 시간 배열
   const imagePath = "snow_village.webp";
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
 
-    // 종료일이 시작일 이전이면 종료일을 시작일 이후로 업데이트
     if (endDate && date > endDate) {
       setEndDate(null); // 종료일을 초기화
     }
   };
 
   // 종료 날짜 변경 핸들러
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
+  // const handleEndDateChange = (date) => {
+  //   setEndDate(date);
+  // };
+
+  const handleReset = () => {
+    // 초기화 버튼 클릭 시 날짜와 시간 초기화
+    setStartDate(null);
+    setEndDate(null);
   };
+
+  const now = new Date();
+  const startExcluded = new Date(2024, 12, 11, 16, 0); // 12월 11일 16시
+  const endExcluded = new Date(2024, 12, 12, 8, 0); // 12월 12일 08시
+  const excludedTimes = GenerateExcludedTimes(startExcluded, endExcluded);
+  // https://codesandbox.io/p/sandbox/react-datepicker-different-excludetimes-for-specific-days-6i7y6?file=%2Fsrc%2FApp.js%3A10%2C1-40%2C2
+  // https://github.com/Hacker0x01/react-datepicker/issues/2412
 
   return (
     <Container>
@@ -60,59 +72,53 @@ const PostContent = () => {
             <DatePicker
               className="input-date-picker"
               locale={ko}
-              dateFormat="yyyy / MM / dd"
+              dateFormat="yyyy-MM-dd  HH:mm"
               dateFormatCalendar="yyyy년 MM월"
+              timeCaption="시간"
               selected={startDate}
               onChange={handleStartDateChange}
               selectsStart
               startDate={startDate}
               endDate={endDate}
               minDate={new Date()}
+              minTime={
+                startDate && startDate.toDateString() === now.toDateString()
+                  ? now
+                  : new Date(0, 0, 0, 0, 0)
+              }
+              maxTime={new Date(0, 0, 0, 23, 59)}
+              excludeTimes={excludedTimes}
+              showTimeSelect
+              timeIntervals={60}
               placeholderText="시작일 선택"
             />
             <div className="line" />
-            <DatePicker
-              className="input-date-picker"
-              locale={ko}
-              dateFormat="yyyy / MM / dd"
-              dateFormatCalendar="yyyy년 MM월"
-              selected={endDate}
-              onChange={handleEndDateChange}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-              placeholderText="종료일 선택"
-            />
-          </div>
-          <div className="time-picker">
-            <TimePicker
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-            >
-              <option value="" disabled hidden>
-                시작 시간 선택
-              </option>
-              {hours.map((hour, index) => (
-                <option key={index} value={hour}>
-                  {hour}
-                </option>
-              ))}
-            </TimePicker>
-            <div className="line" />
-            <TimePicker
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-            >
-              <option value="" disabled hidden>
-                종료 시간 선택
-              </option>
-              {hours.map((hour, index) => (
-                <option key={index} value={hour}>
-                  {hour}
-                </option>
-              ))}
-            </TimePicker>
+            {startDate ? (
+              <DatePicker
+                className="input-date-picker"
+                locale={ko}
+                dateFormat="yyyy-MM-dd  HH:mm"
+                dateFormatCalendar="yyyy년 MM월"
+                timeCaption="시간"
+                selected={endDate}
+                onChange={(date) => {
+                  setEndDate(date);
+                }}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                showTimeSelect
+                timeIntervals={60}
+                placeholderText="종료일 선택"
+              />
+            ) : (
+              <input
+                className="input-date-picker"
+                placeholder="종료일 선택"
+                onClick={() => alert("시작일 먼저 선택")}
+              />
+            )}
           </div>
           <div
             style={{
@@ -123,6 +129,9 @@ const PostContent = () => {
             }}
           >
             계산된 가격
+            <button onClick={handleReset} className="post-reserve-reset-button">
+              초기화
+            </button>
           </div>
           <div className="post-reserve-button">
             <ReserveButton>예약하기</ReserveButton>

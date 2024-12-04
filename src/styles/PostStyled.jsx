@@ -205,7 +205,7 @@ export const PostContentTop = styled.div`
 
   .line {
     width: 1px;
-    height: 35px;
+    height: 25px;
     background-color: #ccc;
     margin: 0 4px;
   }
@@ -252,38 +252,6 @@ export const PostContentTop = styled.div`
     height: 10%;
     justify-content: center;
     background-color: #71db9a;
-  }
-
-  .time-picker {
-    width: 100%;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-export const TimePicker = styled.select`
-  width: 216px;
-  height: 35px;
-  font-size: 17px;
-  text-align: center;
-  appearance: none;
-  border: none;
-  border-radius: 25px;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ddd;
-  }
-
-  option {
-    font-size: 16px;
-    padding: 10px;
-    background-color: white;
-    color: black;
   }
 `;
 

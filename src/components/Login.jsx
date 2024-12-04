@@ -35,10 +35,10 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginBox>
-        <LogoContainer onClick={() => navigate("/main")}>
+        <LogoAndTitle onClick={() => navigate("/main")}>
           <Logo src={logo} alt="로고" />
           <Title>WVillage</Title>
-        </LogoContainer>
+        </LogoAndTitle>
         <InputContainer>
           <InputWrapper>
             <Icon icon={ICONS.user} />
@@ -83,8 +83,8 @@ const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  transform: translateY(-13%);
+  min-height: 100vh;
+  padding: 20px;
 `;
 
 const LoginBox = styled.div`
@@ -103,11 +103,12 @@ const LoginBox = styled.div`
     height: auto;
   }
 `;
-const LogoContainer = styled.div`
+const LogoAndTitle = styled.div`
   display: flex;
-  align-items: center;
+
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   cursor: pointer;
 `;
 

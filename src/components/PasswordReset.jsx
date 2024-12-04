@@ -22,7 +22,7 @@ const PasswordReset = () => {
     if (newPassword !== confirmPassword) {
       alert("새 비밀번호가 일치하지 않습니다.");
     } else {
-      alert("비밀번호가 성공적으로 변경되었습니다.");
+      navigate("/passwordreset2");
     }
   };
 

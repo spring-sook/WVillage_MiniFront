@@ -7,19 +7,22 @@ const FindMail = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [result, setResult] = useState("");
 
-  const handleFindId = () => {
-    if (name && phoneNumber) {
-      alert(`가입된 아이디는 example@mail.com 입니다.`);
-    } else {
-      alert("이름과 전화번호를 입력해주세요.");
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      if (name && phoneNumber) {
+        setResult(`아이디는 example@mail.com 입니다.`);
+      } else {
+        setResult("이름과 전화번호를 입력해주세요.");
+      }
     }
   };
 
   return (
     <FindMailContainer>
       <FindMailBox>
-        <Header>
+        <Header onClick={() => navigate("/intro")}>
           <Logo src={logo} alt="로고" />
           <Title>아이디찾기</Title>
         </Header>
@@ -31,6 +34,7 @@ const FindMail = () => {
             placeholder=""
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onKeyPress={handleKeyPress} // Enter 키 이벤트
           />
         </InputWrapper>
         <InputWrapper>
@@ -40,11 +44,12 @@ const FindMail = () => {
             placeholder=""
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            onKeyPress={handleKeyPress} // Enter 키 이벤트
           />
         </InputWrapper>
         <ResultText>가입된 아이디는</ResultText>
-        <ResultBox></ResultBox>
-        <Button onClick={handleFindId}>확인</Button>
+        <ResultBox>{result}</ResultBox>
+        <BackLink onClick={() => navigate("/")}>로그인</BackLink>
         <BackLink onClick={() => navigate("/passwordreset")}>
           비밀번호 변경
         </BackLink>
@@ -78,6 +83,11 @@ const Header = styled.div`
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Logo = styled.img`
@@ -134,7 +144,7 @@ const ResultBox = styled.div`
   width: 90%;
   text-align: center;
   background-color: #f0f0f0;
-  border: 1px solid #ffffff;
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
   color: #333;

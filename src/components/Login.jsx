@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginBox>
-        <LogoAndTitle onClick={() => navigate("/main")}>
+        <LogoAndTitle onClick={() => navigate("/intro")}>
           <Logo src={logo} alt="로고" />
           <Title>WVillage</Title>
         </LogoAndTitle>

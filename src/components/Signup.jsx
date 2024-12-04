@@ -1,110 +1,182 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import logo from "../images/logo.png";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+const ICONS = {
+  eye: faEye,
+  eyeSlash: faEyeSlash,
+};
 
 const Signup = () => {
+  const navigate = useNavigate();
+
+  const [step, setStep] = useState(1); // 단계: 1 -> 기본정보, 2 -> 주소와 가입
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
-    year: "",
-    month: "",
-    day: "",
+    birthYear: "",
+    birthMonth: "",
+    birthDay: "",
     phone: "",
+    address: "",
+    addressDetail: "",
   });
+
+  const handleNextStep = () => {
+    if (step === 1) {
+      setStep(2);
+    } else {
+      alert("가입이 완료되었습니다.");
+      navigate("/"); // 로그인 페이지로 이동
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
+  const generateYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = currentYear - 100; year <= currentYear; year++) {
+      years.push(
+        <option key={year} value={year}>
+          {year}
+        </option>
+      );
     }
-    alert("회원가입 성공!");
+    return years;
+  };
+
+  const generateMonthOptions = () => {
+    return Array.from({ length: 12 }, (_, i) => (
+      <option key={i + 1} value={i + 1}>
+        {i + 1}
+      </option>
+    ));
+  };
+
+  const generateDayOptions = () => {
+    return Array.from({ length: 31 }, (_, i) => (
+      <option key={i + 1} value={i + 1}>
+        {i + 1}
+      </option>
+    ));
   };
 
   return (
     <SignupContainer>
-      <SignupForm onSubmit={handleSubmit}>
-        <Logo>로고</Logo>
-        <Title>계정 만들기</Title>
-
-        <InputWrapper>
-          <Label>이메일</Label>
-          <Input
-            type="email"
-            name="email"
-            placeholder="이메일 입력"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </InputWrapper>
-
-        <InputWrapper>
-          <Label>비밀번호</Label>
-          <Input
-            type="password"
-            name="password"
-            placeholder="비밀번호 입력"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </InputWrapper>
-
-        <InputWrapper>
-          <Label>비밀번호 확인</Label>
-          <Input
-            type="password"
-            name="confirmPassword"
-            placeholder="비밀번호 확인"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </InputWrapper>
-
-        <InputWrapper>
-          <Label>생년월일</Label>
-          <DateWrapper>
-            <Input
-              type="number"
-              name="year"
-              placeholder="년"
-              value={formData.year}
-              onChange={handleChange}
-            />
-            <Input
-              type="number"
-              name="month"
-              placeholder="월"
-              value={formData.month}
-              onChange={handleChange}
-            />
-            <Input
-              type="number"
-              name="day"
-              placeholder="일"
-              value={formData.day}
-              onChange={handleChange}
-            />
-          </DateWrapper>
-        </InputWrapper>
-
-        <InputWrapper>
-          <Label>전화번호</Label>
-          <Input
-            type="tel"
-            name="phone"
-            placeholder="전화번호 입력"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-        </InputWrapper>
-
-        <SubmitButton type="submit">회원가입</SubmitButton>
-      </SignupForm>
+      <SignupBox>
+        <Header>
+          <Logo src={logo} alt="로고" onClick={() => navigate("/main")} />
+          <Title>계정 만들기</Title>
+        </Header>
+        {step === 1 ? (
+          <StepOne>
+            <InputWrapper>
+              <Label>이메일</Label>
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <Label>비밀번호</Label>
+              <Input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <Label>비밀번호 확인</Label>
+              <Input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <Label>생년월일</Label>
+              <BirthInputContainer>
+                <Select
+                  name="birthYear"
+                  value={formData.birthYear}
+                  onChange={handleChange}
+                >
+                  <option value="">년</option>
+                  {generateYearOptions()}
+                </Select>
+                <Select
+                  name="birthMonth"
+                  value={formData.birthMonth}
+                  onChange={handleChange}
+                >
+                  <option value="">월</option>
+                  {generateMonthOptions()}
+                </Select>
+                <Select
+                  name="birthDay"
+                  value={formData.birthDay}
+                  onChange={handleChange}
+                >
+                  <option value="">일</option>
+                  {generateDayOptions()}
+                </Select>
+              </BirthInputContainer>
+            </InputWrapper>
+            <InputWrapper>
+              <Label>전화번호</Label>
+              <Input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <Button onClick={handleNextStep}>다음</Button>
+          </StepOne>
+        ) : (
+          <StepTwo>
+            <InputWrapper>
+              <Label>주소</Label>
+              <Input
+                type="text"
+                name="address"
+                placeholder="주소 입력"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <Label>상세 주소</Label>
+              <Input
+                type="text"
+                name="addressDetail"
+                placeholder="상세 주소 입력"
+                value={formData.addressDetail}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <ButtonContainer>
+              <PreviousButton onClick={() => setStep(1)}>이전</PreviousButton>
+              <Button onClick={handleNextStep}>가입하기</Button>
+            </ButtonContainer>
+          </StepTwo>
+        )}
+      </SignupBox>
     </SignupContainer>
   );
 };
@@ -113,41 +185,72 @@ const SignupContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #ffffff;
+  width: 100%;
+  height: 100vh;
+  background-color: #f5f5f5;
 `;
 
-const SignupForm = styled.form`
-  width: 500px;
-  padding: 20px;
+const SignupBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
   background-color: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
 `;
 
-const Logo = styled.div`
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+const Logo = styled.img`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const Title = styled.h1`
   font-size: 24px;
   font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  margin-bottom: 20px;
-  background-color: #95bfe5;
-  padding: 10px;
-  color: white;
-  border-radius: 5px;
+  color: #1b5e96;
 `;
 
 const InputWrapper = styled.div`
+  width: 100%;
   margin-bottom: 15px;
+  padding: 20px;
+`;
+
+const PasswordContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
+const ToggleVisibility = styled.div`
+  position: absolute;
+  right: 10px;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
+  }
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-size: 14px;
   color: #333;
 `;
@@ -155,37 +258,95 @@ const Label = styled.label`
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  border: 1px solid #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+  }
+`;
+
+const BirthInputContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Select = styled.select`
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+  }
+`;
+const BirthInput = styled.input`
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
 `;
 
-const DateWrapper = styled.div`
+const AddressContainer = styled.div`
   display: flex;
   gap: 10px;
-
-  input {
-    width: calc(33.33% - 10px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    text-align: center;
-  }
 `;
 
-const SubmitButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+const SearchButton = styled.button`
+  padding: 10px 20px;
+  background-color: #1b5e96;
   color: white;
-  font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
   &:hover {
-    background-color: #0056b3;
+    background-color: #164d7f;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+`;
+
+const Button = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: white;
+  background-color: #1b5e96;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #164d7f;
+  }
+`;
+
+const PreviousButton = styled(Button)`
+  background-color: #a9a9a9;
+
+  &:hover {
+    background-color: #888;
+  }
+`;
+
+const StepOne = styled.div`
+  width: 100%;
+`;
+
+const StepTwo = styled.div`
+  width: 100%;
 `;
 
 export default Signup;

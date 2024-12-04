@@ -102,7 +102,7 @@ export const PostMainList = styled.div`
   flex-direction: column;
   position: relative;
   width: 80%;
-  background-color: #b98230;
+  background-color: #cbe5fd;
   padding: 1%;
 
   button {
@@ -205,8 +205,9 @@ export const PostContentTop = styled.div`
 
   .line {
     width: 1px;
-    height: 25px;
+    height: 35px;
     background-color: #ccc;
+    margin: 0 4px;
   }
 
   .date-picker {
@@ -238,7 +239,7 @@ export const PostContentTop = styled.div`
   }
 
   .input-date-picker:hover {
-    background-color: #fff;
+    background-color: #ddd;
   }
 
   .input-date-picker:focus {
@@ -251,6 +252,38 @@ export const PostContentTop = styled.div`
     height: 10%;
     justify-content: center;
     background-color: #71db9a;
+  }
+
+  .time-picker {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const TimePicker = styled.select`
+  width: 216px;
+  height: 35px;
+  font-size: 17px;
+  text-align: center;
+  appearance: none;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  option {
+    font-size: 16px;
+    padding: 10px;
+    background-color: white;
+    color: black;
   }
 `;
 
@@ -303,29 +336,177 @@ export const PostContentBottom = styled.div`
 
 export const PostWriteContainer = styled.div`
   width: 1000px;
-  height: 500px;
+  min-height: 500px;
   margin: 0 auto;
-  background-color: bisque;
+
+  h2 {
+    margin: 40px 0 10px;
+  }
+
+  .post-top {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .post-submit {
+    margin: 40px 10px 10px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    background-color: #1b5e96;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .post-submit:hover {
+    background-color: #95bfe5;
+  }
+
+  .post-submit:active {
+    transform: scale(0.99);
+  }
+`;
+
+export const PostWriteContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 0;
+
+  .post-write-title {
+    margin-bottom: 20px;
+    height: 50px;
+    width: 95%;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    background-color: #eee;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .post-write-context {
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    width: 95%;
+    min-height: 200px;
+    padding: 8px;
+  }
 `;
 
 export const PostWriteSelect = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
-  position: relative;
+  justify-content: center;
   margin: 20px 0;
-  padding-left: 15px;
-  background-color: brown;
 
-  .post-write-price {
-    display: flex;
-    position: absolute;
-    right: 15px;
-    bottom: 0;
+  .post-write-dropbox {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    padding: 10px;
+    appearance: none; /* 기본 브라우저 스타일 제거 */
+    background-size: 10px;
+    background: no-repeat;
+    background-position: right 10px center;
+    cursor: pointer;
   }
 
+  .post-write-category {
+    width: 45%;
+    margin-right: 5%;
+  }
+
+  .post-write-price {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-right: 10px;
+    padding: 10px;
+    width: 22%;
+    font-size: 16px;
+  }
+
+  .post-write-dh {
+    width: 22%;
+  }
+
+  select option {
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+  }
+`;
+
+export const Attachment = styled.div`
+  width: 95%;
+  margin-bottom: 20px;
+
   span {
-    font-size: 23px;
-    margin: 0 10px;
+    font-size: 14px;
+  }
+
+  .file-upload-label {
+    display: inline-block;
+    background-color: #1b5e96;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .file-upload-label:hover {
+    background-color: #95bfe5;
+  }
+
+  .file-upload-label:active {
+    transform: scale(0.99);
+  }
+
+  .file-list {
+    margin-top: 10px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 100px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .file-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .file-list li {
+    background-color: #f1f1f1;
+    padding: 3px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  .file-list button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 3px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .file-list button:hover {
+    background-color: #e53935;
   }
 `;

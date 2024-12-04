@@ -11,8 +11,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
+import { useNavigate } from "react-router-dom";
 
 const PostList = () => {
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isDropdownView, setDropdownView] = useState(false);
@@ -78,7 +80,12 @@ const PostList = () => {
             <button>최신순</button>
             <span>|</span>
             <button>인기순</button>
-            <button className="write-post-button">게시글 작성</button>
+            <button
+              className="write-post-button"
+              onClick={() => navigate("/postWrite")}
+            >
+              게시글 작성
+            </button>
           </div>
           <PostDisplay></PostDisplay>
         </PostMainList>

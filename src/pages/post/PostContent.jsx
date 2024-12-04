@@ -3,6 +3,7 @@ import {
   PostContentBottom,
   PostContentTop,
   ReserveButton,
+  TimePicker,
 } from "../../styles/PostStyled";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,7 +16,24 @@ import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 const PostContent = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const hours = Array.from({ length: 24 }, (_, i) => `${i} : 00`); // 시간 배열
   const imagePath = "snow_village.webp";
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+
+    // 종료일이 시작일 이전이면 종료일을 시작일 이후로 업데이트
+    if (endDate && date > endDate) {
+      setEndDate(null); // 종료일을 초기화
+    }
+  };
+
+  // 종료 날짜 변경 핸들러
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
 
   return (
     <Container>
@@ -43,21 +61,23 @@ const PostContent = () => {
               className="input-date-picker"
               locale={ko}
               dateFormat="yyyy / MM / dd"
+              dateFormatCalendar="yyyy년 MM월"
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={handleStartDateChange}
               selectsStart
               startDate={startDate}
               endDate={endDate}
               minDate={new Date()}
               placeholderText="시작일 선택"
             />
-            <div className="line"></div>
+            <div className="line" />
             <DatePicker
               className="input-date-picker"
               locale={ko}
               dateFormat="yyyy / MM / dd"
+              dateFormatCalendar="yyyy년 MM월"
               selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              onChange={handleEndDateChange}
               selectsEnd
               startDate={startDate}
               endDate={endDate}
@@ -65,10 +85,39 @@ const PostContent = () => {
               placeholderText="종료일 선택"
             />
           </div>
+          <div className="time-picker">
+            <TimePicker
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+            >
+              <option value="" disabled hidden>
+                시작 시간 선택
+              </option>
+              {hours.map((hour, index) => (
+                <option key={index} value={hour}>
+                  {hour}
+                </option>
+              ))}
+            </TimePicker>
+            <div className="line" />
+            <TimePicker
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+            >
+              <option value="" disabled hidden>
+                종료 시간 선택
+              </option>
+              {hours.map((hour, index) => (
+                <option key={index} value={hour}>
+                  {hour}
+                </option>
+              ))}
+            </TimePicker>
+          </div>
           <div
             style={{
               textAlign: "center",
-              height: "150px",
+              height: "100px",
               alignContent: "center",
               backgroundColor: "gray",
             }}

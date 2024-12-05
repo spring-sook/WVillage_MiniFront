@@ -7,7 +7,7 @@ export const UserMain = styled.div`
 
 export const PointBox = styled.div`
   width: 80%;
-  height: 700px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -34,7 +34,6 @@ const Login = () => {
 
   return (
     <LoginContainer>
-      {/* 헤더 추가 */}
       <Header>
         <Logo src={logo} alt="로고" />
         <Title>WVillage</Title>

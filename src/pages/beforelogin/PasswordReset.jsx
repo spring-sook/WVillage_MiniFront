@@ -11,7 +11,7 @@ const PasswordReset = () => {
 
   const handleReset = () => {
     if (!email || !newPassword || !confirmPassword) {
-      alert("모든 필드를 입력해주세요.");
+      alert("공백을 전부 입력해주세요.");
       return;
     }
     if (newPassword !== confirmPassword) {

@@ -1,184 +1,229 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { useNavigate } from "react-router-dom";
-import { Container } from "../../styles/GlobalStyled";
+import styled from "styled-components";
+import logo from "../../images/logo.png";
 
 const Signup = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: "",
     nickname: "",
     email: "",
     password: "",
     confirmPassword: "",
-    birthYear: "",
-    birthMonth: "",
-    birthDay: "",
-    phone: "",
-    address: "",
-    addressDetail: "",
   });
-
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "이름을 입력하세요.";
-    if (!formData.nickname.trim()) newErrors.nickname = "닉네임을 입력하세요.";
-    if (!formData.email.trim()) newErrors.email = "이메일을 입력하세요.";
-    if (formData.password.length < 8)
-      newErrors.password = "비밀번호는 최소 8자 이상이어야 합니다.";
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSignup = () => {
-    if (!validateForm()) return;
-    alert("가입 완료!");
+    if (
+      !formData.name ||
+      !formData.nickname ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    alert("회원가입이 완료되었습니다!");
     navigate("/");
   };
 
   return (
-    <Container>
-      <SignupContainer>
-        <HeaderCom />
-        <SignupBox>
-          <Title>회원가입</Title>
+    <SignupContainer>
+      <Header>
+        <Logo src={logo} alt="로고" />
+        <Title>WVillage</Title>
+      </Header>
+
+      <SignupBox>
+        <InputContainer>
           <InputWrapper>
-            <InputLabel>이름</InputLabel>
             <Input
               type="text"
               name="name"
-              placeholder="이름을 입력하세요"
+              placeholder="이름"
               value={formData.name}
               onChange={handleChange}
             />
-            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
           </InputWrapper>
+          <Divider />
           <InputWrapper>
-            <InputLabel>닉네임</InputLabel>
             <Input
               type="text"
               name="nickname"
-              placeholder="닉네임을 입력하세요"
+              placeholder="닉네임"
               value={formData.nickname}
               onChange={handleChange}
             />
-            {errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
           </InputWrapper>
+          <Divider />
           <InputWrapper>
-            <InputLabel>이메일</InputLabel>
             <Input
-              type="text"
+              type="email"
               name="email"
-              placeholder="이메일을 입력하세요"
+              placeholder="이메일"
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
           </InputWrapper>
+          <Divider />
           <InputWrapper>
-            <InputLabel>비밀번호</InputLabel>
             <Input
               type="password"
               name="password"
-              placeholder="비밀번호를 입력하세요"
+              placeholder="비밀번호"
               value={formData.password}
               onChange={handleChange}
             />
-            {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
           </InputWrapper>
+          <Divider />
           <InputWrapper>
-            <InputLabel>비밀번호 확인</InputLabel>
             <Input
               type="password"
               name="confirmPassword"
-              placeholder="비밀번호를 다시 입력하세요"
+              placeholder="비밀번호 확인"
               value={formData.confirmPassword}
               onChange={handleChange}
             />
-            {errors.confirmPassword && (
-              <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
-            )}
           </InputWrapper>
-          <Button onClick={handleSignup}>가입하기</Button>
-        </SignupBox>
-        <FooterCom />
-      </SignupContainer>
-    </Container>
+        </InputContainer>
+        <Button onClick={handleSignup}>회원가입</Button>
+        <BackToLoginButton onClick={() => navigate("/")}>
+          로그인
+        </BackToLoginButton>
+      </SignupBox>
+    </SignupContainer>
   );
 };
+
+export default Signup;
+
+const Header = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 5px 20px;
+  z-index: 1000;
+  height: 90px;
+  margin-bottom: 18px;
+`;
+
+const Logo = styled.img`
+  width: 120px;
+  height: 100px;
+`;
+
+const Title = styled.h1`
+  font-size: 70px;
+  font-weight: bold;
+  color: #1b5e96;
+  margin-left: 15px;
+`;
 
 const SignupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+  padding-top: 160px;
 `;
 
 const SignupBox = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 0px;
   padding: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
-
-const InputWrapper = styled.div`
   width: 100%;
   max-width: 400px;
-  margin-bottom: 15px;
-`;
+  background: white;
 
-const InputLabel = styled.label`
-  display: block;
-  margin-bottom: 5px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const ErrorMessage = styled.span`
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-
-  &:hover {
-    background-color: #0056b3;
+  @media (max-width: 1200px) {
+    width: 90%;
+    height: auto;
   }
 `;
 
-export default Signup;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 130%;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+  }
+`;
+
+const Divider = styled.div`
+  height: 1px;
+  background-color: #ccc;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 27.5px;
+  transition: background-color 0.3s ease;
+  position: relative;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 13px;
+
+  &::placeholder {
+    color: #aaa;
+  }
+`;
+
+const Button = styled.button`
+  width: 130%;
+  padding: 20px;
+  margin: 60px 0 20px 0;
+  color: #ffffff;
+  background-color: #a2d2ff;
+  border: none;
+  border-radius: 15px;
+  font-size: large;
+  cursor: pointer;
+  &:hover {
+    background-color: #b4d8fa;
+  }
+`;
+
+const BackToLoginButton = styled.button`
+  width: 130%;
+  padding: 20px;
+  margin: 20px 0 20px 0;
+  color: #ffffff;
+  background-color: #a2d2ff;
+  border: none;
+  border-radius: 15px;
+  font-size: large;
+  cursor: pointer;
+  &:hover {
+    background-color: #b4d8fa;
+  }
+`;

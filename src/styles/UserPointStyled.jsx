@@ -83,7 +83,7 @@ export const ChargeBox = styled.div`
   font-weight: bold;
   color: #444;
   button {
-    width: 20%;
+    width: 250px;
     height: 50px;
     padding: 12px;
     font-size: 18px;

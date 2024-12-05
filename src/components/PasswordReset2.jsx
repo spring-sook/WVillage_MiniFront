@@ -1,75 +1,76 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { HeaderCom, FooterCom } from "../components/GlobalComponent";
 
-const PasswordReset2 = () => {
-  const navigate = useNavigate();
-
+const PasswordResetComplete = () => {
   return (
-    <Container>
+    <PageContainer>
+      {/* 상단 헤더 */}
+      <HeaderWrapper>
+        <HeaderCom />
+      </HeaderWrapper>
+
+      {/* 본문 */}
       <Content>
-        <Logo src={logo} alt="로고" onClick={() => navigate("/intro")} />
-        <Message>비밀번호 변경이 완료되었습니다</Message>
-        <Button onClick={() => navigate("/")}>로그인</Button>
+        <MessageContainer>
+          <Message>비밀번호가 성공적으로 변경되었습니다!</Message>
+          <LinkButton href="/">로그인 페이지로 이동</LinkButton>
+        </MessageContainer>
       </Content>
-    </Container>
+
+      {/* 하단 푸터 */}
+      <FooterWrapper>
+        <FooterCom />
+      </FooterWrapper>
+    </PageContainer>
   );
 };
 
-const Container = styled.div`
+// Styled Components
+const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  background-color: #f5f5f5;
+  min-height: 100vh;
 `;
 
-const Content = styled.div`
+const HeaderWrapper = styled.header`
+  flex-shrink: 0;
+  background-color: #f8f9fa;
+`;
+
+const FooterWrapper = styled.footer`
+  flex-shrink: 0;
+  background-color: #f8f9fa;
+`;
+
+const Content = styled.main`
+  flex: 1;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 80px;
+  padding: 20px;
+`;
+
+const MessageContainer = styled.div`
   text-align: center;
 `;
 
-const Logo = styled.img`
-  width: 80px;
-  height: 80px;
-  margin-bottom: 20px; /* 로고와 텍스트 사이 간격 */
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
 const Message = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
+  margin-bottom: 100px;
   color: #333;
-  margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
 `;
 
-const Button = styled.button`
-  width: 200px;
-  padding: 25px;
-  background-color: #1b5e96;
+const LinkButton = styled.a`
   color: white;
-  border: none;
+  background-color: #007bff;
+  padding: 10px 10px;
   border-radius: 5px;
-  cursor: pointer;
-  font-size: 20px;
+  text-decoration: none;
+  font-size: 16px;
 
   &:hover {
-    background-color: #164d7f;
+    background-color: #0056b3;
   }
 `;
 
-export default PasswordReset2;
+export default PasswordResetComplete;

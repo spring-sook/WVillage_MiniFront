@@ -30,14 +30,14 @@ export const Header = styled.div`
     width: 100px;
   }
   .logo-img {
-    height: 100px;
+    height: 90px;
     width: auto;
     object-fit: contain;
   }
   .name {
     height: 100px;
     width: 200px;
-    padding-left: 10px;
+    padding-left: 20px;
     font-size: 45px;
     color: #1b5e96;
     display: flex;
@@ -133,6 +133,7 @@ export const Header = styled.div`
   .search-options.active {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
   }
 
   .options-list p {
@@ -154,15 +155,16 @@ export const Header = styled.div`
 
     .badge {
       position: absolute;
-      top: -5px; /* 이미지 위로 살짝 올라오도록 조정 */
-      right: -5px; /* 이미지 우측으로 살짝 넘어가도록 조정 */
-      width: 20px;
+      top: -5px;
+      right: -5px;
+      padding: 5px;
+      width: auto;
       height: 20px;
       background-color: #df3232;
       color: white;
       font-size: 15px;
       font-weight: bold;
-      border-radius: 50%; /* 원형으로 만들기 */
+      border-radius: 50px;
       display: flex;
       justify-content: center;
       align-items: center;

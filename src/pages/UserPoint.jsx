@@ -91,7 +91,7 @@ const UserPoint = () => {
           <PointBox>
             <div className="select">
               <p>보유 포인트</p>
-              <div className="point-display">{balance}P</div>
+              <div className="point-display">{balance} P</div>
               <ButtonContainer>
                 <button
                   className={isCharge ? "active" : ""}

@@ -4,7 +4,7 @@ import {ReportBtn} from "./ReportBtn";
 import {UserProfileBox} from "../styles/OtherUserStyled";
 import {Typography} from "@mui/material";
 
-export const OtherUser = ({email}) => {
+export const OtherUser = ({ email }) => {
   const imagePath = "snow_village.webp";
 
   return (

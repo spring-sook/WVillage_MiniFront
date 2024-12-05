@@ -1,7 +1,7 @@
 import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
-import ImgDownloader from "../components/Profile";
+import ImgDownloader from "./Profile";
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -68,7 +68,7 @@ export const HeaderCom = () => {
         </Link>
         <p>/</p>
         <Link to="/post" className="tag">
-          알바
+          아르바이트
         </Link>
         <p>/</p>
         <Link to="/post" className="tag">
@@ -102,7 +102,7 @@ export const HeaderCom = () => {
           <div className="options-list">
             <p onClick={() => selectOption("전체")}>전체</p>
             <p onClick={() => selectOption("물건")}>물건</p>
-            <p onClick={() => selectOption("알바")}>알바</p>
+            <p onClick={() => selectOption("아르바이트")}>아르바이트</p>
             <p onClick={() => selectOption("장소")}>장소</p>
           </div>
         </div>

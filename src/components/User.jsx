@@ -1,4 +1,4 @@
-import ImgDownloader from "../components/Profile";
+import ImgDownloader from "./Profile";
 import { Usermy } from "../styles/UserComstyled";
 import { Link } from "react-router-dom";
 

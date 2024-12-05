@@ -1,20 +1,19 @@
-import {Container} from "../styles/GlobalStyled";
-import {HeaderCom} from "../components/GlobalComponent";
-import {UserMain} from "../styles/UserPointStyled";
+import { Container } from "../styles/GlobalStyled";
+import { HeaderCom } from "../components/GlobalComponent";
+import { UserMain } from "../styles/UserPointStyled";
 import OtherUser from "../components/OtherUser";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const OtherUserProfile = () => {
-  const {email} = useParams();
+  const { email } = useParams();
   return (
     <Container>
-      <HeaderCom/>
+      <HeaderCom />
       <UserMain>
-        <OtherUser email={email}/>
+        <OtherUser email={email} />
       </UserMain>
-
     </Container>
   );
-}
+};
 
 export default OtherUserProfile;

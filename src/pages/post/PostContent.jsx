@@ -10,16 +10,35 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { useState } from "react";
 import Logo from "../../images/logo.png";
+import BookmarkNo from "../../images/bookmark_no.png";
+import BookmarkYes from "../../images/bookmark_yes.png";
 import ImgDownloader from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { GenerateExcludedTimes } from "../../components/PostComponent";
+import { Bookmark } from "@material-ui/icons";
 
 const PostContent = () => {
+  const now = new Date();
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [excludeTimes, setExcludeTimes] = useState([]);
   const imagePath = "snow_village.webp";
+
+  const exTime = [
+    {
+      start: new Date("2024-12-11 10:00:00"),
+      end: new Date("2024-12-12 9:00:00"),
+    },
+    {
+      start: new Date("2024-12-14 13:00:00"),
+      end: new Date("2024-12-14 20:00:00"),
+    },
+  ];
+
+  const reserveTimes = exTime.flatMap((item) => {
+    return GenerateExcludedTimes(item.start, item.end);
+  });
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -27,12 +46,12 @@ const PostContent = () => {
     if (endDate && date > endDate) {
       setEndDate(null); // 종료일을 초기화
     }
-  };
 
-  // 종료 날짜 변경 핸들러
-  // const handleEndDateChange = (date) => {
-  //   setEndDate(date);
-  // };
+    const filteredTimes = reserveTimes.filter(
+      (time) => time.toDateString() === date.toDateString()
+    );
+    setExcludeTimes(filteredTimes);
+  };
 
   const handleReset = () => {
     // 초기화 버튼 클릭 시 날짜와 시간 초기화
@@ -40,19 +59,22 @@ const PostContent = () => {
     setEndDate(null);
   };
 
-  const now = new Date();
-  const startExcluded = new Date(2024, 12, 11, 16, 0); // 12월 11일 16시
-  const endExcluded = new Date(2024, 12, 12, 8, 0); // 12월 12일 08시
-  const excludedTimes = GenerateExcludedTimes(startExcluded, endExcluded);
-  // https://codesandbox.io/p/sandbox/react-datepicker-different-excludetimes-for-specific-days-6i7y6?file=%2Fsrc%2FApp.js%3A10%2C1-40%2C2
-  // https://github.com/Hacker0x01/react-datepicker/issues/2412
-
   return (
     <Container>
       <HeaderCom />
       <PostContentTop>
         <div className="post-content-top-left">
-          <div className="post-content-img">여기가 이미지</div>
+          <div className="post-content-img">
+            <img
+              src={isBookmarked ? BookmarkYes : BookmarkNo}
+              alt="북마크"
+              onClick={() => {
+                setIsBookmarked(!isBookmarked);
+              }}
+              className="bookmark-icon"
+            />
+            여기가 이미지
+          </div>
           <div className="post-content-user">
             <ImgDownloader imgfile={imagePath} width="40px" height="40px" />
             <div className="post-content-userinfo">
@@ -66,7 +88,14 @@ const PostContent = () => {
           </div>
         </div>
         <div className="post-content-reserve">
-          <p className="post-content-title">상품 제목</p>
+          <p className="post-content-title">
+            상품 제목
+            <p className="post-content-cnt">
+              <span className="post-content-bookmark">북마크 20</span>
+              &nbsp;/&nbsp;
+              <span className="post-content-view">조회수 100</span>
+            </p>
+          </p>
           <p className="post-content-price">상품 가격 / 시</p>
           <div className="date-picker">
             <DatePicker
@@ -87,8 +116,8 @@ const PostContent = () => {
                   : new Date(0, 0, 0, 0, 0)
               }
               maxTime={new Date(0, 0, 0, 23, 59)}
-              excludeTimes={excludedTimes}
               showTimeSelect
+              excludeTimes={excludeTimes}
               timeIntervals={60}
               placeholderText="시작일 선택"
             />
@@ -108,8 +137,15 @@ const PostContent = () => {
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
+                minTime={
+                  endDate && endDate.toDateString() === startDate.toDateString()
+                    ? startDate.setMinutes(10, 0)
+                    : new Date(0, 0, 0, 0, 0)
+                }
+                maxTime={new Date(0, 0, 0, 23, 59)}
                 showTimeSelect
                 timeIntervals={60}
+                excludeTimes={excludeTimes}
                 placeholderText="종료일 선택"
               />
             ) : (
@@ -125,7 +161,6 @@ const PostContent = () => {
               textAlign: "center",
               height: "100px",
               alignContent: "center",
-              backgroundColor: "gray",
             }}
           >
             계산된 가격

@@ -77,9 +77,10 @@ const PostWrite = () => {
                 카테고리 선택
               </option>
               <option value="product">제품</option>
-              <option value="part-time">알바</option>
+              <option value="part-time">구인</option>
               <option value="place">장소</option>
             </select>
+            <div className="post-write-hour">시간당</div>
             <input
               className="post-write-price"
               type="text"
@@ -88,9 +89,8 @@ const PostWrite = () => {
               value={price}
               placeholder="가격"
               onChange={handlePriceChange}
-              style={{ textAlign: "right" }}
             />
-            <select
+            {/* <select
               className="post-write-dropbox post-write-dh"
               onClick={() => setIsUnitOpen(!isUnitOpen)}
               onBlur={() => setIsUnitOpen(false)}
@@ -106,7 +106,7 @@ const PostWrite = () => {
               </option>
               <option value="day">일</option>
               <option value="hour">시간</option>
-            </select>
+            </select> */}
           </PostWriteSelect>
           <input type="text" className="post-write-title" placeholder="제목" />
           <Attachment>

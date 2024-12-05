@@ -74,6 +74,7 @@ const PostList = () => {
           <button className="select-region-button" onClick={handleClickIcon}>
             지역 선택 &nbsp;{isDropdownView ? "▲" : "▼"}
           </button>
+          <button className="condition-search">검색</button>
         </PostMainFilter>
         <PostMainList>
           <div>

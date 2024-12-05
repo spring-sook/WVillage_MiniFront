@@ -83,7 +83,8 @@ export const PostMainFilter = styled.div`
     cursor: pointer;
   }
 
-  .select-region-button {
+  .select-region-button,
+  .condition-search {
     margin-top: 1vh;
     width: 95%;
     height: 35px;
@@ -94,6 +95,20 @@ export const PostMainFilter = styled.div`
     border-radius: 20px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+  }
+
+  .condition-search {
+    background-color: #95bfe5;
+    color: black;
+
+    &:hover {
+      background-color: #1b5e96;
+      color: white;
+    }
+
+    &:active {
+      transform: scale(0.99);
+    }
   }
 `;
 
@@ -133,7 +148,6 @@ export const PostDisplay = styled.div`
 `;
 
 export const PostContentTop = styled.div`
-  background-color: #93dada;
   width: 100%;
   height: 400px;
   display: flex;
@@ -146,12 +160,23 @@ export const PostContentTop = styled.div`
     width: 350px;
     height: 300px;
     background-color: #71db9a;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .bookmark-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    position: absolute;
+    left: 5px;
+    cursor: pointer;
   }
 
   .post-content-user {
     width: 350px;
     height: 50px;
-    background-color: #f397ba;
     padding: 0 5px;
     display: flex;
     align-items: center;
@@ -188,13 +213,19 @@ export const PostContentTop = styled.div`
   .post-content-reserve {
     width: 500px;
     height: 350px;
-    background-color: blanchedalmond;
   }
 
   .post-content-title {
     margin: 20px 30px;
     font-size: 23px;
     font-weight: 800;
+  }
+
+  .post-content-cnt {
+    font-size: 12px;
+    font-weight: normal;
+    color: #777;
+    margin: 5px 0 0 2px;
   }
 
   .post-content-price {
@@ -251,7 +282,10 @@ export const PostContentTop = styled.div`
     width: 100%;
     height: 10%;
     justify-content: center;
-    background-color: #71db9a;
+  }
+
+  .post-reserve-reset-button {
+    cursor: pointer;
   }
 `;
 
@@ -391,6 +425,13 @@ export const PostWriteSelect = styled.div`
     margin-right: 5%;
   }
 
+  .post-write-hour {
+    width: 22%;
+    text-align: right;
+    font-size: 17px;
+    padding: 13px 10px;
+  }
+
   .post-write-price {
     border: none;
     border-bottom: 1px solid #ccc;
@@ -400,9 +441,9 @@ export const PostWriteSelect = styled.div`
     font-size: 16px;
   }
 
-  .post-write-dh {
+  /* .post-write-dh {
     width: 22%;
-  }
+  } */
 
   select option {
     color: #333;

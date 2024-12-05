@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../../images/logo.png";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import logo from "../../images/logo.png";
 
 const FindMail = () => {
   const navigate = useNavigate();
@@ -17,12 +17,15 @@ const FindMail = () => {
   };
 
   return (
-    <LoginContainer>
-      <LoginBox>
-        <LogoAndTitle onClick={() => navigate("/intro")}>
-          <Logo src={logo} alt="로고" />
-          <Title>WVillage</Title>
-        </LogoAndTitle>
+    <FindMailContainer>
+      {/* 헤더 */}
+      <Header>
+        <Logo src={logo} alt="로고" />
+        <Title>WVillage</Title>
+      </Header>
+
+      {/* 아이디 찾기 박스 */}
+      <FindMailBox>
         <InputContainer>
           <InputWrapper>
             <Input
@@ -44,25 +47,54 @@ const FindMail = () => {
         </InputContainer>
         <Button onClick={handleFindMail}>아이디 찾기</Button>
         <LinkContainer>
-          <StyledLink to="/passwordreset">비밀번호 재설정</StyledLink>
-          <StyledLink to="/signup">회원가입</StyledLink>
+          <StyledLink onClick={() => navigate("/passwordreset")}>
+            비밀번호 재설정
+          </StyledLink>
+          <StyledLink onClick={() => navigate("/signup")}>회원가입</StyledLink>
         </LinkContainer>
-      </LoginBox>
-    </LoginContainer>
+      </FindMailBox>
+    </FindMailContainer>
   );
 };
 
-// Login 페이지와 동일한 스타일을 적용한 코드 (기존 컴포넌트 재활용)
-const LoginContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export default FindMail;
+
+const Header = styled.div`
   width: 100%;
-  height: 80vh;
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 5px 20px;
+  z-index: 1000;
+  height: 90px;
+  margin-bottom: 18px;
 `;
 
-const LoginBox = styled.div`
+const Logo = styled.img`
+  width: 120px;
+  height: 100px;
+`;
+
+const Title = styled.h1`
+  font-size: 70px;
+  font-weight: bold;
+  color: #1b5e96;
+  margin-left: 15px;
+`;
+
+const FindMailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+  padding-top: 10px;
+`;
+
+const FindMailBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,28 +109,6 @@ const LoginBox = styled.div`
     width: 90%;
     height: auto;
   }
-`;
-
-const LogoAndTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 50px;
-  cursor: pointer;
-`;
-
-const Logo = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
-const Title = styled.h2`
-  font-size: 65px;
-  font-weight: bold;
-  height: auto;
-  color: #1b5e96;
-  text-align: center;
-  margin-bottom: 10px;
 `;
 
 const InputContainer = styled.div`
@@ -124,7 +134,7 @@ const Divider = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 25px;
+  padding: 27.5px;
   transition: background-color 0.3s ease;
   position: relative;
 `;
@@ -159,13 +169,16 @@ const LinkContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 120%;
-  margin-top: 30px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.p`
   color: black;
   font-size: 14px;
   text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
-
-export default FindMail;

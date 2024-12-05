@@ -1,162 +1,197 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { useNavigate } from "react-router-dom";
-import { Container } from "../../styles/GlobalStyled";
+import styled from "styled-components";
+import logo from "../../images/logo.png";
 
 const PasswordReset = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigate = useNavigate();
 
-  const handlePasswordReset = () => {
-    if (!email || !name || !phoneNumber) {
-      alert("공백을 입력해주세요.");
+  const handleReset = () => {
+    if (!email || !newPassword || !confirmPassword) {
+      alert("모든 필드를 입력해주세요.");
       return;
     }
-
     if (newPassword !== confirmPassword) {
-      alert("새 비밀번호가 일치하지 않습니다.");
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-
+    alert("비밀번호가 성공적으로 변경되었습니다.");
     navigate("/passwordreset2");
   };
 
   return (
-    <Container>
-      <PageContainer>
-        <HeaderWrapper>
-          <HeaderCom />
-        </HeaderWrapper>
+    <PasswordResetContainer>
+      {/* 헤더 */}
+      <Header>
+        <Logo src={logo} alt="로고" />
+        <Title>WVillage</Title>
+      </Header>
 
-        <Content>
-          <PasswordResetContainer>
-            <Title>비밀번호 변경</Title>
-            <InputWrapper>
-              <Label>이메일</Label>
-              <Input
-                type="email"
-                placeholder="이메일 입력"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>이름</Label>
-              <Input
-                type="text"
-                placeholder="이름 입력"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>전화번호</Label>
-              <Input
-                type="text"
-                placeholder="전화번호 입력"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>새로운 비밀번호</Label>
-              <Input
-                type={passwordVisible ? "text" : "password"}
-                placeholder="새 비밀번호 입력"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <Label>새로운 비밀번호 확인</Label>
-              <Input
-                type={passwordVisible ? "text" : "password"}
-                placeholder="비밀번호 확인"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </InputWrapper>
-            <Button onClick={handlePasswordReset}>확인</Button>
-          </PasswordResetContainer>
-        </Content>
+      {/* 비밀번호 재설정 박스 */}
+      <PasswordResetBox>
+        <InputContainer>
+          <InputWrapper>
+            <Input
+              type="email"
+              placeholder="이메일"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </InputWrapper>
+          <Divider />
+          <InputWrapper>
+            <Input
+              type="password"
+              placeholder="새 비밀번호"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </InputWrapper>
+          <Divider />
+          <InputWrapper>
+            <Input
+              type="password"
+              placeholder="비밀번호 확인"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </InputWrapper>
+        </InputContainer>
+        <Button onClick={handleReset}>재설정</Button>
 
-        <FooterWrapper>
-          <FooterCom />
-        </FooterWrapper>
-      </PageContainer>
-    </Container>
+        {/* 로그인 버튼 추가 */}
+        <BackToLoginButton onClick={() => navigate("/")}>
+          로그인
+        </BackToLoginButton>
+      </PasswordResetBox>
+    </PasswordResetContainer>
   );
 };
 
-const PageContainer = styled.div`
+export default PasswordReset;
+
+// 스타일 적용 (수정된 스타일 활용)
+const Header = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 5px 20px;
+  z-index: 1000;
+  height: 90px;
+  margin-bottom: 18px;
 `;
 
-const HeaderWrapper = styled.header`
-  flex-shrink: 0;
-  background-color: #ffffff;
+const Logo = styled.img`
+  width: 120px;
+  height: 100px;
 `;
 
-const FooterWrapper = styled.footer`
-  flex-shrink: 0;
-  background-color: #ffffff;
-`;
-
-const Content = styled.main`
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
+const Title = styled.h1`
+  font-size: 70px;
+  font-weight: bold;
+  color: #1b5e96;
+  margin-left: 15px;
 `;
 
 const PasswordResetContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+  padding-top: 10px;
+`;
+
+const PasswordResetBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
   padding: 20px;
-`;
-
-const Title = styled.h1`
-  margin-bottom: 20px;
-`;
-
-const InputWrapper = styled.div`
-  margin-bottom: 15px;
   width: 100%;
   max-width: 400px;
-`;
+  background: white;
 
-const Label = styled.label`
-  display: block;
-  margin-bottom: 5px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
+  @media (max-width: 1200px) {
+    width: 90%;
+    height: auto;
   }
 `;
 
-export default PasswordReset;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 130%;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+  }
+`;
+
+const Divider = styled.div`
+  height: 1px;
+  background-color: #ccc;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 27.5px;
+  transition: background-color 0.3s ease;
+  position: relative;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 13px;
+
+  &::placeholder {
+    color: #aaa;
+  }
+`;
+
+const Button = styled.button`
+  width: 130%;
+  padding: 20px;
+  margin: 52px 0 20px 0;
+  color: #ffffff;
+  background-color: #a2d2ff;
+  border: none;
+  border-radius: 15px;
+  font-size: large;
+  cursor: pointer;
+  &:hover {
+    background-color: #b4d8fa;
+  }
+`;
+
+// 로그인 버튼 스타일
+const BackToLoginButton = styled.button`
+  width: 130%;
+  padding: 20px;
+  margin: 20px 0 20px 0;
+  color: #ffffff;
+  background-color: #a2d2ff;
+  border: none;
+  border-radius: 15px;
+  font-size: large;
+  cursor: pointer;
+  &:hover {
+    background-color: #b4d8fa;
+  }
+`;

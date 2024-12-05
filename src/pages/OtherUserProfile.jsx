@@ -1,17 +1,26 @@
 import { Container } from "../styles/GlobalStyled";
 import { HeaderCom } from "../components/GlobalComponent";
-import { UserMain } from "../styles/UserPointStyled";
 import OtherUser from "../components/OtherUser";
 import { useParams } from "react-router-dom";
+import {UserPostList} from "../components/UserPostList";
+import styled from "styled-components";
+
+const UserInfoFrame = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin: 0 2%;
+    overflow: hidden;
+`;
 
 const OtherUserProfile = () => {
   const { email } = useParams();
   return (
     <Container>
       <HeaderCom />
-      <UserMain>
+      <UserInfoFrame>
         <OtherUser email={email} />
-      </UserMain>
+        <UserPostList email={email}/>
+      </UserInfoFrame>
     </Container>
   );
 };

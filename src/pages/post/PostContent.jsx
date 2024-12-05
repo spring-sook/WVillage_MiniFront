@@ -139,7 +139,13 @@ const PostContent = () => {
                 minDate={startDate}
                 minTime={
                   endDate && endDate.toDateString() === startDate.toDateString()
-                    ? startDate.setMinutes(10, 0)
+                    ? new Date(
+                        0,
+                        0,
+                        0,
+                        startDate.getHours(),
+                        startDate.getMinutes()
+                      )
                     : new Date(0, 0, 0, 0, 0)
                 }
                 maxTime={new Date(0, 0, 0, 23, 59)}

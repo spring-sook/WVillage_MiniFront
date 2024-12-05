@@ -392,6 +392,12 @@ export const PostWriteContent = styled.div`
     border-radius: 10px;
   }
 
+  .post-write-place {
+    width: 100%;
+    height: 50px;
+    display: flex;
+  }
+
   .post-write-context {
     margin-bottom: 30px;
     border: 1px solid #ccc;

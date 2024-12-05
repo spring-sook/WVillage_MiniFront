@@ -109,6 +109,9 @@ const PostWrite = () => {
             </select> */}
           </PostWriteSelect>
           <input type="text" className="post-write-title" placeholder="제목" />
+          <div className="post-write-place">
+            <span>서울시 송파구 역삼동</span>
+          </div>
           <Attachment>
             <label htmlFor="file-upload" className="file-upload-label">
               <span>이미지 파일 첨부</span>

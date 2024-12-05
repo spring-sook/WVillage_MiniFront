@@ -7,13 +7,13 @@ const ReviewLst = styled.ul`
 `;
 
 
-export const UserReviewRecord = () => {
+export const UserReviewRecord = ({email}) => {
   const [reviews, setReviews] = useState("");
 
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const response = await UserProfileAPI.reviewList()
+        const response = await UserProfileAPI.reviewList(email)
         console.log(response.data)
         setReviews(response.data);
       } catch (e) {

@@ -1,14 +1,13 @@
-
 import {Usermy} from "../styles/UserComstyled";
 import ImgDownloader from "./Profile";
 import {UserReviewRecord} from "./UserReviewRecord";
 import {ReportBtn} from "./ReportBtn";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-export const OtherUser = () =>{
-  const [imagePath, setImagePath] = useState();
+export const OtherUser = ({email}) => {
+  const imagePath = "snow_village.webp";
 
-  return(
+  return (
     <>
       <Usermy>
         <div className="usermy">
@@ -19,7 +18,7 @@ export const OtherUser = () =>{
           <div className="temp">
             <p>온도</p>
           </div>
-          <UserReviewRecord/>
+          <UserReviewRecord email={email}/>
           <ReportBtn/>
         </div>
       </Usermy>

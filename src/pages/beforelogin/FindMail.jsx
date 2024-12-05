@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { HeaderCom, FooterCom } from "../components/GlobalComponent"; // 헤더와 푸터 가져오기
+import { HeaderCom, FooterCom } from "../../components/GlobalComponent"; // 헤더와 푸터 가져오기
 import { useNavigate } from "react-router-dom";
-import { Container } from "../styles/GlobalStyled";
+import { Container } from "../../styles/GlobalStyled";
 
 const FindMail = () => {
   const [name, setName] = useState("");
@@ -21,12 +21,9 @@ const FindMail = () => {
   return (
     <Container>
       <PageContainer>
-        {/* 상단 헤더 */}
         <HeaderWrapper>
           <HeaderCom />
         </HeaderWrapper>
-
-        {/* 본문 */}
         <Content>
           <FindMailContainer>
             <Title>아이디 찾기</Title>
@@ -73,7 +70,6 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin: 0.2%;
 `;
 
 const HeaderWrapper = styled.header`

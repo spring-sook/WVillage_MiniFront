@@ -34,11 +34,12 @@ const Login = () => {
 
   return (
     <LoginContainer>
+      <Header>
+        <Logo src={logo} alt="로고" />
+        <Title>WVillage</Title>
+      </Header>
+
       <LoginBox>
-        <LogoAndTitle onClick={() => navigate("/intro")}>
-          <Logo src={logo} alt="로고" />
-          <Title>WVillage</Title>
-        </LogoAndTitle>
         <InputContainer>
           <InputWrapper>
             <Icon icon={ICONS.user} />
@@ -69,7 +70,7 @@ const Login = () => {
         </InputContainer>
         <Button onClick={handleLogin}>로그인</Button>
         <LinkContainer>
-          <StyledLink to="/Findmail">아이디 찾기</StyledLink>
+          <StyledLink to="/findmail">아이디 찾기</StyledLink>
           <StyledLink to="/passwordreset">비밀번호 재설정</StyledLink>
           <StyledLink to="/signup">회원가입</StyledLink>
         </LinkContainer>
@@ -78,15 +79,40 @@ const Login = () => {
   );
 };
 
-const LoginContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Header = styled.div`
   width: 100%;
-  height: 80vh;
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 5px 20px;
+  z-index: 1000;
+  height: 90px;
+  margin-bottom: 18px;
 `;
 
+const Logo = styled.img`
+  width: 120px;
+  height: 100px;
+`;
+
+const Title = styled.h1`
+  font-size: 70px;
+  font-weight: bold;
+  color: #1b5e96;
+  margin-left: 15px;
+`;
+
+const LoginContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+  box-sizing: border-box;
+  padding-top: 10px;
+`;
 const LoginBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -102,28 +128,6 @@ const LoginBox = styled.div`
     width: 90%;
     height: auto;
   }
-`;
-const LogoAndTitle = styled.div`
-  display: flex;
-
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 50px;
-  cursor: pointer;
-`;
-
-const Logo = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
-const Title = styled.h2`
-  font-size: 65px;
-  font-weight: bold;
-  height: auto;
-  color: #1b5e96;
-  text-align: center;
-  margin-bottom: 10px;
 `;
 
 const InputContainer = styled.div`
@@ -153,6 +157,7 @@ const InputWrapper = styled.div`
   transition: background-color 0.3s ease;
   position: relative;
 `;
+
 const Icon = styled(FontAwesomeIcon)`
   font-size: 20px;
   margin-right: 10px;
@@ -201,7 +206,8 @@ const LinkContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 120%;
-  margin-top: 30px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 `;
 
 const StyledLink = styled(Link)`

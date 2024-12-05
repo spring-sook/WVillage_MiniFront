@@ -1,6 +1,6 @@
 // import "./App.css";
 import GlobalStyled from "./styles/GlobalStyled";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Main from "./pages/main/Main";
 import PostList from "./pages/post/PostList";
 import PostContent from "./pages/post/PostContent";
@@ -12,24 +12,26 @@ import Intro from "./pages/main/Intro";
 import UserPoint from "./pages/UserPoint";
 import FindMail from "./components/FindMail";
 import PasswordReset2 from "./components/PasswordReset2";
+import OtherUser from "./components/OtherUser";
 
 function App() {
   return (
     <>
-      <GlobalStyled />
+      <GlobalStyled/>
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/intro" element={<Intro />} />
-          <Route path="/post" element={<PostList />} />
-          <Route path="/postContent" element={<PostContent />} />
-          <Route path="/postWrite" element={<PostWrite />} />
-          <Route path="/passwordreset" element={<PasswordReset />} />
-          <Route path="/passwordreset2" element={<PasswordReset2 />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/point" element={<UserPoint />} />
-          <Route path="/findmail" element={<FindMail />} />
+          <Route path="/" element={<Login/>}/>
+          <Route path="/main" element={<Main/>}/>
+          <Route path="/intro" element={<Intro/>}/>
+          <Route path="/post" element={<PostList/>}/>
+          <Route path="/postContent" element={<PostContent/>}/>
+          <Route path="/postWrite" element={<PostWrite/>}/>
+          <Route path="/passwordreset" element={<PasswordReset/>}/>
+          <Route path="/passwordreset2" element={<PasswordReset2/>}/>
+          <Route path="/signup" element={<Signup/>}/>
+          <Route path="/point" element={<UserPoint/>}/>
+          <Route path="/findmail" element={<FindMail/>}/>
+          <Route path="/userProfile" element={<OtherUser/>}/>
         </Routes>
       </Router>
     </>

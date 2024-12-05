@@ -1,5 +1,6 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
+import UserProfileAPI from "../api/OtherUserProfileAPI";
 
 const ReviewLst = styled.ul`
     list-style: none;
@@ -7,14 +8,27 @@ const ReviewLst = styled.ul`
 
 
 export const UserReviewRecord = () => {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState("");
+
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const response = await UserProfileAPI.reviewList()
+        console.log(response.data)
+        setReviews(response.data);
+      } catch (e) {
+        alert(e);
+      }
+    }
+    getReviews();
+  }, []);
 
   return (
     <>
-      <ul>
+      <ReviewLst>
         {reviews && reviews.map((e, idx) => (
-          <li key={idx}>{e.content} {e.count}</li>
-        ))}</ul>
+          <li key={idx}>{e.content}, {e.count}</li>
+        ))}</ReviewLst>
     </>
   );
 }

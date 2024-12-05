@@ -8,7 +8,6 @@ const PasswordReset2 = () => {
 
   return (
     <PasswordReset2Container>
-      {/* 헤더 */}
       <Header>
         <Logo src={logo} alt="로고" />
         <Title>WVillage</Title>
@@ -90,12 +89,12 @@ const Button = styled.button`
   padding: 25px;
   margin: 40px 0 195px 0;
   color: #ffffff;
-  background-color: #1b5e96;
+  background-color: #a2d2ff;
   border: none;
   border-radius: 15px;
   font-size: large;
   cursor: pointer;
   &:hover {
-    background-color: #164d7f;
+    background-color: #b4d8fa;
   }
 `;

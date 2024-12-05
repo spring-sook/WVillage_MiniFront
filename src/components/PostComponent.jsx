@@ -11,12 +11,18 @@ export const GenerateExcludedTimes = (startDate, endDate) => {
   return excludedTimes;
 };
 
-// export const CalculateDaysFromToday = (targetDate) => {
-//   const today = new Date();
-//   const targetDateOnly = new Date(targetDate);
-//   today.setHours(0, 0, 0, 0);
-//   targetDateOnly.setHours(0, 0, 0, 0);
-//   const diffTime = targetDate.getTime() - today.getTime();
-//   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // 하루 단위 계산
-//   return diffDays - 1;
-// };
+export const ViewItemInfo = () => {
+  return (
+    <>
+      <div>여기는 제품 정보</div>
+    </>
+  );
+};
+
+export const ViewReview = () => {
+  return (
+    <>
+      <div>여기는 사용자 리뷰</div>
+    </>
+  );
+};

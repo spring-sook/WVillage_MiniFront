@@ -68,15 +68,11 @@ export const Usermy = styled.div`
     p {
       margin: 10%;
       transition: color 0.3s ease, transform 0.3s ease; /* 부드러운 애니메이션 추가 */
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    p:hover {
       cursor: pointer;
+    }
+
+    p:hover,
+    p.selected {
       color: #3c8dbc;
       text-decoration: underline;
     }

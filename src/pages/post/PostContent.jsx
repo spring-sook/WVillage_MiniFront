@@ -3,7 +3,6 @@ import {
   PostContentBottom,
   PostContentTop,
   ReserveButton,
-  TimePicker,
 } from "../../styles/PostStyled";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,8 +13,11 @@ import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
 import ImgDownloader from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { GenerateExcludedTimes } from "../../components/PostComponent";
-import { Bookmark } from "@material-ui/icons";
+import {
+  GenerateExcludedTimes,
+  ViewItemInfo,
+  ViewReview,
+} from "../../components/PostComponent";
 
 const PostContent = () => {
   const now = new Date();
@@ -23,6 +25,7 @@ const PostContent = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [excludeTimes, setExcludeTimes] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const imagePath = "snow_village.webp";
 
   const exTime = [
@@ -46,6 +49,15 @@ const PostContent = () => {
     if (endDate && date > endDate) {
       setEndDate(null); // 종료일을 초기화
     }
+
+    const filteredTimes = reserveTimes.filter(
+      (time) => time.toDateString() === date.toDateString()
+    );
+    setExcludeTimes(filteredTimes);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
 
     const filteredTimes = reserveTimes.filter(
       (time) => time.toDateString() === date.toDateString()
@@ -130,9 +142,7 @@ const PostContent = () => {
                 dateFormatCalendar="yyyy년 MM월"
                 timeCaption="시간"
                 selected={endDate}
-                onChange={(date) => {
-                  setEndDate(date);
-                }}
+                onChange={handleEndDateChange}
                 selectsEnd
                 startDate={startDate}
                 endDate={endDate}
@@ -144,7 +154,7 @@ const PostContent = () => {
                         0,
                         0,
                         startDate.getHours(),
-                        startDate.getMinutes()
+                        startDate.getMinutes() + 10
                       )
                     : new Date(0, 0, 0, 0, 0)
                 }
@@ -181,11 +191,23 @@ const PostContent = () => {
       </PostContentTop>
       <PostContentBottom>
         <div className="bottom-menu">
-          <p>제품 상세 정보</p>
+          <p
+            onClick={() => setSelectedTab("제품 상세 정보")}
+            className={selectedTab === "제품 상세 정보" ? "active" : ""}
+          >
+            제품 상세 정보
+          </p>
           <div className="line"></div>
-          <p>사용자 리뷰</p>
+          <p
+            onClick={() => setSelectedTab("사용자 리뷰")}
+            className={selectedTab === "사용자 리뷰" ? "active" : ""}
+          >
+            사용자 리뷰
+          </p>
         </div>
-        <div>여기가 제품 내용</div>
+
+        {selectedTab === "제품 상세 정보" && <ViewItemInfo />}
+        {selectedTab === "사용자 리뷰" && <ViewReview />}
       </PostContentBottom>
       <FooterCom />
     </Container>

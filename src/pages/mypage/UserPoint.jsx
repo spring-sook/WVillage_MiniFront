@@ -1,6 +1,6 @@
-import { Container } from "../styles/GlobalStyled";
-import { HeaderCom, FooterCom } from "../components/GlobalComponent";
-import { User } from "../components/User";
+import { Container } from "../../styles/GlobalStyled";
+import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
+import { User } from "../../components/User";
 import {
   UserMain,
   PointBox,
@@ -9,10 +9,10 @@ import {
   ChargeBox,
   ChargeRefundContainer,
   Modal,
-} from "../styles/UserPointStyled";
+} from "../../styles/UserPointStyled";
 import { useState } from "react";
 
-const UserPoint = () => {
+export const UserPoint = () => {
   const [isCharge, setIsCharge] = useState(true);
   const [balance, setBalance] = useState(1000);
   const [amount, setAmount] = useState("");
@@ -84,77 +84,70 @@ const UserPoint = () => {
 
   return (
     <>
-      <Container>
-        <HeaderCom />
-        <UserMain>
-          <User />
-          <PointBox>
-            <div className="select">
-              <p>보유 포인트</p>
-              <div className="point-display">{balance} P</div>
-              <ButtonContainer>
-                <button
-                  className={isCharge ? "active" : ""}
-                  onClick={handleChargeClick}
-                >
-                  충전
-                </button>
-                <button
-                  className={!isCharge ? "active" : ""}
-                  onClick={handleRefundClick}
-                >
-                  환급
-                </button>
-              </ButtonContainer>
-            </div>
+      <PointBox>
+        <div className="select">
+          <p>보유 포인트</p>
+          <div className="point-display">{balance} P</div>
+          <ButtonContainer>
+            <button
+              className={isCharge ? "active" : ""}
+              onClick={handleChargeClick}
+            >
+              충전
+            </button>
+            <button
+              className={!isCharge ? "active" : ""}
+              onClick={handleRefundClick}
+            >
+              환급
+            </button>
+          </ButtonContainer>
+        </div>
 
-            <ChargeBox>
-              <ChargeRefundContainer>
-                <p>
-                  {isCharge
-                    ? "충전할 포인트를 입력하세요"
-                    : "환급할 포인트를 입력하세요"}
-                </p>
-                <input
-                  type="text" // input 타입을 text로 설정
-                  placeholder={isCharge ? "충전할 포인트" : "환급할 포인트"}
-                  value={amount}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자 외의 문자 제거
-                    setAmount(value); // 숫자만 상태에 저장
-                  }}
-                />
-              </ChargeRefundContainer>
+        <ChargeBox>
+          <ChargeRefundContainer>
+            <p>
+              {isCharge
+                ? "충전할 포인트를 입력하세요"
+                : "환급할 포인트를 입력하세요"}
+            </p>
+            <input
+              type="text" // input 타입을 text로 설정
+              placeholder={isCharge ? "충전할 포인트" : "환급할 포인트"}
+              value={amount}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자 외의 문자 제거
+                setAmount(value); // 숫자만 상태에 저장
+              }}
+            />
+          </ChargeRefundContainer>
 
-              {/* 계좌 선택 */}
-              <AccountContainer>
-                <label htmlFor="account-select">계좌 선택</label>
-                <select
-                  id="account-select"
-                  value={selectedAccount}
-                  onChange={(e) => setSelectedAccount(e.target.value)}
-                >
-                  <option value="">계좌를 선택하세요</option>
-                  {accounts.map((account, index) => (
-                    <option key={index} value={account}>
-                      {account}
-                    </option>
-                  ))}
-                </select>
-                <button onClick={handleOpenModal}>계좌 추가하기</button>
-              </AccountContainer>
+          {/* 계좌 선택 */}
+          <AccountContainer>
+            <label htmlFor="account-select">계좌 선택</label>
+            <select
+              id="account-select"
+              value={selectedAccount}
+              onChange={(e) => setSelectedAccount(e.target.value)}
+            >
+              <option value="">계좌를 선택하세요</option>
+              {accounts.map((account, index) => (
+                <option key={index} value={account}>
+                  {account}
+                </option>
+              ))}
+            </select>
+            <button onClick={handleOpenModal}>계좌 추가하기</button>
+          </AccountContainer>
 
-              <button
-                onClick={isCharge ? handleCharge : handleRefund}
-                disabled={isCharge ? isChargeDisabled : isRefundDisabled}
-              >
-                {isCharge ? "충전하기" : "환급하기"}
-              </button>
-            </ChargeBox>
-          </PointBox>
-        </UserMain>
-        <FooterCom />
-      </Container>
+          <button
+            onClick={isCharge ? handleCharge : handleRefund}
+            disabled={isCharge ? isChargeDisabled : isRefundDisabled}
+          >
+            {isCharge ? "충전하기" : "환급하기"}
+          </button>
+        </ChargeBox>
+      </PointBox>
 
       {/* 모달 팝업 */}
       {showModal && (
@@ -193,4 +186,4 @@ const UserPoint = () => {
     </>
   );
 };
-export default UserPoint;
+// export default UserPoint;

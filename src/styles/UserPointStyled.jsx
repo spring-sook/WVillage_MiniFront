@@ -1,12 +1,7 @@
 import styled from "styled-components";
 
-export const UserMain = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 export const PointBox = styled.div`
-  width: 80%;
+  width: 78%;
 
   display: flex;
   flex-direction: column;
@@ -16,7 +11,7 @@ export const PointBox = styled.div`
   color: #1b5e96;
   .select {
     width: 90%;
-    height: 120px;
+    height: 100px;
     background-color: #d5e8f1;
     display: flex;
     justify-content: center;

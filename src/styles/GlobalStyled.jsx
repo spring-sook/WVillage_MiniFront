@@ -44,6 +44,11 @@ export const Header = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   .search-container {

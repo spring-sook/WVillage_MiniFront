@@ -6,18 +6,27 @@ const ImgDownloader = ({ imgfile, width, height }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    // Reference to the image file in Firebase Storage
-    const fileRef = ref(storage, imgfile); // Update with the correct path
+    const storedImageUrl = localStorage.getItem("profileImageUrl");
 
-    // Get the download URL
-    getDownloadURL(fileRef)
-      .then((url) => {
-        setImageUrl(url); // Set the download URL to state
-      })
-      .catch((error) => {
-        console.error("Error fetching image:", error);
-      });
-  }, []);
+    if (storedImageUrl) {
+      // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
+      setImageUrl(storedImageUrl);
+    } else {
+      // 로컬 스토리지에 이미지가 없으면 Firebase에서 가져옴
+      const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
+
+      getDownloadURL(fileRef)
+        .then((url) => {
+          setImageUrl(url);
+          // 이미지를 로컬 스토리지에 저장
+          localStorage.setItem("profileImageUrl", url);
+        })
+        .catch((error) => {
+          console.error("Error fetching image:", error);
+        });
+    }
+  }, [imgfile]);
+  // 로그아웃 시 이미지 제거: localStorage.removeItem("profileImageUrl") -- 로그인 중인지 확인해서 하면 될듯
 
   return (
     <>

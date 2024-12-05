@@ -60,7 +60,9 @@ export const HeaderCom = () => {
         <img src={LogoImg} alt="로고" className="logo-img" />
       </Link>
       <div className="name">
-        <h4>WVillage</h4>
+        <Link to="/main">
+          <h4>WVillage</h4>
+        </Link>
       </div>
       <Nav>
         <Link to="/post" className="tag">
@@ -108,7 +110,7 @@ export const HeaderCom = () => {
         </div>
       </div>
       <div className="usermy">
-        <Link to="/point" className="profile-link">
+        <Link to="/mypage" className="profile-link">
           <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
         </Link>
         {hasNotification && <div className="badge">10</div>} {/* 알림 뱃지 */}

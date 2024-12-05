@@ -1,8 +1,18 @@
 import ImgDownloader from "./Profile";
 import { Usermy } from "../styles/UserComstyled";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-export const User = () => {
+export const User = ({ setSelectedMenu, selectedMenu }) => {
+  const links = [
+    "작성 게시글",
+    "즐겨찾기 게시글",
+    "예약 리스트",
+    "포인트",
+    "내 정보 수정",
+    "설정",
+  ];
+
   const imagePath = "snow_village.webp";
 
   return (
@@ -19,14 +29,15 @@ export const User = () => {
             </div>
           </div>
           <div className="option">
-            <p>작성 게시글</p>
-            <p>즐겨찾기 게시글</p>
-            <p>예약 리스트</p>
-            <Link to="/point">
-              <p>포인트</p>
-            </Link>
-            <p>내 정보 수정</p>
-            <p>설정</p>
+            {links.map((label) => (
+              <p
+                key={label}
+                onClick={() => setSelectedMenu(label)}
+                className={selectedMenu === label ? "selected" : ""}
+              >
+                {label}
+              </p>
+            ))}
           </div>
         </div>
       </Usermy>

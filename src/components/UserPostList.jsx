@@ -14,11 +14,12 @@ const UserPostContainer = styled.div`
 
 const PostListContainer = styled.div`
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     overflow-x: hidden;
     overflow-y: scroll;
     flex-grow: 1;
     flex-wrap: wrap;
+    margin-left: 20px;
 
     /* 전체 스크롤바 */
 
@@ -51,7 +52,7 @@ const PostListContainer = styled.div`
 const PostItem = styled.div`
     width: 200px;
     height: 300px;
-    margin: 10px;
+    margin: 20px;
     background-color: white;
 `;
 

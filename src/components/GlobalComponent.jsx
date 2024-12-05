@@ -68,7 +68,7 @@ export const HeaderCom = () => {
         </Link>
         <p>/</p>
         <Link to="/post" className="tag">
-          아르바이트
+          구인
         </Link>
         <p>/</p>
         <Link to="/post" className="tag">
@@ -102,7 +102,7 @@ export const HeaderCom = () => {
           <div className="options-list">
             <p onClick={() => selectOption("전체")}>전체</p>
             <p onClick={() => selectOption("물건")}>물건</p>
-            <p onClick={() => selectOption("아르바이트")}>아르바이트</p>
+            <p onClick={() => selectOption("구인")}>구인</p>
             <p onClick={() => selectOption("장소")}>장소</p>
           </div>
         </div>

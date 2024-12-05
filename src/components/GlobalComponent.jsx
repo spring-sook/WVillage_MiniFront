@@ -2,18 +2,38 @@ import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
 import ImgDownloader from "../components/Profile";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
 export const HeaderCom = () => {
   const [showOptions, setShowOptions] = useState(false);
+  const optionsRef = useRef(null);
   const [selectedOption, setSelectedOption] = useState("전체");
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
   const [hasNotification, setHasNotification] = useState(true); // 알림 상태
 
-  const toggleOptions = () => {
-    setShowOptions((prev) => !prev);
+  const toggleOptions = (event) => {
+    event.stopPropagation(); // 클릭 이벤트 전파 방지
+    setShowOptions((prev) => !prev); // 상태 반전
   };
+
+  const handleClickOutside = (event) => {
+    if (
+      optionsRef.current &&
+      !optionsRef.current.contains(event.target) && // 옵션 리스트가 아닌 경우
+      !event.target.closest(".search-toggle") // 토글 버튼이 아닌 경우
+    ) {
+      setShowOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const selectOption = (option) => {
     setSelectedOption(option); // 선택된 옵션 표시
     setShowOptions(false); // 옵션 창 닫기
@@ -74,7 +94,11 @@ export const HeaderCom = () => {
             <FaSearch /> {/* 검색 아이콘 */}
           </button>
         </div>
-        <div className={`search-options ${showOptions ? "active" : ""}`}>
+        <div
+          ref={optionsRef}
+          className={`search-options ${showOptions ? "active" : ""}`}
+          style={{ pointerEvents: showOptions ? "auto" : "none" }}
+        >
           <div className="options-list">
             <p onClick={() => selectOption("전체")}>전체</p>
             <p onClick={() => selectOption("물건")}>물건</p>
@@ -84,8 +108,10 @@ export const HeaderCom = () => {
         </div>
       </div>
       <div className="usermy">
-        <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
-        {hasNotification && <div className="badge">!</div>} {/* 알림 뱃지 */}
+        <Link to="/point" className="profile-link">
+          <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
+        </Link>
+        {hasNotification && <div className="badge">10</div>} {/* 알림 뱃지 */}
         {/* !!!!db연결하며 상태관리 기능 추가 필요!!!! */}
       </div>
     </Header>

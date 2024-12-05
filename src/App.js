@@ -12,7 +12,7 @@ import Intro from "./pages/main/Intro";
 import UserPoint from "./pages/UserPoint";
 import FindMail from "./components/FindMail";
 import PasswordReset2 from "./components/PasswordReset2";
-import OtherUser from "./components/OtherUser";
+import OtherUserProfile from "./pages/OtherUserProfile";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/point" element={<UserPoint/>}/>
           <Route path="/findmail" element={<FindMail/>}/>
-          <Route path="/userProfile" element={<OtherUser/>}/>
+          <Route path="/userProfile" element={<OtherUserProfile/>}/>
         </Routes>
       </Router>
     </>

@@ -15,3 +15,5 @@ const OtherUserProfile = () =>{
     </Container>
   );
 }
+
+export default OtherUserProfile;

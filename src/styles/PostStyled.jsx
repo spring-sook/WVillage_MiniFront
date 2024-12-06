@@ -21,6 +21,11 @@ export const PostMainFilter = styled.div`
     margin-bottom: 20px;
   }
 
+  h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
   p {
     width: 90%;
     height: 40px;

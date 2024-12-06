@@ -11,13 +11,16 @@ import {
 // import "react-datepicker/dist/react-datepicker.css";
 // import { ko } from "date-fns/locale";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PostList = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isDropdownView, setDropdownView] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchKeyword = searchParams.get("search");
 
   const handleClickIcon = () => {
     setDropdownView(!isDropdownView);
@@ -27,9 +30,11 @@ const PostList = () => {
     setStartDate(null);
     setEndDate(null);
     setDropdownView(false);
+    setSearchParams("");
   };
 
-  const isResetVisible = startDate || endDate || isDropdownView;
+  const isResetVisible =
+    startDate || endDate || isDropdownView || searchKeyword;
 
   return (
     <Container>
@@ -37,6 +42,7 @@ const PostList = () => {
       <PostBody>
         <PostMainFilter>
           <h2>서울시 강남구 역삼동</h2>
+          {searchKeyword ? <h3>"{searchKeyword}" 검색 결과</h3> : null}
           <p>
             필터
             {isResetVisible && (

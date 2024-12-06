@@ -1,6 +1,6 @@
 import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImgDownloader from "./Profile";
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -12,6 +12,7 @@ export const HeaderCom = () => {
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
   const [hasNotification, setHasNotification] = useState(true); // 알림 상태
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
+  const navigate = useNavigate();
 
   const toggleOptions = (event) => {
     event.stopPropagation(); // 클릭 이벤트 전파 방지
@@ -45,6 +46,7 @@ export const HeaderCom = () => {
       alert("검색어는 2자리 이상 입력해 주세요."); // 길이가 2자 미만일 경우 팝업
     } else {
       console.log("검색어:", searchQuery);
+      navigate(`/post?search=${searchQuery}`);
     }
   };
   const handleKeyDown = (e) => {

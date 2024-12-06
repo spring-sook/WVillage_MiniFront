@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { headerHeight, navHeight } from "./GlobalStyled";
 
-export const PostHeader = styled.h2`
-  margin: 1% 3% 2% 3.3%;
-`;
-
 export const PostBody = styled.div`
   display: flex;
   justify-content: space-around;
@@ -20,6 +16,10 @@ export const PostMainFilter = styled.div`
   flex-direction: column;
   align-items: center;
   width: 300px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
 
   p {
     width: 90%;

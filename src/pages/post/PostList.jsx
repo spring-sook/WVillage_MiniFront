@@ -6,7 +6,6 @@ import {
   PostMainFilter,
   PostMainList,
   PostDisplay,
-  PostHeader,
 } from "../../styles/PostStyled";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
@@ -35,9 +34,9 @@ const PostList = () => {
   return (
     <Container>
       <HeaderCom />
-      <PostHeader>서울시 강남구 역삼동</PostHeader>
       <PostBody>
         <PostMainFilter>
+          <h2>서울시 강남구 역삼동</h2>
           <p>
             필터
             {isResetVisible && (

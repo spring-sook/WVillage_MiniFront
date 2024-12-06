@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const PointBox = styled.div`
   width: 78%;
-
   display: flex;
   flex-direction: column;
   justify-content: center;

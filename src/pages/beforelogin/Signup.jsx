@@ -177,9 +177,6 @@ const Signup = () => {
 
         {/* 회원가입 버튼 */}
         <Button onClick={handleSignup}>회원가입</Button>
-        <BackToLoginButton onClick={() => navigate("/")}>
-          로그인
-        </BackToLoginButton>
       </SignupBox>
     </SignupContainer>
   );

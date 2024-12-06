@@ -171,8 +171,8 @@ export const Tier = styled.div`
   padding: 11px;
 
   img {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

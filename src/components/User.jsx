@@ -61,44 +61,44 @@ export const User = ({ setSelectedMenu, selectedMenu }) => {
             </p>
             <TempInfo>
               <Tier>
-                <img src={fire1} alt="꺼진 불" />
+                <img src={fire1} alt="꺼진 모닥불" />
                 <div>
-                  <h3>꺼진 불</h3>
+                  <h3>꺼진 모닥불</h3>
                   <p>0~10 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={fire2} alt="작은 불" />
+                <img src={fire2} alt="작은 모닥불" />
                 <div>
-                  <h3>작은 불</h3>
+                  <h3>작은 모닥불</h3>
                   <p>11~30 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={fire3} alt="중간 불" />
+                <img src={fire3} alt="중간 모닥불" />
                 <div>
-                  <h3>중간 불</h3>
+                  <h3>중간 모닥불</h3>
                   <p>31~50 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={fire4} alt="큰 불" />
+                <img src={fire4} alt="큰 모닥불" />
                 <div>
-                  <h3>큰 불</h3>
+                  <h3>큰 모닥불</h3>
                   <p>51~70 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={fire5} alt="왕큰 불" />
+                <img src={fire5} alt="왕큰 모닥불" />
                 <div>
-                  <h3>왕큰 불</h3>
+                  <h3>왕큰 모닥불</h3>
                   <p>71~90 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={fire6} alt="대왕 불" />
+                <img src={fire6} alt="대왕 모닥불" />
                 <div>
-                  <h3>대왕 불</h3>
+                  <h3>대왕 모닥불</h3>
                   <p>91~100+ ℃</p>
                 </div>
               </Tier>

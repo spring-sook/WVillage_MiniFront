@@ -5,17 +5,42 @@ import logo from "../../images/logo.png";
 
 const Signup = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     nickname: "",
     email: "",
     password: "",
     confirmPassword: "",
+    phone: "",
+    addressType: "default", // 선택한 주소 유형 (default: "주소 목록", custom: "직접 입력")
+    address: "",
   });
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // 실시간 유효성 검사 (선택적으로 추가)
+    if (name === "name" && value.length < 2) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        name: "이름은 2글자 이상이어야 합니다.",
+      }));
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    }
+  };
+
+  const handleAddressChange = (e) => {
+    const { value } = e.target;
+    if (value === "custom") {
+      setFormData({ ...formData, addressType: "custom", address: "" });
+    } else {
+      setFormData({ ...formData, addressType: "default", address: value });
+    }
   };
 
   const handleSignup = () => {
@@ -24,15 +49,18 @@ const Signup = () => {
       !formData.nickname ||
       !formData.email ||
       !formData.password ||
-      !formData.confirmPassword
+      !formData.confirmPassword ||
+      !formData.address
     ) {
       alert("모든 필드를 입력해주세요.");
       return;
     }
+
     if (formData.password !== formData.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
+
     alert("회원가입이 완료되었습니다!");
     navigate("/");
   };
@@ -46,6 +74,7 @@ const Signup = () => {
 
       <SignupBox>
         <InputContainer>
+          {/* 이름 */}
           <InputWrapper>
             <Input
               type="text"
@@ -54,8 +83,11 @@ const Signup = () => {
               value={formData.name}
               onChange={handleChange}
             />
+            {errors.name && <Error>{errors.name}</Error>}
           </InputWrapper>
           <Divider />
+
+          {/* 닉네임 */}
           <InputWrapper>
             <Input
               type="text"
@@ -66,6 +98,8 @@ const Signup = () => {
             />
           </InputWrapper>
           <Divider />
+
+          {/* 이메일 */}
           <InputWrapper>
             <Input
               type="email"
@@ -76,6 +110,8 @@ const Signup = () => {
             />
           </InputWrapper>
           <Divider />
+
+          {/* 비밀번호 */}
           <InputWrapper>
             <Input
               type="password"
@@ -86,6 +122,8 @@ const Signup = () => {
             />
           </InputWrapper>
           <Divider />
+
+          {/* 비밀번호 확인 */}
           <InputWrapper>
             <Input
               type="password"
@@ -95,7 +133,49 @@ const Signup = () => {
               onChange={handleChange}
             />
           </InputWrapper>
+          <Divider />
+
+          {/* 전화번호 */}
+          <InputWrapper>
+            <Input
+              type="text"
+              name="phone"
+              placeholder="전화번호 ('-' 제외)"
+              value={formData.phone}
+              onChange={handleChange}
+            />
+          </InputWrapper>
+          <Divider />
+
+          {/* 주소 */}
+          <InputWrapper>
+            <Select
+              name="address"
+              value={formData.address}
+              onChange={handleAddressChange}
+            >
+              <option value="서울특별시 강남구">서울특별시 강남구</option>
+              <option value="서울특별시 송파구">서울특별시 송파구</option>
+              <option value="부산광역시 해운대구">부산광역시 해운대구</option>
+              <option value="custom">직접 입력</option>
+            </Select>
+          </InputWrapper>
+
+          {/* 직접 입력 필드 */}
+          {formData.addressType === "custom" && (
+            <InputWrapper>
+              <Input
+                type="text"
+                name="address"
+                placeholder="주소를 입력하세요"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+          )}
         </InputContainer>
+
+        {/* 회원가입 버튼 */}
         <Button onClick={handleSignup}>회원가입</Button>
         <BackToLoginButton onClick={() => navigate("/")}>
           로그인
@@ -106,6 +186,12 @@ const Signup = () => {
 };
 
 export default Signup;
+
+// 스타일링
+const Error = styled.span`
+  color: red;
+  font-size: 12px;
+`;
 
 const Header = styled.div`
   width: 100%;
@@ -195,6 +281,19 @@ const Input = styled.input`
 
   &::placeholder {
     color: #aaa;
+  }
+`;
+
+const Select = styled.select`
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 13px;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
   }
 `;
 

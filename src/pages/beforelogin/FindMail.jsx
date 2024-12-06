@@ -1,57 +1,83 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import logo from "../../images/logo.png";
 
 const FindMail = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "phone" && isNaN(value)) return;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "이름을 입력하세요.";
+    if (!formData.phone.trim() || formData.phone.length !== 11)
+      newErrors.phone = "유효하지 않은 번호 입니다.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleFindMail = () => {
-    if (name && phoneNumber) {
-      alert("아이디는 example@mail.com 입니다.");
-    } else {
-      alert("이름과 전화번호를 입력해주세요.");
+    if (!validateForm()) {
+      return;
     }
+    alert(
+      `이메일 찾기 완료! 이름: ${formData.name}, 전화번호: ${formData.phone}`
+    );
+    navigate("/passwordreset");
   };
 
   return (
     <FindMailContainer>
-      {/* 헤더 */}
       <Header>
-        <Logo src={logo} alt="로고" />
-        <Title>WVillage</Title>
+        <Logo src={logo} alt="로고" onClick={() => navigate("/")} />
+        <Title> WVillage</Title>
       </Header>
 
-      {/* 아이디 찾기 박스 */}
       <FindMailBox>
         <InputContainer>
           <InputWrapper>
             <Input
               type="text"
+              name="name"
               placeholder="이름"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
             />
+            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
           </InputWrapper>
           <Divider />
           <InputWrapper>
             <Input
               type="text"
-              placeholder="전화번호"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              name="phone"
+              placeholder="전화번호 ('-' 제외 11자리)"
+              value={formData.phone}
+              onChange={handleChange}
+              maxLength="11"
             />
+            {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
           </InputWrapper>
         </InputContainer>
-        <Button onClick={handleFindMail}>아이디 찾기</Button>
-        <LinkContainer>
-          <StyledLink onClick={() => navigate("/passwordreset")}>
+        <Button onClick={handleFindMail}>이메일 찾기</Button>
+
+        <TextLinksContainer>
+          <TextLink onClick={() => navigate("/passwordreset")}>
             비밀번호 재설정
-          </StyledLink>
-          <StyledLink onClick={() => navigate("/signup")}>회원가입</StyledLink>
-        </LinkContainer>
+          </TextLink>
+          <Separator>|</Separator>
+          <TextLink onClick={() => navigate("/signup")}>회원가입</TextLink>
+        </TextLinksContainer>
       </FindMailBox>
     </FindMailContainer>
   );
@@ -66,18 +92,18 @@ const Header = styled.div`
   justify-content: center;
   background-color: white;
   padding: 5px 20px;
-  z-index: 1000;
-  height: 90px;
-  margin-bottom: 18px;
+  height: 70px;
+  margin-bottom: 50px;
 `;
 
 const Logo = styled.img`
-  width: 120px;
+  width: 135px;
   height: 100px;
+  cursor: pointer;
 `;
 
 const Title = styled.h1`
-  font-size: 70px;
+  font-size: 65px;
   font-weight: bold;
   color: #1b5e96;
   margin-left: 15px;
@@ -165,20 +191,31 @@ const Button = styled.button`
   }
 `;
 
-const LinkContainer = styled.div`
+const TextLinksContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 120%;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
-  margin-bottom: 100px;
 `;
 
-const StyledLink = styled.p`
-  color: black;
+const TextLink = styled.span`
+  color: #535353;
   font-size: 14px;
-  text-decoration: none;
   cursor: pointer;
+
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const Separator = styled.span`
+  margin: 0 50px;
+  color: #ccc;
+`;
+
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 10px;
+  margin-top: 5px;
+  display: block;
 `;

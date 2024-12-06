@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <Header>
-        <Logo src={logo} alt="로고" />
+        <Logo src={logo} alt="로고" onClick={() => navigate("/intro")} />
         <Title>WVillage</Title>
       </Header>
 
@@ -51,7 +51,7 @@ const Login = () => {
             />
           </InputWrapper>
           <Divider />
-          <InputWrapper isLast>
+          <InputWrapper>
             <Icon icon={ICONS.lock} />
             <Input
               type={passwordVisible ? "text" : "password"}
@@ -69,11 +69,13 @@ const Login = () => {
           </InputWrapper>
         </InputContainer>
         <Button onClick={handleLogin}>로그인</Button>
-        <LinkContainer>
+        <TextLinksContainer>
           <StyledLink to="/findmail">아이디 찾기</StyledLink>
+          <Separator>|</Separator>
           <StyledLink to="/passwordreset">비밀번호 재설정</StyledLink>
+          <Separator>|</Separator>
           <StyledLink to="/signup">회원가입</StyledLink>
-        </LinkContainer>
+        </TextLinksContainer>
       </LoginBox>
     </LoginContainer>
   );
@@ -86,18 +88,18 @@ const Header = styled.div`
   justify-content: center;
   background-color: white;
   padding: 5px 20px;
-  z-index: 1000;
-  height: 90px;
-  margin-bottom: 18px;
+  height: 70px;
+  margin-bottom: 50px;
 `;
 
 const Logo = styled.img`
-  width: 120px;
+  width: 135px;
   height: 100px;
+  cursor: pointer;
 `;
 
 const Title = styled.h1`
-  font-size: 70px;
+  font-size: 65px;
   font-weight: bold;
   color: #1b5e96;
   margin-left: 15px;
@@ -202,18 +204,21 @@ const Button = styled.button`
   }
 `;
 
-const LinkContainer = styled.div`
+const TextLinksContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 120%;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
 `;
 
 const StyledLink = styled(Link)`
-  color: black;
+  color: #4e4e4e;
   font-size: 14px;
   text-decoration: none;
+`;
+const Separator = styled.span`
+  margin: 0 30px;
+  color: #ccc;
 `;
 
 export default Login;

@@ -8,7 +8,9 @@ export const UserMain = styled.div`
 export const MyPostContainer = styled.div`
   width: 78%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 export const Posts = styled.div`

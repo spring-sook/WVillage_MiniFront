@@ -10,6 +10,7 @@ const UserInfoFrame = styled.div`
     justify-content: space-around;
     margin: 0 2%;
     overflow: hidden;
+    gap: 20px;
 `;
 
 const OtherUserProfile = () => {

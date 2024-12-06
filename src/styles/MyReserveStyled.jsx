@@ -13,3 +13,12 @@ export const Reserves = styled.div`
   height: 610px;
   background-color: #d5e8f1;
 `;
+
+export const ReserveHeader = styled.div`
+  display: flex;
+
+  span {
+    box-sizing: border-box;
+    padding: 20px 20px;
+  }
+`;

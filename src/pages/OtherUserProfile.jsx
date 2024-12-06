@@ -2,7 +2,7 @@ import { Container } from "../styles/GlobalStyled";
 import { HeaderCom } from "../components/GlobalComponent";
 import OtherUser from "../components/OtherUser";
 import { useParams } from "react-router-dom";
-import { UserPostList } from "../components/UserPostList";
+import { PostListComponent } from "../components/PostListComponent";
 import styled from "styled-components";
 
 export const UserInfoFrame = styled.div`
@@ -20,7 +20,7 @@ const OtherUserProfile = () => {
       <HeaderCom />
       <UserInfoFrame>
         <OtherUser email={email} />
-        <UserPostList email={email} />
+        <PostListComponent email={email} />
       </UserInfoFrame>
     </Container>
   );

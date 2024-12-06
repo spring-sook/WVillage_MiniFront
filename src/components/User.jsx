@@ -2,7 +2,12 @@ import ImgDownloader from "./Profile";
 import { Usermy, Modal, Tier, TempInfo } from "../styles/UserComstyled";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import temptier from "../../src/images/fire.png";
+import fire1 from "../../src/images/fire1.jpg";
+import fire2 from "../../src/images/fire2.jpg";
+import fire3 from "../../src/images/fire3.jpg";
+import fire4 from "../../src/images/fire4.jpg";
+import fire5 from "../../src/images/fire5.jpg";
+import fire6 from "../../src/images/fire6.jpg";
 
 export const User = ({ setSelectedMenu, selectedMenu }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
@@ -56,42 +61,42 @@ export const User = ({ setSelectedMenu, selectedMenu }) => {
             </p>
             <TempInfo>
               <Tier>
-                <img src={temptier} alt="꺼진 불" />
+                <img src={fire1} alt="꺼진 불" />
                 <div>
                   <h3>꺼진 불</h3>
                   <p>0~10 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={temptier} alt="작은 불" />
+                <img src={fire2} alt="작은 불" />
                 <div>
                   <h3>작은 불</h3>
                   <p>11~30 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={temptier} alt="중간 불" />
+                <img src={fire3} alt="중간 불" />
                 <div>
                   <h3>중간 불</h3>
                   <p>31~50 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={temptier} alt="큰 불" />
+                <img src={fire4} alt="큰 불" />
                 <div>
                   <h3>큰 불</h3>
                   <p>51~70 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={temptier} alt="왕큰 불" />
+                <img src={fire5} alt="왕큰 불" />
                 <div>
                   <h3>왕큰 불</h3>
                   <p>71~90 ℃</p>
                 </div>
               </Tier>
               <Tier>
-                <img src={temptier} alt="대왕 불" />
+                <img src={fire6} alt="대왕 불" />
                 <div>
                   <h3>대왕 불</h3>
                   <p>91~100+ ℃</p>

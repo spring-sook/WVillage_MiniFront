@@ -179,6 +179,29 @@ export const Header = styled.div`
       z-index: 1; /* 이미지보다 위에 표시 */
     }
   }
+  .dropdown {
+    position: absolute;
+    top: 100%; /* 부모 요소 바로 아래 */
+    right: 0; /* 오른쪽 정렬 */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: 150px;
+    font-size: 15px;
+  }
+
+  .dropdown-item {
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
 `;
 
 // nav 스타일

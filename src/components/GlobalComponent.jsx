@@ -11,6 +11,7 @@ export const HeaderCom = () => {
   const [selectedOption, setSelectedOption] = useState("전체");
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
   const [hasNotification, setHasNotification] = useState(true); // 알림 상태
+  const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
 
   const toggleOptions = (event) => {
     event.stopPropagation(); // 클릭 이벤트 전파 방지
@@ -52,6 +53,10 @@ export const HeaderCom = () => {
       handleSearch(); // 검색 함수 호출
     }
   };
+
+  const handleMouseEnter = () => setShowUserMenu(true); // 마우스 진입 시 메뉴 표시
+  const handleMouseLeave = () => setShowUserMenu(false); // 마우스 나갈 시 메뉴 숨김
+
   const imagePath = "snow_village.webp";
 
   return (
@@ -113,12 +118,25 @@ export const HeaderCom = () => {
           </div>
         </div>
       </div>
-      <div className="usermy">
+      <div
+        className="usermy"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <Link to="/mypage" className="profile-link">
           <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
         </Link>
         {hasNotification && <div className="badge">10</div>} {/* 알림 뱃지 */}
-        {/* !!!!db연결하며 상태관리 기능 추가 필요!!!! */}
+        {showUserMenu && (
+          <div className="dropdown">
+            <Link to="/mypage" className="dropdown-item">
+              마이페이지
+            </Link>
+            <Link to="/intro" className="dropdown-item">
+              로그아웃
+            </Link>
+          </div>
+        )}
       </div>
     </Header>
   );

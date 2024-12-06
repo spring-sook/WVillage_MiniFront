@@ -38,16 +38,15 @@ export const Usermy = styled.div`
     width: 80%;
     background-color: #95bfe5;
     font-size: 17px;
-    /* color: #1b5e96; */
     font-weight: bold;
     cursor: pointer; /* 마우스 포인터 변경 */
-    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+    border: 2px solid transparent;
+    transition: border 0.3s ease;
     p {
       color: #1b5e96;
-      &:hover {
-        color: #3c8dbc;
-        text-decoration: underline;
-      }
+    }
+    &:hover {
+      border: 1px solid #1b5e96;
     }
   }
   .gauge {
@@ -66,9 +65,6 @@ export const Usermy = styled.div`
       font-weight: bold;
       color: #1b5e96;
       text-align: center;
-      &:hover {
-        text-decoration: none;
-      }
     }
   }
   .option {
@@ -171,15 +167,15 @@ export const TempInfo = styled.div`
 export const Tier = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px; /* 이미지와 텍스트 사이의 간격 */
-  padding: 10px;
+  gap: 30px;
+  padding: 11px;
 
   img {
-    width: 40px; /* 이미지를 원하는 크기로 조정 */
-    height: 40px;
-    border-radius: 50%; /* 원형 이미지 */
-    object-fit: cover; /* 이미지 비율 유지 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 이미지를 강조하는 그림자 */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   div {

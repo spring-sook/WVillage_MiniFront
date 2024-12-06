@@ -43,7 +43,6 @@ export const UserPoint = () => {
     setBalance(balance + chargeAmount);
     setAmount(""); // 금액 초기화
     setSelectedAccount(""); // 계좌 선택 초기화
-    setAccounts([]); // 추가된 계좌 리스트 초기화
   };
   // 환급 기능
   const handleRefund = () => {
@@ -55,7 +54,6 @@ export const UserPoint = () => {
     setBalance(balance - refundAmount);
     setAmount(""); // 금액 초기화
     setSelectedAccount(""); // 계좌 선택 초기화
-    setAccounts([]); // 추가된 계좌 리스트 초기화
   };
 
   // 계좌 추가하기 버튼 클릭 시 모달 열기

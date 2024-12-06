@@ -5,6 +5,9 @@ export const EditProfile = () => {
   const [isEditing, setIsEditing] = useState(false); // 입력창 표시 상태
   const userEmail = "user@example.com"; // 로그인된 기본 이메일 정보
 
+  const accountWidth = "80%"; // 계좌 입력창 너비
+  const newAccountWidth = "60%"; // 새 계좌 입력창 너비
+
   const toggleEditing = () => {
     setIsEditing(!isEditing); // 상태 전환
   };
@@ -12,7 +15,6 @@ export const EditProfile = () => {
   return (
     <EditProfileContainer>
       <Edit>
-        {/* 입력창 섹션 */}
         <div
           style={{
             padding: "25px",
@@ -20,7 +22,7 @@ export const EditProfile = () => {
             gap: "20px",
           }}
         >
-          {/* 왼쪽 상단: 이름, 이메일, 주소, 상세 주소 */}
+          {/* 왼쪽 상단: 이름, 이메일, 비밀번호, 주소, 상세 주소 */}
           <div style={{ flex: "1" }}>
             <div style={{ marginBottom: "15px" }}>
               <label style={{ display: "block", marginBottom: "5px" }}>
@@ -38,7 +40,7 @@ export const EditProfile = () => {
                   placeholder="이름 수정"
                 />
               ) : (
-                <p>장원영</p> // 기본 텍스트 표시
+                <p>장원영</p>
               )}
             </div>
             <div style={{ marginBottom: "15px" }}>
@@ -57,7 +59,7 @@ export const EditProfile = () => {
                   placeholder="닉네임 수정"
                 />
               ) : (
-                <p>장어녀</p> // 기본 텍스트 표시
+                <p>장어녀</p>
               )}
             </div>
             <div style={{ marginBottom: "15px" }}>
@@ -65,6 +67,25 @@ export const EditProfile = () => {
                 이메일
               </label>
               <p>{userEmail}</p> {/* 고정된 기본 이메일 정보 표시 */}
+            </div>
+            <div style={{ marginBottom: "15px" }}>
+              <label style={{ display: "block", marginBottom: "5px" }}>
+                비밀번호 수정
+              </label>
+              {isEditing ? (
+                <input
+                  type="password"
+                  style={{
+                    width: "70%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                  }}
+                  placeholder="새 비밀번호 입력"
+                />
+              ) : (
+                <p>••••••••</p>
+              )}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label style={{ display: "block", marginBottom: "5px" }}>
@@ -82,7 +103,7 @@ export const EditProfile = () => {
                   placeholder="주소 입력"
                 />
               ) : (
-                <p>서울특별시 강남구</p> // 기본 텍스트 표시
+                <p>서울특별시 강남구</p>
               )}
             </div>
             <div style={{ marginBottom: "15px" }}>
@@ -101,58 +122,72 @@ export const EditProfile = () => {
                   placeholder="상세 주소 입력"
                 />
               ) : (
-                <p>123-456</p> // 기본 텍스트 표시
+                <p>123-456</p>
               )}
             </div>
           </div>
 
           {/* 오른쪽 상단: 계좌 입력 섹션 */}
           <div style={{ flex: "1", textAlign: "right" }}>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-              }}
-            >
-              계좌 정보 확인 및 삭제/추가
-            </label>
-            <div
-              style={{
-                marginTop: "10px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                padding: "10px",
-                backgroundColor: "#f9f9f9",
-                width: "100%",
-              }}
-            >
-              <span>우리은행 - 123-456-789</span>
-              {isEditing && (
-                <button
-                  type="button"
-                  style={{
-                    padding: "5px 10px",
-                    backgroundColor: "#4342a0",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  삭제
-                </button>
-              )}
+            {/* 계좌 정보 섹션 */}
+            <div style={{ marginBottom: "20px" }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "5px",
+                  fontWeight: "bold",
+                }}
+              >
+                계좌 정보 확인 및 삭제
+              </label>
+              <div
+                style={{
+                  marginTop: "5px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  backgroundColor: "#f9f9f9",
+                  width: accountWidth,
+                }}
+              >
+                <span>우리은행 - 123-456-789</span>
+                {isEditing && (
+                  <button
+                    type="button"
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#4342a0",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    삭제
+                  </button>
+                )}
+              </div>
             </div>
+
+            {/* 새 계좌 입력창 */}
             {isEditing && (
-              <div style={{ position: "relative", marginTop: "15px" }}>
+              <div
+                style={{
+                  marginTop: "15px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  width: newAccountWidth,
+                }}
+              >
                 <input
                   type="text"
                   style={{
-                    width: "70%",
-                    padding: "10px 50px 10px 10px",
+                    flex: "1",
+                    padding: "10px",
                     border: "1px solid #ccc",
                     borderRadius: "5px",
                   }}
@@ -161,11 +196,7 @@ export const EditProfile = () => {
                 <button
                   type="button"
                   style={{
-                    position: "absolute",
-                    right: "10px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    padding: "5px 15px",
+                    padding: "10px 15px",
                     backgroundColor: "#007bff",
                     color: "white",
                     border: "none",

@@ -11,7 +11,7 @@ export const EditProfileBox = styled.div`
   .select {
     width: 90%;
     height: 100px;
-    background-color: #d5e8f1;
+    background-color: #f5f6fa;
     display: flex;
     justify-content: center;
     align-items: center; /* 세로로 중앙 정렬 */
@@ -49,5 +49,5 @@ export const EditProfileContainer = styled.div`
 export const Edit = styled.div`
   width: 90%;
   height: 610px;
-  background-color: #d5e8f1;
+  background-color: #f5f6fa;
 `;

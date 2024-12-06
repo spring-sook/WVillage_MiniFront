@@ -38,24 +38,36 @@ export const Usermy = styled.div`
     width: 80%;
     background-color: #95bfe5;
     font-size: 17px;
-    color: #1b5e96;
+    /* color: #1b5e96; */
     font-weight: bold;
-    .gauge {
-      margin-left: 20px;
-      height: 35px;
-      width: 150px;
-      background-color: white;
-      border-radius: 50px;
+    cursor: pointer; /* 마우스 포인터 변경 */
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+    p {
+      color: #1b5e96;
+      &:hover {
+        color: #3c8dbc;
+        text-decoration: underline;
+      }
+    }
+  }
+  .gauge {
+    margin-left: 20px;
+    height: 35px;
+    width: 150px;
+    background-color: white;
+    border-radius: 50px;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-      p {
-        font-size: 15px;
-        font-weight: bold;
-        color: #1b5e96;
-        text-align: center;
+    p {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1b5e96;
+      text-align: center;
+      &:hover {
+        text-decoration: none;
       }
     }
   }
@@ -75,6 +87,112 @@ export const Usermy = styled.div`
     p.selected {
       color: #3c8dbc;
       text-decoration: underline;
+    }
+  }
+`;
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease; /* 페이드인 애니메이션 추가 */
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    animation: scaleUp 0.3s ease; /* 확대 애니메이션 추가 */
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.8);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #1b5e96;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #145a86;
+      }
+    }
+    .warning {
+      color: #e03838;
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+  }
+`;
+// temp-info와 tier 관련 스타일
+export const TempInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+`;
+
+export const Tier = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px; /* 이미지와 텍스트 사이의 간격 */
+  padding: 10px;
+
+  img {
+    width: 40px; /* 이미지를 원하는 크기로 조정 */
+    height: 40px;
+    border-radius: 50%; /* 원형 이미지 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 이미지를 강조하는 그림자 */
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1b5e96;
+    }
+
+    p {
+      font-size: 14px;
+      color: #333;
     }
   }
 `;

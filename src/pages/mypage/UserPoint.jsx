@@ -25,13 +25,11 @@ export const UserPoint = () => {
 
   const handleChargeClick = () => {
     setIsCharge(true);
-    setAccounts([]); // 충전 버튼 클릭 시 계좌 리스트 초기화
     setAmount(""); // 포인트 입력란 초기화
   };
 
   const handleRefundClick = () => {
     setIsCharge(false);
-    setAccounts([]); // 환급 버튼 클릭 시 계좌 리스트 초기화
     setAmount(""); // 포인트 입력란 초기화
   };
 

@@ -66,6 +66,10 @@ export const HeaderCom = () => {
       </div>
       <Nav>
         <Link to="/post" className="tag">
+          전체
+        </Link>
+        <p>/</p>
+        <Link to="/post" className="tag">
           제품
         </Link>
         <p>/</p>

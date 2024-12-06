@@ -191,6 +191,18 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
 
+  /* 배경 페이드인 효과만 적용 */
+  animation: fadeBackground 0.3s ease;
+
+  @keyframes fadeBackground {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   .modal-content {
     background-color: white;
     padding: 20px;
@@ -198,6 +210,18 @@ export const Modal = styled.div`
     width: 500px;
     height: 400px;
     text-align: center;
+
+    /* 모달 내용에만 확대 애니메이션 적용 */
+    animation: scaleUp 0.3s ease;
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.8);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
 
     h2 {
       margin-top: 10px;

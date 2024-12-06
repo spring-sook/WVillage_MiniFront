@@ -25,6 +25,8 @@ export const Header = styled.div`
 
   gap: 20px;
   margin: 5px;
+  width: 93vw;
+
   .logo {
     height: 100px;
     width: 100px;
@@ -153,7 +155,7 @@ export const Header = styled.div`
   }
   .usermy {
     position: relative; /* 뱃지를 배치하기 위한 기준 */
-    margin-right: 50px; /* 오른쪽 여백 */
+
     &:hover {
       cursor: pointer;
     }

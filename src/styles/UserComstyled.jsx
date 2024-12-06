@@ -153,6 +153,10 @@ export const Modal = styled.div`
       margin-top: 10px;
       font-size: 15px;
     }
+    .tier-intro {
+      margin-top: 10px;
+      font-size: 13px;
+    }
   }
 `;
 // temp-info와 tier 관련 스타일

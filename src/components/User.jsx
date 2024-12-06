@@ -49,7 +49,11 @@ export const User = ({ setSelectedMenu, selectedMenu }) => {
         <Modal>
           <div className="modal-content">
             <h2>온도 정보</h2>
-            <p className="tier-intro">리뷰 점수 10점당 1℃ 씩 가감됩니다.</p>
+            <p className="tier-intro">
+              신규 가입시 첫 온도는 30℃ 입니다. <br />
+              점수 10점당 1℃ 씩 가감됩니다. <br />
+              점수는 리뷰를 받거나 거래성사시 받을 수 있습니다.
+            </p>
             <TempInfo>
               <Tier>
                 <img src={temptier} alt="꺼진 불" />
@@ -96,7 +100,7 @@ export const User = ({ setSelectedMenu, selectedMenu }) => {
             </TempInfo>
 
             <p className="warning">
-              1회 신고 받을시 20점이 차감됩니다. <br />
+              신고 1회당 20점이 차감됩니다. <br />
               신고 누적 10회 이상시 꺼진 불이 고정됩니다.
             </p>
             <button onClick={() => setIsModalOpen(false)}>닫기</button>

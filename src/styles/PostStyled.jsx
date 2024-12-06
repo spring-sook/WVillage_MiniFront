@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import { headerHeight, navHeight } from "./GlobalStyled";
 
+export const PostHeader = styled.h2`
+  margin: 1% 3% 2% 3.3%;
+`;
+
 export const PostBody = styled.div`
   display: flex;
+  justify-content: space-around;
   width: 100%;
-  min-height: calc(100vh - ${headerHeight} - ${navHeight});
+  /* min-height: calc(100vh - ${headerHeight} - ${navHeight}); */
+  min-height: 700px;
+  margin: 0 2%;
 `;
 
 export const PostMainFilter = styled.div`
@@ -12,11 +19,10 @@ export const PostMainFilter = styled.div`
   position: relative;
   flex-direction: column;
   align-items: center;
-  min-width: 250px;
-  width: 20%;
+  width: 300px;
 
   p {
-    width: 100%;
+    width: 90%;
     height: 40px;
     padding-left: 10px;
     display: flex;
@@ -26,7 +32,7 @@ export const PostMainFilter = styled.div`
   }
 
   hr {
-    width: 100%;
+    width: 90%;
     background-color: #ccc;
   }
 
@@ -50,7 +56,7 @@ export const PostMainFilter = styled.div`
     margin-left: 2px;
   }
 
-  .div-datepicker {
+  /* .div-datepicker {
     display: flex;
     flex-direction: column;
     width: 95%;
@@ -87,19 +93,18 @@ export const PostMainFilter = styled.div`
     border-radius: 20px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-  }
+  } */
 
   .select-region-button,
   .condition-search {
     margin-top: 2vh;
-    width: 95%;
+    width: 85%;
     height: 35px;
     background-color: #fff;
     color: #777;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 20px;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 
@@ -123,6 +128,7 @@ export const PostMainList = styled.div`
   flex-direction: column;
   position: relative;
   width: 80%;
+  margin: 0 8% 0 2%;
   background-color: #cbe5fd;
   padding: 10px;
 

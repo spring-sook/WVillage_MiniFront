@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { CategorySelect } from "./CategorySelect";
+import {PostItem} from "./PostItemComponent";
 
 const UserPostContainer = styled.div`
   display: flex;
@@ -49,14 +50,9 @@ const PostListContainer = styled.div`
   }
 `;
 
-const PostItem = styled.div`
-  width: 200px;
-  height: 300px;
-  margin: 10px;
-  background-color: white;
-`;
 
-export const UserPostList = ({ email }) => {
+
+export const PostListComponent = ({ email }) => {
   const option = [
     {
       value: "물건",
@@ -73,31 +69,31 @@ export const UserPostList = ({ email }) => {
     <UserPostContainer>
       <CategorySelect options={option} />
       <PostListContainer>
-        <PostItem>12345</PostItem>
+        {/*<PostItem>12345</PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
 
-        <PostItem></PostItem>
+        {/*<PostItem></PostItem>*/}
       </PostListContainer>
     </UserPostContainer>
   );

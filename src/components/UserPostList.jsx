@@ -5,7 +5,7 @@ const UserPostContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 0.9;
-    max-width: 1250px;
+    max-width: 90%;
     height: 600px;
     overflow: hidden;
     background-color: #686a7e;
@@ -48,7 +48,7 @@ const PostListContainer = styled.div`
 const PostItem = styled.div`
     width: 200px;
     height: 300px;
-    margin: 20px;
+    margin: 10px;
     background-color: white;
 `;
 

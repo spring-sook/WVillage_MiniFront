@@ -3,6 +3,7 @@ import { EditProfileContainer, Edit } from "../../styles/EditProfileStyled";
 
 export const EditProfile = () => {
   const [isEditing, setIsEditing] = useState(false); // 입력창 표시 상태
+  const userEmail = "user@example.com"; // 로그인된 기본 이메일 정보
 
   const toggleEditing = () => {
     setIsEditing(!isEditing); // 상태 전환
@@ -37,7 +38,7 @@ export const EditProfile = () => {
                   placeholder="이름 수정"
                 />
               ) : (
-                <p>홍길동</p> // 기본 텍스트 표시
+                <p>장원영</p> // 기본 텍스트 표시
               )}
             </div>
             <div style={{ marginBottom: "15px" }}>
@@ -56,27 +57,14 @@ export const EditProfile = () => {
                   placeholder="닉네임 수정"
                 />
               ) : (
-                <p>길동이</p> // 기본 텍스트 표시
+                <p>장어녀</p> // 기본 텍스트 표시
               )}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label style={{ display: "block", marginBottom: "5px" }}>
                 이메일
               </label>
-              {isEditing ? (
-                <input
-                  type="email"
-                  style={{
-                    width: "70%",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                  }}
-                  placeholder="이메일 입력"
-                />
-              ) : (
-                <p>hong@gmail.com</p> // 기본 텍스트 표시
-              )}
+              <p>{userEmail}</p> {/* 고정된 기본 이메일 정보 표시 */}
             </div>
             <div style={{ marginBottom: "15px" }}>
               <label style={{ display: "block", marginBottom: "5px" }}>
@@ -124,7 +112,6 @@ export const EditProfile = () => {
               style={{
                 display: "block",
                 marginBottom: "5px",
-                fontWeight: "bold",
               }}
             >
               계좌 정보 확인 및 삭제/추가
@@ -139,6 +126,7 @@ export const EditProfile = () => {
                 borderRadius: "5px",
                 padding: "10px",
                 backgroundColor: "#f9f9f9",
+                width: "100%",
               }}
             >
               <span>우리은행 - 123-456-789</span>
@@ -147,7 +135,7 @@ export const EditProfile = () => {
                   type="button"
                   style={{
                     padding: "5px 10px",
-                    backgroundColor: "#ff4d4d",
+                    backgroundColor: "#4342a0",
                     color: "white",
                     border: "none",
                     borderRadius: "5px",
@@ -163,7 +151,7 @@ export const EditProfile = () => {
                 <input
                   type="text"
                   style={{
-                    width: "100%",
+                    width: "70%",
                     padding: "10px 50px 10px 10px",
                     border: "1px solid #ccc",
                     borderRadius: "5px",
@@ -204,7 +192,7 @@ export const EditProfile = () => {
             onClick={toggleEditing}
             style={{
               padding: "10px 20px",
-              backgroundColor: isEditing ? "#ff4d4d" : "#007bff",
+              backgroundColor: isEditing ? "#4342a0" : "#007bff",
               color: "white",
               border: "none",
               borderRadius: "5px",
@@ -218,3 +206,5 @@ export const EditProfile = () => {
     </EditProfileContainer>
   );
 };
+
+export default EditProfile;

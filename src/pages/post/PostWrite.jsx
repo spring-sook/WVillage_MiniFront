@@ -11,12 +11,12 @@ import { useState } from "react";
 
 const PostWrite = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isUnitOpen, setIsUnitOpen] = useState(false);
   const [category, setCategory] = useState("");
-  const [unit, setUnit] = useState("");
   const [price, setPrice] = useState("");
   const [title, setTitle] = useState("");
+  const [addr, setAddr] = useState("");
   const [files, setFiles] = useState([]);
+  const [content, setContent] = useState("");
 
   const getArrowIcon = (isOpen) =>
     `url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 10 6%27%3E%3Cpath d=%27${
@@ -34,6 +34,9 @@ const PostWrite = () => {
       value = Number(value).toLocaleString();
       setPrice(value);
     }
+  };
+  const handleInputChange = (e, setState) => {
+    setState(e.target.value);
   };
   const handleSubmit = async () => {
     try {
@@ -108,7 +111,12 @@ const PostWrite = () => {
               <option value="hour">시간</option>
             </select> */}
           </PostWriteSelect>
-          <input type="text" className="post-write-title" placeholder="제목" />
+          <input
+            type="text"
+            className="post-write-title"
+            placeholder="제목"
+            onChange={(e) => handleInputChange(e, setTitle)}
+          />
           <div className="post-write-place">
             <span>서울시 송파구 역삼동</span>
           </div>
@@ -142,6 +150,7 @@ const PostWrite = () => {
           <textarea
             className="post-write-context"
             placeholder="내용을 작성하세요."
+            onChange={(e) => handleInputChange(e, setContent)}
           />
         </PostWriteContent>
       </PostWriteContainer>

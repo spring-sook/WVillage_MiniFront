@@ -45,6 +45,7 @@ const PostList = () => {
               </button>
             )}
           </p>
+          <hr />
           {/* <div className="PostFilterDatePicker"> */}
           <div className="div-datepicker">
             {/* today버튼, month/day dropdown, select time, locale, fixed height of calendar?, 이전날은 안보이게  */}

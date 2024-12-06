@@ -12,8 +12,8 @@ export const PostMainFilter = styled.div`
   position: relative;
   flex-direction: column;
   align-items: center;
+  min-width: 250px;
   width: 20%;
-  background-color: antiquewhite;
 
   p {
     width: 100%;
@@ -21,7 +21,13 @@ export const PostMainFilter = styled.div`
     padding-left: 10px;
     display: flex;
     align-items: center;
-    background-color: blueviolet;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  hr {
+    width: 100%;
+    background-color: #ccc;
   }
 
   .reset-button {
@@ -48,7 +54,7 @@ export const PostMainFilter = styled.div`
     display: flex;
     flex-direction: column;
     width: 95%;
-    margin-top: 2%;
+    margin-top: 2.5%;
   }
 
   .input-date-picker {
@@ -73,7 +79,7 @@ export const PostMainFilter = styled.div`
   .input-date-picker {
     // 시작일, 종료일 input
     height: 35px;
-    margin-top: 1vh;
+    margin-top: 2vh;
     text-align: center;
     color: #777;
     font-size: 16px;
@@ -85,7 +91,7 @@ export const PostMainFilter = styled.div`
 
   .select-region-button,
   .condition-search {
-    margin-top: 1vh;
+    margin-top: 2vh;
     width: 95%;
     height: 35px;
     background-color: #fff;
@@ -118,13 +124,13 @@ export const PostMainList = styled.div`
   position: relative;
   width: 80%;
   background-color: #cbe5fd;
-  padding: 1%;
+  padding: 10px;
 
   button {
     background-color: transparent;
     border: none;
     font-size: 14px;
-    padding: 10px;
+    padding: 6px 20px;
     cursor: pointer;
   }
 
@@ -141,7 +147,6 @@ export const PostMainList = styled.div`
 `;
 
 export const PostDisplay = styled.div`
-  /* background-color: blanchedalmond; */
   width: 100%;
   height: 100%;
   padding: 1%;

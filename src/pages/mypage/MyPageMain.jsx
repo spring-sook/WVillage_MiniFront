@@ -9,7 +9,7 @@ import { MyBookmark } from "./MyBookmark";
 import { MyReserve } from "./MyReserves";
 import { UserPoint } from "./UserPoint";
 import { EditProfile } from "./EditProfile";
-import { UserMain } from "../../styles/MyPostStyled";
+// import { UserMain } from "../../styles/MyPostStyled";
 
 export const MyPageMain = () => {
   const [selectedMenu, setSelectedMenu] = useState("작성 게시글");

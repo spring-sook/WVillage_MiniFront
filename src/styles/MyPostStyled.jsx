@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const UserMain = styled.div`
-  display: flex;
-  align-items: center;
-`;
+// export const UserMain = styled.div`
+//   display: flex;
+//   align-items: center;
+// `;
 
 export const MyPostContainer = styled.div`
   width: 78%;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CategorySelect } from "./CategorySelect";
-import {PostItem} from "./PostItemComponent";
+import { PostItem } from "./PostItemComponent";
 
 const UserPostContainer = styled.div`
   display: flex;
@@ -49,8 +49,6 @@ const PostListContainer = styled.div`
     background: #555; /* 마우스를 올렸을 때의 색상 */
   }
 `;
-
-
 
 export const PostListComponent = ({ email }) => {
   const option = [

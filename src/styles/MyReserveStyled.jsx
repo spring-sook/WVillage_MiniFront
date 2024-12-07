@@ -16,9 +16,17 @@ export const Reserves = styled.div`
 
 export const ReserveHeader = styled.div`
   display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 30px;
 
-  span {
+  .line {
     box-sizing: border-box;
-    padding: 20px 20px;
+    padding: 20px 30px;
+  }
+
+  .sort-menu {
+    cursor: pointer;
   }
 `;

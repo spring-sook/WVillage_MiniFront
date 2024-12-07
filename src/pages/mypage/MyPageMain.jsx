@@ -3,16 +3,25 @@ import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { UserInfoFrame } from "../OtherUserProfile";
 import OtherUser from "../../components/OtherUser";
 import { User } from "../../components/User";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MyPosts } from "./MyPosts";
 import { MyBookmark } from "./MyBookmark";
 import { MyReserve } from "./MyReserves";
 import { UserPoint } from "./UserPoint";
 import { EditProfile } from "./EditProfile";
+import { useLocation, useNavigate } from "react-router-dom";
 // import { UserMain } from "../../styles/MyPostStyled";
 
 export const MyPageMain = () => {
-  const [selectedMenu, setSelectedMenu] = useState("작성 게시글");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const menuFromUrl = queryParams.get("menu") || "작성 게시글";
+  const [selectedMenu, setSelectedMenu] = useState(menuFromUrl);
+
+  useEffect(() => {
+    navigate(`?menu=${selectedMenu}`, { replace: true });
+  }, [selectedMenu, navigate]);
 
   return (
     <Container>

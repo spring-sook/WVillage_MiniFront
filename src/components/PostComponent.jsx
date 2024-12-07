@@ -1,3 +1,9 @@
+import {
+  ModalOverlay,
+  ModalContainer,
+  ModalButton,
+} from "../styles/PostStyled";
+
 export const GenerateExcludedTimes = (startDate, endDate) => {
   const excludedTimes = [];
   let currentTime = new Date(startDate);
@@ -24,5 +30,17 @@ export const ViewReview = () => {
     <>
       <div>여기는 사용자 리뷰</div>
     </>
+  );
+};
+
+export const Modal = ({ onClose }) => {
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <h3>모든 항목을 기입해 주세요!</h3>
+        <p>게시글을 작성하려면 모든 입력 필드를 채워야 합니다.</p>
+        <ModalButton onClick={onClose}>확인</ModalButton>
+      </ModalContainer>
+    </ModalOverlay>
   );
 };

@@ -352,6 +352,42 @@ export const PostContentBottom = styled.div`
   }
 `;
 
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContainer = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+`;
+
+export const ModalButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #1b5e96;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #95bfe5;
+  }
+`;
+
 export const PostWriteContainer = styled.div`
   width: 1000px;
   min-height: 500px;
@@ -386,6 +422,11 @@ export const PostWriteContainer = styled.div`
   .post-submit:active {
     transform: scale(0.99);
   }
+
+  .post-submit:disabled {
+    background-color: #ccc;
+    transform: none;
+  }
 `;
 
 export const PostWriteContent = styled.div`
@@ -406,6 +447,10 @@ export const PostWriteContent = styled.div`
     background-color: #eee;
     border: none;
     border-radius: 10px;
+
+    &:focus {
+      background-color: transparent;
+    }
   }
 
   .post-write-place {
@@ -459,13 +504,14 @@ export const PostWriteSelect = styled.div`
     border-bottom: 1px solid #ccc;
     margin-right: 10px;
     padding: 10px;
-    width: 22%;
-    font-size: 16px;
+    width: 20%;
+    font-size: 17px;
   }
 
-  /* .post-write-dh {
-    width: 22%;
-  } */
+  span {
+    font-size: 17px;
+    padding-top: 12px;
+  }
 
   select option {
     color: #333;

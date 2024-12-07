@@ -6,6 +6,7 @@ import {
   PostWriteSelect,
   Attachment,
 } from "../../styles/PostStyled";
+import { Modal } from "../../components/PostComponent";
 import { ImgUpload } from "../../components/ImgUpload";
 import { useState } from "react";
 
@@ -17,6 +18,7 @@ const PostWrite = () => {
   const [addr, setAddr] = useState("");
   const [files, setFiles] = useState([]);
   const [content, setContent] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const getArrowIcon = (isOpen) =>
     `url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 10 6%27%3E%3Cpath d=%27${
@@ -39,6 +41,10 @@ const PostWrite = () => {
     setState(e.target.value);
   };
   const handleSubmit = async () => {
+    if (!isFormValid()) {
+      setShowModal(true); // 모든 필드를 채우지 않으면 모달을 띄운다
+      return;
+    }
     try {
       const fileUrls = await ImgUpload(files);
       console.log("Uploaded file URLs:", fileUrls);
@@ -46,10 +52,22 @@ const PostWrite = () => {
     } catch (e) {
       console.error("파일업로드 중 오류 발생", e);
     }
-    window.history.back();
+    window.history.back(); // 이전 페이지로 이동
+  };
+  const closeModal = () => {
+    setShowModal(false); // 모달 닫기
   };
   const handleRemoveFile = (index) => {
     setFiles((prevState) => prevState.filter((_, i) => i !== index));
+  };
+  const isFormValid = () => {
+    return (
+      category &&
+      price &&
+      title &&
+      files.length > 0 &&
+      content.trim().length > 0
+    );
   };
 
   return (
@@ -58,7 +76,13 @@ const PostWrite = () => {
       <PostWriteContainer>
         <div className="post-top">
           <h2>게시글 작성</h2>
-          <button className="post-submit" onClick={handleSubmit}>
+          <button
+            className="post-submit"
+            onClick={handleSubmit}
+            style={{
+              backgroundColor: isFormValid() ? "#1b5e96" : "#ccc",
+            }}
+          >
             작성 완료
           </button>
         </div>
@@ -93,23 +117,7 @@ const PostWrite = () => {
               placeholder="가격"
               onChange={handlePriceChange}
             />
-            {/* <select
-              className="post-write-dropbox post-write-dh"
-              onClick={() => setIsUnitOpen(!isUnitOpen)}
-              onBlur={() => setIsUnitOpen(false)}
-              value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-              style={{
-                backgroundImage: getArrowIcon(isUnitOpen),
-                backgroundSize: "14px",
-              }}
-            >
-              <option value="" disabled hidden>
-                시간/일
-              </option>
-              <option value="day">일</option>
-              <option value="hour">시간</option>
-            </select> */}
+            <span>원</span>
           </PostWriteSelect>
           <input
             type="text"
@@ -154,6 +162,7 @@ const PostWrite = () => {
           />
         </PostWriteContent>
       </PostWriteContainer>
+      {showModal && <Modal onClose={closeModal} />}
       <FooterCom />
     </Container>
   );

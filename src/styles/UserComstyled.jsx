@@ -52,22 +52,29 @@ export const Usermy = styled.div`
       border: 1px solid #1b5e96;
     }
   }
+  .temperature-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* 동그랗게 만들기 */
+    border: 1px solid #1b5e96;
+  }
+
   .gauge {
     margin-left: 20px;
     height: 35px;
     width: 150px;
     background-color: white;
     border-radius: 50px;
-
     display: flex;
-    justify-content: center;
     align-items: center;
+    position: relative;
 
     p {
       font-size: 15px;
       font-weight: bold;
       color: #1b5e96;
       text-align: center;
+      padding: 30px;
     }
   }
   .option {

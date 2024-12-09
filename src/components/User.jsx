@@ -24,6 +24,23 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
 
   const imagePath = "snow_village.webp";
 
+  const temperature = 36.5;
+  let temperatureImage = fire1; // 기본 이미지를 설정 (기본값)
+
+  if (temperature >= 0 && temperature <= 10) {
+    temperatureImage = fire1;
+  } else if (temperature >= 11 && temperature <= 30) {
+    temperatureImage = fire2;
+  } else if (temperature >= 31 && temperature <= 50) {
+    temperatureImage = fire3;
+  } else if (temperature >= 51 && temperature <= 70) {
+    temperatureImage = fire4;
+  } else if (temperature >= 71 && temperature <= 90) {
+    temperatureImage = fire5;
+  } else if (temperature >= 91) {
+    temperatureImage = fire6;
+  }
+
   return (
     <>
       <Usermy>
@@ -36,6 +53,11 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
             <p>온도</p>
             <div className="gauge">
               <p>36.5 ℃</p>
+              <img
+                src={temperatureImage}
+                alt="온도 이미지"
+                className="temperature-image"
+              />
             </div>
           </div>
           <div className="option">

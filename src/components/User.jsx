@@ -9,7 +9,7 @@ import fire4 from "../../src/images/fire4.jpg";
 import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
 
-export const User = ({ setSelectedMenu, selectedMenu }) => {
+export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
   const links = [
@@ -30,6 +30,7 @@ export const User = ({ setSelectedMenu, selectedMenu }) => {
         <div className="usermy">
           <ImgDownloader imgfile={imagePath} width="120px" height="120px" />
         </div>
+        <h3>{nickname}</h3>
         <div className="box">
           <div className="temp" onClick={() => setIsModalOpen(true)}>
             <p>온도</p>

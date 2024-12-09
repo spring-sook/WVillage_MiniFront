@@ -9,6 +9,7 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import AuthAPI from "../../api/AuthAPI";
 
 const ICONS = {
   user: faUser,
@@ -23,13 +24,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleLogin = () => {
-    if (email === "test@example.com" && password === "password123") {
-      alert("로그인 성공!");
-      navigate("/main");
-    } else {
-      alert("이메일 또는 비밀번호가 잘못되었습니다.");
-    }
+  const handleLogin = async () => {
+    const response = await AuthAPI.login(email, password);
+    // if (email === "test@example.com" && password === "password123") {
+    //   alert("로그인 성공!");
+    //   navigate("/main");
+    // } else {
+    //   alert("이메일 또는 비밀번호가 잘못되었습니다.");
+    // }
   };
 
   return (

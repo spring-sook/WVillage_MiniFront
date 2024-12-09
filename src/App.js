@@ -1,5 +1,6 @@
 // import "./App.css";
 import GlobalStyled from "./styles/GlobalStyled";
+import UserStore from "./context/UserStore";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/main/Main";
 import PostList from "./pages/post/PostList";
@@ -18,22 +19,24 @@ function App() {
   return (
     <>
       <GlobalStyled />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/intro" element={<Intro />} />
-          <Route path="/post" element={<PostList />} />
-          <Route path="/postContent" element={<PostContent />} />
-          <Route path="/postWrite" element={<PostWrite />} />
-          <Route path="/passwordreset" element={<PasswordReset />} />
-          <Route path="/passwordreset2" element={<PasswordReset2 />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/findmail" element={<FindMail />} />
-          <Route path="/userProfile" element={<OtherUserProfile />} />
-          <Route path="/mypage" element={<MyPageMain />} />
-        </Routes>
-      </Router>
+      <UserStore>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/main" element={<Main />} />
+            <Route path="/intro" element={<Intro />} />
+            <Route path="/post" element={<PostList />} />
+            <Route path="/postContent" element={<PostContent />} />
+            <Route path="/postWrite" element={<PostWrite />} />
+            <Route path="/passwordreset" element={<PasswordReset />} />
+            <Route path="/passwordreset2" element={<PasswordReset2 />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/findmail" element={<FindMail />} />
+            <Route path="/userProfile" element={<OtherUserProfile />} />
+            <Route path="/mypage" element={<MyPageMain />} />
+          </Routes>
+        </Router>
+      </UserStore>
     </>
   );
 }

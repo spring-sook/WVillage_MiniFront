@@ -1,33 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
-import { useNavigate } from "react-router-dom";
 
 const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleReset = () => {
-    if (!email || !phone || !newPassword || !confirmPassword) {
-      alert("공백을 전부 입력해주세요.");
+    if (!email || !phone) {
+      alert("이메일과 전화번호를 입력해주세요.");
       return;
     }
-    if (newPassword.length < 8) {
-      alert("비밀번호는 최소 8자 이상 문자, 특수문자가 포함되어있어야 합니다.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-    setIsModalOpen(true);
-  };
-  const handleCloseModal = () => {
-    navigate("/");
+    navigate("/passwordreset2");
   };
 
   return (
@@ -51,7 +37,7 @@ const PasswordReset = () => {
           <InputWrapper>
             <Input
               type="text"
-              placeholder="전화번호   `-`를 제외 (11자리)"
+              placeholder="전화번호  '-'를 제외 (11자리)"
               value={phone}
               onChange={(e) => {
                 if (!isNaN(e.target.value)) setPhone(e.target.value);
@@ -59,41 +45,26 @@ const PasswordReset = () => {
               maxLength="11"
             />
           </InputWrapper>
-          <Divider />
-          <InputWrapper>
-            <Input
-              type="password"
-              placeholder="새 비밀번호"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </InputWrapper>
-          <Divider />
-          <InputWrapper>
-            <Input
-              type="password"
-              placeholder="비밀번호 확인"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </InputWrapper>
         </InputContainer>
         <Button onClick={handleReset}>재설정</Button>
       </PasswordResetBox>
-
-      {isModalOpen && (
-        <Modal>
-          <ModalContent>
-            <ModalMessage>비밀번호가 성공적으로 변경되었습니다!</ModalMessage>
-            <CloseButton onClick={handleCloseModal}>완료</CloseButton>
-          </ModalContent>
-        </Modal>
-      )}
     </PasswordResetContainer>
   );
 };
 
 export default PasswordReset;
+
+const ToggleVisibility = styled.div`
+  position: absolute;
+  right: 15px;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
+  }
+`;
 
 const Header = styled.div`
   width: 100%;

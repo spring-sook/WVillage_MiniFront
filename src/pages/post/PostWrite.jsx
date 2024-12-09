@@ -9,21 +9,28 @@ import {
 import { Modal } from "../../components/PostComponent";
 import { ImgUpload } from "../../components/ImgUpload";
 import { useEffect, useState } from "react";
+import UserProfileAPI from "../../api/OtherUserProfileAPI";
 
 const PostWrite = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [title, setTitle] = useState("");
-  const [addr, setAddr] = useState("");
+  const [areaCode, setAreaCode] = useState("");
   const [files, setFiles] = useState([]);
   const [content, setContent] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const getAddr = async () => {
-      const response = await 
+    const storedAddr = localStorage.getItem("userInfo");
+    if (storedAddr) {
+      const parsedUserInfo = JSON.parse(storedAddr);
+      setAreaCode(parsedUserInfo.areaCode || "");
     }
+    const getRegion = async (areaCode) => {
+      const regionResponse = await UserProfileAPI.getRegion(areaCode);
+      console.log(regionResponse);
+    };
   }, []);
 
   const getArrowIcon = (isOpen) =>

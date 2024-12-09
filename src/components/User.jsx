@@ -15,6 +15,7 @@ export const User = ({ setSelectedMenu, selectedMenu }) => {
   const links = [
     "작성 게시글",
     "즐겨찾기 게시글",
+    "예약 관리",
     "예약 리스트",
     "포인트",
     "내 정보 수정",

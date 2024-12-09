@@ -1,6 +1,3 @@
-import { Container } from "../../styles/GlobalStyled";
-import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { User } from "../../components/User";
 import {
   UserMain,
   PointBox,
@@ -10,7 +7,9 @@ import {
   ChargeRefundContainer,
   Modal,
 } from "../../styles/UserPointStyled";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AccountAPI from "../../api/AccountAPI";
+import { UserContext } from "../../context/UserStore";
 
 export const UserPoint = () => {
   const [isCharge, setIsCharge] = useState(true);
@@ -18,10 +17,10 @@ export const UserPoint = () => {
   const [amount, setAmount] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState("");
-
   // 모달 관련 상태
   const [showModal, setShowModal] = useState(false); // 모달 열기/닫기
   const [newAccount, setNewAccount] = useState({ bank: "", accountNumber: "" }); // 새 계좌 정보
+  const { userInfo } = useContext(UserContext); // UserContext에서 userInfo 가져오기
 
   const handleChargeClick = () => {
     setIsCharge(true);
@@ -61,19 +60,36 @@ export const UserPoint = () => {
     setShowModal(true);
   };
 
-  // 계좌 추가 완료
-  const handleAddAccount = () => {
-    if (!newAccount.bank || !newAccount.accountNumber) {
-      alert("은행과 계좌 번호를 입력하세요.");
+  // 계좌 추가
+  const handleAddAccount = async () => {
+    if (!newAccount.bank || !newAccount.accountNumber || !userInfo.email) {
+      alert("은행, 계좌 번호, 이메일을 모두 입력하세요.");
       return;
     }
-    setAccounts([
-      ...accounts,
-      `${newAccount.bank} - ${newAccount.accountNumber}`,
-    ]);
-    setShowModal(false); // 모달 닫기
-    setNewAccount({ bank: "", accountNumber: "" }); // 입력값 초기화
+
+    // newAccount에 이메일을 추가
+    const updatedAccount = {
+      ...newAccount,
+      accountEmail: userInfo.email, // 이메일을 newAccount에 할당
+    };
+
+    try {
+      const success = await AccountAPI.addAccount(
+        updatedAccount.accountEmail, // 이메일 포함해서 서버로 전송
+        updatedAccount.bank,
+        updatedAccount.accountNumber
+      );
+      if (success) {
+        alert("계좌가 추가되었습니다.");
+      } else {
+        alert("계좌 추가 실패");
+      }
+    } catch (error) {
+      console.error("계좌 추가 중 오류 발생:", error);
+      alert("계좌 추가 중 오류가 발생했습니다.");
+    }
   };
+
   const isChargeDisabled = !amount || !selectedAccount;
   const isRefundDisabled =
     !amount || !selectedAccount || parseFloat(amount) > balance;
@@ -168,7 +184,7 @@ export const UserPoint = () => {
               placeholder="계좌 번호"
               value={newAccount.accountNumber}
               onChange={(e) => {
-                const value = e.target.value.replace(/[^0-9]/g, "");
+                const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 입력
                 setNewAccount({ ...newAccount, accountNumber: value });
               }}
             />

@@ -46,25 +46,13 @@ const PasswordReset = () => {
             />
           </InputWrapper>
         </InputContainer>
-        <Button onClick={handleReset}>재설정</Button>
+        <Button onClick={handleReset}>비밀번호 재설정</Button>
       </PasswordResetBox>
     </PasswordResetContainer>
   );
 };
 
 export default PasswordReset;
-
-const ToggleVisibility = styled.div`
-  position: absolute;
-  right: 15px;
-  font-size: 18px;
-  color: #aaa;
-  cursor: pointer;
-
-  &:hover {
-    color: #007bff;
-  }
-`;
 
 const Header = styled.div`
   width: 100%;
@@ -167,48 +155,6 @@ const Button = styled.button`
   border-radius: 15px;
   font-size: large;
   cursor: pointer;
-  &:hover {
-    background-color: #b4d8fa;
-  }
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  border-radius: 10px;
-  padding: 20px 40px;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-`;
-
-const ModalMessage = styled.p`
-  font-size: 15px;
-  color: #000000;
-  margin-bottom: 20px;
-`;
-
-const CloseButton = styled.button`
-  padding: 10px 20px;
-  color: white;
-  background-color: #a2d2ff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-
   &:hover {
     background-color: #b4d8fa;
   }

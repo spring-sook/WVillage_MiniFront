@@ -97,15 +97,16 @@ const PostList = () => {
             </button>
           </div>
           <PostDisplay>
-            {posts.map((post, index) => (
-              <PostItem
-                key={index}
-                thumbnail={post.postThumbnail} // assuming postThumbnail is part of the post object
-                title={post.postTitle}
-                price={post.postPrice}
-                region={post.postRegion}
-              />
-            ))}
+            {Array.isArray(posts) &&
+              posts.map((post, index) => (
+                <PostItem
+                  key={index}
+                  thumbnail={post.postThumbnail} // assuming postThumbnail is part of the post object
+                  title={post.postTitle}
+                  price={post.postPrice}
+                  region={post.postRegion}
+                />
+              ))}
           </PostDisplay>
         </PostMainList>
       </PostBody>

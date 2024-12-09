@@ -8,7 +8,7 @@ import {
 } from "../../styles/PostStyled";
 import { Modal } from "../../components/PostComponent";
 import { ImgUpload } from "../../components/ImgUpload";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PostWrite = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -19,6 +19,12 @@ const PostWrite = () => {
   const [files, setFiles] = useState([]);
   const [content, setContent] = useState("");
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const getAddr = async () => {
+      const response = await 
+    }
+  }, []);
 
   const getArrowIcon = (isOpen) =>
     `url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 10 6%27%3E%3Cpath d=%27${

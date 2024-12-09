@@ -12,8 +12,20 @@ export const UserStore = (props) => {
     setUserInfo(info);
     localStorage.setItem("userInfo", JSON.stringify(info)); // 로컬 스토리지에 저장
   };
+  // 포인트 업데이트 관련
+  const updateUserPoints = (newPoints) => {
+    const updatedUserInfo = { ...userInfo, point: newPoints };
+    updateUserInfo(updatedUserInfo);
+  };
+
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo: updateUserInfo }}>
+    <UserContext.Provider
+      value={{
+        userInfo,
+        setUserInfo: updateUserInfo,
+        updateUserPoints,
+      }}
+    >
       {props.children}
     </UserContext.Provider>
   );

@@ -7,7 +7,7 @@ import {
   Attachment,
 } from "../../styles/PostStyled";
 import { Modal } from "../../components/PostComponent";
-import { ImgUpload } from "../../components/ImgUpload";
+import { ImgUpload } from "../../components/ImgComponent";
 import { useContext, useEffect, useState } from "react";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
 import { UserContext } from "../../context/UserStore";

@@ -1,4 +1,4 @@
-import ImgDownloader from "./Profile";
+import ProfileImgDownloader from "./Profile";
 import { Usermy, Modal, Tier, TempInfo } from "../styles/UserComstyled";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
@@ -47,7 +47,11 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
     <>
       <Usermy>
         <div className="usermy">
-          <ImgDownloader imgfile={imagePath} width="120px" height="120px" />
+          <ProfileImgDownloader
+            imgfile={imagePath}
+            width="120px"
+            height="120px"
+          />
           <h4>{nickname}</h4>
         </div>
         <div className="box">

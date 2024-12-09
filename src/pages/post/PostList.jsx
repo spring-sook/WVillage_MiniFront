@@ -11,6 +11,7 @@ import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
+import { PostItem } from "../../components/PostItemComponent";
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -27,14 +28,23 @@ const PostList = () => {
   const category = queryParams.get("category");
 
   useEffect(() => {
-    const region = userInfo.region;
-    const fetchPosts = async () => {
+    const region = userInfo.areaCode;
+    setPosts([]);
+    const fetchAllPosts = async () => {
       const response = await PostAPI.CommonAllList(region);
       setPosts(response.data);
     };
+    const fetchCategoryPosts = async () => {
+      const response = await PostAPI.CommonCategoryList(region, category);
+      console.log(response);
+      setPosts(response);
+    };
     if (category === "all") {
-      fetchPosts();
+      fetchAllPosts();
+    } else {
+      fetchCategoryPosts();
     }
+    console.log(posts);
   }, [category]);
 
   const handleClickIcon = () => {
@@ -86,7 +96,17 @@ const PostList = () => {
               게시글 작성
             </button>
           </div>
-          <PostDisplay></PostDisplay>
+          <PostDisplay>
+            {posts.map((post, index) => (
+              <PostItem
+                key={index}
+                thumbnail={post.postThumbnail} // assuming postThumbnail is part of the post object
+                title={post.postTitle}
+                price={post.postPrice}
+                region={post.postRegion}
+              />
+            ))}
+          </PostDisplay>
         </PostMainList>
       </PostBody>
       <FooterCom />

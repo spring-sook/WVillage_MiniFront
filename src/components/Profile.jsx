@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { storage } from "../api/Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 
-const ImgDownloader = ({ imgfile, width, height }) => {
+const ProfileImgDownloader = ({ imgfile, width, height }) => {
   const [imageUrl, setImageUrl] = useState(null);
+  const storedImageUrl = localStorage.getItem("profileImageUrl");
 
   useEffect(() => {
-    const storedImageUrl = localStorage.getItem("profileImageUrl");
-
     if (storedImageUrl) {
       // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
       setImageUrl(storedImageUrl);
@@ -43,4 +42,4 @@ const ImgDownloader = ({ imgfile, width, height }) => {
   );
 };
 
-export default ImgDownloader;
+export default ProfileImgDownloader;

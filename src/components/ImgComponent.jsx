@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { storage } from "../api/Firebase";
+import { ref, getDownloadURL } from "firebase/storage";
 
 export const ImgUpload = async (files) => {
   const uploadedFileUrls = [];
@@ -24,4 +26,32 @@ export const ImgUpload = async (files) => {
   }
 
   return uploadedFileUrls; // 업로드된 파일들의 URL을 반환
+};
+
+export const ImgDownloader = ({ imgfile, width, height }) => {
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
+
+    getDownloadURL(fileRef)
+      .then((url) => {
+        setImageUrl(url); // 이미지 URL을 상태에 저장
+      })
+      .catch((error) => {
+        console.error("이미지 가져오기 에러:", error);
+      });
+  }, [imgfile]);
+  return (
+    <>
+      <img
+        src={imageUrl}
+        alt="이미지"
+        style={{
+          width: width || "200px",
+          height: height || "200px",
+        }}
+      />
+    </>
+  );
 };

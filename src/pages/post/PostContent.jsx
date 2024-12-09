@@ -11,7 +11,7 @@ import { useState } from "react";
 import Logo from "../../images/logo.png";
 import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
-import ImgDownloader from "../../components/Profile";
+import ProfileImgDownloader from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import {
   GenerateExcludedTimes,
@@ -88,7 +88,11 @@ const PostContent = () => {
             여기가 이미지
           </div>
           <div className="post-content-user">
-            <ImgDownloader imgfile={imagePath} width="40px" height="40px" />
+            <ProfileImgDownloader
+              imgfile={imagePath}
+              width="40px"
+              height="40px"
+            />
             <div className="post-content-userinfo">
               <p className="post-content-nick">coolcool</p>
               <p className="post-content-region">여의동</p>

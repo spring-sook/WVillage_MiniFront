@@ -1,7 +1,7 @@
 import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import ImgDownloader from "./Profile";
+import ProfileImgDownloader from "./Profile";
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -76,15 +76,15 @@ export const HeaderCom = () => {
           전체
         </Link>
         <p>/</p>
-        <Link to="/post?category=product" className="tag">
+        <Link to="/post?category=제품" className="tag">
           제품
         </Link>
         <p>/</p>
-        <Link to="/post?category=parttime" className="tag">
+        <Link to="/post?category=구인" className="tag">
           구인
         </Link>
         <p>/</p>
-        <Link to="/post?category=place" className="tag">
+        <Link to="/post?category=장소" className="tag">
           장소
         </Link>
       </Nav>
@@ -126,7 +126,11 @@ export const HeaderCom = () => {
         onMouseLeave={handleMouseLeave}
       >
         <Link to="/mypage" className="profile-link">
-          <ImgDownloader imgfile={imagePath} width="60px" height="60px" />
+          <ProfileImgDownloader
+            imgfile={imagePath}
+            width="60px"
+            height="60px"
+          />
         </Link>
         {hasNotification && <div className="badge">10</div>} {/* 알림 뱃지 */}
         {showUserMenu && (

@@ -5,7 +5,14 @@ const SERVER = "http://localhost:8111";
 const PostAPI = {
   // 기본 전체 조회
   CommonAllList: async (region) => {
-    return await axios.get(SERVER + `/board/CommonAllList/${region}`);
+    return await axios.get(SERVER + `/board/commonAllList/${region}`);
+  },
+  CommonCategoryList: async (region, category) => {
+    const params = {
+      region: region,
+      category: category,
+    };
+    return await axios.get(SERVER + `/board/commonCategoryList`, { params });
   },
   PostWrite: async (
     email,

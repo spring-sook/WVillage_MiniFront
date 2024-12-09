@@ -5,6 +5,7 @@ import {
   ReserveItemContainer,
   ReserveState,
 } from "../styles/MyReserveStyled";
+import { ImgDownloader } from "./ImgComponent";
 
 const PostItemStyled = styled.div`
   width: 200px;
@@ -14,7 +15,14 @@ const PostItemStyled = styled.div`
 `;
 
 export const PostItem = ({ thumbnail, title, price, region }) => {
-  return <PostItemStyled>{}</PostItemStyled>;
+  return (
+    <PostItemStyled>
+      <ImgDownloader imgfile={thumbnail} />
+      <h3>{title}</h3>
+      <p>{price} 원</p>
+      <p>{region}</p>
+    </PostItemStyled>
+  );
 };
 
 export const ReserveItem = ({ thumbnail, title, region, state }) => {

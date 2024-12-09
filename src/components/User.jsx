@@ -1,16 +1,18 @@
 import ImgDownloader from "./Profile";
 import { Usermy, Modal, Tier, TempInfo } from "../styles/UserComstyled";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import fire1 from "../../src/images/fire1.jpg";
 import fire2 from "../../src/images/fire2.jpg";
 import fire3 from "../../src/images/fire3.jpg";
 import fire4 from "../../src/images/fire4.jpg";
 import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
+import { UserContext } from "../context/UserStore";
 
 export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+  const { userInfo } = useContext(UserContext);
 
   const links = [
     "작성 게시글",
@@ -24,7 +26,7 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
 
   const imagePath = "snow_village.webp";
 
-  const temperature = 36.5;
+  const temperature = (300.0 + parseInt(userInfo.score)) / 10.0;
   let temperatureImage = fire1; // 기본 이미지를 설정 (기본값)
 
   if (temperature >= 0 && temperature <= 10) {
@@ -52,7 +54,7 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
           <div className="temp" onClick={() => setIsModalOpen(true)}>
             <p>온도</p>
             <div className="gauge">
-              <p>36.5 ℃</p>
+              <p>{temperature} ℃</p>
               <img
                 src={temperatureImage}
                 alt="온도 이미지"

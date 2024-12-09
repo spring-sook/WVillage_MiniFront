@@ -72,19 +72,19 @@ export const HeaderCom = () => {
         </Link>
       </div>
       <Nav>
-        <Link to="/post" className="tag">
+        <Link to="/post?category=all" className="tag">
           전체
         </Link>
         <p>/</p>
-        <Link to="/post" className="tag">
+        <Link to="/post?category=product" className="tag">
           제품
         </Link>
         <p>/</p>
-        <Link to="/post" className="tag">
+        <Link to="/post?category=parttime" className="tag">
           구인
         </Link>
         <p>/</p>
-        <Link to="/post" className="tag">
+        <Link to="/post?category=place" className="tag">
           장소
         </Link>
       </Nav>

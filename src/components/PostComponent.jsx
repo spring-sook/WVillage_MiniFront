@@ -38,7 +38,10 @@ export const Modal = ({ onClose }) => {
     <ModalOverlay>
       <ModalContainer>
         <h3>모든 항목을 기입해 주세요!</h3>
-        <p>게시글을 작성하려면 모든 입력 필드를 채워야 합니다.</p>
+        <p>
+          게시글을 작성하려면 모든 항목(카테고리, 가격, 상세 장소, 제목,
+          첨부파일, 내용)을 채워야 합니다.
+        </p>
         <ModalButton onClick={onClose}>확인</ModalButton>
       </ModalContainer>
     </ModalOverlay>

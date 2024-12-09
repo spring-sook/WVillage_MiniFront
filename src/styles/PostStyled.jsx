@@ -371,6 +371,10 @@ export const ModalContainer = styled.div`
   border-radius: 10px;
   width: 400px;
   text-align: center;
+
+  h3 {
+    margin-bottom: 12px;
+  }
 `;
 
 export const ModalButton = styled.button`
@@ -436,6 +440,24 @@ export const PostWriteContent = styled.div`
   border: 1px solid #ccc;
   border-radius: 10px;
   margin: 10px 0;
+
+  .post-write-place {
+    padding: 5px 30px 20px;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 95%;
+    font-size: 17px;
+  }
+
+  .post-write-addr {
+    width: 40%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 17px;
+  }
 
   .post-write-title {
     margin-bottom: 20px;

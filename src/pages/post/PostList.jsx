@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container } from "../../styles/GlobalStyled";
 import resetIcon from "../../images/reset_icon.png";
 import {
@@ -7,20 +7,35 @@ import {
   PostMainList,
   PostDisplay,
 } from "../../styles/PostStyled";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-// import { ko } from "date-fns/locale";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { UserContext } from "../../context/UserStore";
+import PostAPI from "../../api/PostAPI";
 
 const PostList = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isDropdownView, setDropdownView] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [posts, setPosts] = useState([]);
+  const { userInfo } = useContext(UserContext);
 
   const searchKeyword = searchParams.get("search");
+  const queryParams = new URLSearchParams(location.search);
+  const category = queryParams.get("category");
+
+  useEffect(() => {
+    const region = userInfo.region;
+    const fetchPosts = async () => {
+      const response = await PostAPI.CommonAllList(region);
+      setPosts(response.data);
+    };
+    if (category === "all") {
+      fetchPosts();
+    }
+  }, [category]);
 
   const handleClickIcon = () => {
     setDropdownView(!isDropdownView);

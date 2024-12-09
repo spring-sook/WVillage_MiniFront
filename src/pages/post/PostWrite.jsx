@@ -8,25 +8,35 @@ import {
 } from "../../styles/PostStyled";
 import { Modal } from "../../components/PostComponent";
 import { ImgUpload } from "../../components/ImgUpload";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
+import { UserContext } from "../../context/UserStore";
+import PostAPI from "../../api/PostAPI";
 
 const PostWrite = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [email, setEmail] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [title, setTitle] = useState("");
-  const [areaCode, setAreaCode] = useState("");
+  const [region, setRegion] = useState("");
+  const [location, setLocation] = useState("");
   const [files, setFiles] = useState([]);
   const [content, setContent] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
-    const storedAddr = localStorage.getItem("userInfo");
-    if (storedAddr) {
-      const parsedUserInfo = JSON.parse(storedAddr);
-      setAreaCode(parsedUserInfo.areaCode || "");
-    }
+    const getRegion = async () => {
+      const rspRegion = await UserProfileAPI.getRegion(userInfo.areaCode);
+      const regionData = rspRegion.data[0];
+      const filteredRegion = Object.values(regionData)
+        .filter((value) => value && value !== "nan")
+        .join(" ");
+      setRegion(filteredRegion);
+    };
+    getRegion();
+    setEmail(userInfo.email);
   }, []);
 
   const getArrowIcon = (isOpen) =>
@@ -55,13 +65,28 @@ const PostWrite = () => {
       return;
     }
     try {
+      console.log(files);
+      const insertPost = await PostAPI.PostWrite(
+        email,
+        category,
+        title,
+        content.replace(/[\n\r]+/g, "<br>"),
+        parseInt(price.replace(/,/g, "")),
+        userInfo.areaCode,
+        location,
+        files.map((file) => file.name)
+      );
+      if (!insertPost) {
+        alert("게시물 작성 실패");
+        return;
+      }
       const fileUrls = await ImgUpload(files);
-      console.log("Uploaded file URLs:", fileUrls);
       setFiles([]);
+
+      window.history.back(); // 이전 페이지로 이동
     } catch (e) {
       console.error("파일업로드 중 오류 발생", e);
     }
-    window.history.back(); // 이전 페이지로 이동
   };
   const closeModal = () => {
     setShowModal(false); // 모달 닫기
@@ -73,7 +98,9 @@ const PostWrite = () => {
     return (
       category &&
       price &&
-      title &&
+      region &&
+      location &&
+      title.trim().length > 0 &&
       files.length > 0 &&
       content.trim().length > 0
     );
@@ -112,9 +139,9 @@ const PostWrite = () => {
               <option value="" disabled hidden>
                 카테고리 선택
               </option>
-              <option value="product">제품</option>
-              <option value="part-time">구인</option>
-              <option value="place">장소</option>
+              <option value="제품">제품</option>
+              <option value="구인">구인</option>
+              <option value="장소">장소</option>
             </select>
             <div className="post-write-hour">시간당</div>
             <input
@@ -128,15 +155,21 @@ const PostWrite = () => {
             />
             <span>원</span>
           </PostWriteSelect>
+          <div className="post-write-place">
+            <span>{region}</span>
+            <input
+              type="text"
+              className="post-write-addr"
+              placeholder="상세 장소 입력"
+              onChange={(e) => handleInputChange(e, setLocation)}
+            />
+          </div>
           <input
             type="text"
             className="post-write-title"
             placeholder="제목"
             onChange={(e) => handleInputChange(e, setTitle)}
           />
-          <div className="post-write-place">
-            <span>서울시 송파구 역삼동</span>
-          </div>
           <Attachment>
             <label htmlFor="file-upload" className="file-upload-label">
               <span>이미지 파일 첨부</span>

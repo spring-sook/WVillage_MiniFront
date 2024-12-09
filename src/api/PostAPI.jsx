@@ -14,18 +14,32 @@ const PostAPI = {
     content,
     price,
     region,
-    location
+    location,
+    imgUrls
   ) => {
     const postWrite = {
-      email: email,
-      category: category,
-      title: title,
-      content: content,
-      price: price,
-      region: region,
-      location: location,
+      postEmail: email,
+      postCat: category,
+      postTitle: title,
+      postContent: content,
+      postPrice: price,
+      postRegion: region,
+      postLocation: location,
     };
-    return await axios.post(SERVER + `/post/postWrite`, postWrite);
+    try {
+      const insertPost = await axios.post(SERVER + `/post/postWrite`, {
+        postVo: postWrite,
+        imgUrls: imgUrls,
+      });
+      if (insertPost.data) {
+        return insertPost.data; // 반환된 postId 사용
+      } else {
+        throw new Error("게시글 작성 실패");
+      }
+    } catch (error) {
+      console.error("게시글 작성 중 오류 발생", error);
+      alert("게시글 작성 중 오류 발생");
+    }
   },
 };
 

@@ -27,10 +27,6 @@ const PostWrite = () => {
       const parsedUserInfo = JSON.parse(storedAddr);
       setAreaCode(parsedUserInfo.areaCode || "");
     }
-    const getRegion = async (areaCode) => {
-      const regionResponse = await UserProfileAPI.getRegion(areaCode);
-      console.log(regionResponse);
-    };
   }, []);
 
   const getArrowIcon = (isOpen) =>

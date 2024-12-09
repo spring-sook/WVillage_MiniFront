@@ -29,8 +29,8 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
       <Usermy>
         <div className="usermy">
           <ImgDownloader imgfile={imagePath} width="120px" height="120px" />
+          <h3>{nickname}</h3>
         </div>
-        <h3>{nickname}</h3>
         <div className="box">
           <div className="temp" onClick={() => setIsModalOpen(true)}>
             <p>온도</p>

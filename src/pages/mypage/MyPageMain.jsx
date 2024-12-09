@@ -3,13 +3,14 @@ import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { UserInfoFrame } from "../OtherUserProfile";
 import OtherUser from "../../components/OtherUser";
 import { User } from "../../components/User";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyPosts } from "./MyPosts";
 import { MyBookmark } from "./MyBookmark";
 import { MyReserve } from "./MyReserves";
 import { UserPoint } from "./UserPoint";
 import { EditProfile } from "./EditProfile";
 import { useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserStore";
 // import { UserMain } from "../../styles/MyPostStyled";
 
 export const MyPageMain = () => {
@@ -19,21 +20,21 @@ export const MyPageMain = () => {
   const menuFromUrl = queryParams.get("menu") || "작성 게시글";
   const [selectedMenu, setSelectedMenu] = useState(menuFromUrl);
   const [nickname, setNickname] = useState("");
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     navigate(`?menu=${selectedMenu}`, { replace: true });
-    const storedNickname = localStorage.getItem("userInfo");
-    if (storedNickname) {
-      const parsedUserInfo = JSON.parse(storedNickname);
-      setNickname(parsedUserInfo.nickname || "");
-    }
   }, [selectedMenu, navigate]);
 
   return (
     <Container>
       <HeaderCom />
-      <UserInfoFrame nickname={nickname}>
-        <User setSelectedMenu={setSelectedMenu} selectedMenu={selectedMenu} />
+      <UserInfoFrame>
+        <User
+          setSelectedMenu={setSelectedMenu}
+          selectedMenu={selectedMenu}
+          nickname={userInfo.nickname}
+        />
         {selectedMenu === "작성 게시글" && <MyPosts />}
         {selectedMenu === "즐겨찾기 게시글" && <MyBookmark />}
         {selectedMenu === "예약 리스트" && <MyReserve />}

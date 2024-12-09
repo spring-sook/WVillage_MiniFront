@@ -17,6 +17,9 @@ export const Usermy = styled.div`
     transform: translateX(-50%);
     z-index: 2;
   }
+  h3 {
+    margin: 10px 0;
+  }
   .box {
     width: 350px;
     height: 600px;

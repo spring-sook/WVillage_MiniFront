@@ -134,7 +134,11 @@ export const HeaderCom = () => {
             <Link to="/mypage" className="dropdown-item">
               마이페이지
             </Link>
-            <Link to="/intro" className="dropdown-item">
+            <Link
+              to="/intro"
+              className="dropdown-item"
+              onClick={() => localStorage.removeItem("userInfo")}
+            >
               로그아웃
             </Link>
           </div>

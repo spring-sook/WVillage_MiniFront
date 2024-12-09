@@ -13,7 +13,7 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
     phone: "",
-    addressType: "default", // 선택한 주소 유형 (default: "주소 목록", custom: "직접 입력")
+    addressType: "default",
     address: "",
   });
 
@@ -298,21 +298,6 @@ const Button = styled.button`
   width: 130%;
   padding: 20px;
   margin: 60px 0 20px 0;
-  color: #ffffff;
-  background-color: #a2d2ff;
-  border: none;
-  border-radius: 15px;
-  font-size: large;
-  cursor: pointer;
-  &:hover {
-    background-color: #b4d8fa;
-  }
-`;
-
-const BackToLoginButton = styled.button`
-  width: 130%;
-  padding: 20px;
-  margin: 20px 0 20px 0;
   color: #ffffff;
   background-color: #a2d2ff;
   border: none;

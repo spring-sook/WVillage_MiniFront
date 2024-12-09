@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
@@ -10,6 +10,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import AuthAPI from "../../api/AuthAPI";
+import { UserContext } from "../../context/UserStore";
 
 const ICONS = {
   user: faUser,
@@ -20,12 +21,20 @@ const ICONS = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUserInfo } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleLogin = async () => {
     const response = await AuthAPI.login(email, password);
+    console.log("response", response);
+    if (response) {
+      setUserInfo(response);
+      navigate("/main");
+    } else {
+      alert("이메일 또는 비밀번호가 잘못되었습니다.");
+    }
     // if (email === "test@example.com" && password === "password123") {
     //   alert("로그인 성공!");
     //   navigate("/main");

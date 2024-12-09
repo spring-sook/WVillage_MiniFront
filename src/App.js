@@ -14,6 +14,7 @@ import FindMail from "./pages/beforelogin/FindMail";
 import PasswordReset2 from "./pages/beforelogin/PasswordReset2";
 import OtherUserProfile from "./pages/OtherUserProfile";
 import MyPageMain from "./pages/mypage/MyPageMain";
+import UserInfo from "./pages/test";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/findmail" element={<FindMail />} />
             <Route path="/userProfile" element={<OtherUserProfile />} />
             <Route path="/mypage" element={<MyPageMain />} />
+            <Route path="/test" element={<UserInfo />} />
           </Routes>
         </Router>
       </UserStore>

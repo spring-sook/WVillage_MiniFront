@@ -119,7 +119,8 @@ const PostList = () => {
                   title={post.postTitle}
                   price={post.postPrice}
                   region={post.region}
-                  onClick={() => navigate(`/post/${post.postID}`)}
+                  postId={post.postId}
+                  post={post}
                 />
               ))}
           </PostDisplay>

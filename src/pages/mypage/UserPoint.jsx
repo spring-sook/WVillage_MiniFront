@@ -152,6 +152,14 @@ export const UserPoint = () => {
       );
       if (success) {
         alert("계좌가 추가되었습니다.");
+
+        // 계좌 목록 다시 불러오기
+        const response = await axios.get(
+          `http://localhost:8111/account/findByEmail?email=${userInfo.email}`
+        );
+        setAccounts(response.data); // 상태 업데이트
+
+        setShowModal(false); // 모달 닫기
       } else {
         alert("계좌 추가 실패");
       }

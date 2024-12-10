@@ -18,7 +18,7 @@ export const Usermy = styled.div`
     z-index: 2;
   }
   h4 {
-    margin-top: 5px;
+    margin-top: 10px;
     color: #1b5e96;
     font-weight: bold;
     width: 300px;
@@ -33,7 +33,7 @@ export const Usermy = styled.div`
   }
   .temp {
     position: absolute;
-    top: 90px;
+    top: 100px;
     left: 50%;
     border-radius: 10px;
     transform: translateX(-50%);
@@ -48,11 +48,20 @@ export const Usermy = styled.div`
     cursor: pointer; /* 마우스 포인터 변경 */
     border: 2px solid transparent;
     transition: border 0.3s ease;
-    p {
-      color: #1b5e96;
-    }
     &:hover {
       border: 1px solid #1b5e96;
+    }
+    img {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      background-color: white;
+      z-index: 2;
     }
   }
   .gauge {
@@ -66,28 +75,16 @@ export const Usermy = styled.div`
     justify-content: center;
     position: relative;
     p {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: bold;
       color: #1b5e96;
     }
-    img {
-      position: absolute;
-      right: -20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      background-color: white;
-    }
   }
-
   .option {
     color: #1b5e96;
     font-weight: bold;
     font-size: 18px;
-    margin-top: 50%;
+    margin-top: 55%;
 
     p {
       margin: 10%;
@@ -176,7 +173,6 @@ export const TempInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
   padding: 20px;
 `;
 

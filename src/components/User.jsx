@@ -1,6 +1,5 @@
 import ProfileImgDownloader from "./Profile";
 import { Usermy, Modal, Tier, TempInfo } from "../styles/UserComstyled";
-import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import fire1 from "../../src/images/fire1.jpg";
 import fire2 from "../../src/images/fire2.jpg";
@@ -21,7 +20,6 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
     "예약 리스트",
     "포인트",
     "내 정보 수정",
-    "설정",
   ];
 
   const imagePath = "snow_village.webp";
@@ -56,14 +54,13 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
         </div>
         <div className="box">
           <div className="temp" onClick={() => setIsModalOpen(true)}>
-            <p>온도</p>
+            <img
+              src={temperatureImage}
+              alt="온도 이미지"
+              className="temperature-image"
+            />
             <div className="gauge">
               <p>{temperature} ℃</p>
-              <img
-                src={temperatureImage}
-                alt="온도 이미지"
-                className="temperature-image"
-              />
             </div>
           </div>
           <div className="option">

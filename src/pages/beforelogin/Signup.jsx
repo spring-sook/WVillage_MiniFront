@@ -77,36 +77,6 @@ const Signup = () => {
     }
   };
 
-  const checkDuplicate = async (type) => {
-    const value = formData[type];
-    if (!value) {
-      alert(`${type === "name" ? "이름" : "닉네임"}을 입력해주세요.`);
-      return;
-    }
-
-    try {
-      const response = { isDuplicate: false };
-
-      if (response.isDuplicate) {
-        setCheckingStatus((prev) => ({
-          ...prev,
-          [type]: `${type === "name" ? "이름" : "닉네임"}이 이미 존재합니다.`,
-        }));
-      } else {
-        setCheckingStatus((prev) => ({
-          ...prev,
-          [type]: "사용 가능한 값입니다.",
-        }));
-      }
-    } catch (error) {
-      console.error("중복 확인 오류:", error);
-      setCheckingStatus((prev) => ({
-        ...prev,
-        [type]: "오류 발생. 다시 시도해주세요.",
-      }));
-    }
-  };
-
   const handleSignup = () => {
     if (
       !formData.name ||
@@ -145,9 +115,12 @@ const Signup = () => {
               placeholder="이름"
               value={formData.name}
               onChange={handleChange}
-              onBlur={() => checkDuplicate("name")}
             />
-            <StatusMessage>{checkingStatus.name}</StatusMessage>
+            <StatusMessage
+              isValid={checkingStatus.name.includes("사용 가능한")}
+            >
+              {checkingStatus.name}
+            </StatusMessage>
           </InputWrapper>
 
           <InputWrapper>
@@ -157,9 +130,12 @@ const Signup = () => {
               placeholder="닉네임"
               value={formData.nickname}
               onChange={handleChange}
-              onBlur={() => checkDuplicate("nickname")}
             />
-            <StatusMessage>{checkingStatus.nickname}</StatusMessage>
+            <StatusMessage
+              isValid={checkingStatus.nickname.includes("사용 가능한")}
+            >
+              {checkingStatus.nickname}
+            </StatusMessage>
           </InputWrapper>
 
           <InputWrapper>
@@ -170,7 +146,9 @@ const Signup = () => {
               value={formData.email}
               onChange={handleChange}
             />
-            <StatusMessage>{checkingStatus.email}</StatusMessage>
+            <StatusMessage isValid={checkingStatus.email.includes("올바른")}>
+              {checkingStatus.email}
+            </StatusMessage>
           </InputWrapper>
 
           <InputWrapper>
@@ -188,7 +166,11 @@ const Signup = () => {
                 icon={passwordVisible ? ICONS.eyeSlash : ICONS.eye}
               />
             </ToggleVisibility>
-            <StatusMessage>{checkingStatus.password}</StatusMessage>
+            <StatusMessage
+              isValid={checkingStatus.password.includes("사용 가능한")}
+            >
+              {checkingStatus.password}
+            </StatusMessage>
           </InputWrapper>
 
           <InputWrapper>
@@ -197,7 +179,18 @@ const Signup = () => {
               name="confirmPassword"
               placeholder="비밀번호 확인"
               value={formData.confirmPassword}
-              onChange={handleChange}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFormData({ ...formData, confirmPassword: value });
+
+                setCheckingStatus((prev) => ({
+                  ...prev,
+                  confirmPassword:
+                    value === formData.password
+                      ? "비밀번호가 일치합니다."
+                      : "비밀번호가 일치하지 않습니다.",
+                }));
+              }}
             />
             <ToggleVisibility
               onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
@@ -206,25 +199,47 @@ const Signup = () => {
                 icon={confirmPasswordVisible ? ICONS.eyeSlash : ICONS.eye}
               />
             </ToggleVisibility>
+            <StatusMessage
+              isValid={
+                checkingStatus.confirmPassword === "비밀번호가 일치합니다."
+              }
+            >
+              {checkingStatus.confirmPassword}
+            </StatusMessage>
           </InputWrapper>
-
           <InputWrapper>
             <Input
               type="text"
               name="phone"
               placeholder="전화번호 ('-' 제외)"
-              value={formData.phone.replace(/-/g, "").slice(0, 11)} // '-' 제거 및 11자리 제한
+              value={formData.phone} // formData.phone을 그대로 사용
               onChange={(e) => {
                 const onlyNumbers = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
-                setFormData({ ...formData, phone: onlyNumbers });
+                setFormData({ ...formData, phone: onlyNumbers.slice(0, 11) }); // 최대 11자리 제한
+
+                // 유효성 메시지 업데이트
+                if (onlyNumbers.length > 0) {
+                  setCheckingStatus((prev) => ({
+                    ...prev,
+                    phone:
+                      onlyNumbers.length === 11
+                        ? "올바른 전화번호입니다."
+                        : "전화번호는 11자리여야 합니다.",
+                  }));
+                } else {
+                  setCheckingStatus((prev) => ({
+                    ...prev,
+                    phone: "",
+                  }));
+                }
               }}
             />
-            {formData.phone &&
-              (formData.phone.length === 11 ? (
-                <StatusMessage>올바른 전화번호입니다.</StatusMessage>
-              ) : (
-                <StatusMessage>전화번호는 11자리여야 합니다.</StatusMessage>
-              ))}
+            {/* 입력이 있을 때만 메시지 표시 */}
+            {formData.phone && (
+              <StatusMessage isValid={formData.phone.length === 11}>
+                {checkingStatus.phone}
+              </StatusMessage>
+            )}
           </InputWrapper>
           <InputWrapper>
             <Select
@@ -266,14 +281,13 @@ const ToggleVisibility = styled.div`
 `;
 
 const StatusMessage = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
+  margin-top: 5px;
   font-size: 12px;
-  color: ${(props) => (props.children.includes("올바른") ? "green" : "red")};
+  color: ${(props) => (props.isValid ? "green" : "red")};
+  min-height: 18px; /* 고정된 높이로 레이아웃 안정 */
+  visibility: ${(props) =>
+    props.children ? "visible" : "hidden"}; /* 메시지가 없을 때도 공간 유지 */
 `;
-
 const Header = styled.div`
   width: 100%;
   display: flex;
@@ -322,19 +336,25 @@ const InputContainer = styled.div`
 
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 18px;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 20px;
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+  }
 `;
 
 const Select = styled.select`
   width: 100%;
-  padding: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 30px;
 `;
 
 const Button = styled.button`
@@ -343,7 +363,7 @@ const Button = styled.button`
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 30px;
   margin-top: 20px;
   cursor: pointer;
 

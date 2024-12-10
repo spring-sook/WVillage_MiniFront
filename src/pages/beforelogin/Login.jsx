@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
@@ -9,8 +9,6 @@ import {
   faEye,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
-import AuthAPI from "../../api/AuthAPI";
-import { UserContext } from "../../context/UserStore";
 
 const ICONS = {
   user: faUser,
@@ -21,26 +19,37 @@ const ICONS = {
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUserInfo } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [emailMessage, setEmailMessage] = useState(""); // 이메일 상태 메시지
+  const [isEmailValid, setIsEmailValid] = useState(null); // 유효성 검사 상태
 
-  const handleLogin = async () => {
-    const response = await AuthAPI.login(email, password);
-    console.log("response", response);
-    if (response) {
-      setUserInfo(response);
-      navigate("/main");
+  // 이메일 유효성 검사
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(value)) {
+      setEmailMessage("유효한 이메일입니다.");
+      setIsEmailValid(true);
     } else {
-      alert("이메일 또는 비밀번호가 잘못되었습니다.");
+      setEmailMessage("유효하지 않은 아이디입니다.");
+      setIsEmailValid(false);
     }
-    // if (email === "test@example.com" && password === "password123") {
-    //   alert("로그인 성공!");
-    //   navigate("/main");
-    // } else {
-    //   alert("이메일 또는 비밀번호가 잘못되었습니다.");
-    // }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
+  };
+
+  const handleLogin = () => {
+    if (!isEmailValid) {
+      alert("유효한 이메일 주소를 입력해주세요.");
+      return;
+    }
+    // 로그인 로직 추가
+    navigate("/main");
   };
 
   return (
@@ -58,8 +67,12 @@ const Login = () => {
               type="email"
               placeholder="이메일"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
             />
+            {/* 이메일 상태 메시지 */}
+            {email && (
+              <EmailMessage isValid={isEmailValid}>{emailMessage}</EmailMessage>
+            )}
           </InputWrapper>
           <Divider />
           <InputWrapper>
@@ -91,6 +104,19 @@ const Login = () => {
     </LoginContainer>
   );
 };
+
+// 스타일링
+
+const EmailMessage = styled.div`
+  position: absolute;
+  right: 15px; /* 입력창 내부 오른쪽 */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  font-weight: bold;
+  color: ${(props) => (props.isValid ? "#28a745" : "#dc3545")};
+  white-space: nowrap;
+`;
 
 const Header = styled.div`
   width: 100%;
@@ -126,6 +152,7 @@ const LoginContainer = styled.div`
   box-sizing: border-box;
   padding-top: 10px;
 `;
+
 const LoginBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -164,11 +191,11 @@ const Divider = styled.div`
 `;
 
 const InputWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   padding: 25px;
   transition: background-color 0.3s ease;
-  position: relative;
 `;
 
 const Icon = styled(FontAwesomeIcon)`
@@ -182,6 +209,7 @@ const Input = styled.input`
   border: none;
   outline: none;
   font-size: 13px;
+  padding-right: 100px; /* 오른쪽 공간 확보 */
 
   &::placeholder {
     color: #aaa;
@@ -227,6 +255,7 @@ const StyledLink = styled(Link)`
   font-size: 14px;
   text-decoration: none;
 `;
+
 const Separator = styled.span`
   margin: 0 30px;
   color: #ccc;

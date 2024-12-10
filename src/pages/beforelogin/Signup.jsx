@@ -29,6 +29,8 @@ const Signup = () => {
     nickname: "",
     email: "",
     password: "",
+    confirmPassword: "",
+    phone: "",
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -75,6 +77,27 @@ const Signup = () => {
             : "비밀번호는 숫자, 특수문자 포함 8자 이상이어야 합니다.",
       }));
     }
+    if (name === "confirmPassword") {
+      setCheckingStatus((prev) => ({
+        ...prev,
+        confirmPassword:
+          value === formData.password
+            ? "비밀번호가 일치합니다."
+            : "비밀번호가 일치하지 않습니다.",
+      }));
+    }
+    if (name === "phone") {
+      const onlyNumbers = value.replace(/[^0-9]/g, "");
+      setFormData({ ...formData, phone: onlyNumbers.slice(0, 11) });
+
+      setCheckingStatus((prev) => ({
+        ...prev,
+        phone:
+          onlyNumbers.length === 11
+            ? "올바른 전화번호입니다."
+            : "전화번호는 11자리여야 합니다.",
+      }));
+    }
   };
 
   const handleSignup = () => {
@@ -118,6 +141,7 @@ const Signup = () => {
             />
             <StatusMessage
               isValid={checkingStatus.name.includes("사용 가능한")}
+              isVisible={!!formData.name}
             >
               {checkingStatus.name}
             </StatusMessage>
@@ -133,6 +157,7 @@ const Signup = () => {
             />
             <StatusMessage
               isValid={checkingStatus.nickname.includes("사용 가능한")}
+              isVisible={!!formData.nickname}
             >
               {checkingStatus.nickname}
             </StatusMessage>
@@ -146,7 +171,10 @@ const Signup = () => {
               value={formData.email}
               onChange={handleChange}
             />
-            <StatusMessage isValid={checkingStatus.email.includes("올바른")}>
+            <StatusMessage
+              isValid={checkingStatus.email.includes("올바른")}
+              isVisible={!!formData.email}
+            >
               {checkingStatus.email}
             </StatusMessage>
           </InputWrapper>
@@ -168,6 +196,7 @@ const Signup = () => {
             </ToggleVisibility>
             <StatusMessage
               isValid={checkingStatus.password.includes("사용 가능한")}
+              isVisible={!!formData.password}
             >
               {checkingStatus.password}
             </StatusMessage>
@@ -179,18 +208,7 @@ const Signup = () => {
               name="confirmPassword"
               placeholder="비밀번호 확인"
               value={formData.confirmPassword}
-              onChange={(e) => {
-                const value = e.target.value;
-                setFormData({ ...formData, confirmPassword: value });
-
-                setCheckingStatus((prev) => ({
-                  ...prev,
-                  confirmPassword:
-                    value === formData.password
-                      ? "비밀번호가 일치합니다."
-                      : "비밀번호가 일치하지 않습니다.",
-                }));
-              }}
+              onChange={handleChange}
             />
             <ToggleVisibility
               onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
@@ -203,44 +221,28 @@ const Signup = () => {
               isValid={
                 checkingStatus.confirmPassword === "비밀번호가 일치합니다."
               }
+              isVisible={!!formData.confirmPassword}
             >
               {checkingStatus.confirmPassword}
             </StatusMessage>
           </InputWrapper>
+
           <InputWrapper>
             <Input
               type="text"
               name="phone"
               placeholder="전화번호 ('-' 제외)"
-              value={formData.phone} // formData.phone을 그대로 사용
-              onChange={(e) => {
-                const onlyNumbers = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
-                setFormData({ ...formData, phone: onlyNumbers.slice(0, 11) }); // 최대 11자리 제한
-
-                // 유효성 메시지 업데이트
-                if (onlyNumbers.length > 0) {
-                  setCheckingStatus((prev) => ({
-                    ...prev,
-                    phone:
-                      onlyNumbers.length === 11
-                        ? "올바른 전화번호입니다."
-                        : "전화번호는 11자리여야 합니다.",
-                  }));
-                } else {
-                  setCheckingStatus((prev) => ({
-                    ...prev,
-                    phone: "",
-                  }));
-                }
-              }}
+              value={formData.phone}
+              onChange={handleChange}
             />
-            {/* 입력이 있을 때만 메시지 표시 */}
-            {formData.phone && (
-              <StatusMessage isValid={formData.phone.length === 11}>
-                {checkingStatus.phone}
-              </StatusMessage>
-            )}
+            <StatusMessage
+              isValid={formData.phone.length === 11}
+              isVisible={!!formData.phone}
+            >
+              {checkingStatus.phone}
+            </StatusMessage>
           </InputWrapper>
+
           <InputWrapper>
             <Select
               name="address"
@@ -270,7 +272,7 @@ const ToggleVisibility = styled.div`
   position: absolute;
   right: 10px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-100%);
   font-size: 18px;
   color: #aaa;
   cursor: pointer;
@@ -285,8 +287,9 @@ const StatusMessage = styled.div`
   font-size: 12px;
   color: ${(props) => (props.isValid ? "green" : "red")};
   min-height: 18px;
-  visibility: ${(props) => (props.children ? "visible" : "hidden")};
+  visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
 `;
+
 const Header = styled.div`
   width: 100%;
   display: flex;
@@ -295,11 +298,10 @@ const Header = styled.div`
   background-color: white;
   padding: 5px 20px;
   height: 90px;
-  margin-top: 60px;
 `;
 
 const Logo = styled.img`
-  width: 120px;
+  width: 135px;
   height: 100px;
 `;
 
@@ -353,8 +355,7 @@ const Input = styled.input`
 const Select = styled.select`
   width: 100%;
   padding: 15px;
-  margin-top: 20px;
-  border-radius: 30px;
+  margin-top: 10px;
 `;
 
 const Button = styled.button`
@@ -363,7 +364,7 @@ const Button = styled.button`
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 20px;
   margin-top: 20px;
   cursor: pointer;
 

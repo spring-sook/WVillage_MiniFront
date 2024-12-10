@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+const ICONS = {
+  eye: faEye,
+  eyeSlash: faEyeSlash,
+};
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,33 +20,57 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
     phone: "",
-    addressType: "default",
-    address: "",
   });
 
   const [errors, setErrors] = useState({});
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // 실시간 유효성 검사 (선택적으로 추가)
-    if (name === "name" && value.length < 2) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        name: "이름은 2글자 이상이어야 합니다.",
+    // 실시간 유효성 검사
+    if (name === "name") {
+      setErrors((prev) => ({
+        ...prev,
+        name:
+          value.length >= 2
+            ? "사용 가능한 이름입니다."
+            : "이름은 2글자 이상이어야 합니다.",
       }));
-    } else {
-      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
     }
-  };
 
-  const handleAddressChange = (e) => {
-    const { value } = e.target;
-    if (value === "custom") {
-      setFormData({ ...formData, addressType: "custom", address: "" });
-    } else {
-      setFormData({ ...formData, addressType: "default", address: value });
+    if (name === "nickname") {
+      setErrors((prev) => ({
+        ...prev,
+        nickname:
+          value.length >= 2
+            ? "사용 가능한 닉네임입니다."
+            : "닉네임은 2글자 이상이어야 합니다.",
+      }));
+    }
+
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setErrors((prev) => ({
+        ...prev,
+        email: emailRegex.test(value)
+          ? "올바른 이메일 형식입니다."
+          : "유효하지 않은 이메일 형식입니다.",
+      }));
+    }
+
+    if (name === "password") {
+      const hasNumber = /\d/.test(value);
+      const hasSpecialChar = /[!@#$%^&*]/.test(value);
+      setErrors((prev) => ({
+        ...prev,
+        password:
+          value.length >= 8 && hasNumber && hasSpecialChar
+            ? "사용 가능한 비밀번호입니다."
+            : "비밀번호는 숫자, 특수문자 포함 8자 이상이어야 합니다.",
+      }));
     }
   };
 
@@ -50,7 +81,7 @@ const Signup = () => {
       !formData.email ||
       !formData.password ||
       !formData.confirmPassword ||
-      !formData.address
+      !formData.phone
     ) {
       alert("모든 필드를 입력해주세요.");
       return;
@@ -73,109 +104,86 @@ const Signup = () => {
       </Header>
 
       <SignupBox>
-        <InputContainer>
-          {/* 이름 */}
-          <InputWrapper>
-            <Input
-              type="text"
-              name="name"
-              placeholder="이름"
-              value={formData.name}
-              onChange={handleChange}
+        <InputWrapper>
+          <Input
+            type="text"
+            name="name"
+            placeholder="이름"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <CheckButton>중복 확인</CheckButton>
+          <StatusMessage>{errors.name}</StatusMessage>
+        </InputWrapper>
+
+        <InputWrapper>
+          <Input
+            type="text"
+            name="nickname"
+            placeholder="닉네임"
+            value={formData.nickname}
+            onChange={handleChange}
+          />
+          <CheckButton>중복 확인</CheckButton>
+          <StatusMessage>{errors.nickname}</StatusMessage>
+        </InputWrapper>
+
+        <InputWrapper>
+          <Input
+            type="email"
+            name="email"
+            placeholder="이메일"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <StatusMessage>{errors.email}</StatusMessage>
+        </InputWrapper>
+
+        <InputWrapper>
+          <Input
+            type={passwordVisible ? "text" : "password"}
+            name="password"
+            placeholder="비밀번호"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <ToggleVisibility
+            onClick={() => setPasswordVisible(!passwordVisible)}
+          >
+            <FontAwesomeIcon
+              icon={passwordVisible ? ICONS.eyeSlash : ICONS.eye}
             />
-            {errors.name && <Error>{errors.name}</Error>}
-          </InputWrapper>
-          <Divider />
+          </ToggleVisibility>
+          <StatusMessage>{errors.password}</StatusMessage>
+        </InputWrapper>
 
-          {/* 닉네임 */}
-          <InputWrapper>
-            <Input
-              type="text"
-              name="nickname"
-              placeholder="닉네임"
-              value={formData.nickname}
-              onChange={handleChange}
+        <InputWrapper>
+          <Input
+            type={confirmPasswordVisible ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="비밀번호 확인"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+          <ToggleVisibility
+            onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+          >
+            <FontAwesomeIcon
+              icon={confirmPasswordVisible ? ICONS.eyeSlash : ICONS.eye}
             />
-          </InputWrapper>
-          <Divider />
+          </ToggleVisibility>
+        </InputWrapper>
 
-          {/* 이메일 */}
-          <InputWrapper>
-            <Input
-              type="email"
-              name="email"
-              placeholder="이메일"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </InputWrapper>
-          <Divider />
+        <InputWrapper>
+          <Input
+            type="text"
+            name="phone"
+            placeholder="전화번호 ('-' 제외)"
+            value={formData.phone.replace(/-/g, "")}
+            onChange={handleChange}
+          />
+        </InputWrapper>
 
-          {/* 비밀번호 */}
-          <InputWrapper>
-            <Input
-              type="password"
-              name="password"
-              placeholder="비밀번호"
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </InputWrapper>
-          <Divider />
-
-          {/* 비밀번호 확인 */}
-          <InputWrapper>
-            <Input
-              type="password"
-              name="confirmPassword"
-              placeholder="비밀번호 확인"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-          </InputWrapper>
-          <Divider />
-
-          {/* 전화번호 */}
-          <InputWrapper>
-            <Input
-              type="text"
-              name="phone"
-              placeholder="전화번호 ('-' 제외)"
-              value={formData.phone}
-              onChange={handleChange}
-            />
-          </InputWrapper>
-          <Divider />
-
-          {/* 주소 */}
-          <InputWrapper>
-            <Select
-              name="address"
-              value={formData.address}
-              onChange={handleAddressChange}
-            >
-              <option value="서울특별시 강남구">서울특별시 강남구</option>
-              <option value="서울특별시 송파구">서울특별시 송파구</option>
-              <option value="부산광역시 해운대구">부산광역시 해운대구</option>
-              <option value="custom">직접 입력</option>
-            </Select>
-          </InputWrapper>
-
-          {/* 직접 입력 필드 */}
-          {formData.addressType === "custom" && (
-            <InputWrapper>
-              <Input
-                type="text"
-                name="address"
-                placeholder="주소를 입력하세요"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </InputWrapper>
-          )}
-        </InputContainer>
-
-        {/* 회원가입 버튼 */}
         <Button onClick={handleSignup}>회원가입</Button>
       </SignupBox>
     </SignupContainer>
@@ -185,9 +193,44 @@ const Signup = () => {
 export default Signup;
 
 // 스타일링
-const Error = styled.span`
-  color: red;
+const ToggleVisibility = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
+  }
+`;
+
+const StatusMessage = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 12px;
+  color: ${(props) => (props.children.includes("사용 가능") ? "green" : "red")};
+`;
+
+const CheckButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 const Header = styled.div`
@@ -197,9 +240,7 @@ const Header = styled.div`
   justify-content: center;
   background-color: white;
   padding: 5px 20px;
-  z-index: 1000;
   height: 90px;
-  margin-bottom: 18px;
 `;
 
 const Logo = styled.img`
@@ -220,9 +261,7 @@ const SignupContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: calc(100vh - 70px);
-  box-sizing: border-box;
-  padding-top: 160px;
+  height: calc(100vh - 90px);
 `;
 
 const SignupBox = styled.div`
@@ -230,81 +269,33 @@ const SignupBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0px;
   padding: 20px;
-  width: 100%;
-  max-width: 400px;
-  background: white;
-
-  @media (max-width: 1200px) {
-    width: 90%;
-    height: auto;
-  }
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 130%;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    border-color: #007bff;
-    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
-  }
-`;
-
-const Divider = styled.div`
-  height: 1px;
-  background-color: #ccc;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 400px;
 `;
 
 const InputWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 27.5px;
-  transition: background-color 0.3s ease;
   position: relative;
+  margin-bottom: 20px;
 `;
 
 const Input = styled.input`
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 13px;
-
-  &::placeholder {
-    color: #aaa;
-  }
-`;
-
-const Select = styled.select`
-  flex: 1;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 13px;
-
-  &:hover {
-    border-color: #007bff;
-    box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
-  }
+  box-sizing: border-box;
 `;
 
 const Button = styled.button`
-  width: 130%;
-  padding: 20px;
-  margin: 60px 0 20px 0;
-  color: #ffffff;
-  background-color: #a2d2ff;
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 15px;
-  font-size: large;
+  border-radius: 5px;
   cursor: pointer;
+
   &:hover {
-    background-color: #b4d8fa;
+    background-color: #0056b3;
   }
 `;

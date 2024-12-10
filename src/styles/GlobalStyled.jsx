@@ -271,7 +271,6 @@ export const Nav = styled.div`
   max-width: 350px;
   align-items: center;
   .tag {
-    font-size: 16px;
     color: #1b5e96;
     font-weight: bold;
     text-decoration: none;
@@ -292,7 +291,7 @@ export const Nav = styled.div`
 export const Footer = styled.div`
   position: relative; /* 부모 컨텍스트를 유지하면서 직접 조정 가능 */
   left: -2%; /* Container의 좌측 여백 제거 */
-  width: calc(100% + 4%); /* Container의 좌우 여백을 포함한 너비 */
+  width: calc(100% + 2%); /* Container의 좌우 여백을 포함한 너비 */
   height: 150px;
   background-color: #dddddd;
   padding: 20px;

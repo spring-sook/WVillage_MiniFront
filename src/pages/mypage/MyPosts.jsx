@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { MyPostContainer, Posts } from "../../styles/MyPostStyled";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 
 export const MyPosts = () => {
   const navigate = useNavigate();
   const { userInfo } = useContext(UserContext);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {

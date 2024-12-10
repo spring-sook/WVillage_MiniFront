@@ -14,7 +14,7 @@ const GlobalStyled = createGlobalStyle`
 
 export const Container = styled.div`
   margin: 0 2%;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 // 헤더 스타일
@@ -289,6 +289,9 @@ export const Nav = styled.div`
 
 // 푸터 스타일
 export const Footer = styled.div`
+  position: relative; /* 부모 컨텍스트를 유지하면서 직접 조정 가능 */
+  left: -2%; /* Container의 좌측 여백 제거 */
+  width: calc(100% + 4%); /* Container의 좌우 여백을 포함한 너비 */
   height: 150px;
   background-color: #dddddd;
   padding: 20px;

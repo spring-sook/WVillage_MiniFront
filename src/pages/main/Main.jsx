@@ -10,25 +10,37 @@ import {
 } from "../../styles/MainStyled";
 import { Container } from "../../styles/GlobalStyled";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaComments } from "react-icons/fa"; // 채팅 아이콘
+import axios from "axios";
 
 // 이미지가 더 추가될 수 있습니다
 
 const Main = () => {
-  const images = [
-    'url("image1.jpg")',
-    'url("image2.jpg")',
-    'url("image3.jpg")',
-    'url("image4.jpg")',
-    'url("image5.jpg")',
-    'url("image6.jpg")',
-    'url("image7.jpg")',
-    'url("image8.jpg")',
-  ];
+  const [posts, setPosts] = useState([]); // API에서 받은 게시물 목록 상태
+  // const images = [
+  //   'url("image1.jpg")',
+  //   'url("image2.jpg")',
+  //   'url("image3.jpg")',
+  //   'url("image4.jpg")',
+  //   'url("image5.jpg")',
+  //   'url("image6.jpg")',
+  //   'url("image7.jpg")',
+  //   'url("image8.jpg")',
+  // ];
   const boxWidth = 320; // 각 이미지의 너비
   const margin = 10; // 이미지 사이의 여백
   const [currentIndex, setCurrentIndex] = useState(0); // 초기값 0
+
+  useEffect(() => {
+    // 서버에서 데이터 가져오기
+    axios
+      .get("http://localhost:8111/board/mainTopEight")
+      .then((response) => {
+        setPosts(response.data); // 게시물 목록 저장
+      })
+      .catch((error) => console.error("Error fetching posts:", error));
+  }, []);
 
   const goToPrevious = () => {
     if (currentIndex > -2) {
@@ -37,8 +49,8 @@ const Main = () => {
   };
 
   const goToNext = () => {
-    if (currentIndex < images.length - 6) {
-      // 4개씩 보니까 마지막 인덱스는 images.length - 4
+    if (currentIndex < posts.length - 6) {
+      // 6개씩 보므로 마지막 인덱스는 posts.length - 6
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -63,15 +75,21 @@ const Main = () => {
 
           <MainRecomm>
             <BoxContainer
-              slideWidth={`${images.length * (boxWidth + margin)}px`}
+              slideWidth={`${posts.length * (boxWidth + margin)}px`}
               style={{
                 transform: `translateX(${
                   currentIndex * (boxWidth + margin)
-                }px)`, // 이미지가 1개씩 이동
+                }px)`,
               }}
             >
-              {images.map((image, index) => (
-                <Box key={index} style={{ backgroundImage: image }} />
+              {posts.map((post, index) => (
+                <Box key={index}>
+                  {post.postThumbnail}
+                  <div className="post-info">
+                    <h3>{post.postTitle}</h3>
+                    <p>{post.postRegion}</p>
+                  </div>
+                </Box>
               ))}
             </BoxContainer>
           </MainRecomm>
@@ -79,7 +97,7 @@ const Main = () => {
           {/* 오른쪽 버튼 */}
           <Button
             onClick={goToNext}
-            disabled={currentIndex === images.length - 6} // 오른쪽 끝일 때 비활성화
+            disabled={currentIndex === posts.length - 6}
           >
             ▶
           </Button>

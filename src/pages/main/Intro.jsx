@@ -22,7 +22,7 @@ const Intro = () => {
 
       {/* 사이드바 */}
       <Sidebar isOpen={isSidebarOpen}>
-        <Link className="sidebar-item" to="/">
+        <Link className="sidebar-item" to="/login">
           로그인
         </Link>
         <Link className="sidebar-item" to="/signup">

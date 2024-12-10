@@ -2,10 +2,32 @@ import ProfileImgDownloader from "./Profile";
 import { UserReviewRecord } from "./UserReviewRecord";
 import { ReportBtn } from "./ReportBtn";
 import { UserProfileBox } from "../styles/OtherUserStyled";
-import { Typography } from "@mui/material";
+import fire1 from "../../src/images/fire1.jpg";
+import fire2 from "../../src/images/fire2.jpg";
+import fire3 from "../../src/images/fire3.jpg";
+import fire4 from "../../src/images/fire4.jpg";
+import fire5 from "../../src/images/fire5.jpg";
+import fire6 from "../../src/images/fire6.jpg";
 
 export const OtherUser = ({ email }) => {
   const imagePath = "snow_village.webp";
+
+  const temperature = 88; /*(300.0 + parseInt(userInfo.score)) / 10.0*/
+  let temperatureImage = fire1; // 기본 이미지를 설정 (기본값)
+
+  if (temperature >= 0 && temperature <= 10) {
+    temperatureImage = fire1;
+  } else if (temperature >= 11 && temperature <= 30) {
+    temperatureImage = fire2;
+  } else if (temperature >= 31 && temperature <= 50) {
+    temperatureImage = fire3;
+  } else if (temperature >= 51 && temperature <= 70) {
+    temperatureImage = fire4;
+  } else if (temperature >= 71 && temperature <= 90) {
+    temperatureImage = fire5;
+  } else if (temperature >= 91) {
+    temperatureImage = fire6;
+  }
 
   return (
     <>
@@ -17,14 +39,17 @@ export const OtherUser = ({ email }) => {
               width="120px"
               height="120px"
             />
-            <Typography variant="h6" color={"black"}>
-              상대유저명
-            </Typography>
+            <h4>상대유저명</h4>
           </div>
           <div className="temp">
             <p>온도</p>
             <div className="gauge">
               <p>36.5 ℃</p>
+              <img
+                src={temperatureImage}
+                alt="온도 이미지"
+                className="temperature-image"
+              />
             </div>
           </div>
           <UserReviewRecord email={email} />

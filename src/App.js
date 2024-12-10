@@ -23,9 +23,9 @@ function App() {
       <UserStore>
         <Router>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/main" element={<Main />} />
-            <Route path="/intro" element={<Intro />} />
+            <Route path="/" element={<Intro />} />
             <Route path="/post" element={<PostList />} />
             <Route path="/postContent" element={<PostContent />} />
             <Route path="/postWrite" element={<PostWrite />} />

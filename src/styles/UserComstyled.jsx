@@ -17,8 +17,11 @@ export const Usermy = styled.div`
     transform: translateX(-50%);
     z-index: 2;
   }
-  h3 {
-    margin: 10px 0;
+  h4 {
+    margin-top: 5px;
+    color: #1b5e96;
+    font-weight: bold;
+    width: 300px;
   }
   .box {
     width: 350px;
@@ -30,7 +33,7 @@ export const Usermy = styled.div`
   }
   .temp {
     position: absolute;
-    top: 80px;
+    top: 90px;
     left: 50%;
     border-radius: 10px;
     transform: translateX(-50%);
@@ -52,13 +55,6 @@ export const Usermy = styled.div`
       border: 1px solid #1b5e96;
     }
   }
-  .temperature-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* 동그랗게 만들기 */
-    border: 1px solid #1b5e96;
-  }
-
   .gauge {
     margin-left: 20px;
     height: 35px;
@@ -67,16 +63,26 @@ export const Usermy = styled.div`
     border-radius: 50px;
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
-
     p {
       font-size: 15px;
       font-weight: bold;
       color: #1b5e96;
-      text-align: center;
-      padding: 30px;
+    }
+    img {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      background-color: white;
     }
   }
+
   .option {
     color: #1b5e96;
     font-weight: bold;

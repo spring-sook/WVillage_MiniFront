@@ -68,18 +68,18 @@ export const Header = styled.div`
   }
 
   .selected-option {
-    position: absolute; /* 검색창 내부에 배치 */
-    left: 55px; /* 검색창 내부 여백 */
+    position: absolute;
+    left: 55px;
     top: 48%;
     transform: translateY(-50%);
     font-size: 16px;
     font-weight: bold;
     color: #1b5e96;
-    pointer-events: none; /* 클릭 불가능하게 설정 */
+    pointer-events: none;
   }
   .divider {
     position: absolute;
-    left: 100px; /* 선택된 옵션 바로 옆에 배치 */
+    left: 100px;
     top: 43%;
     transform: translateY(-50%);
     color: #1b5e96;
@@ -100,8 +100,8 @@ export const Header = styled.div`
 
   .search-toggle {
     position: absolute;
-    left: 10px; /* 검색창 왼쪽에 고정 */
-    top: 50%; /* 검색창의 세로 중심에 위치 */
+    left: 10px;
+    top: 50%;
     transform: translateY(-50%);
     padding: 5px 10px;
     background-color: #1b5e96;
@@ -154,7 +154,7 @@ export const Header = styled.div`
     background-color: #f0f0f0;
   }
   .usermy {
-    position: relative; /* 뱃지를 배치하기 위한 기준 */
+    position: relative;
 
     &:hover {
       cursor: pointer;
@@ -175,14 +175,14 @@ export const Header = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5); /* 입체감 추가 */
-      z-index: 1; /* 이미지보다 위에 표시 */
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+      z-index: 1;
     }
   }
   .dropdown {
     position: absolute;
-    top: 100%; /* 부모 요소 바로 아래 */
-    right: 0; /* 오른쪽 정렬 */
+    top: 100%;
+    right: 0;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -197,10 +197,68 @@ export const Header = styled.div`
     color: black;
     text-decoration: none;
     display: block;
+    text-align: center;
   }
 
   .dropdown-item:hover {
     background-color: #f0f0f0;
+  }
+
+  .dropdown button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+
+      p {
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      button {
+        margin: 5px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      button:first-of-type {
+        background-color: #1b5e96;
+        color: white;
+      }
+
+      button:last-of-type {
+        background-color: #f0f0f0;
+        color: black;
+      }
+    }
   }
 `;
 

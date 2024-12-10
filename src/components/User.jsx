@@ -52,7 +52,7 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
             width="120px"
             height="120px"
           />
-          <h4>{nickname}</h4>
+          <h4>'{nickname}'님 안녕하세요!</h4>
         </div>
         <div className="box">
           <div className="temp" onClick={() => setIsModalOpen(true)}>

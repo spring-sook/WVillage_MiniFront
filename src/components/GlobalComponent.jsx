@@ -12,6 +12,8 @@ export const HeaderCom = () => {
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
   const [hasNotification, setHasNotification] = useState(true); // 알림 상태
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
+  const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
+
   const navigate = useNavigate();
 
   const toggleOptions = (event) => {
@@ -58,6 +60,13 @@ export const HeaderCom = () => {
 
   const handleMouseEnter = () => setShowUserMenu(true); // 마우스 진입 시 메뉴 표시
   const handleMouseLeave = () => setShowUserMenu(false); // 마우스 나갈 시 메뉴 숨김
+
+  const handleLogout = () => {
+    // 로그아웃 실행
+    localStorage.removeItem("userInfo");
+    setShowLogoutModal(false);
+    navigate("/intro");
+  };
 
   const imagePath = "snow_village.webp";
 
@@ -138,16 +147,24 @@ export const HeaderCom = () => {
             <Link to="/mypage" className="dropdown-item">
               마이페이지
             </Link>
-            <Link
-              to="/intro"
+            <button
               className="dropdown-item"
-              onClick={() => localStorage.removeItem("userInfo")}
+              onClick={() => setShowLogoutModal(true)}
             >
               로그아웃
-            </Link>
+            </button>
           </div>
         )}
       </div>
+      {showLogoutModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>로그아웃 하시겠습니까?</p>
+            <button onClick={handleLogout}>확인</button>
+            <button onClick={() => setShowLogoutModal(false)}>취소</button>
+          </div>
+        </div>
+      )}
     </Header>
   );
 };

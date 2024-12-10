@@ -53,10 +53,9 @@ const Main = () => {
   };
 
   return (
-    <>
-      <div style={{ marginLeft: "2%", marginRight: "2%" }}>
+    <Container>
         <HeaderCom />
-      </div>
+        <div style={{ marginLeft: "-2%", marginRight: "-2%" }}>
       <MainBody>
         <RecommBox>
           <h2>인기 게시물</h2>
@@ -115,11 +114,12 @@ const Main = () => {
           <div className="explain">안쓰는 물건의 마을</div>
         </MainBanner>
       </MainBody>
+      </div>
       <ChatWidget onClick={handleChatClick} title="채팅하기">
         <FaComments />
       </ChatWidget>
       <FooterCom />
-    </>
+    </Container>
   );
 };
 export default Main;

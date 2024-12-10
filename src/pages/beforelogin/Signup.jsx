@@ -20,9 +20,16 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
     phone: "",
+    addressType: "default",
+    address: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [checkingStatus, setCheckingStatus] = useState({
+    name: "",
+    nickname: "",
+    email: "",
+    password: "",
+  });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
@@ -32,7 +39,7 @@ const Signup = () => {
 
     // 실시간 유효성 검사
     if (name === "name") {
-      setErrors((prev) => ({
+      setCheckingStatus((prev) => ({
         ...prev,
         name:
           value.length >= 2
@@ -40,9 +47,8 @@ const Signup = () => {
             : "이름은 2글자 이상이어야 합니다.",
       }));
     }
-
     if (name === "nickname") {
-      setErrors((prev) => ({
+      setCheckingStatus((prev) => ({
         ...prev,
         nickname:
           value.length >= 2
@@ -50,26 +56,54 @@ const Signup = () => {
             : "닉네임은 2글자 이상이어야 합니다.",
       }));
     }
-
     if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setErrors((prev) => ({
+      setCheckingStatus((prev) => ({
         ...prev,
         email: emailRegex.test(value)
           ? "올바른 이메일 형식입니다."
           : "유효하지 않은 이메일 형식입니다.",
       }));
     }
-
     if (name === "password") {
       const hasNumber = /\d/.test(value);
       const hasSpecialChar = /[!@#$%^&*]/.test(value);
-      setErrors((prev) => ({
+      setCheckingStatus((prev) => ({
         ...prev,
         password:
           value.length >= 8 && hasNumber && hasSpecialChar
             ? "사용 가능한 비밀번호입니다."
             : "비밀번호는 숫자, 특수문자 포함 8자 이상이어야 합니다.",
+      }));
+    }
+  };
+
+  const checkDuplicate = async (type) => {
+    const value = formData[type];
+    if (!value) {
+      alert(`${type === "name" ? "이름" : "닉네임"}을 입력해주세요.`);
+      return;
+    }
+
+    try {
+      const response = { isDuplicate: false };
+
+      if (response.isDuplicate) {
+        setCheckingStatus((prev) => ({
+          ...prev,
+          [type]: `${type === "name" ? "이름" : "닉네임"}이 이미 존재합니다.`,
+        }));
+      } else {
+        setCheckingStatus((prev) => ({
+          ...prev,
+          [type]: "사용 가능한 값입니다.",
+        }));
+      }
+    } catch (error) {
+      console.error("중복 확인 오류:", error);
+      setCheckingStatus((prev) => ({
+        ...prev,
+        [type]: "오류 발생. 다시 시도해주세요.",
       }));
     }
   };
@@ -81,9 +115,9 @@ const Signup = () => {
       !formData.email ||
       !formData.password ||
       !formData.confirmPassword ||
-      !formData.phone
+      !formData.address
     ) {
-      alert("모든 필드를 입력해주세요.");
+      alert("공백을 전부 입력해주세요.");
       return;
     }
 
@@ -104,85 +138,103 @@ const Signup = () => {
       </Header>
 
       <SignupBox>
-        <InputWrapper>
-          <Input
-            type="text"
-            name="name"
-            placeholder="이름"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <CheckButton>중복 확인</CheckButton>
-          <StatusMessage>{errors.name}</StatusMessage>
-        </InputWrapper>
-
-        <InputWrapper>
-          <Input
-            type="text"
-            name="nickname"
-            placeholder="닉네임"
-            value={formData.nickname}
-            onChange={handleChange}
-          />
-          <CheckButton>중복 확인</CheckButton>
-          <StatusMessage>{errors.nickname}</StatusMessage>
-        </InputWrapper>
-
-        <InputWrapper>
-          <Input
-            type="email"
-            name="email"
-            placeholder="이메일"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <StatusMessage>{errors.email}</StatusMessage>
-        </InputWrapper>
-
-        <InputWrapper>
-          <Input
-            type={passwordVisible ? "text" : "password"}
-            name="password"
-            placeholder="비밀번호"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <ToggleVisibility
-            onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-            <FontAwesomeIcon
-              icon={passwordVisible ? ICONS.eyeSlash : ICONS.eye}
+        <InputContainer>
+          <InputWrapper>
+            <Input
+              type="text"
+              name="name"
+              placeholder="이름"
+              value={formData.name}
+              onChange={handleChange}
+              onBlur={() => checkDuplicate("name")}
             />
-          </ToggleVisibility>
-          <StatusMessage>{errors.password}</StatusMessage>
-        </InputWrapper>
+            <StatusMessage>{checkingStatus.name}</StatusMessage>
+          </InputWrapper>
 
-        <InputWrapper>
-          <Input
-            type={confirmPasswordVisible ? "text" : "password"}
-            name="confirmPassword"
-            placeholder="비밀번호 확인"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          <ToggleVisibility
-            onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
-          >
-            <FontAwesomeIcon
-              icon={confirmPasswordVisible ? ICONS.eyeSlash : ICONS.eye}
+          <InputWrapper>
+            <Input
+              type="text"
+              name="nickname"
+              placeholder="닉네임"
+              value={formData.nickname}
+              onChange={handleChange}
+              onBlur={() => checkDuplicate("nickname")}
             />
-          </ToggleVisibility>
-        </InputWrapper>
+            <StatusMessage>{checkingStatus.nickname}</StatusMessage>
+          </InputWrapper>
 
-        <InputWrapper>
-          <Input
-            type="text"
-            name="phone"
-            placeholder="전화번호 ('-' 제외)"
-            value={formData.phone.replace(/-/g, "")}
-            onChange={handleChange}
-          />
-        </InputWrapper>
+          <InputWrapper>
+            <Input
+              type="email"
+              name="email"
+              placeholder="이메일"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <StatusMessage>{checkingStatus.email}</StatusMessage>
+          </InputWrapper>
+
+          <InputWrapper>
+            <Input
+              type={passwordVisible ? "text" : "password"}
+              name="password"
+              placeholder="비밀번호"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <ToggleVisibility
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              <FontAwesomeIcon
+                icon={passwordVisible ? ICONS.eyeSlash : ICONS.eye}
+              />
+            </ToggleVisibility>
+            <StatusMessage>{checkingStatus.password}</StatusMessage>
+          </InputWrapper>
+
+          <InputWrapper>
+            <Input
+              type={confirmPasswordVisible ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="비밀번호 확인"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            <ToggleVisibility
+              onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+            >
+              <FontAwesomeIcon
+                icon={confirmPasswordVisible ? ICONS.eyeSlash : ICONS.eye}
+              />
+            </ToggleVisibility>
+          </InputWrapper>
+
+          <InputWrapper>
+            <Input
+              type="text"
+              name="phone"
+              placeholder="전화번호 ('-' 제외)"
+              value={formData.phone.replace(/-/g, "")}
+              onChange={handleChange}
+            />
+          </InputWrapper>
+
+          <InputWrapper>
+            <Select
+              name="address"
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+            >
+              <option value="">주소를 선택하세요</option>
+              <option value="서울특별시 강남구">서울특별시 강남구</option>
+              <option value="서울특별시 송파구">서울특별시 송파구</option>
+              <option value="부산광역시 해운대구">부산광역시 해운대구</option>
+              <option value="custom">직접 입력</option>
+            </Select>
+          </InputWrapper>
+        </InputContainer>
 
         <Button onClick={handleSignup}>회원가입</Button>
       </SignupBox>
@@ -208,29 +260,9 @@ const ToggleVisibility = styled.div`
 `;
 
 const StatusMessage = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   font-size: 12px;
   color: ${(props) => (props.children.includes("사용 가능") ? "green" : "red")};
-`;
-
-const CheckButton = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
+  margin-top: 5px;
 `;
 
 const Header = styled.div`
@@ -273,9 +305,15 @@ const SignupBox = styled.div`
   width: 400px;
 `;
 
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 `;
 
 const Input = styled.input`
@@ -283,7 +321,11 @@ const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-sizing: border-box;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 10px;
 `;
 
 const Button = styled.button`

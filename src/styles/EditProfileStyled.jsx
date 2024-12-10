@@ -78,10 +78,8 @@ export const AccountContainer = styled.div`
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     color: #333;
-    transition: border-color 0.3s ease;
 
     &:hover {
       border-color: #007bff;
@@ -89,7 +87,6 @@ export const AccountContainer = styled.div`
   }
 
   button {
-    flex-shrink: 0; /* 버튼 크기 고정 */
     padding: 10px 15px;
     background-color: #007bff;
     color: #fff;
@@ -97,16 +94,15 @@ export const AccountContainer = styled.div`
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
 
     &:hover {
       background-color: #0056b3;
     }
   }
 `;
+
 export const BottomButtonContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 200px;
   text-align: center;
 
   button {

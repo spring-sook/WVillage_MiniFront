@@ -37,7 +37,6 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // 실시간 유효성 검사
     if (name === "name") {
       setCheckingStatus((prev) => ({
         ...prev,
@@ -214,11 +213,19 @@ const Signup = () => {
               type="text"
               name="phone"
               placeholder="전화번호 ('-' 제외)"
-              value={formData.phone.replace(/-/g, "")}
-              onChange={handleChange}
+              value={formData.phone.replace(/-/g, "").slice(0, 11)} // '-' 제거 및 11자리 제한
+              onChange={(e) => {
+                const onlyNumbers = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
+                setFormData({ ...formData, phone: onlyNumbers });
+              }}
             />
+            {formData.phone &&
+              (formData.phone.length === 11 ? (
+                <StatusMessage>올바른 전화번호입니다.</StatusMessage>
+              ) : (
+                <StatusMessage>전화번호는 11자리여야 합니다.</StatusMessage>
+              ))}
           </InputWrapper>
-
           <InputWrapper>
             <Select
               name="address"
@@ -244,7 +251,6 @@ const Signup = () => {
 
 export default Signup;
 
-// 스타일링
 const ToggleVisibility = styled.div`
   position: absolute;
   right: 10px;
@@ -260,9 +266,12 @@ const ToggleVisibility = styled.div`
 `;
 
 const StatusMessage = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
   font-size: 12px;
-  color: ${(props) => (props.children.includes("사용 가능") ? "green" : "red")};
-  margin-top: 5px;
+  color: ${(props) => (props.children.includes("올바른") ? "green" : "red")};
 `;
 
 const Header = styled.div`
@@ -318,9 +327,9 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
+  padding: 18px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 20px;
 `;
 
 const Select = styled.select`
@@ -330,11 +339,12 @@ const Select = styled.select`
 
 const Button = styled.button`
   width: 100%;
-  padding: 15px;
+  padding: 20px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
+  margin-top: 20px;
   cursor: pointer;
 
   &:hover {

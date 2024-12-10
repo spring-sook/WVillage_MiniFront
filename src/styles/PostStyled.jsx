@@ -229,7 +229,8 @@ export const PostContentTop = styled.div`
   }
 
   .post-content-region {
-    font-size: 14px;
+    font-size: 12px;
+    margin-top: 1px;
   }
 
   .temp-img {
@@ -259,6 +260,10 @@ export const PostContentTop = styled.div`
     margin: 20px 30px;
     font-size: 18px;
     font-weight: 500;
+
+    span {
+      font-size: 20px;
+    }
   }
 
   .line {

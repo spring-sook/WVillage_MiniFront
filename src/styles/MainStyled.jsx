@@ -50,6 +50,11 @@ export const Box = styled.div`
   &:hover {
     cursor: pointer;
   }
+  h3 {
+    white-space: nowrap; /* 텍스트가 한 줄로만 표시되게 함 */
+    overflow: hidden; /* 텍스트가 넘치면 숨김 처리 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시 */
+  }
 `;
 
 export const Button = styled.button`

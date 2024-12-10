@@ -7,7 +7,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Logo from "../../images/logo.png";
 import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
@@ -18,8 +18,14 @@ import {
   ViewItemInfo,
   ViewReview,
 } from "../../components/PostComponent";
+import { useLocation, useParams } from "react-router-dom";
+import { UserContext } from "../../context/UserStore";
 
 const PostContent = () => {
+  const location = useLocation();
+  const { post } = location.state || {};
+  const { postId } = useParams();
+  const { userInfo } = useContext(UserContext);
   const now = new Date();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [startDate, setStartDate] = useState("");
@@ -27,6 +33,7 @@ const PostContent = () => {
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const imagePath = "snow_village.webp";
+  console.log("post : ", post);
 
   const exTime = [
     {
@@ -94,8 +101,8 @@ const PostContent = () => {
               height="40px"
             />
             <div className="post-content-userinfo">
-              <p className="post-content-nick">coolcool</p>
-              <p className="post-content-region">여의동</p>
+              <p className="post-content-nick">{userInfo.nickname}</p>
+              <p className="post-content-region">{userInfo.filteredRegion}</p>
             </div>
             <div className="post-content-temp">
               <img className="temp-img" src={Logo} alt="온도이미지" />
@@ -105,14 +112,16 @@ const PostContent = () => {
         </div>
         <div className="post-content-reserve">
           <p className="post-content-title">
-            상품 제목
+            {post.postTitle}
             <p className="post-content-cnt">
               <span className="post-content-bookmark">북마크 20</span>
               &nbsp;/&nbsp;
               <span className="post-content-view">조회수 100</span>
             </p>
           </p>
-          <p className="post-content-price">상품 가격 / 시</p>
+          <p className="post-content-price">
+            시간 당 &nbsp;<span>{post.postPrice.toLocaleString()}</span> 원
+          </p>
           <div className="date-picker">
             <DatePicker
               className="input-date-picker"

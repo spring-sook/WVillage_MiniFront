@@ -6,6 +6,7 @@ import {
   ReserveState,
 } from "../styles/MyReserveStyled";
 import { ImgDownloader } from "./ImgComponent";
+import { useNavigate } from "react-router-dom";
 
 const PostItemStyled = styled.div`
   width: 225px;
@@ -30,9 +31,12 @@ const PostItemStyled = styled.div`
   }
 `;
 
-export const PostItem = ({ thumbnail, title, price, region }) => {
+export const PostItem = ({ thumbnail, title, price, region, postId, post }) => {
+  const navigate = useNavigate();
   return (
-    <PostItemStyled>
+    <PostItemStyled
+      onClick={() => navigate(`/post/${postId}`, { state: { post } })}
+    >
       <ImgDownloader imgfile={thumbnail} />
       <h3>{title}</h3>
       <p className="price">{price.toLocaleString()} 원</p>

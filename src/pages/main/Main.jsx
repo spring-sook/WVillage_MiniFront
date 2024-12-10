@@ -13,6 +13,7 @@ import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import { useState, useEffect } from "react";
 import { FaComments } from "react-icons/fa"; // 채팅 아이콘
 import axios from "axios";
+import { ImgDownloader } from "../../components/ImgComponent";
 
 // 이미지가 더 추가될 수 있습니다
 
@@ -84,7 +85,7 @@ const Main = () => {
             >
               {posts.map((post, index) => (
                 <Box key={index}>
-                  {post.postThumbnail}
+                  <ImgDownloader imgfile={post.postThumbnail} />
                   <div className="post-info">
                     <h3>{post.postTitle}</h3>
                     <p>{post.postRegion}</p>

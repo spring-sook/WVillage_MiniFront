@@ -284,9 +284,8 @@ const StatusMessage = styled.div`
   margin-top: 5px;
   font-size: 12px;
   color: ${(props) => (props.isValid ? "green" : "red")};
-  min-height: 18px; /* 고정된 높이로 레이아웃 안정 */
-  visibility: ${(props) =>
-    props.children ? "visible" : "hidden"}; /* 메시지가 없을 때도 공간 유지 */
+  min-height: 18px;
+  visibility: ${(props) => (props.children ? "visible" : "hidden")};
 `;
 const Header = styled.div`
   width: 100%;
@@ -296,6 +295,7 @@ const Header = styled.div`
   background-color: white;
   padding: 5px 20px;
   height: 90px;
+  margin-top: 60px;
 `;
 
 const Logo = styled.img`
@@ -336,7 +336,7 @@ const InputContainer = styled.div`
 
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 `;
 
 const Input = styled.input`

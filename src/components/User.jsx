@@ -54,7 +54,6 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
         </div>
         <div className="box">
           <div className="temp" onClick={() => setIsModalOpen(true)}>
-            {/* <p>온도</p> */}
             <img
               src={temperatureImage}
               alt="온도 이미지"

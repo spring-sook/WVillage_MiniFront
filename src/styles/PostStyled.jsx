@@ -231,6 +231,7 @@ export const PostContentTop = styled.div`
   .post-content-region {
     font-size: 12px;
     margin-top: 1px;
+    color: #444;
   }
 
   .temp-img {

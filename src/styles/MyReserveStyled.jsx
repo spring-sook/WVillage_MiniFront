@@ -22,6 +22,7 @@ export const ReserveHeader = styled.div`
   justify-content: space-between;
   margin-left: 10px;
   margin-bottom: 10px;
+  font-size: 14px;
 
   .line {
     box-sizing: border-box;

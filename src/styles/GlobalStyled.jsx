@@ -271,6 +271,7 @@ export const Nav = styled.div`
   max-width: 350px;
   align-items: center;
   .tag {
+    font-size: 16px;
     color: #1b5e96;
     font-weight: bold;
     text-decoration: none;

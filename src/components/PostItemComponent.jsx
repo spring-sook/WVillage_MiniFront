@@ -27,7 +27,8 @@ const PostItemStyled = styled.div`
   }
 
   .region {
-    font-size: 14px;
+    font-size: 12px;
+    color: #444;
   }
 `;
 

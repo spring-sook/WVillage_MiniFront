@@ -376,6 +376,7 @@ const Header = styled.div`
   justify-content: center;
   background-color: white;
   padding: 5px 20px;
+
   height: 90px;
 `;
 

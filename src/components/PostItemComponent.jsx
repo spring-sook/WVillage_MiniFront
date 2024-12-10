@@ -8,10 +8,26 @@ import {
 import { ImgDownloader } from "./ImgComponent";
 
 const PostItemStyled = styled.div`
-  width: 200px;
+  width: 225px;
   height: 300px;
   margin: 10px;
   background-color: white;
+  cursor: pointer;
+
+  h3 {
+    white-space: nowrap; /* 텍스트가 한 줄로만 표시되게 함 */
+    overflow: hidden; /* 텍스트가 넘치면 숨김 처리 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시 */
+  }
+
+  .price {
+    font-size: 16px;
+    margin: 3px 0;
+  }
+
+  .region {
+    font-size: 14px;
+  }
 `;
 
 export const PostItem = ({ thumbnail, title, price, region }) => {
@@ -19,8 +35,8 @@ export const PostItem = ({ thumbnail, title, price, region }) => {
     <PostItemStyled>
       <ImgDownloader imgfile={thumbnail} />
       <h3>{title}</h3>
-      <p>{price} 원</p>
-      <p>{region}</p>
+      <p className="price">{price.toLocaleString()} 원</p>
+      <p className="region">{region}</p>
     </PostItemStyled>
   );
 };

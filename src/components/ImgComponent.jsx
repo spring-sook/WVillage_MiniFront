@@ -48,8 +48,9 @@ export const ImgDownloader = ({ imgfile, width, height }) => {
         src={imageUrl}
         alt="이미지"
         style={{
-          width: width || "200px",
-          height: height || "200px",
+          width: width || "100%",
+          height: height || "80%",
+          objectFit: "cover",
         }}
       />
     </>

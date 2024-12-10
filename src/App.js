@@ -27,7 +27,7 @@ function App() {
             <Route path="/main" element={<Main />} />
             <Route path="/" element={<Intro />} />
             <Route path="/post" element={<PostList />} />
-            <Route path="/postContent" element={<PostContent />} />
+            <Route path="/post/:postId" element={<PostContent />} />
             <Route path="/postWrite" element={<PostWrite />} />
             <Route path="/passwordreset" element={<PasswordReset />} />
             <Route path="/passwordreset2" element={<PasswordReset2 />} />

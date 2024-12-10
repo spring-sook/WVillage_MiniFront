@@ -14,6 +14,7 @@ const UserInfo = () => {
           <p>점수: {userInfo.score}</p>
           <p>등급: {userInfo.grade}</p>
           <p>지역 코드: {userInfo.areaCode}</p>
+          <p>지역명 : {userInfo.filteredRegion}</p>
           <p>포인트: {userInfo.point}</p>
         </div>
       ) : (

@@ -16,6 +16,7 @@ export const PostMainFilter = styled.div`
   flex-direction: column;
   align-items: center;
   width: 350px;
+  min-width: 350px;
 
   h2 {
     margin-bottom: 20px;
@@ -169,6 +170,8 @@ export const PostDisplay = styled.div`
   padding: 1%;
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  row-gap: 30px;
 `;
 
 export const PostContentTop = styled.div`

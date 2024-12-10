@@ -15,6 +15,7 @@ import { FaComments } from "react-icons/fa"; // 채팅 아이콘
 import axios from "axios";
 import { ImgDownloader } from "../../components/ImgComponent";
 import { useNavigate } from "react-router-dom";
+import PostAPI from "../../api/PostAPI";
 
 // 이미지가 더 추가될 수 있습니다
 
@@ -51,69 +52,72 @@ const Main = () => {
     alert("채팅창 열기"); // 임시 동작
     // 실제 채팅 기능 추가 필요
   };
+  const handleBoxClick = async (post) => {
+    try {
+      await PostAPI.PostView(post.postId);
+      navigate(`/post/${post.postId}`, { state: { post } });
+    } catch (error) {
+      console.error("PostView 실행 중 오류 발생:", error);
+    }
+  };
 
   return (
     <Container>
-        <HeaderCom />
-        <div style={{ marginLeft: "-2%", marginRight: "-2%" }}>
-      <MainBody>
-        <RecommBox>
-          <h2>인기 게시물</h2>
+      <HeaderCom />
+      <div style={{ marginLeft: "-2%", marginRight: "-2%" }}>
+        <MainBody>
+          <RecommBox>
+            <h2>인기 게시물</h2>
 
-          {/* 왼쪽 버튼 */}
-          <Button
-            left
-            onClick={goToPrevious}
-            disabled={currentIndex === -2} // 왼쪽 끝일 때 비활성화
-          >
-            ◀
-          </Button>
-
-          <MainRecomm>
-            <BoxContainer
-              slideWidth={`${posts.length * (boxWidth + margin)}px`}
-              style={{
-                transform: `translateX(${
-                  currentIndex * (boxWidth + margin)
-                }px)`,
-              }}
+            {/* 왼쪽 버튼 */}
+            <Button
+              left
+              onClick={goToPrevious}
+              disabled={currentIndex === -2} // 왼쪽 끝일 때 비활성화
             >
-              {posts.map((post, index) => (
-                <Box
-                  key={index}
-                  onClick={() =>
-                    navigate(`/post/${post.postId}`, { state: { post } })
-                  }
-                >
-                  <ImgDownloader
-                    imgfile={post.postThumbnail}
-                    width="100%" // Box에 맞춰 크기 조정
-                    height="82%" // 높이를 80%로 설정
-                  />
-                  <div className="post-info">
-                    <h3>{post.postTitle}</h3>
-                    <p>{post.postRegion}</p>
-                  </div>
-                </Box>
-              ))}
-            </BoxContainer>
-          </MainRecomm>
+              ◀
+            </Button>
 
-          {/* 오른쪽 버튼 */}
-          <Button
-            onClick={goToNext}
-            disabled={currentIndex === posts.length - 6}
-          >
-            ▶
-          </Button>
-        </RecommBox>
-        <MainBanner>
-          <div className="catch">
-            <h1>어디서 Village?</h1>
-          </div>
-          <div className="explain">안쓰는 물건의 마을</div>
-        </MainBanner>
-      </MainBody>
+            <MainRecomm>
+              <BoxContainer
+                slideWidth={`${posts.length * (boxWidth + margin)}px`}
+                style={{
+                  transform: `translateX(${
+                    currentIndex * (boxWidth + margin)
+                  }px)`,
+                }}
+              >
+                {posts.map((post, index) => (
+                  <Box key={index} onClick={() => handleBoxClick(post)}>
+                    <ImgDownloader
+                      imgfile={post.postThumbnail}
+                      width="100%" // Box에 맞춰 크기 조정
+                      height="82%" // 높이를 80%로 설정
+                    />
+                    <div className="post-info">
+                      <h3>{post.postTitle}</h3>
+                      <p>{post.postRegion}</p>
+                    </div>
+                  </Box>
+                ))}
+              </BoxContainer>
+            </MainRecomm>
+
+            {/* 오른쪽 버튼 */}
+            <Button
+              onClick={goToNext}
+              disabled={currentIndex === posts.length - 6}
+            >
+              ▶
+            </Button>
+          </RecommBox>
+          <MainBanner>
+            <div className="catch">
+              <h1>어디서 Village?</h1>
+            </div>
+            <div className="explain">안쓰는 물건의 마을</div>
+          </MainBanner>
+        </MainBody>
       </div>
       <ChatWidget onClick={handleChatClick} title="채팅하기">
         <FaComments />

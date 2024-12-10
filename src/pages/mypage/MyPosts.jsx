@@ -3,6 +3,8 @@ import { MyPostContainer, Posts } from "../../styles/MyPostStyled";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
+import { PostItem } from "../../components/PostItemComponent";
+import { PostHeader } from "../../styles/MyPostStyled";
 
 export const MyPosts = () => {
   const navigate = useNavigate();
@@ -12,13 +14,33 @@ export const MyPosts = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await PostAPI.UserPostList(userInfo.email);
-      console.log("response : ", response);
+      setPosts(response.data);
     };
     fetchData();
   }, []);
   return (
     <MyPostContainer>
-      <Posts>여기에 게시글 목록</Posts>
+      <Posts>
+        <PostHeader>
+          <button>최신순</button>
+          <span>|</span>
+          <button>인기순</button>
+        </PostHeader>
+        {Array.isArray(posts) &&
+          posts.map((post, index) => (
+            <PostItem
+              key={index}
+              thumbnail={post.postThumbnail}
+              title={post.postTitle}
+              price={post.postPrice}
+              region={post.region}
+              postId={post.postId}
+              post={post}
+              width={"210px"}
+              height={"270px"}
+            />
+          ))}
+      </Posts>
     </MyPostContainer>
   );
 };

@@ -20,6 +20,7 @@ import {
 } from "../../components/PostComponent";
 import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
+import PostAPI from "../../api/PostAPI";
 
 const PostContent = () => {
   const location = useLocation();
@@ -45,11 +46,9 @@ const PostContent = () => {
       end: new Date("2024-12-14 20:00:00"),
     },
   ];
-
   const reserveTimes = exTime.flatMap((item) => {
     return GenerateExcludedTimes(item.start, item.end);
   });
-
   const handleStartDateChange = (date) => {
     setStartDate(date);
 
@@ -62,7 +61,6 @@ const PostContent = () => {
     );
     setExcludeTimes(filteredTimes);
   };
-
   const handleEndDateChange = (date) => {
     setEndDate(date);
 
@@ -77,6 +75,14 @@ const PostContent = () => {
     setStartDate(null);
     setEndDate(null);
   };
+  const handleBookmark = async () => {
+    setIsBookmarked(!isBookmarked);
+    if (!isBookmarked) {
+      await PostAPI.InsertBookmark(postId, userInfo.email);
+    } else {
+      await PostAPI.DeleteBookmark(postId, userInfo.email);
+    }
+  };
 
   return (
     <Container>
@@ -88,7 +94,7 @@ const PostContent = () => {
               src={isBookmarked ? BookmarkYes : BookmarkNo}
               alt="북마크"
               onClick={() => {
-                setIsBookmarked(!isBookmarked);
+                handleBookmark();
               }}
               className="bookmark-icon"
             />

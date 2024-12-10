@@ -14,10 +14,12 @@ import { useState, useEffect } from "react";
 import { FaComments } from "react-icons/fa"; // 채팅 아이콘
 import axios from "axios";
 import { ImgDownloader } from "../../components/ImgComponent";
+import { useNavigate } from "react-router-dom";
 
 // 이미지가 더 추가될 수 있습니다
 
 const Main = () => {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]); // API에서 받은 게시물 목록 상태
   const boxWidth = 315; // 각 이미지의 너비
   const margin = 10; // 이미지 사이의 여백
@@ -78,7 +80,12 @@ const Main = () => {
               }}
             >
               {posts.map((post, index) => (
-                <Box key={index}>
+                <Box
+                  key={index}
+                  onClick={() =>
+                    navigate(`/post/${post.postId}`, { state: { post } })
+                  }
+                >
                   <ImgDownloader
                     imgfile={post.postThumbnail}
                     width="100%" // Box에 맞춰 크기 조정

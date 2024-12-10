@@ -10,6 +10,7 @@ const UserInfo = () => {
       {userInfo ? (
         <div>
           <h3>사용자 정보</h3>
+          <p>이메일: {userInfo.email}</p>
           <p>닉네임: {userInfo.nickname}</p>
           <p>점수: {userInfo.score}</p>
           <p>등급: {userInfo.grade}</p>

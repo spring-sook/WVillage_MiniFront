@@ -69,7 +69,6 @@ const PostList = () => {
     setStartDate(null);
     setEndDate(null);
     setDropdownView(false);
-    setSearchParams("");
   };
 
   const isResetVisible =

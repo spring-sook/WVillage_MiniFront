@@ -83,7 +83,9 @@ const PostWrite = () => {
       const fileUrls = await ImgUpload(files);
       setFiles([]);
 
-      window.history.back(); // 이전 페이지로 이동
+      setTimeout(() => {
+        window.history.back(); // 이전 페이지로 이동
+      }, 200);
     } catch (e) {
       console.error("파일업로드 중 오류 발생", e);
     }

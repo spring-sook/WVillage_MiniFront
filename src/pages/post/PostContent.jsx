@@ -101,8 +101,8 @@ const PostContent = () => {
               height="40px"
             />
             <div className="post-content-userinfo">
-              <p className="post-content-nick">{userInfo.nickname}</p>
-              <p className="post-content-region">{userInfo.filteredRegion}</p>
+              <p className="post-content-nick">작성자 닉네임</p>
+              <p className="post-content-region">작성자 지역</p>
             </div>
             <div className="post-content-temp">
               <img className="temp-img" src={Logo} alt="온도이미지" />

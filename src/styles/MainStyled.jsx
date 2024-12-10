@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 //메인 크기
 export const MainBody = styled.div`
-  height: 950px;
+  height: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,12 +11,19 @@ export const MainBody = styled.div`
 
 // 추천 배너
 export const RecommBox = styled.div`
-  height: 450px;
+  height: 500px;
   width: 100%;
   background-color: #f5f6fa;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   position: relative;
+  h2 {
+    font-size: 25px;
+    color: #1b5e96;
+    z-index: 10;
+  }
 `;
 
 export const MainRecomm = styled.div`
@@ -28,6 +35,7 @@ export const MainRecomm = styled.div`
   justify-content: center;
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
+  margin-top: -20px;
 `;
 
 export const BoxContainer = styled.div`
@@ -40,20 +48,25 @@ export const BoxContainer = styled.div`
 
 export const Box = styled.div`
   margin: 0 10px; /* 간격을 조정 */
-  height: 300px;
+  height: 380px;
   width: 305px;
-  border: 1px solid black; /*테두리 삭제?*/
+  background-color: white;
   box-shadow: 3px 3px 5px #707070;
   background-size: cover;
   background-position: center;
-  border-radius: 5% 0 5% 0;
+
   &:hover {
     cursor: pointer;
   }
   h3 {
+    margin-left: 5px;
+    margin-top: 5px;
     white-space: nowrap; /* 텍스트가 한 줄로만 표시되게 함 */
     overflow: hidden; /* 텍스트가 넘치면 숨김 처리 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시 */
+  }
+  p {
+    color: #555555;
   }
 `;
 

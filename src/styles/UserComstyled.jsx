@@ -173,7 +173,6 @@ export const TempInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
   padding: 20px;
 `;
 

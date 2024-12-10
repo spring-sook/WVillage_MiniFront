@@ -54,7 +54,7 @@ const FindMail = () => {
               value={formData.name}
               onChange={handleChange}
             />
-            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+            <ErrorMessage>{errors.name}</ErrorMessage>
           </InputWrapper>
           <Divider />
           <InputWrapper>
@@ -66,7 +66,7 @@ const FindMail = () => {
               onChange={handleChange}
               maxLength="11"
             />
-            {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+            <ErrorMessage>{errors.phone}</ErrorMessage>
           </InputWrapper>
         </InputContainer>
         <Button onClick={handleFindMail}>이메일 찾기</Button>
@@ -160,7 +160,7 @@ const Divider = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 27.5px;
+  padding: 30px;
   transition: background-color 0.3s ease;
   position: relative;
 `;
@@ -218,4 +218,6 @@ const ErrorMessage = styled.span`
   font-size: 10px;
   margin-top: 5px;
   display: block;
+  min-height: 14px;
+  visibility: ${(props) => (props.children ? "visible" : "hidden")};
 `;

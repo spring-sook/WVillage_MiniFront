@@ -86,7 +86,7 @@ export default PasswordReset;
 
 const EmailMessage = styled.div`
   position: absolute;
-  right: 15px; /* 입력창 내부 오른쪽 */
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 12px;
@@ -170,7 +170,7 @@ const Divider = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 27.5px;
+  padding: 30px;
   transition: background-color 0.3s ease;
   position: relative;
 `;

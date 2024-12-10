@@ -37,66 +37,102 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    let updatedValue = value;
 
-    if (name === "name") {
-      setCheckingStatus((prev) => ({
-        ...prev,
-        name:
-          value.length >= 2
-            ? "사용 가능한 이름입니다."
-            : "이름은 2글자 이상이어야 합니다.",
-      }));
-    }
-    if (name === "nickname") {
-      setCheckingStatus((prev) => ({
-        ...prev,
-        nickname:
-          value.length >= 2
-            ? "사용 가능한 닉네임입니다."
-            : "닉네임은 2글자 이상이어야 합니다.",
-      }));
-    }
-    if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setCheckingStatus((prev) => ({
-        ...prev,
-        email: emailRegex.test(value)
-          ? "올바른 이메일 형식입니다."
-          : "유효하지 않은 이메일 형식입니다.",
-      }));
-    }
-    if (name === "password") {
-      const hasNumber = /\d/.test(value);
-      const hasSpecialChar = /[!@#$%^&*]/.test(value);
-      setCheckingStatus((prev) => ({
-        ...prev,
-        password:
-          value.length >= 8 && hasNumber && hasSpecialChar
-            ? "사용 가능한 비밀번호입니다."
-            : "비밀번호는 숫자, 특수문자 포함 8자 이상이어야 합니다.",
-      }));
-    }
-    if (name === "confirmPassword") {
-      setCheckingStatus((prev) => ({
-        ...prev,
-        confirmPassword:
-          value === formData.password
-            ? "비밀번호가 일치합니다."
-            : "비밀번호가 일치하지 않습니다.",
-      }));
-    }
     if (name === "phone") {
-      const onlyNumbers = value.replace(/[^0-9]/g, "");
-      setFormData({ ...formData, phone: onlyNumbers.slice(0, 11) });
+      // 숫자만 허용
+      let onlyNumbers = updatedValue.replace(/[^0-9]/g, "");
 
-      setCheckingStatus((prev) => ({
-        ...prev,
-        phone:
-          onlyNumbers.length === 11
-            ? "올바른 전화번호입니다."
-            : "전화번호는 11자리여야 합니다.",
-      }));
+      // 입력 제한: 최대 11자리까지만 허용
+      if (onlyNumbers.length > 11) {
+        onlyNumbers = onlyNumbers.slice(0, 11);
+      }
+
+      // 유효한 접두사 검사
+      const startsWithValidPrefix =
+        onlyNumbers.startsWith("010") || onlyNumbers.startsWith("011");
+
+      if (onlyNumbers.length > 0 && !startsWithValidPrefix) {
+        // 접두사가 유효하지 않으면 입력 무시
+        return;
+      }
+
+      updatedValue = onlyNumbers;
+    }
+
+    setFormData({ ...formData, [name]: updatedValue });
+
+    // 유효성 검사
+    if (updatedValue.trim() === "") {
+      // 값이 비어 있을 경우 메시지 초기화
+      setCheckingStatus((prev) => ({ ...prev, [name]: "" }));
+    } else {
+      // 유효성 검사 로직
+      if (name === "phone") {
+        const startsWithValidPrefix =
+          updatedValue.startsWith("010") || updatedValue.startsWith("011");
+        const isValidLength = updatedValue.length === 11;
+
+        setCheckingStatus((prev) => ({
+          ...prev,
+          phone:
+            startsWithValidPrefix && isValidLength
+              ? "올바른 전화번호입니다."
+              : "전화번호는 010, 011로 시작하는 11자리여야 합니다.",
+        }));
+      }
+
+      if (name === "name") {
+        setCheckingStatus((prev) => ({
+          ...prev,
+          name:
+            updatedValue.length >= 2
+              ? "사용 가능한 이름입니다."
+              : "이름은 2글자 이상이어야 합니다.",
+        }));
+      }
+
+      if (name === "nickname") {
+        setCheckingStatus((prev) => ({
+          ...prev,
+          nickname:
+            updatedValue.length >= 2
+              ? "사용 가능한 닉네임입니다."
+              : "닉네임은 2글자 이상이어야 합니다.",
+        }));
+      }
+
+      if (name === "email") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setCheckingStatus((prev) => ({
+          ...prev,
+          email: emailRegex.test(updatedValue)
+            ? "올바른 이메일 형식입니다."
+            : "유효하지 않은 이메일 형식입니다.",
+        }));
+      }
+
+      if (name === "password") {
+        const hasNumber = /\d/.test(updatedValue);
+        const hasSpecialChar = /[!#$%^&*~\-]/.test(updatedValue);
+        setCheckingStatus((prev) => ({
+          ...prev,
+          password:
+            updatedValue.length >= 8 && hasNumber && hasSpecialChar
+              ? "사용 가능한 비밀번호입니다."
+              : "비밀번호는 숫자, (!, #, $, %, ^, &, *, ~, -) 포함 8자 이상입니다.",
+        }));
+      }
+
+      if (name === "confirmPassword") {
+        setCheckingStatus((prev) => ({
+          ...prev,
+          confirmPassword:
+            updatedValue === formData.password
+              ? "비밀번호가 일치합니다."
+              : "비밀번호가 일치하지 않습니다.",
+        }));
+      }
     }
   };
 
@@ -125,12 +161,17 @@ const Signup = () => {
   return (
     <SignupContainer>
       <Header>
-        <Logo src={logo} alt="로고" />
+        <Logo
+          src={logo}
+          alt="로고"
+          onClick={() => navigate("/")} // 로고 클릭 시 인트로 페이지로 이동
+        />
         <Title>WVillage</Title>
       </Header>
 
       <SignupBox>
         <InputContainer>
+          {/* 이름 */}
           <InputWrapper>
             <Input
               type="text"
@@ -147,6 +188,7 @@ const Signup = () => {
             </StatusMessage>
           </InputWrapper>
 
+          {/* 닉네임 */}
           <InputWrapper>
             <Input
               type="text"
@@ -163,6 +205,7 @@ const Signup = () => {
             </StatusMessage>
           </InputWrapper>
 
+          {/* 이메일 */}
           <InputWrapper>
             <Input
               type="email"
@@ -179,6 +222,7 @@ const Signup = () => {
             </StatusMessage>
           </InputWrapper>
 
+          {/* 비밀번호 */}
           <InputWrapper>
             <Input
               type={passwordVisible ? "text" : "password"}
@@ -202,6 +246,7 @@ const Signup = () => {
             </StatusMessage>
           </InputWrapper>
 
+          {/* 비밀번호 확인 */}
           <InputWrapper>
             <Input
               type={confirmPasswordVisible ? "text" : "password"}
@@ -227,22 +272,57 @@ const Signup = () => {
             </StatusMessage>
           </InputWrapper>
 
+          {/* 전화번호 */}
           <InputWrapper>
             <Input
               type="text"
               name="phone"
               placeholder="전화번호 ('-' 제외)"
               value={formData.phone}
-              onChange={handleChange}
+              onChange={(e) => {
+                let onlyNumbers = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
+
+                // 입력 제한: 최대 11자리까지만 허용
+                if (onlyNumbers.length > 11) {
+                  onlyNumbers = onlyNumbers.slice(0, 11);
+                }
+
+                const startsWithValidPrefix =
+                  onlyNumbers.startsWith("010") ||
+                  onlyNumbers.startsWith("011");
+
+                // 앞 3자리가 010 또는 011로 시작하지 않으면 입력 무시
+                if (onlyNumbers.length <= 3 || startsWithValidPrefix) {
+                  setFormData({ ...formData, phone: onlyNumbers });
+                }
+
+                // 유효성 검사 상태 업데이트
+                if (onlyNumbers.trim() === "") {
+                  // 빈 값일 때 메시지 초기화
+                  setCheckingStatus((prev) => ({
+                    ...prev,
+                    phone: "",
+                  }));
+                } else {
+                  setCheckingStatus((prev) => ({
+                    ...prev,
+                    phone:
+                      onlyNumbers.length === 11 && startsWithValidPrefix
+                        ? "올바른 전화번호입니다."
+                        : "전화번호는 010, 011로 시작하는 11자리여야 합니다.",
+                  }));
+                }
+              }}
             />
             <StatusMessage
-              isValid={formData.phone.length === 11}
-              isVisible={!!formData.phone}
+              isValid={checkingStatus.phone === "올바른 전화번호입니다."}
+              isVisible={!!formData.phone} // 입력값이 있는 경우만 메시지 표시
             >
               {checkingStatus.phone}
             </StatusMessage>
           </InputWrapper>
 
+          {/* 주소 */}
           <InputWrapper>
             <Select
               name="address"
@@ -287,7 +367,6 @@ const StatusMessage = styled.div`
   font-size: 12px;
   color: ${(props) => (props.isValid ? "green" : "red")};
   min-height: 18px;
-  visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
 `;
 
 const Header = styled.div`
@@ -303,6 +382,7 @@ const Header = styled.div`
 const Logo = styled.img`
   width: 135px;
   height: 100px;
+  cursor: pointer; // 커서 모양을 클릭 가능하도록 변경
 `;
 
 const Title = styled.h1`

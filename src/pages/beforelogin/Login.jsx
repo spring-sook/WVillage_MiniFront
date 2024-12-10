@@ -202,7 +202,7 @@ const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 25px;
+  padding: 30px;
   transition: background-color 0.3s ease;
 `;
 

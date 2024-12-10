@@ -34,6 +34,8 @@ const PostAPI = {
       postLocation: location,
     };
     try {
+      console.log(postWrite);
+      console.log(imgUrls);
       const insertPost = await axios.post(SERVER + `/post/postWrite`, {
         postVo: postWrite,
         imgUrls: imgUrls,

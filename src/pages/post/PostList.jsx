@@ -12,6 +12,7 @@ import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import { PostItem } from "../../components/PostItemComponent";
+import UserProfileAPI from "../../api/OtherUserProfileAPI";
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -28,24 +29,37 @@ const PostList = () => {
   const category = queryParams.get("category");
 
   useEffect(() => {
-    const region = userInfo.areaCode;
-    setPosts([]);
-    const fetchAllPosts = async () => {
-      const response = await PostAPI.CommonAllList(region);
-      setPosts(response.data);
+    const fetchData = async () => {
+      const region = userInfo.areaCode;
+      setPosts([]); // 초기화
+
+      try {
+        const rspRegion = await UserProfileAPI.getRegion(region);
+        const regionData = rspRegion.data[0];
+        const filteredRegion = Object.values(regionData)
+          .filter((value) => value && value !== "nan")
+          .join(" ");
+
+        let response;
+        if (category === "all") {
+          response = await PostAPI.CommonAllList(region);
+        } else {
+          response = await PostAPI.CommonCategoryList(region, category);
+        }
+
+        const updatedPosts = response.data.map((post) => ({
+          ...post,
+          region: filteredRegion,
+        }));
+
+        setPosts(updatedPosts);
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류 발생:", error);
+      }
     };
-    const fetchCategoryPosts = async () => {
-      const response = await PostAPI.CommonCategoryList(region, category);
-      console.log(response);
-      setPosts(response);
-    };
-    if (category === "all") {
-      fetchAllPosts();
-    } else {
-      fetchCategoryPosts();
-    }
-    console.log(posts);
-  }, [category]);
+
+    fetchData();
+  }, [category, userInfo.areaCode]);
 
   const handleClickIcon = () => {
     setDropdownView(!isDropdownView);
@@ -66,7 +80,7 @@ const PostList = () => {
       <HeaderCom />
       <PostBody>
         <PostMainFilter>
-          <h2>서울시 강남구 역삼동</h2>
+          <h2>{userInfo.filteredRegion}</h2>
           {searchKeyword ? <h3>"{searchKeyword}" 검색 결과</h3> : null}
           <p>
             필터
@@ -101,10 +115,10 @@ const PostList = () => {
               posts.map((post, index) => (
                 <PostItem
                   key={index}
-                  thumbnail={post.postThumbnail} // assuming postThumbnail is part of the post object
+                  thumbnail={post.postThumbnail}
                   title={post.postTitle}
                   price={post.postPrice}
-                  region={post.postRegion}
+                  region={post.region}
                 />
               ))}
           </PostDisplay>

@@ -65,7 +65,7 @@ export const HeaderCom = () => {
     // 로그아웃 실행
     localStorage.removeItem("userInfo");
     setShowLogoutModal(false);
-    navigate("/intro");
+    navigate("/");
   };
 
   const imagePath = "snow_village.webp";

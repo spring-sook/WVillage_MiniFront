@@ -15,7 +15,7 @@ export const PostMainFilter = styled.div`
   position: relative;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 350px;
 
   h2 {
     margin-bottom: 20px;
@@ -134,7 +134,7 @@ export const PostMainList = styled.div`
   position: relative;
   width: 80%;
   margin: 0 8% 0 2%;
-  background-color: #cbe5fd;
+  /* background-color: #cbe5fd; */
   padding: 10px;
 
   button {
@@ -146,21 +146,29 @@ export const PostMainList = styled.div`
   }
 
   .write-post-button {
-    background-color: #ccc;
+    background-color: #1b5e96;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 1vh 3%;
     display: flex;
     position: absolute;
     right: 2.5vh;
     top: 1.8vh;
+    color: white;
+
+    &:hover {
+      background-color: #95bfe5;
+    }
   }
 `;
 
 export const PostDisplay = styled.div`
   width: 100%;
   height: 100%;
+  margin-top: 20px;
   padding: 1%;
+  display: flex;
+  justify-content: flex-start;
 `;
 
 export const PostContentTop = styled.div`

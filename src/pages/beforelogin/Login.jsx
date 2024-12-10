@@ -32,7 +32,7 @@ const Login = () => {
       setEmailMessage("유효한 이메일입니다.");
       setIsEmailValid(true);
     } else {
-      setEmailMessage("유효하지 않은 아이디입니다.");
+      setEmailMessage("유효하지 않은 이메일입니다.");
       setIsEmailValid(false);
     }
   };
@@ -105,11 +105,9 @@ const Login = () => {
   );
 };
 
-// 스타일링
-
 const EmailMessage = styled.div`
   position: absolute;
-  right: 15px; /* 입력창 내부 오른쪽 */
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 10px;
@@ -209,8 +207,7 @@ const Input = styled.input`
   border: none;
   outline: none;
   font-size: 13px;
-  padding-right: 100px; /* 오른쪽 공간 확보 */
-
+  padding-right: 100px;
   &::placeholder {
     color: #aaa;
   }

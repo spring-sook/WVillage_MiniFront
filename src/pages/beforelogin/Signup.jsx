@@ -37,41 +37,40 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let updatedValue = value;
+
+    // 공백 제거
+    const trimmedValue = value.trimStart(); // 입력 시작 부분 공백 제거
+    let sanitizedValue = trimmedValue;
 
     if (name === "phone") {
-      // 숫자만 허용
-      let onlyNumbers = updatedValue.replace(/[^0-9]/g, "");
+      sanitizedValue = trimmedValue.replace(/[^0-9]/g, ""); // 숫자만 허용
 
-      // 입력 제한: 최대 11자리까지만 허용
-      if (onlyNumbers.length > 11) {
-        onlyNumbers = onlyNumbers.slice(0, 11);
+      // 입력 길이를 제한
+      if (sanitizedValue.length > 11) {
+        sanitizedValue = sanitizedValue.slice(0, 11);
       }
 
-      // 유효한 접두사 검사
-      const startsWithValidPrefix =
-        onlyNumbers.startsWith("010") || onlyNumbers.startsWith("011");
-
-      if (onlyNumbers.length > 0 && !startsWithValidPrefix) {
-        // 접두사가 유효하지 않으면 입력 무시
+      // 전화번호는 010 또는 011로 시작해야 함
+      if (
+        sanitizedValue.length > 0 &&
+        !sanitizedValue.startsWith("010") &&
+        !sanitizedValue.startsWith("011")
+      ) {
+        // 조건에 맞지 않는 경우 입력값을 무시
         return;
       }
-
-      updatedValue = onlyNumbers;
     }
 
-    setFormData({ ...formData, [name]: updatedValue });
+    setFormData({ ...formData, [name]: sanitizedValue });
 
     // 유효성 검사
-    if (updatedValue.trim() === "") {
-      // 값이 비어 있을 경우 메시지 초기화
+    if (sanitizedValue.trim() === "") {
       setCheckingStatus((prev) => ({ ...prev, [name]: "" }));
     } else {
-      // 유효성 검사 로직
       if (name === "phone") {
         const startsWithValidPrefix =
-          updatedValue.startsWith("010") || updatedValue.startsWith("011");
-        const isValidLength = updatedValue.length === 11;
+          sanitizedValue.startsWith("010") || sanitizedValue.startsWith("011");
+        const isValidLength = sanitizedValue.length === 11;
 
         setCheckingStatus((prev) => ({
           ...prev,
@@ -86,7 +85,7 @@ const Signup = () => {
         setCheckingStatus((prev) => ({
           ...prev,
           name:
-            updatedValue.length >= 2
+            sanitizedValue.length >= 2
               ? "사용 가능한 이름입니다."
               : "이름은 2글자 이상이어야 합니다.",
         }));
@@ -96,7 +95,7 @@ const Signup = () => {
         setCheckingStatus((prev) => ({
           ...prev,
           nickname:
-            updatedValue.length >= 2
+            sanitizedValue.length >= 2
               ? "사용 가능한 닉네임입니다."
               : "닉네임은 2글자 이상이어야 합니다.",
         }));
@@ -106,21 +105,28 @@ const Signup = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setCheckingStatus((prev) => ({
           ...prev,
-          email: emailRegex.test(updatedValue)
+          email: emailRegex.test(sanitizedValue)
             ? "올바른 이메일 형식입니다."
             : "유효하지 않은 이메일 형식입니다.",
         }));
       }
 
       if (name === "password") {
-        const hasNumber = /\d/.test(updatedValue);
-        const hasSpecialChar = /[!#$%^&*~\-]/.test(updatedValue);
+        const hasNumber = /\d/.test(sanitizedValue);
+        const hasAllowedSpecialChar = /^[a-zA-Z0-9!#$@%^&*\~\-]*$/.test(
+          sanitizedValue
+        );
+        const hasSpecialChar = /[!#$%^&*\~\-]/.test(sanitizedValue);
+
         setCheckingStatus((prev) => ({
           ...prev,
           password:
-            updatedValue.length >= 8 && hasNumber && hasSpecialChar
+            sanitizedValue.length >= 8 &&
+            hasNumber &&
+            hasSpecialChar &&
+            hasAllowedSpecialChar
               ? "사용 가능한 비밀번호입니다."
-              : "비밀번호는 숫자, (!, #, $, %, ^, &, *, ~, -) 포함 8자 이상입니다.",
+              : "비밀번호는 숫자, (!, #, $, @,%, ^, &, *, ~, -) 포함 8자 이상입니다.",
         }));
       }
 
@@ -128,7 +134,7 @@ const Signup = () => {
         setCheckingStatus((prev) => ({
           ...prev,
           confirmPassword:
-            updatedValue === formData.password
+            sanitizedValue === formData.password
               ? "비밀번호가 일치합니다."
               : "비밀번호가 일치하지 않습니다.",
         }));
@@ -297,26 +303,17 @@ const Signup = () => {
                 }
 
                 // 유효성 검사 상태 업데이트
-                if (onlyNumbers.trim() === "") {
-                  // 빈 값일 때 메시지 초기화
-                  setCheckingStatus((prev) => ({
-                    ...prev,
-                    phone: "",
-                  }));
-                } else {
-                  setCheckingStatus((prev) => ({
-                    ...prev,
-                    phone:
-                      onlyNumbers.length === 11 && startsWithValidPrefix
-                        ? "올바른 전화번호입니다."
-                        : "전화번호는 010, 011로 시작하는 11자리여야 합니다.",
-                  }));
-                }
+                setCheckingStatus((prev) => ({
+                  ...prev,
+                  phone:
+                    onlyNumbers.length === 11 && startsWithValidPrefix
+                      ? "올바른 전화번호입니다."
+                      : "전화번호는 010 또는 011로 시작하는 11자리여야 합니다.",
+                }));
               }}
             />
             <StatusMessage
               isValid={checkingStatus.phone === "올바른 전화번호입니다."}
-              isVisible={!!formData.phone} // 입력값이 있는 경우만 메시지 표시
             >
               {checkingStatus.phone}
             </StatusMessage>
@@ -376,37 +373,30 @@ const Header = styled.div`
   justify-content: center;
   background-color: white;
   padding: 5px 20px;
-
-  height: 90px;
 `;
 
 const Logo = styled.img`
   width: 135px;
   height: 100px;
-  cursor: pointer; // 커서 모양을 클릭 가능하도록 변경
+  cursor: pointer;
 `;
 
 const Title = styled.h1`
   font-size: 70px;
   font-weight: bold;
   color: #1b5e96;
-  margin-left: 15px;
 `;
 
 const SignupContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
-  height: calc(100vh - 90px);
 `;
 
 const SignupBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 20px;
   width: 400px;
 `;

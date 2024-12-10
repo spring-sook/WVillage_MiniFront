@@ -6,11 +6,35 @@ import logo from "../../images/logo.png";
 const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [emailMessage, setEmailMessage] = useState(""); // 이메일 상태 메시지
+  const [isEmailValid, setIsEmailValid] = useState(null); // 유효성 검사 상태
   const navigate = useNavigate();
+
+  // 이메일 유효성 검사
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 정규식
+    if (emailRegex.test(value)) {
+      setEmailMessage("유효한 이메일입니다.");
+      setIsEmailValid(true);
+    } else {
+      setEmailMessage("유효하지 않은 이메일입니다.");
+      setIsEmailValid(false);
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    validateEmail(value);
+  };
 
   const handleReset = () => {
     if (!email || !phone) {
       alert("이메일과 전화번호를 입력해주세요.");
+      return;
+    }
+    if (!isEmailValid) {
+      alert("유효한 이메일 주소를 입력해주세요.");
       return;
     }
     navigate("/passwordreset2");
@@ -30,8 +54,12 @@ const PasswordReset = () => {
               type="email"
               placeholder="이메일"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
             />
+            {/* 이메일 상태 메시지 */}
+            {email && (
+              <EmailMessage isValid={isEmailValid}>{emailMessage}</EmailMessage>
+            )}
           </InputWrapper>
           <Divider />
           <InputWrapper>
@@ -53,6 +81,19 @@ const PasswordReset = () => {
 };
 
 export default PasswordReset;
+
+// 스타일링
+
+const EmailMessage = styled.div`
+  position: absolute;
+  right: 15px; /* 입력창 내부 오른쪽 */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: ${(props) => (props.isValid ? "#28a745" : "#dc3545")};
+  white-space: nowrap;
+`;
 
 const Header = styled.div`
   width: 100%;

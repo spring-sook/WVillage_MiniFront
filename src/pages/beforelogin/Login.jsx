@@ -25,7 +25,6 @@ const Login = () => {
   const [emailMessage, setEmailMessage] = useState(""); // 이메일 상태 메시지
   const [isEmailValid, setIsEmailValid] = useState(null); // 유효성 검사 상태
 
-  // 이메일 유효성 검사
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(value)) {

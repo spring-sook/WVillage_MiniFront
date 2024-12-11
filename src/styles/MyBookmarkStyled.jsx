@@ -11,5 +11,8 @@ export const MyBookmarkContainer = styled.div`
 export const Bookmarks = styled.div`
   width: 90%;
   height: 610px;
-  background-color: #d5e8f1;
+  display: flex;
+  flex-direction: column;
+  column-gap: 0.8%;
+  overflow-y: auto;
 `;

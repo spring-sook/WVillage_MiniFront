@@ -50,17 +50,18 @@ export const ProfileBox = styled.div`
 
 export const ParentContainer = styled.div`
   width: 78%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  padding: 5px;
+  /* gap: 10px; */
+  /* padding: 5px; */
 `;
 
 export const MenuContainer = styled.div`
   display: flex;
   justify-content: center;
+  width: 90%;
   margin-top: 10px;
   padding: 10px 0;
   border-bottom: 1px solid #ddd;

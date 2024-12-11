@@ -19,6 +19,12 @@ const PostAPI = {
   UserPostList: async (email) => {
     return await axios.get(SERVER + `/board/userProfile/${email}`);
   },
+  // 북마크한 게시글 조회
+  BookmarkedPostList: async (email) => {
+    return await axios.get(SERVER + `/bookmark/bookmarkedList`, {
+      params: { email: email },
+    });
+  },
   // 작성한 게시물(내용 + 이미지) 삽입
   PostWrite: async (
     email,

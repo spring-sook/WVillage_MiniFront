@@ -38,7 +38,7 @@ export const PostItem = ({
   thumbnail,
   title,
   price,
-  region,
+  postRegion,
   postId,
   post,
   width,
@@ -72,7 +72,7 @@ export const PostItem = ({
       <ImgDownloader imgfile={thumbnail} />
       <h3>{title}</h3>
       <p className="price">{price.toLocaleString()} 원</p>
-      <p className="region">{region}</p>
+      <p className="region">{postRegion}</p>
     </PostItemStyled>
   );
 };

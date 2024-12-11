@@ -16,9 +16,6 @@ export const MyPostContainer = styled.div`
 export const Posts = styled.div`
   width: 90%;
   height: 610px;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
   column-gap: 0.8%;
   overflow-y: auto;
 `;
@@ -33,4 +30,12 @@ export const PostHeader = styled.div`
     padding: 6px 20px;
     cursor: pointer;
   }
+`;
+
+export const PostBody = styled.div`
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;

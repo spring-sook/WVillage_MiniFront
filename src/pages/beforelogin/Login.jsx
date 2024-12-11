@@ -65,7 +65,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <Header>
-        <Logo src={logo} alt="로고" onClick={() => navigate("/intro")} />
+        <Logo src={logo} alt="로고" onClick={() => navigate("/")} />
         <Title>WVillage</Title>
       </Header>
 

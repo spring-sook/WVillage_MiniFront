@@ -1,98 +1,202 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faUser,
+  faLock,
+  faEye,
+  faEyeSlash,
+  faCamera,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  ParentContainer,
+  MenuContainer,
   EditProfileContainer,
   Edit,
   InfoSection,
-  AccountContainer,
   BottomButtonContainer,
+  ProfileBox,
 } from "../../styles/EditProfileStyled";
 
 export const EditProfile = () => {
+  const [activeMenu, setActiveMenu] = useState("수정");
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState("");
-  const accounts = ["우리은행 - 123-456-789", "카카오뱅크 - 987-654-321"];
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
   const toggleEditing = () => {
     setIsEditing(!isEditing);
   };
 
-  const handleOpenModal = () => {
-    alert("계좌 추가 기능은 현재 구현 중입니다.");
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
-    <EditProfileContainer>
-      <Edit>
-        <InfoSection>
-          <div className="info-item">
-            <label>이메일:</label>
-            {isEditing ? (
-              <input type="email" defaultValue="user@example.com" />
-            ) : (
-              <p>user@example.com</p>
-            )}
-          </div>
-          <div className="info-item">
-            <label>이름:</label>
-            {isEditing ? (
-              <input
-                type="text"
-                defaultValue="장원영"
-                placeholder="이름 수정"
-              />
-            ) : (
-              <p>장원영</p>
-            )}
-          </div>
-          <div className="info-item">
-            <label>전화번호:</label>
-            {isEditing ? (
-              <input
-                type="text"
-                defaultValue="010-1234-5678"
-                placeholder="전화번호 수정"
-              />
-            ) : (
-              <p>010-1234-5678</p>
-            )}
-          </div>
-          <div className="info-item">
-            <label>비밀번호:</label>
-            {isEditing ? (
-              <input
-                type="password"
-                defaultValue="password123"
-                placeholder="비밀번호 변경"
-              />
-            ) : (
-              <p>********</p>
-            )}
-          </div>
-        </InfoSection>
+    <ParentContainer>
+      <MenuContainer>
+        {["수정", "계좌정보", "회원탈퇴"].map((menu) => (
+          <button
+            key={menu}
+            className={activeMenu === menu ? "active" : ""}
+            onClick={() => setActiveMenu(menu)}
+          >
+            {menu}
+          </button>
+        ))}
+      </MenuContainer>
 
-        <AccountContainer>
-          <label>계좌 선택:</label>
-          <div className="select-button-container">
-            <select
-              value={selectedAccount}
-              onChange={(e) => setSelectedAccount(e.target.value)}
-            >
-              <option value="">계좌를 선택하세요</option>
-              {accounts.map((account, index) => (
-                <option key={index} value={account}>
-                  {account}
-                </option>
-              ))}
-            </select>
-            <button onClick={handleOpenModal}>계좌 추가하기</button>
-          </div>
-        </AccountContainer>
+      {activeMenu === "수정" && (
+        <EditProfileContainer>
+          <Edit>
+            <InfoSection>
+              <div className="info-item">
+                <label>이메일:</label>
+                <input type="email" defaultValue="user@example.com" disabled />
+              </div>
+              <div className="info-item">
+                <label>이름:</label>
+                <input
+                  type="text"
+                  defaultValue="장원영"
+                  disabled={!isEditing}
+                />
+              </div>
+              <div className="info-item">
+                <label>닉네임:</label>
+                <input
+                  type="text"
+                  defaultValue="닉네임123"
+                  disabled={!isEditing}
+                />
+              </div>
+              <div className="info-item">
+                <label>전화번호:</label>
+                <input
+                  type="text"
+                  defaultValue="010-1234-5678"
+                  disabled={!isEditing}
+                />
+              </div>
+              <div className="info-item">
+                <label>비밀번호:</label>
+                <div style={{ position: "relative", display: "flex" }}>
+                  <FontAwesomeIcon
+                    icon={faLock}
+                    style={{
+                      position: "absolute",
+                      left: 10,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: "#ccc",
+                    }}
+                  />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    defaultValue="password123"
+                    disabled={!isEditing}
+                    style={{ paddingLeft: 30 }}
+                  />
+                  <FontAwesomeIcon
+                    icon={showPassword ? faEyeSlash : faEye}
+                    style={{
+                      position: "absolute",
+                      right: 10,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      color: "#007bff",
+                    }}
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                </div>
+              </div>
+              <div className="info-item">
+                <label>비밀번호 확인:</label>
+                <div style={{ position: "relative", display: "flex" }}>
+                  <FontAwesomeIcon
+                    icon={faLock}
+                    style={{
+                      position: "absolute",
+                      left: 10,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: "#ccc",
+                    }}
+                  />
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    defaultValue="password123"
+                    disabled={!isEditing}
+                    style={{ paddingLeft: 30 }}
+                  />
+                  <FontAwesomeIcon
+                    icon={showConfirmPassword ? faEyeSlash : faEye}
+                    style={{
+                      position: "absolute",
+                      right: 10,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      color: "#007bff",
+                    }}
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  />
+                </div>
+              </div>
+            </InfoSection>
 
-        <BottomButtonContainer>
-          <button onClick={toggleEditing}>{isEditing ? "취소" : "수정"}</button>
-        </BottomButtonContainer>
-      </Edit>
-    </EditProfileContainer>
+            <BottomButtonContainer>
+              <button onClick={toggleEditing}>
+                {isEditing ? "수정 완료" : "수정"}
+              </button>
+            </BottomButtonContainer>
+          </Edit>
+
+          <ProfileBox>
+            <div className="profile-image-container">
+              {profileImage ? (
+                <img
+                  src={profileImage}
+                  alt="프로필"
+                  className="profile-image"
+                />
+              ) : (
+                <FontAwesomeIcon icon={faUser} className="placeholder-icon" />
+              )}
+              <label htmlFor="profile-upload" className="upload-label">
+                <FontAwesomeIcon icon={faCamera} />
+              </label>
+              <input
+                id="profile-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: "none" }}
+              />
+            </div>
+          </ProfileBox>
+        </EditProfileContainer>
+      )}
+
+      {activeMenu === "계좌정보" && (
+        <EditProfileContainer>
+          계좌정보 탭 내용이 여기에 표시됩니다.
+        </EditProfileContainer>
+      )}
+      {activeMenu === "회원탈퇴" && (
+        <EditProfileContainer>
+          회원탈퇴 탭 내용이 여기에 표시됩니다.
+        </EditProfileContainer>
+      )}
+    </ParentContainer>
   );
 };
 

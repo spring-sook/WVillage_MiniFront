@@ -41,7 +41,7 @@ const PasswordReset2 = () => {
   return (
     <PasswordResetContainer>
       <Header>
-        <Logo src={logo} alt="로고" />
+        <Logo src={logo} alt="로고" onClick={() => navigate("/")} />
         <Title>WVillage</Title>
       </Header>
 
@@ -123,8 +123,8 @@ const Header = styled.div`
 const Logo = styled.img`
   width: 135px;
   height: 100px;
+  cursor: pointer;
 `;
-
 const Title = styled.h1`
   font-size: 65px;
   font-weight: bold;

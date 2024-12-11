@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 export const MyReserve = () => {
-  const { email } = useParams();
   const [selectState, setSelectState] = useState("전체");
   //모달
   const [showModal, setShowModal] = useState(false);

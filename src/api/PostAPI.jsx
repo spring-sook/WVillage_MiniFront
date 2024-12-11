@@ -57,19 +57,15 @@ const PostAPI = {
     return await axios.post(SERVER + `/post/postView/${postId}`);
   },
   InsertBookmark: async (postId, email) => {
-    return await axios.post(SERVER + `/bookmark/insertBookmark`, null, {
-      params: {
-        postId: postId,
-        email: email,
-      },
+    return await axios.post(SERVER + `/bookmark/insertBookmark`, {
+      postId: postId,
+      email: email,
     });
   },
   DeleteBookmark: async (postId, email) => {
-    return await axios.post(SERVER + `/bookmark/deleteBookmark`, null, {
-      params: {
-        postId: postId,
-        email: email,
-      },
+    return await axios.post(SERVER + `/bookmark/deleteBookmark`, {
+      postId: postId,
+      email: email,
     });
   },
 };

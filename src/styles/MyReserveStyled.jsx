@@ -21,8 +21,8 @@ export const ReserveHeader = styled.div`
   width: 97%;
   justify-content: space-between;
   margin-left: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
+  margin-bottom: 20px;
+  font-size: 15px;
 
   .line {
     box-sizing: border-box;
@@ -136,6 +136,7 @@ export const Modal = styled.div`
   .review-tags {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
     margin: 20px 0;
 

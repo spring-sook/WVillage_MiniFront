@@ -91,8 +91,8 @@ export const ReserveState = styled.div`
   }};
 `;
 export const Modal = styled.div`
-  width: 600px;
-  height: 500px;
+  width: 650px;
+  height: 600px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -122,13 +122,13 @@ export const Modal = styled.div`
       transition: all 0.3s ease;
 
       &.selected {
-        background-color: #007bff;
+        background-color: #1b5e96;
         color: white;
-        border-color: #007bff;
+        border-color: #1b5e96;
       }
 
       &:hover {
-        background-color: #f0f0f0;
+        opacity: 0.7;
       }
     }
   }
@@ -149,36 +149,55 @@ export const Modal = styled.div`
     }
 
     .review-tag.selected {
-      background-color: #007bff;
-      color: white;
-      border-color: #007bff;
+      background-color: #95bfe5;
+      color: black;
+      border-color: #95bfe5;
     }
 
     .review-tag:hover {
-      background-color: #f0f0f0;
+      opacity: 0.7;
     }
   }
 
   .selected-tags-list {
-    margin-top: 20px;
-
     h3 {
+      margin-top: 30px;
       font-size: 18px;
-      margin-bottom: 10px;
+    }
+    .selected-tags {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      transition: all 0.3s ease;
+    }
+    .selected-tags .tag:hover {
+      opacity: 0.7; /* 투명도 설정 */
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
+    /* 좋은 리뷰 선택된 태그 색상 */
+    .tag.good-review.selected {
+      background-color: #5db480; /* 좋은 리뷰 색상 */
+      color: white;
+    }
 
-      li {
-        margin: 5px 0;
-      }
+    /* 나쁜 리뷰 선택된 태그 색상 */
+    .tag.bad-review.selected {
+      background-color: #da7f75; /* 나쁜 리뷰 색상 */
+      color: white;
     }
   }
 
   .modal-buttons {
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -190,7 +209,7 @@ export const Modal = styled.div`
       cursor: pointer;
       transition: all 0.3s ease;
       &:first-child {
-        background-color: #007bff;
+        background-color: #1b5e96;
         color: white;
       }
       &:last-child {
@@ -201,21 +220,5 @@ export const Modal = styled.div`
         opacity: 0.8;
       }
     }
-  }
-  .selected-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .tag {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
-    border: 1px solid #ccc;
   }
 `;

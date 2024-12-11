@@ -275,11 +275,17 @@ export const Nav = styled.div`
     font-weight: bold;
     text-decoration: none;
     flex: 0.8;
-    text-align: center; /* 태그 내부의 텍스트를 중앙에 배치 */
+    text-align: center;
+    transition: color 0.3s ease;
     &:hover {
       text-decoration: underline;
+      color: #95bfe5; /* hover 상태에서 색상 변경 */
       cursor: pointer;
     }
+  }
+  .tag.active {
+    text-decoration: underline; /* 현재 페이지에 해당하는 링크는 항상 밑줄 */
+    color: #3c8dbc;
   }
   p {
     color: #1b5e96;

@@ -1,6 +1,6 @@
 import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ProfileImgDownloader from "./Profile";
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -13,6 +13,16 @@ export const HeaderCom = () => {
   const [hasNotification, setHasNotification] = useState(true); // 알림 상태
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
+  const location = useLocation();
+
+  const isActive = (path) => {
+    const currentPath = new URL(window.location.href); // 현재 URL 객체 생성
+    const targetPath = new URL(path, window.location.origin); // target URL 객체 생성
+    return (
+      currentPath.pathname === targetPath.pathname &&
+      currentPath.search === targetPath.search
+    );
+  };
 
   const navigate = useNavigate();
 
@@ -81,19 +91,31 @@ export const HeaderCom = () => {
         </Link>
       </div>
       <Nav>
-        <Link to="/post?category=all" className="tag">
+        <Link
+          to="/post?category=all"
+          className={`tag ${isActive("/post?category=all") ? "active" : ""}`}
+        >
           전체
         </Link>
         <p>/</p>
-        <Link to="/post?category=제품" className="tag">
+        <Link
+          to="/post?category=제품"
+          className={`tag ${isActive("/post?category=제품") ? "active" : ""}`}
+        >
           제품
         </Link>
         <p>/</p>
-        <Link to="/post?category=구인" className="tag">
+        <Link
+          to="/post?category=구인"
+          className={`tag ${isActive("/post?category=구인") ? "active" : ""}`}
+        >
           구인
         </Link>
         <p>/</p>
-        <Link to="/post?category=장소" className="tag">
+        <Link
+          to="/post?category=장소"
+          className={`tag ${isActive("/post?category=장소") ? "active" : ""}`}
+        >
           장소
         </Link>
       </Nav>

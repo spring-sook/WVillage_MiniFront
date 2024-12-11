@@ -7,6 +7,7 @@ import {
   ReserveManageHeader,
   Modal,
   ReviewTag,
+  ReservationPendingBtn,
 } from "../../styles/MyResManageStyled";
 import { useState } from "react";
 
@@ -163,30 +164,31 @@ export const MyResManage = () => {
             {/* 예약 거절 사유 입력창 */}
             {rejectionReasonVisible ? (
               <>
-                <textarea
-                  placeholder="예약거절 사유를 작성해주세요."
-                  value={rejectionReason}
-                  onChange={(e) => setRejectionReason(e.target.value)}
-                />
+        <textarea
+          placeholder="예약거절 사유를 작성해주세요."
+          value={rejectionReason}
+          onChange={(e) => setRejectionReason(e.target.value)}
+        />
                 <button onClick={completeRejection} className="confirm">
                   완료
                 </button>
               </>
             ) : (
-              <>
+              <ReservationPendingBtn>
                 <button onClick={confirmReservation} className="confirm">
                   예약완료로 변경
                 </button>
                 <button onClick={rejectReservation} className="cancel">
                   예약거절로 변경
                 </button>
-              </>
+              </ReservationPendingBtn>
             )}
             <button onClick={closeModal} className="cancel">
               닫기
             </button>
           </div>
         </Modal>
+
       )}
 
       {/* 예약취소 모달 */}

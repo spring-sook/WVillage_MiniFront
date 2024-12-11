@@ -12,7 +12,7 @@ import fire6 from "../../src/images/fire6.jpg";
 export const OtherUser = ({ email }) => {
   const imagePath = "snow_village.webp";
 
-  const temperature = 88; /*(300.0 + parseInt(userInfo.score)) / 10.0*/
+  const temperature = 10; /*(300.0 + parseInt(userInfo.score)) / 10.0*/
   let temperatureImage = fire1; // 기본 이미지를 설정 (기본값)
 
   if (temperature >= 0 && temperature <= 10) {
@@ -42,14 +42,13 @@ export const OtherUser = ({ email }) => {
             <h4>상대유저명</h4>
           </div>
           <div className="temp">
-            <p>온도</p>
+            <img
+              src={temperatureImage}
+              alt="온도 이미지"
+              className="temperature-image"
+            />
             <div className="gauge">
-              <p>36.5 ℃</p>
-              <img
-                src={temperatureImage}
-                alt="온도 이미지"
-                className="temperature-image"
-              />
+              <p>{temperature} ℃</p>
             </div>
           </div>
           <UserReviewRecord email={email} />

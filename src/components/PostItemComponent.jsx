@@ -77,7 +77,7 @@ export const PostItem = ({
   );
 };
 
-export const ReserveItem = ({ thumbnail, title, region, state }) => {
+export const ReserveItem = ({ thumbnail, title, region, state, onClick }) => {
   return (
     <ReserveItemContainer>
       <ReserveItemThumbnail>{thumbnail}</ReserveItemThumbnail>
@@ -85,7 +85,13 @@ export const ReserveItem = ({ thumbnail, title, region, state }) => {
         <p className="reserve-item-info-title">{title || "제목 입니다."}</p>
         <p className="reserve-item-info-region">{region || "지역 입니다."}</p>
       </ReserveItemInfo>
-      <ReserveState state={state}>{state || "상태 영역"}</ReserveState>
+      <ReserveState
+        state={state}
+        onClick={() => onClick && onClick(state)} // ReserveState에 클릭 핸들러 추가
+        style={{ cursor: "pointer" }} // 클릭 가능 표시
+      >
+        {state || "상태 영역"}
+      </ReserveState>{" "}
     </ReserveItemContainer>
   );
 };

@@ -2,8 +2,8 @@ import {
   MyReserveContainer,
   Reserves,
   ReserveHeader,
+  Modal,
 } from "../../styles/MyReserveStyled";
-import { CategorySelect } from "../../components/CategorySelect";
 import { PostsContainer } from "../../components/PostListComponent";
 import { ReserveItem } from "../../components/PostItemComponent";
 import { useParams } from "react-router-dom";
@@ -11,101 +11,189 @@ import { useState } from "react";
 
 export const MyReserve = () => {
   const { email } = useParams();
-  const [selectState, setSelectState] = useState("all");
-
-  const option = [
-    {
-      value: "물건",
-    },
-    {
-      value: "장소",
-    },
-    {
-      value: "구인",
-    },
+  const [selectState, setSelectState] = useState("전체");
+  //모달
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]); // 선택된 태그 상태
+  const [selectedReviewType, setSelectedReviewType] = useState("좋은 리뷰"); // 리뷰 타입 상태
+  const goodReviewTags = [
+    "깨끗해요",
+    "친절해요",
+    "상태가 좋아요",
+    "설명과 실물이 동일해요",
+    "승인이 빨라요",
+    "약속시간을 잘 지켜요",
+    "가격이 합리적이에요",
+    "분위기가 좋아요",
+    "안전해요",
+    "응대가 세심해요",
   ];
+
+  // 나쁜 리뷰 태그 (10개)
+  const badReviewTags = [
+    "또 거래하고 싶어요",
+    "더러워요",
+    "불친절해요",
+    "낡았어요",
+    "실물이 달라요",
+    "승인이 느려요",
+    "약속시간을 잘 안지켜요",
+    "또 거래하고싶지 않아요",
+    "가격이 비싸요",
+    "설명이 부족해요",
+  ];
+
+  const handleItemClick = (state) => {
+    if (state === "거래완료") {
+      setModalContent("리뷰를 작성해주세요."); // 모달 내용 설정
+      setShowModal(true); // 모달 표시
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent("");
+    setSelectedTags([]); // 태그 초기화
+  };
+
+  const toggleTag = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags((prevTags) => prevTags.filter((item) => item !== tag));
+    } else if (selectedTags.length < 6) {
+      setSelectedTags((prevTags) => [...prevTags, tag]);
+    }
+  };
+
+  const switchReviewType = (type) => {
+    setSelectedReviewType(type);
+  };
 
   return (
     <MyReserveContainer>
       <Reserves>
         <ReserveHeader>
           <div>
-            <span className="sort-menu" onClick={() => setSelectState("all")}>
+            <span className="sort-menu" onClick={() => setSelectState("전체")}>
               전체
             </span>
             <span className="line">|</span>
             <span
               className="sort-menu"
-              onClick={() => setSelectState("accept")}
+              onClick={() => setSelectState("예약완료")}
             >
-              다가오는 예약
-            </span>
-            <span className="line">|</span>
-            <span className="sort-menu" onClick={() => setSelectState("wait")}>
-              승인대기
+              예약완료
             </span>
             <span className="line">|</span>
             <span
               className="sort-menu"
-              onClick={() => setSelectState("complete")}
+              onClick={() => setSelectState("예약대기")}
             >
-              지난 예약
+              예약대기
             </span>
             <span className="line">|</span>
             <span
               className="sort-menu"
-              onClick={() => setSelectState("cancel")}
+              onClick={() => setSelectState("거래완료")}
             >
-              취소한 예약
+              거래완료
             </span>
             <span className="line">|</span>
-            <span className="sort-menu" onClick={() => setSelectState("deny")}>
-              거절된 예약
+            <span
+              className="sort-menu"
+              onClick={() => setSelectState("예약취소")}
+            >
+              예약취소
+            </span>
+            <span className="line">|</span>
+            <span
+              className="sort-menu"
+              onClick={() => setSelectState("예약거절")}
+            >
+              예약거절
             </span>
           </div>
-          <CategorySelect email={email} options={option} />
         </ReserveHeader>
         <PostsContainer>
-          {selectState === "all" && (
+          {selectState === "전체" && (
             <>
-              <ReserveItem state="wait" />
-              <hr />
-              <ReserveItem state="accept" />
-              <hr />
-              <ReserveItem state="deny" />
-              <hr />
-              <ReserveItem state="complete" />
-              <hr />
-              <ReserveItem state="cancel" />
+              {["예약대기", "예약완료", "예약거절", "거래완료", "예약취소"].map(
+                (state, index) => (
+                  <div key={index}>
+                    <ReserveItem
+                      state={state}
+                      onClick={() => handleItemClick(state)}
+                    />
+                    <hr />
+                  </div>
+                )
+              )}
             </>
           )}
-          {selectState === "accept" && (
-            <>
-              <ReserveItem state="accept" />
-            </>
-          )}
-          {selectState === "wait" && (
-            <>
-              <ReserveItem state="wait" />
-            </>
-          )}
-          {selectState === "complete" && (
-            <>
-              <ReserveItem state="complete" />
-            </>
-          )}
-          {selectState === "cancel" && (
-            <>
-              <ReserveItem state="cancel" />
-            </>
-          )}
-          {selectState === "deny" && (
-            <>
-              <ReserveItem state="deny" />
-            </>
+          {selectState !== "전체" && (
+            <ReserveItem
+              state={selectState}
+              onClick={() => handleItemClick(selectState)}
+            />
           )}
         </PostsContainer>
       </Reserves>
+      {showModal && (
+        <Modal>
+          <div className="modal-content">
+            <h2>{modalContent}</h2>
+            <div className="review-type-buttons">
+              <button
+                className={selectedReviewType === "좋은 리뷰" ? "selected" : ""}
+                onClick={() => switchReviewType("좋은 리뷰")}
+              >
+                좋은 리뷰
+              </button>
+              <button
+                className={selectedReviewType === "나쁜 리뷰" ? "selected" : ""}
+                onClick={() => switchReviewType("나쁜 리뷰")}
+              >
+                나쁜 리뷰
+              </button>
+            </div>
+            <div className="review-tags">
+              {(selectedReviewType === "좋은 리뷰"
+                ? goodReviewTags
+                : badReviewTags
+              ).map((tag) => (
+                <span
+                  key={tag}
+                  className={`review-tag ${
+                    selectedTags.includes(tag) ? "selected" : ""
+                  }`}
+                  onClick={() => toggleTag(tag)}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="selected-tags-list">
+              <h3>선택한 태그:</h3>
+              <div className="selected-tags">
+                {selectedTags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="tag"
+                    onClick={() => toggleTag(tag)}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="modal-buttons">
+              <button onClick={closeModal}>완료</button>
+
+              <button onClick={closeModal}>취소</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </MyReserveContainer>
   );
 };

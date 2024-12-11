@@ -19,7 +19,7 @@ export const UserProfileBox = styled.div`
     z-index: 2;
   }
   h4 {
-    margin-top: 5px;
+    margin-top: 8px;
     color: #1b5e96;
     font-weight: bold;
     width: 300px;
@@ -51,37 +51,42 @@ export const UserProfileBox = styled.div`
     justify-content: center;
     height: 50px;
     width: 90%;
-    background-color: #95bfe5;
     font-size: 17px;
     color: #1b5e96;
     font-weight: bold;
     z-index: 100;
-
+    img {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      background-color: white;
+      z-index: 2;
+      border: 2px solid transparent;
+      background-color: #d5e8f1;
+    }
     .gauge {
       margin-left: 20px;
       height: 35px;
-      width: 150px;
+      width: 200px;
       background-color: white;
       border-radius: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      border: 2px solid transparent;
+      transition: border 0.3s ease;
+      background-color: #d5e8f1;
+
       p {
-        font-size: 15px;
+        font-size: 16px;
         font-weight: bold;
         color: #1b5e96;
-      }
-      img {
-        position: absolute;
-        right: -20px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        background-color: white;
       }
     }
   }

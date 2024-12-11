@@ -18,7 +18,7 @@ export const Usermy = styled.div`
     z-index: 2;
   }
   h4 {
-    margin-top: 10px;
+    margin-top: 8px;
     color: #1b5e96;
     font-weight: bold;
     width: 300px;
@@ -33,7 +33,7 @@ export const Usermy = styled.div`
   }
   .temp {
     position: absolute;
-    top: 110px;
+    top: 100px;
     left: 50%;
     border-radius: 10px;
     transform: translateX(-50%);

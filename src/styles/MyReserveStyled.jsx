@@ -193,13 +193,15 @@ export const Modal = styled.div`
 
     /* 좋은 리뷰 선택된 태그 색상 */
     .tag.good-review.selected {
-      background-color: #a4d8b9; /* 좋은 리뷰 색상 */
+      /* background-color: #a4d8b9; */
+      border: 1px solid #a4d8b9;
       /* color: white; */
     }
 
     /* 나쁜 리뷰 선택된 태그 색상 */
     .tag.bad-review.selected {
-      background-color: #ecb1ab; /* 나쁜 리뷰 색상 */
+      /* background-color: #ecb1ab; */
+      border: 1px solid #ecb1ab;
       /* color: white; */
     }
   }

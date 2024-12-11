@@ -33,7 +33,7 @@ export const Usermy = styled.div`
   }
   .temp {
     position: absolute;
-    top: 100px;
+    top: 110px;
     left: 50%;
     border-radius: 10px;
     transform: translateX(-50%);
@@ -42,18 +42,11 @@ export const Usermy = styled.div`
     justify-content: center;
     height: 50px;
     width: 80%;
-    background-color: #95bfe5;
     font-size: 17px;
     font-weight: bold;
-    cursor: pointer; /* 마우스 포인터 변경 */
-    border: 2px solid transparent;
-    transition: border 0.3s ease;
-    &:hover {
-      border: 1px solid #1b5e96;
-    }
     img {
       position: absolute;
-      left: 20px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       width: 70px;
@@ -62,18 +55,30 @@ export const Usermy = styled.div`
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
       background-color: white;
       z-index: 2;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.3s ease;
+      background-color: #d5e8f1;
+      &:hover {
+        border: 1px solid #1b5e96;
+      }
     }
   }
   .gauge {
     margin-left: 20px;
     height: 35px;
-    width: 150px;
+    width: 200px;
     background-color: white;
     border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s ease;
+    background-color: #d5e8f1;
+
     p {
       font-size: 16px;
       font-weight: bold;

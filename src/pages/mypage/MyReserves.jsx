@@ -3,6 +3,7 @@ import {
   Reserves,
   ReserveHeader,
   Modal,
+  ModalOverlay,
 } from "../../styles/MyReserveStyled";
 import { PostsContainer } from "../../components/PostListComponent";
 import { ReserveItem } from "../../components/PostItemComponent";

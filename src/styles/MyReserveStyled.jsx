@@ -12,7 +12,6 @@ export const Reserves = styled.div`
   width: 90%;
   height: 610px;
   justify-items: center;
-  /* background-color: #d5e8f1; */
 `;
 
 export const ReserveHeader = styled.div`
@@ -23,6 +22,7 @@ export const ReserveHeader = styled.div`
   margin-left: 10px;
   margin-bottom: 20px;
   font-size: 15px;
+  font-weight: bold;
 
   .line {
     box-sizing: border-box;
@@ -31,6 +31,10 @@ export const ReserveHeader = styled.div`
 
   .sort-menu {
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+      color: #1b5e96;
+    }
   }
 `;
 
@@ -231,4 +235,13 @@ export const Modal = styled.div`
       }
     }
   }
+`;
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 회색 */
+  z-index: 998; /* Modal보다 낮은 z-index */
 `;

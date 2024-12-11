@@ -62,6 +62,9 @@ const PostAPI = {
   PostContentDetail: async (postId) => {
     return await axios.get(SERVER + `/post/details/${postId}`);
   },
+  PostImages: async (postId) => {
+    return await axios.get(SERVER + `/post/images/${postId}`);
+  },
   PostView: async (postId) => {
     return await axios.post(SERVER + `/post/postView/${postId}`);
   },
@@ -75,6 +78,11 @@ const PostAPI = {
     return await axios.post(SERVER + `/bookmark/deleteBookmark`, {
       postId: postId,
       email: email,
+    });
+  },
+  IsBookmarked: async (email, postId) => {
+    return await axios.get(SERVER + `/bookmark/isBookmarking`, {
+      params: { email: email, postId: postId },
     });
   },
 };

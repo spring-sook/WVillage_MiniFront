@@ -186,7 +186,6 @@ export const PostContentTop = styled.div`
   .post-content-img {
     width: 350px;
     height: 300px;
-    background-color: #71db9a;
     display: flex;
     justify-content: center;
     position: relative;
@@ -310,6 +309,15 @@ export const PostContentTop = styled.div`
     outline: none; // 포커스 시 검은색 테두리 제거
   }
 
+  .calc-price {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    font-size: 17px;
+  }
+
   .post-reserve-button {
     display: flex;
     width: 100%;
@@ -318,7 +326,22 @@ export const PostContentTop = styled.div`
   }
 
   .post-reserve-reset-button {
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 4px 10px;
     cursor: pointer;
+    gap: 4px;
+  }
+
+  .post-reserve-reset-button img {
+    width: 15px;
+    height: auto;
+    margin: 0;
+    position: static;
   }
 `;
 

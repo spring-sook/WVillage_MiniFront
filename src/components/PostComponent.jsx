@@ -5,6 +5,8 @@ import {
   ModalButton,
 } from "../styles/PostStyled";
 import React from "react";
+import Slider from "react-slick";
+import { ImgDownloader } from "./ImgComponent";
 
 const ViewItemContainer = styled.div`
   width: 1200px;
@@ -77,5 +79,29 @@ export const Modal = ({ onClose }) => {
         <ModalButton onClick={onClose}>확인</ModalButton>
       </ModalContainer>
     </ModalOverlay>
+  );
+};
+
+export const ImageSlider = ({ imgs }) => {
+  console.log("imgs", imgs);
+  const settings = {
+    dots: true, // 페이지네이션 점 표시
+    infinite: true, // 무한 슬라이드
+    speed: 500, // 슬라이드 전환 속도
+    slidesToShow: 1, // 한 번에 보여줄 이미지 개수
+    slidesToScroll: 1, // 한 번에 이동할 이미지 개수
+    autoplay: false, // 자동 슬라이드
+    autoplaySpeed: 2000, // 자동 슬라이드 간격
+  };
+  return (
+    <div>
+      <Slider {...settings}>
+        {imgs.map((imgfile, index) => (
+          <div key={index}>
+            <ImgDownloader imgfile={imgfile} />
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };

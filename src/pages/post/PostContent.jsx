@@ -1,4 +1,8 @@
 import { Container } from "../../styles/GlobalStyled";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { ImgDownloader } from "../../components/ImgComponent";
 import {
   PostContentBottom,
   PostContentTop,
@@ -15,6 +19,7 @@ import ProfileImgDownloader from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import {
   GenerateExcludedTimes,
+  ImageSlider,
   ViewItemInfo,
   ViewReview,
 } from "../../components/PostComponent";
@@ -22,6 +27,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
+import resetIcon from "../../images/reset_icon.png";
 
 const PostContent = () => {
   const location = useLocation();
@@ -31,9 +37,11 @@ const PostContent = () => {
   const { userInfo } = useContext(UserContext);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [postData, setPostData] = useState([]);
+  const [imgData, setImgData] = useState([]);
   const [writerData, setWriterData] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [duration, setDuration] = useState(0);
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const imagePath = "snow_village.webp";
@@ -46,9 +54,37 @@ const PostContent = () => {
         responseData.data.postEmail
       );
       setWriterData(responseProfile.data);
+      console.log("profile : ", responseProfile.data);
+      const responseBookmark = await PostAPI.IsBookmarked(
+        responseData.data.postEmail,
+        postId
+      );
+      setIsBookmarked(responseBookmark.data);
+      const responseImg = await PostAPI.PostImages(postId);
+      setImgData(responseImg.data);
+      console.log(">>>", imgData);
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    if (startDate && endDate) {
+      const diffInMilliseconds = endDate - startDate;
+      const diffInHours = diffInMilliseconds / (1000 * 60 * 60); // 시간 단위 변환
+      setDuration(diffInHours);
+    } else {
+      setDuration(0); // 날짜가 없으면 0으로 초기화
+    }
+  }, [startDate, endDate]);
+
+  const settings = {
+    dots: true, // 페이지네이션 점 표시
+    infinite: true, // 무한 슬라이드
+    speed: 500, // 슬라이드 전환 속도
+    slidesToShow: 1, // 한 번에 보여줄 이미지 개수
+    slidesToScroll: 1, // 한 번에 이동할 이미지 개수
+    autoplay: false, // 자동 슬라이드
+    autoplaySpeed: 2000, // 자동 슬라이드 간격
+  };
 
   const exTime = [
     {
@@ -112,7 +148,15 @@ const PostContent = () => {
               }}
               className="bookmark-icon"
             />
-            여기가 이미지
+            이미지
+            <Slider {...settings}>
+              {imgData.map((imgfile, index) => (
+                <div key={index}>
+                  <ImgDownloader imgfile={imgfile} />
+                </div>
+              ))}
+            </Slider>
+            {/* <ImageSlider imgs={imgData} /> */}
           </div>
           <div className="post-content-user">
             <ProfileImgDownloader
@@ -196,7 +240,29 @@ const PostContent = () => {
                       )
                     : new Date(0, 0, 0, 0, 0)
                 }
-                maxTime={new Date(0, 0, 0, 23, 59)}
+                maxDate={
+                  exTime.find((item) => item.start >= startDate)?.start ||
+                  null /* 다음 예약 시작 시간을 기준으로 */
+                }
+                maxTime={(() => {
+                  const nextReservation = exTime.find(
+                    (item) => item.start >= startDate
+                  );
+                  if (
+                    nextReservation &&
+                    nextReservation.start.toDateString() ===
+                      endDate?.toDateString()
+                  ) {
+                    return new Date(
+                      0,
+                      0,
+                      0,
+                      nextReservation.start.getHours(),
+                      nextReservation.start.getMinutes()
+                    );
+                  }
+                  return new Date(0, 0, 0, 23, 59); // 기본값: 하루 끝
+                })()}
                 showTimeSelect
                 timeIntervals={60}
                 excludeTimes={excludeTimes}
@@ -211,16 +277,28 @@ const PostContent = () => {
             )}
           </div>
           <div
+            className="calc-price"
             style={{
               textAlign: "center",
               height: "100px",
               alignContent: "center",
             }}
           >
-            계산된 가격
-            <button onClick={handleReset} className="post-reserve-reset-button">
-              초기화
-            </button>
+            금액 &nbsp;:&nbsp;{" "}
+            {(duration > 0
+              ? duration * (postData.postPrice || 0)
+              : 0
+            ).toLocaleString()}{" "}
+            원
+            {duration > 0 && (
+              <button
+                onClick={handleReset}
+                className="post-reserve-reset-button"
+              >
+                초기화
+                <img src={resetIcon} alt="Reset Icon" />
+              </button>
+            )}
           </div>
           <div className="post-reserve-button">
             <ReserveButton>예약하기</ReserveButton>

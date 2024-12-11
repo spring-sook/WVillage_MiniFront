@@ -105,6 +105,13 @@ export const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  h2 {
+    color: #1b5e96;
+  }
+  p {
+    margin: 5px;
+    font-size: 12px;
+  }
 
   .modal-content {
     text-align: center;
@@ -162,6 +169,7 @@ export const Modal = styled.div`
   .selected-tags-list {
     h3 {
       margin-top: 30px;
+      margin-bottom: 20px;
       font-size: 18px;
     }
     .selected-tags {
@@ -185,14 +193,14 @@ export const Modal = styled.div`
 
     /* 좋은 리뷰 선택된 태그 색상 */
     .tag.good-review.selected {
-      background-color: #5db480; /* 좋은 리뷰 색상 */
-      color: white;
+      background-color: #a4d8b9; /* 좋은 리뷰 색상 */
+      /* color: white; */
     }
 
     /* 나쁜 리뷰 선택된 태그 색상 */
     .tag.bad-review.selected {
-      background-color: #da7f75; /* 나쁜 리뷰 색상 */
-      color: white;
+      background-color: #ecb1ab; /* 나쁜 리뷰 색상 */
+      /* color: white; */
     }
   }
 

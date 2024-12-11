@@ -47,6 +47,13 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+    
+    h2 {
+        margin-bottom: 20px;
+    }
+    p {
+        margin-bottom: 20px;
+    }
 
   .modal-content {
     background: white;
@@ -55,6 +62,9 @@ export const Modal = styled.div`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 400px;
     max-width: 90%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
   }
 
   textarea {
@@ -67,14 +77,16 @@ export const Modal = styled.div`
     display: block;
   }
 
+    
   button {
-    margin: 10px 5px 0 0;
+    margin-top: 20px;
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s ease;
+      
 
     &.confirm {
       background-color: #007bff;
@@ -117,5 +129,23 @@ export const ReviewTag = styled.span`
 
   &:hover {
     opacity: 0.9;
+  }
+`;
+export const ReservationPendingBtn = styled.div`
+  display: flex;
+  justify-content: center;
+    gap: 20px;
+  
+  button {
+    
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 `;

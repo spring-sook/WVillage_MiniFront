@@ -1,8 +1,34 @@
+import styled from "styled-components";
 import {
   ModalOverlay,
   ModalContainer,
   ModalButton,
 } from "../styles/PostStyled";
+import React from "react";
+
+const ViewItemContainer = styled.div`
+  width: 850px;
+  margin: 0 auto;
+
+  p {
+    font-size: 18px;
+    margin: 20px 0;
+  }
+  span {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .post-content {
+    line-height: 30px;
+    margin-top: 10px;
+  }
+
+  hr {
+    border: 0.5px solid #ccc;
+    margin: 30px 0;
+  }
+`;
 
 export const GenerateExcludedTimes = (startDate, endDate) => {
   const excludedTimes = [];
@@ -17,11 +43,21 @@ export const GenerateExcludedTimes = (startDate, endDate) => {
   return excludedTimes;
 };
 
-export const ViewItemInfo = () => {
+export const ViewItemInfo = (postData) => {
+  console.log("데이터 넘김 : ", postData);
   return (
-    <>
-      <div>여기는 제품 정보</div>
-    </>
+    <ViewItemContainer>
+      <p>
+        <span>거래 장소 &nbsp; : &nbsp; </span>
+        {postData.postData.postRegion} {postData.postData.postLocation}
+      </p>
+      <span>상품 내용</span>
+      <div
+        className="post-content"
+        dangerouslySetInnerHTML={{ __html: postData.postData.postContent }}
+      />
+      <hr />
+    </ViewItemContainer>
   );
 };
 

@@ -59,6 +59,9 @@ const PostAPI = {
       console.error("게시글 작성 중 오류 발생", error);
     }
   },
+  PostContentDetail: async (postId) => {
+    return await axios.get(SERVER + `/post/details/${postId}`);
+  },
   PostView: async (postId) => {
     return await axios.post(SERVER + `/post/postView/${postId}`);
   },

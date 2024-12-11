@@ -343,11 +343,10 @@ export const ReserveButton = styled.button`
 
 export const PostContentBottom = styled.div`
   width: 100%;
-  min-height: 200px;
-  background-color: #56943a;
+  min-height: 255px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
 
   .bottom-menu {
     display: flex;
@@ -355,7 +354,7 @@ export const PostContentBottom = styled.div`
     width: 1200px;
     padding: 10px 300px;
     font-size: 16px;
-    background-color: #f0cca0;
+    margin: 0 auto;
   }
 
   .line {
@@ -364,7 +363,7 @@ export const PostContentBottom = styled.div`
     background-color: black;
   }
 
-  p {
+  .bottom-menu p {
     cursor: pointer;
   }
 `;

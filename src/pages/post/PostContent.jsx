@@ -7,7 +7,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Logo from "../../images/logo.png";
 import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
@@ -24,17 +24,26 @@ import PostAPI from "../../api/PostAPI";
 
 const PostContent = () => {
   const location = useLocation();
-  const { post } = location.state || {};
+  // const { post } = location.state || {};
+  const now = new Date();
   const { postId } = useParams();
   const { userInfo } = useContext(UserContext);
-  const now = new Date();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [postData, setPostData] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const imagePath = "snow_village.webp";
-  console.log("post : ", post);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await PostAPI.PostContentDetail(postId);
+      setPostData(response.data);
+      console.log(response.data);
+    };
+    fetchData();
+  }, []);
 
   const exTime = [
     {
@@ -107,8 +116,8 @@ const PostContent = () => {
               height="40px"
             />
             <div className="post-content-userinfo">
-              <p className="post-content-nick">작성자 닉네임</p>
-              <p className="post-content-region">작성자 지역</p>
+              <p className="post-content-nick">사용자 닉네임</p>
+              <p className="post-content-region">사용자 지역</p>
             </div>
             <div className="post-content-temp">
               <img className="temp-img" src={Logo} alt="온도이미지" />
@@ -118,15 +127,20 @@ const PostContent = () => {
         </div>
         <div className="post-content-reserve">
           <p className="post-content-title">
-            {post.postTitle}
+            {postData.postTitle}
             <p className="post-content-cnt">
-              <span className="post-content-bookmark">북마크 20</span>
-              &nbsp;/&nbsp;
-              <span className="post-content-view">조회수 100</span>
+              <span className="post-content-bookmark">
+                북마크 {postData.bookmarked}
+              </span>
+              &nbsp;&nbsp;/&nbsp;&nbsp;
+              <span className="post-content-view">
+                조회수 {postData.postViews}
+              </span>
             </p>
           </p>
           <p className="post-content-price">
-            시간 당 &nbsp;<span>{post.postPrice.toLocaleString()}</span> 원
+            시간 당 &nbsp;
+            <span>{Number(postData.postPrice).toLocaleString()}</span> 원
           </p>
           <div className="date-picker">
             <DatePicker
@@ -225,7 +239,9 @@ const PostContent = () => {
           </p>
         </div>
 
-        {selectedTab === "제품 상세 정보" && <ViewItemInfo />}
+        {selectedTab === "제품 상세 정보" && (
+          <ViewItemInfo postData={postData} />
+        )}
         {selectedTab === "사용자 리뷰" && <ViewReview />}
       </PostContentBottom>
       <FooterCom />

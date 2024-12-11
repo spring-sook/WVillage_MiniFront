@@ -47,7 +47,6 @@ const Login = () => {
 
   const handleLogin = async () => {
     const response = await AuthAPI.login(email, password);
-    console.log("response", response);
     if (response) {
       setUserInfo(response);
       navigate("/main");

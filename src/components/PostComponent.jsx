@@ -7,8 +7,10 @@ import {
 import React from "react";
 
 const ViewItemContainer = styled.div`
-  width: 850px;
+  width: 1200px;
+  padding: 50px 100px;
   margin: 0 auto;
+  border-bottom: 1px solid #ccc;
 
   p {
     font-size: 18px;
@@ -22,11 +24,6 @@ const ViewItemContainer = styled.div`
   .post-content {
     line-height: 30px;
     margin-top: 10px;
-  }
-
-  hr {
-    border: 0.5px solid #ccc;
-    margin: 30px 0;
   }
 `;
 
@@ -56,7 +53,6 @@ export const ViewItemInfo = (postData) => {
         className="post-content"
         dangerouslySetInnerHTML={{ __html: postData.postData.postContent }}
       />
-      <hr />
     </ViewItemContainer>
   );
 };

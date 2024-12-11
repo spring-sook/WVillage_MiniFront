@@ -21,6 +21,7 @@ import {
 import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
+import UserProfileAPI from "../../api/OtherUserProfileAPI";
 
 const PostContent = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const PostContent = () => {
   const { userInfo } = useContext(UserContext);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [postData, setPostData] = useState([]);
+  const [writerData, setWriterData] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [excludeTimes, setExcludeTimes] = useState([]);
@@ -38,9 +40,12 @@ const PostContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await PostAPI.PostContentDetail(postId);
-      setPostData(response.data);
-      console.log(response.data);
+      const responseData = await PostAPI.PostContentDetail(postId);
+      setPostData(responseData.data);
+      const responseProfile = await UserProfileAPI.getUserProfile(
+        responseData.data.postEmail
+      );
+      setWriterData(responseProfile.data);
     };
     fetchData();
   }, []);
@@ -116,7 +121,7 @@ const PostContent = () => {
               height="40px"
             />
             <div className="post-content-userinfo">
-              <p className="post-content-nick">사용자 닉네임</p>
+              <p className="post-content-nick">{writerData.nickname}</p>
               <p className="post-content-region">사용자 지역</p>
             </div>
             <div className="post-content-temp">

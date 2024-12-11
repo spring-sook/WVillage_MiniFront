@@ -9,6 +9,9 @@ const UserProfileAPI = {
   getRegion: async (areaCode) => {
     return await axios.get(SERVER + `/post/getRegion/${areaCode}`);
   },
+  getUserProfile: async (email) => {
+    return await axios.get(SERVER + `/userProfile/profile/${email}`);
+  },
 };
 
 export default UserProfileAPI;

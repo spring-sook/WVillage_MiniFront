@@ -355,6 +355,7 @@ export const PostContentBottom = styled.div`
     padding: 10px 300px;
     font-size: 16px;
     margin: 0 auto;
+    border-bottom: 1px solid #ccc;
   }
 
   .line {

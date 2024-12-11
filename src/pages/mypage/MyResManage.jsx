@@ -6,6 +6,7 @@ import {
   ResManage,
   ReserveManageHeader,
   Modal,
+  ReviewTag,
 } from "../../styles/MyResManageStyled";
 import { useState } from "react";
 
@@ -15,13 +16,14 @@ export const MyResManage = () => {
   const [currentItem, setCurrentItem] = useState(null); // 현재 선택한 예약 데이터
   const [rejectionReason, setRejectionReason] = useState(""); // 예약거절 사유
   const [cancelReason, setCancelReason] = useState(""); // 예약취소 사유
+  const [rejectionReasonVisible, setRejectionReasonVisible] = useState(false); // 거절 사유 입력창 보이기/숨기기
 
   // 상태별 데이터 필터링
   const reserveData = [
     { state: "예약대기", id: 1 },
     { state: "예약완료", id: 2 },
     { state: "예약거절", id: 3 },
-    { state: "거래완료", id: 4 },
+    { state: "거래완료", id: 4, tags: ["친절", "빠른 처리", "상태 좋음"] },
     { state: "예약취소", id: 5, reason: "사용자가 취소 요청" },
   ];
 
@@ -52,6 +54,9 @@ export const MyResManage = () => {
     } else if (item.state === "예약취소") {
       setCancelReason(item.reason || "취소 사유 없음");
       setModalType("reservationCancel");
+    } else if (item.state === "거래완료") {
+      setCurrentItem(item);
+      setModalType("transactionComplete");
     }
   };
 
@@ -60,6 +65,7 @@ export const MyResManage = () => {
     setModalType(null);
     setRejectionReason("");
     setCurrentItem(null);
+    setRejectionReasonVisible(false); // 거절 사유 입력창 초기화
   };
 
   // 예약 상태 변경
@@ -68,7 +74,13 @@ export const MyResManage = () => {
     closeModal();
   };
 
+  // 예약 거절 처리
   const rejectReservation = () => {
+    setRejectionReasonVisible(true); // 예약 거절 입력창 보이기
+  };
+
+  // 예약 거절 완료
+  const completeRejection = () => {
     if (rejectionReason.trim()) {
       console.log(
         `예약 ID ${currentItem.id}: 예약거절로 변경, 사유: ${rejectionReason}`
@@ -84,33 +96,46 @@ export const MyResManage = () => {
       <ResManage>
         <ReserveManageHeader>
           <div>
-            <span className="sort-menu" onClick={() => setSelectState("전체")}>
+            <span
+              className={`sort-menu ${
+                selectState !== "전체" ? "disabled" : ""
+              }`}
+              onClick={() => setSelectState("전체")}
+            >
               전체
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "승인대기" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("승인대기")}
             >
               승인대기
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "승인완료" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("승인완료")}
             >
               승인완료
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "거래완료" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("거래완료")}
             >
               거래완료
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "예약취소" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("예약취소")}
             >
               예약취소
@@ -135,14 +160,31 @@ export const MyResManage = () => {
         <Modal>
           <div className="modal-content">
             <h2>예약 상태 변경</h2>
-            <textarea
-              placeholder="예약거절 사유를 작성해주세요."
-              value={rejectionReason}
-              onChange={(e) => setRejectionReason(e.target.value)}
-            />
-            <button onClick={confirmReservation}>예약완료로 변경</button>
-            <button onClick={rejectReservation}>예약거절로 변경</button>
-            <button onClick={closeModal}>닫기</button>
+            {/* 예약 거절 사유 입력창 */}
+            {rejectionReasonVisible ? (
+              <>
+                <textarea
+                  placeholder="예약거절 사유를 작성해주세요."
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                />
+                <button onClick={completeRejection} className="confirm">
+                  완료
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={confirmReservation} className="confirm">
+                  예약완료로 변경
+                </button>
+                <button onClick={rejectReservation} className="cancel">
+                  예약거절로 변경
+                </button>
+              </>
+            )}
+            <button onClick={closeModal} className="cancel">
+              닫기
+            </button>
           </div>
         </Modal>
       )}
@@ -153,7 +195,38 @@ export const MyResManage = () => {
           <div className="modal-content">
             <h2>예약취소 사유</h2>
             <p>{cancelReason}</p>
-            <button onClick={closeModal}>닫기</button>
+            <button onClick={closeModal} className="cancel">
+              닫기
+            </button>
+          </div>
+        </Modal>
+      )}
+      {/* 거래완료 모달 */}
+      {modalType === "transactionComplete" && (
+        <Modal>
+          <div className="modal-content">
+            <h2>거래완료 - 리뷰 태그</h2>
+            <p>리뷰 태그:</p>
+            {/* currentItem.tags가 있을 경우, 이를 반복해서 출력 */}
+            {currentItem.tags && currentItem.tags.length > 0 ? (
+              <div>
+                {currentItem.tags.map((tag, index) => (
+                  <ReviewTag
+                    key={index}
+                    className={`${
+                      tag === "친절" ? "good-review" : "bad-review"
+                    }`} // tag 값에 따라 스타일을 다르게 적용할 수 있습니다.
+                  >
+                    {tag}
+                  </ReviewTag>
+                ))}
+              </div>
+            ) : (
+              <p>아직 리뷰가 존재하지 않습니다.</p>
+            )}
+            <button onClick={closeModal} className="cancel">
+              닫기
+            </button>
           </div>
         </Modal>
       )}

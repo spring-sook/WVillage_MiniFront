@@ -64,28 +64,58 @@ export const Modal = styled.div`
     padding: 8px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    display: block;
   }
 
   button {
     margin: 10px 5px 0 0;
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
+    padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+
+    &.confirm {
+      background-color: #007bff;
+      color: white;
+    }
+
+    &.cancel {
+      background-color: #f0f0f0;
+      color: black;
+    }
 
     &:hover {
-      background-color: #0056b3;
+      opacity: 0.9;
     }
   }
+`;
 
-  button:last-child {
-    background-color: #ccc;
-    color: black;
+// 태그 스타일 정의
+export const ReviewTag = styled.span`
+  margin: 20px 10px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
 
-    &:hover {
-      background-color: #aaa;
-    }
+  &.good-review {
+    border: 1px solid green;
+  }
+
+  &.bad-review {
+    border: 1px solid red;
+  }
+
+  &.selected {
+    background-color: #1b5e96;
+    color: white;
+    border-color: #1b5e96;
+  }
+
+  &:hover {
+    opacity: 0.9;
   }
 `;

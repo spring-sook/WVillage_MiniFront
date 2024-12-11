@@ -139,68 +139,76 @@ export const MyReserve = () => {
         </PostsContainer>
       </Reserves>
       {showModal && (
-        <Modal>
-          <div className="modal-content">
-            <h2>{modalContent}</h2>
-            <p>※태그는 최대 6개까지 선택 가능합니다.</p>
-            <div className="review-type-buttons">
-              <button
-                className={selectedReviewType === "좋은 리뷰" ? "selected" : ""}
-                onClick={() => switchReviewType("좋은 리뷰")}
-              >
-                좋은 리뷰
-              </button>
-              <button
-                className={selectedReviewType === "나쁜 리뷰" ? "selected" : ""}
-                onClick={() => switchReviewType("나쁜 리뷰")}
-              >
-                나쁜 리뷰
-              </button>
-            </div>
-            <div className="review-tags">
-              {(selectedReviewType === "좋은 리뷰"
-                ? goodReviewTags
-                : badReviewTags
-              ).map((tag) => (
-                <span
-                  key={tag}
-                  className={`review-tag ${
-                    selectedTags.includes(tag) ? "selected" : ""
-                  } ${
-                    selectedReviewType === "좋은 리뷰"
-                      ? "good-review"
-                      : "bad-review"
-                  }`}
-                  onClick={() => toggleTag(tag)}
+        <>
+          {/* 오버레이 추가 */}
+          <ModalOverlay onClick={closeModal} />
+          <Modal>
+            <div className="modal-content">
+              <h2>{modalContent}</h2>
+              <p>※태그는 최대 6개까지 선택 가능합니다.</p>
+              <div className="review-type-buttons">
+                <button
+                  className={
+                    selectedReviewType === "좋은 리뷰" ? "selected" : ""
+                  }
+                  onClick={() => switchReviewType("좋은 리뷰")}
                 >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className="selected-tags-list">
-              <h3>선택 태그</h3>
-              <div className="selected-tags">
-                {selectedTags.map((tag, index) => (
+                  좋은 리뷰
+                </button>
+                <button
+                  className={
+                    selectedReviewType === "나쁜 리뷰" ? "selected" : ""
+                  }
+                  onClick={() => switchReviewType("나쁜 리뷰")}
+                >
+                  나쁜 리뷰
+                </button>
+              </div>
+              <div className="review-tags">
+                {(selectedReviewType === "좋은 리뷰"
+                  ? goodReviewTags
+                  : badReviewTags
+                ).map((tag) => (
                   <span
-                    key={index}
-                    className={`tag ${
-                      goodReviewTags.includes(tag)
+                    key={tag}
+                    className={`review-tag ${
+                      selectedTags.includes(tag) ? "selected" : ""
+                    } ${
+                      selectedReviewType === "좋은 리뷰"
                         ? "good-review"
                         : "bad-review"
-                    } ${selectedTags.includes(tag) ? "selected" : ""}`}
+                    }`}
                     onClick={() => toggleTag(tag)}
                   >
                     {tag}
                   </span>
                 ))}
               </div>
+              <div className="selected-tags-list">
+                <h3>선택 태그</h3>
+                <div className="selected-tags">
+                  {selectedTags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className={`tag ${
+                        goodReviewTags.includes(tag)
+                          ? "good-review"
+                          : "bad-review"
+                      } ${selectedTags.includes(tag) ? "selected" : ""}`}
+                      onClick={() => toggleTag(tag)}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="modal-buttons">
+                <button onClick={closeModal}>완료</button>
+                <button onClick={closeModal}>취소</button>
+              </div>
             </div>
-            <div className="modal-buttons">
-              <button onClick={closeModal}>완료</button>
-              <button onClick={closeModal}>취소</button>
-            </div>
-          </div>
-        </Modal>
+          </Modal>
+        </>
       )}
     </MyReserveContainer>
   );

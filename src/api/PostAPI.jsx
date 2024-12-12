@@ -19,7 +19,7 @@ const PostAPI = {
   UserPostList: async (email) => {
     return await axios.get(SERVER + `/board/userProfile/${email}`);
   },
-  // 북마크한 게시글 조회
+  // 북마크한 게시글 리스트 조회
   BookmarkedPostList: async (email) => {
     return await axios.get(SERVER + `/bookmark/bookmarkedList`, {
       params: { email: email },
@@ -59,6 +59,12 @@ const PostAPI = {
       console.error("게시글 작성 중 오류 발생", error);
     }
   },
+  PostContentDetail: async (postId) => {
+    return await axios.get(SERVER + `/post/details/${postId}`);
+  },
+  PostImages: async (postId) => {
+    return await axios.get(SERVER + `/post/images/${postId}`);
+  },
   PostView: async (postId) => {
     return await axios.post(SERVER + `/post/postView/${postId}`);
   },
@@ -72,6 +78,11 @@ const PostAPI = {
     return await axios.post(SERVER + `/bookmark/deleteBookmark`, {
       postId: postId,
       email: email,
+    });
+  },
+  IsBookmarked: async (email, postId) => {
+    return await axios.get(SERVER + `/bookmark/isBookmarking`, {
+      params: { email: email, postId: postId },
     });
   },
 };

@@ -12,7 +12,6 @@ export const Reserves = styled.div`
   width: 90%;
   height: 610px;
   justify-items: center;
-  /* background-color: #d5e8f1; */
 `;
 
 export const ReserveHeader = styled.div`
@@ -23,6 +22,7 @@ export const ReserveHeader = styled.div`
   margin-left: 10px;
   margin-bottom: 20px;
   font-size: 15px;
+  font-weight: bold;
 
   .line {
     box-sizing: border-box;
@@ -31,6 +31,10 @@ export const ReserveHeader = styled.div`
 
   .sort-menu {
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+      color: #1b5e96;
+    }
   }
 `;
 
@@ -76,35 +80,51 @@ export const ReserveState = styled.div`
   background-color: ${(props) => {
     switch (props.state) {
       case "예약대기":
-        return "#fdc264";
+        return "#f8d294";
       case "예약완료":
-        return "#2ecc71";
+        return "#66e299";
       case "예약거절":
-        return "#f85f4e";
+        return "#f07e72";
       case "거래완료":
-        return "#3498db";
+        return "#73bbeb";
       case "예약취소":
-        return "#95a5a6";
+        return "#dac2e0";
       default:
         return "#bdc3c7"; // 기본 색상 (회색)
     }
   }};
 `;
 export const Modal = styled.div`
-  width: 600px;
-  height: 500px;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 650px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  h2 {
+    color: #1b5e96;
+  }
+  p {
+    margin: 5px;
+    font-size: 12px;
+  }
 
   .modal-content {
     text-align: center;
@@ -122,13 +142,13 @@ export const Modal = styled.div`
       transition: all 0.3s ease;
 
       &.selected {
-        background-color: #007bff;
+        background-color: #1b5e96;
         color: white;
-        border-color: #007bff;
+        border-color: #1b5e96;
       }
 
       &:hover {
-        background-color: #f0f0f0;
+        opacity: 0.7;
       }
     }
   }
@@ -149,36 +169,52 @@ export const Modal = styled.div`
     }
 
     .review-tag.selected {
-      background-color: #007bff;
-      color: white;
-      border-color: #007bff;
+      background-color: #95bfe5;
+      color: black;
+      border-color: #95bfe5;
     }
 
     .review-tag:hover {
-      background-color: #f0f0f0;
+      opacity: 0.7;
     }
   }
 
   .selected-tags-list {
-    margin-top: 20px;
-
     h3 {
+      margin-top: 30px;
+      margin-bottom: 20px;
       font-size: 18px;
-      margin-bottom: 10px;
+    }
+    .selected-tags {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      transition: all 0.3s ease;
+    }
+    .selected-tags .tag:hover {
+      opacity: 0.7; /* 투명도 설정 */
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
+    .tag.good-review.selected {
+      border: 1px solid #a4d8b9;
+    }
 
-      li {
-        margin: 5px 0;
-      }
+    .tag.bad-review.selected {
+      border: 1px solid #ecb1ab;
     }
   }
 
   .modal-buttons {
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -190,7 +226,7 @@ export const Modal = styled.div`
       cursor: pointer;
       transition: all 0.3s ease;
       &:first-child {
-        background-color: #007bff;
+        background-color: #1b5e96;
         color: white;
       }
       &:last-child {
@@ -202,20 +238,13 @@ export const Modal = styled.div`
       }
     }
   }
-  .selected-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .tag {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
-    border: 1px solid #ccc;
-  }
+`;
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 회색 */
+  z-index: 998; /* Modal보다 낮은 z-index */
 `;

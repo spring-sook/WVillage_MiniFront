@@ -1,4 +1,8 @@
 import { Container } from "../../styles/GlobalStyled";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { ImgDownloader } from "../../components/ImgComponent";
 import {
   PostContentBottom,
   PostContentTop,
@@ -7,34 +11,83 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Logo from "../../images/logo.png";
 import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
-import ProfileImgDownloader from "../../components/Profile";
+import { ProfileImgDownloader } from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import {
   GenerateExcludedTimes,
+  ImageSlider,
   ViewItemInfo,
   ViewReview,
 } from "../../components/PostComponent";
 import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
+import UserProfileAPI from "../../api/OtherUserProfileAPI";
+import ReviewAPI from "../../api/ReviewAPI";
+import resetIcon from "../../images/reset_icon.png";
+import { ProfileFireImg } from "../../components/Profile";
 
 const PostContent = () => {
   const location = useLocation();
-  const { post } = location.state || {};
+  // const { post } = location.state || {};
+  const now = new Date();
   const { postId } = useParams();
   const { userInfo } = useContext(UserContext);
-  const now = new Date();
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [postData, setPostData] = useState([]);
+  const [imgData, setImgData] = useState([]);
+  const [writerData, setWriterData] = useState([]);
+  const [reviewData, setReviewData] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [duration, setDuration] = useState(0);
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const imagePath = "snow_village.webp";
-  console.log("post : ", post);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await PostAPI.PostContentDetail(postId);
+      setPostData(responseData.data);
+      const responseProfile = await UserProfileAPI.getUserProfile(postId);
+      setWriterData(responseProfile.data);
+      console.log(responseProfile.data);
+      const responseBookmark = await PostAPI.IsBookmarked(
+        responseData.data.postEmail,
+        postId
+      );
+      setIsBookmarked(responseBookmark.data);
+      const responseImg = await PostAPI.PostImages(postId);
+      setImgData(responseImg.data);
+      console.log(">>>imgData", imgData);
+      const reponseReview = await ReviewAPI.PostReview(postId);
+      setReviewData(reponseReview.data);
+    };
+    fetchData();
+  }, []);
+  useEffect(() => {
+    if (startDate && endDate) {
+      const diffInMilliseconds = endDate - startDate;
+      const diffInHours = diffInMilliseconds / (1000 * 60 * 60); // 시간 단위 변환
+      setDuration(diffInHours);
+    } else {
+      setDuration(0); // 날짜가 없으면 0으로 초기화
+    }
+  }, [startDate, endDate]);
+
+  const settings = {
+    dots: true, // 페이지네이션 점 표시
+    infinite: true, // 무한 슬라이드
+    speed: 500, // 슬라이드 전환 속도
+    slidesToShow: 1, // 한 번에 보여줄 이미지 개수
+    slidesToScroll: 1, // 한 번에 이동할 이미지 개수
+    autoplay: false, // 자동 슬라이드
+    autoplaySpeed: 2000, // 자동 슬라이드 간격
+  };
 
   const exTime = [
     {
@@ -98,7 +151,15 @@ const PostContent = () => {
               }}
               className="bookmark-icon"
             />
-            여기가 이미지
+            이미지
+            <Slider {...settings}>
+              {imgData.map((imgfile, index) => (
+                <div key={index}>
+                  <ImgDownloader imgfile={imgfile} />
+                </div>
+              ))}
+            </Slider>
+            {/* <ImageSlider imgs={imgData} /> */}
           </div>
           <div className="post-content-user">
             <ProfileImgDownloader
@@ -107,26 +168,38 @@ const PostContent = () => {
               height="40px"
             />
             <div className="post-content-userinfo">
-              <p className="post-content-nick">작성자 닉네임</p>
-              <p className="post-content-region">작성자 지역</p>
+              <p className="post-content-nick">{writerData.nickname}</p>
+              <p className="post-content-region">{writerData.areaCode}</p>
             </div>
             <div className="post-content-temp">
-              <img className="temp-img" src={Logo} alt="온도이미지" />
-              <p>36.5℃</p>
+              <ProfileFireImg
+                className="temp-img"
+                score={writerData.score}
+                height={"40px"}
+              />
+              {/* <img className="temp-img" src={Logo} alt="온도이미지" /> */}
+              <p>
+                {((300.0 + parseInt(writerData.score)) / 10.0).toFixed(1)} ℃
+              </p>
             </div>
           </div>
         </div>
         <div className="post-content-reserve">
           <p className="post-content-title">
-            {post.postTitle}
+            {postData.postTitle}
             <p className="post-content-cnt">
-              <span className="post-content-bookmark">북마크 20</span>
-              &nbsp;/&nbsp;
-              <span className="post-content-view">조회수 100</span>
+              <span className="post-content-bookmark">
+                북마크 {postData.bookmarked}
+              </span>
+              &nbsp;&nbsp;/&nbsp;&nbsp;
+              <span className="post-content-view">
+                조회수 {postData.postViews}
+              </span>
             </p>
           </p>
           <p className="post-content-price">
-            시간 당 &nbsp;<span>{post.postPrice.toLocaleString()}</span> 원
+            시간 당 &nbsp;
+            <span>{Number(postData.postPrice).toLocaleString()}</span> 원
           </p>
           <div className="date-picker">
             <DatePicker
@@ -177,7 +250,29 @@ const PostContent = () => {
                       )
                     : new Date(0, 0, 0, 0, 0)
                 }
-                maxTime={new Date(0, 0, 0, 23, 59)}
+                maxDate={
+                  exTime.find((item) => item.start >= startDate)?.start ||
+                  null /* 다음 예약 시작 시간을 기준으로 */
+                }
+                maxTime={(() => {
+                  const nextReservation = exTime.find(
+                    (item) => item.start >= startDate
+                  );
+                  if (
+                    nextReservation &&
+                    nextReservation.start.toDateString() ===
+                      endDate?.toDateString()
+                  ) {
+                    return new Date(
+                      0,
+                      0,
+                      0,
+                      nextReservation.start.getHours(),
+                      nextReservation.start.getMinutes()
+                    );
+                  }
+                  return new Date(0, 0, 0, 23, 59); // 기본값: 하루 끝
+                })()}
                 showTimeSelect
                 timeIntervals={60}
                 excludeTimes={excludeTimes}
@@ -192,16 +287,28 @@ const PostContent = () => {
             )}
           </div>
           <div
+            className="calc-price"
             style={{
               textAlign: "center",
               height: "100px",
               alignContent: "center",
             }}
           >
-            계산된 가격
-            <button onClick={handleReset} className="post-reserve-reset-button">
-              초기화
-            </button>
+            금액 &nbsp;:&nbsp;{" "}
+            {(duration > 0
+              ? duration * (postData.postPrice || 0)
+              : 0
+            ).toLocaleString()}{" "}
+            원
+            {duration > 0 && (
+              <button
+                onClick={handleReset}
+                className="post-reserve-reset-button"
+              >
+                초기화
+                <img src={resetIcon} alt="Reset Icon" />
+              </button>
+            )}
           </div>
           <div className="post-reserve-button">
             <ReserveButton>예약하기</ReserveButton>
@@ -225,8 +332,15 @@ const PostContent = () => {
           </p>
         </div>
 
-        {selectedTab === "제품 상세 정보" && <ViewItemInfo />}
-        {selectedTab === "사용자 리뷰" && <ViewReview />}
+        {selectedTab === "제품 상세 정보" && (
+          <>
+            <ViewItemInfo postData={postData} />
+            <ViewReview reviewData={reviewData} />
+          </>
+        )}
+        {selectedTab === "사용자 리뷰" && (
+          <ViewReview reviewData={reviewData} />
+        )}
       </PostContentBottom>
       <FooterCom />
     </Container>

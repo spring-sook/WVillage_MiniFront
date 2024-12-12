@@ -11,6 +11,7 @@ import { UserPoint } from "./UserPoint";
 import { EditProfile } from "./EditProfile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
+import { MyResManage } from "./MyResManage";
 // import { UserMain } from "../../styles/MyPostStyled";
 
 export const MyPageMain = () => {
@@ -37,6 +38,7 @@ export const MyPageMain = () => {
         />
         {selectedMenu === "작성 게시글" && <MyPosts />}
         {selectedMenu === "즐겨찾기 게시글" && <MyBookmark />}
+        {selectedMenu === "예약 관리" && <MyResManage />}
         {selectedMenu === "예약 리스트" && <MyReserve />}
         {selectedMenu === "포인트" && <UserPoint />}
         {selectedMenu === "내 정보 수정" && <EditProfile />}

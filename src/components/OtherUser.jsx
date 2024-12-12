@@ -1,4 +1,4 @@
-import ProfileImgDownloader from "./Profile";
+import { ProfileImgDownloader } from "./Profile";
 import { UserReviewRecord } from "./UserReviewRecord";
 import { ReportBtn } from "./ReportBtn";
 import { UserProfileBox } from "../styles/OtherUserStyled";

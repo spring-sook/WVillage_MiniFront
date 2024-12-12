@@ -1,4 +1,4 @@
-import ProfileImgDownloader from "./Profile";
+import { ProfileImgDownloader } from "./Profile";
 import { Usermy, Modal, Tier, TempInfo } from "../styles/UserComstyled";
 import { useContext, useState } from "react";
 import fire1 from "../../src/images/fire1.jpg";
@@ -29,15 +29,15 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
 
   if (temperature >= 0 && temperature <= 10) {
     temperatureImage = fire1;
-  } else if (temperature >= 11 && temperature <= 30) {
+  } else if (temperature > 10 && temperature <= 30) {
     temperatureImage = fire2;
-  } else if (temperature >= 31 && temperature <= 50) {
+  } else if (temperature > 30 && temperature <= 50) {
     temperatureImage = fire3;
-  } else if (temperature >= 51 && temperature <= 70) {
+  } else if (temperature > 50 && temperature <= 70) {
     temperatureImage = fire4;
-  } else if (temperature >= 71 && temperature <= 90) {
+  } else if (temperature > 70 && temperature <= 90) {
     temperatureImage = fire5;
-  } else if (temperature >= 91) {
+  } else if (temperature > 90) {
     temperatureImage = fire6;
   }
 
@@ -60,7 +60,7 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
               className="temperature-image"
             />
             <div className="gauge">
-              <p>{temperature} ℃</p>
+              <p>{temperature.toFixed(1)} ℃</p>
             </div>
           </div>
           <div className="option">

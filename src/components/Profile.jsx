@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { storage } from "../api/Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 
-const ProfileImgDownloader = ({ imgfile, width, height }) => {
+export const ProfileImgDownloader = ({ imgfile, width, height }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const storedImageUrl = localStorage.getItem("profileImageUrl");
@@ -48,5 +48,3 @@ const ProfileImgDownloader = ({ imgfile, width, height }) => {
     </>
   );
 };
-
-export default ProfileImgDownloader;

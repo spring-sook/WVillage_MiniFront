@@ -1,7 +1,7 @@
 import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import ProfileImgDownloader from "./Profile";
+import { ProfileImgDownloader } from "./Profile";
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 

@@ -60,7 +60,7 @@ export const ViewItemInfo = (postData) => {
         <span>거래 장소 &nbsp; : &nbsp; </span>
         {postData.postData.postRegion} {postData.postData.postLocation}
       </p>
-      <span>상품 내용</span>
+      {/* <span>상품 내용</span> */}
       <div
         className="post-content"
         dangerouslySetInnerHTML={{ __html: postData.postData.postContent }}

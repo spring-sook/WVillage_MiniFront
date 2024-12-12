@@ -15,7 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import Logo from "../../images/logo.png";
 import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
-import ProfileImgDownloader from "../../components/Profile";
+import { ProfileImgDownloader } from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import {
   GenerateExcludedTimes,
@@ -54,6 +54,7 @@ const PostContent = () => {
       setPostData(responseData.data);
       const responseProfile = await UserProfileAPI.getUserProfile(postId);
       setWriterData(responseProfile.data);
+      console.log(responseProfile.data);
       const responseBookmark = await PostAPI.IsBookmarked(
         responseData.data.postEmail,
         postId

@@ -1,4 +1,4 @@
-import ProfileImgDownloader from "./Profile";
+import { ProfileImgDownloader } from "./Profile";
 import { Usermy, Modal, Tier, TempInfo } from "../styles/UserComstyled";
 import { useContext, useState } from "react";
 import fire1 from "../../src/images/fire1.jpg";

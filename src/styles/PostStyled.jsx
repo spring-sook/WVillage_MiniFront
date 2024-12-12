@@ -310,9 +310,9 @@ export const PostContentTop = styled.div`
   }
 
   .calc-price {
-    width: 50%;
+    width: 80%;
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     align-items: center;
     margin: 0 auto;
     font-size: 17px;
@@ -333,6 +333,7 @@ export const PostContentTop = styled.div`
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 4px 10px;
+    margin-left: 15px;
     cursor: pointer;
     gap: 4px;
   }
@@ -369,6 +370,7 @@ export const PostContentBottom = styled.div`
   min-height: 255px;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
   /* align-items: center; */
 
   .bottom-menu {

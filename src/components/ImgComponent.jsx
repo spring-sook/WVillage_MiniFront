@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { storage } from "../api/Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
+import { UserContext } from "../context/UserStore";
 
 export const ImgUpload = async (files) => {
   const uploadedFileUrls = [];
   const storageRef = storage.ref(); // Firebase Storage 참조
+  const { userInfo } = useContext(UserContext);
 
   for (const file of files) {
+    // const fileRef = storageRef.child(`${userInfo.phone}_${file.name}`);
     const fileRef = storageRef.child(file.name);
     console.log(file.name);
     fileRef

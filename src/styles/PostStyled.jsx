@@ -198,6 +198,7 @@ export const PostContentTop = styled.div`
     position: absolute;
     left: 5px;
     cursor: pointer;
+    z-index: 99;
   }
 
   .post-content-user {
@@ -207,6 +208,7 @@ export const PostContentTop = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+    cursor: pointer;
   }
 
   .post-content-userinfo {
@@ -343,6 +345,69 @@ export const PostContentTop = styled.div`
     height: auto;
     margin: 0;
     position: static;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 120px;
+  width: 350px;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+`;
+
+export const Button = styled.button`
+  display: flex;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  z-index: 10;
+  & + & {
+    margin-left: 20px;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 39%;
+    left: 45%;
+    width: 10px;
+    height: 2px;
+    background-color: grey;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 61%;
+    left: 45%;
+    width: 10px;
+    height: 2px;
+    background-color: grey;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  & + &::before {
+    position: absolute;
+    top: 39%;
+    left: 55%;
+    width: 10px;
+    height: 2px;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  & + &::after {
+    content: "";
+    position: absolute;
+    top: 61%;
+    left: 55%;
+    width: 10px;
+    height: 2px;
+    background-color: grey;
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
 `;
 

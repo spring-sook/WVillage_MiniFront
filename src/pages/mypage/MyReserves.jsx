@@ -83,40 +83,56 @@ export const MyReserve = () => {
       <Reserves>
         <ReserveHeader>
           <div>
-            <span className="sort-menu" onClick={() => setSelectState("전체")}>
+            <span
+              className={`sort-menu ${
+                selectState !== "전체" ? "disabled" : ""
+              }`}
+              onClick={() => setSelectState("전체")}
+            >
+              {" "}
               전체
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "예약완료" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("예약완료")}
             >
               예약완료
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "예약대기" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("예약대기")}
             >
               예약대기
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "거래완료" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("거래완료")}
             >
               거래완료
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "예약취소" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("예약취소")}
             >
               예약취소
             </span>
             <span className="line">|</span>
             <span
-              className="sort-menu"
+              className={`sort-menu ${
+                selectState !== "예약거절" ? "disabled" : ""
+              }`}
               onClick={() => setSelectState("예약거절")}
             >
               예약거절

@@ -21,7 +21,6 @@ import { ProfileImgDownloader } from "../../components/Profile";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
 import {
   GenerateExcludedTimes,
-  ImageSlider,
   ViewItemInfo,
   ViewReview,
 } from "../../components/PostComponent";
@@ -30,6 +29,7 @@ import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
 import ReviewAPI from "../../api/ReviewAPI";
+import ReserveAPI from "../../api/ReserveAPI";
 import resetIcon from "../../images/reset_icon.png";
 import { ProfileFireImg } from "../../components/Profile";
 
@@ -45,6 +45,7 @@ const PostContent = () => {
   const [imgData, setImgData] = useState([]);
   const [writerData, setWriterData] = useState([]);
   const [reviewData, setReviewData] = useState([]);
+  const [reserveData, setReserveData] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [duration, setDuration] = useState(0);
@@ -69,6 +70,8 @@ const PostContent = () => {
       console.log(">>>imgData", imgData);
       const reponseReview = await ReviewAPI.PostReview(postId);
       setReviewData(reponseReview.data);
+      const responseReserve = await ReserveAPI.GetPostReserve(postId);
+      setReserveData(responseReserve.data);
     };
     fetchData();
   }, []);
@@ -81,16 +84,6 @@ const PostContent = () => {
       setDuration(0); // 날짜가 없으면 0으로 초기화
     }
   }, [startDate, endDate]);
-
-  // const settings = {
-  //   dots: true, // 페이지네이션 점 표시
-  //   infinite: true, // 무한 슬라이드
-  //   speed: 500, // 슬라이드 전환 속도
-  //   slidesToShow: 1, // 한 번에 보여줄 이미지 개수
-  //   slidesToScroll: 1, // 한 번에 이동할 이미지 개수
-  //   autoplay: false, // 자동 슬라이드
-  //   autoplaySpeed: 2000, // 자동 슬라이드 간격
-  // };
 
   const exTime = [
     {
@@ -139,6 +132,7 @@ const PostContent = () => {
       await PostAPI.DeleteBookmark(postId, userInfo.email);
     }
   };
+  const handleReserveClick = async () => {};
 
   return (
     <Container>
@@ -347,7 +341,9 @@ const PostContent = () => {
             )}
           </div>
           <div className="post-reserve-button">
-            <ReserveButton>예약하기</ReserveButton>
+            <ReserveButton disabled={!endDate} onClick={handleReserveClick}>
+              예약하기
+            </ReserveButton>
           </div>
         </div>
       </PostContentTop>

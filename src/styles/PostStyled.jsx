@@ -428,6 +428,12 @@ export const ReserveButton = styled.button`
   &:active {
     transform: scale(0.99);
   }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: none;
+    pointer-events: none;
+  }
 `;
 
 export const PostContentBottom = styled.div`

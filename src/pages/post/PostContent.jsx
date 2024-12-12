@@ -98,6 +98,21 @@ const PostContent = () => {
   const reserveTimes = exTime.flatMap((item) => {
     return GenerateExcludedTimes(item.start, item.end);
   });
+  // useEffect(() => {
+  //   // reserveData 기반으로 reserveTimes 업데이트
+  //   if (reserveData.length > 0) {
+  //     const exTime = reserveData.map((reserve) => ({
+  //       start: new Date(reserve.reserveStart),
+  //       end: new Date(reserve.reserveEnd),
+  //     }));
+
+  //     const reserveTimes = exTime.flatMap((item) =>
+  //       GenerateExcludedTimes(item.start, item.end)
+  //     );
+  //     setExcludeTimes(reserveTimes);
+  //     console.log(excludeTimes);
+  //   }
+  // }, [reserveData]);
   const handleStartDateChange = (date) => {
     setStartDate(date);
 

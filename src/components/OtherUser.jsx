@@ -28,7 +28,7 @@ export const OtherUser = ({ email }) => {
     const fetchUserProfile = async () => {
       try {
         setLoading(true); // 로딩 시작
-        const response = await UserProfileAPI.getUserProfile(email); // API 호출
+        const response = await UserProfileAPI.getOtherUserProfile(email); // API 호출
         setUserProfile(response.data); // 상태에 유저 정보 저장
         console.log(">>>", response.data);
       } catch (error) {

@@ -13,7 +13,8 @@ export const ProfileImgDownloader = ({ imgfile, width, height }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const { userInfo } = useContext(UserContext);
-  const storedImageUrl = localStorage.getItem("profileImageUrl");
+  // const storedImageUrl = localStorage.getItem("profileImageUrl");
+  const storedImageUrl = "profile_basic.png";
 
   useEffect(() => {
     if (storedImageUrl) {

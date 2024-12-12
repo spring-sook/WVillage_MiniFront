@@ -1,7 +1,7 @@
 import { Container } from "../styles/GlobalStyled";
 import { HeaderCom } from "../components/GlobalComponent";
 import OtherUser from "../components/OtherUser";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { PostListComponent } from "../components/PostListComponent";
 import styled from "styled-components";
 
@@ -14,7 +14,9 @@ export const UserInfoFrame = styled.div`
 `;
 
 const OtherUserProfile = () => {
-  const { email } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const email = searchParams.get("email");
+
   return (
     <Container>
       <HeaderCom />

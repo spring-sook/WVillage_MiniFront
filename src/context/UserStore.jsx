@@ -33,7 +33,6 @@ export const UserStore = (props) => {
         // 업데이트 후 상태 확인
         const updatedUserInfo = { ...userInfo, filteredRegion };
         updateUserInfo(updatedUserInfo);
-        console.log("업데이트된 userInfo:", updatedUserInfo);
       } catch (error) {
         console.error("지역 정보를 가져오는 중 오류 발생:", error);
       }

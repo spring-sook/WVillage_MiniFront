@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { ProfileImgDownloader } from "./Profile";
 import {
   UserProfileBox,
@@ -7,56 +8,83 @@ import {
   TextArea,
   Review,
 } from "../styles/OtherUserStyled";
+import UserProfileAPI from "../api/OtherUserProfileAPI";
 import fire1 from "../../src/images/fire1.jpg";
 import fire2 from "../../src/images/fire2.jpg";
 import fire3 from "../../src/images/fire3.jpg";
 import fire4 from "../../src/images/fire4.jpg";
 import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
-import { useState } from "react";
 
 export const OtherUser = ({ email }) => {
-  const imagePath = "snow_village.webp";
-
-  const temperature = 10; /*(300.0 + parseInt(userInfo.score)) / 10.0*/
-  let temperatureImage = fire1; // 기본 이미지를 설정 (기본값)
-
-  if (temperature >= 0 && temperature <= 10) {
-    temperatureImage = fire1;
-  } else if (temperature >= 11 && temperature <= 30) {
-    temperatureImage = fire2;
-  } else if (temperature > 30 && temperature <= 50) {
-    temperatureImage = fire3;
-  } else if (temperature > 50 && temperature <= 70) {
-    temperatureImage = fire4;
-  } else if (temperature > 70 && temperature <= 90) {
-    temperatureImage = fire5;
-  } else if (temperature > 90) {
-    temperatureImage = fire6;
-  }
+  const [userProfile, setUserProfile] = useState(null); // 유저 프로필 정보 상태
   const [isModalOpen, setModalOpen] = useState(false);
   const [reportReason, setReportReason] = useState(""); // 신고 사유 상태
   const [isReported, setIsReported] = useState(false); // 신고 완료 여부 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+
+  // API 호출: 상대 유저 정보를 가져오기
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        setLoading(true); // 로딩 시작
+        const response = await UserProfileAPI.getUserProfile(email); // API 호출
+        setUserProfile(response.data); // 상태에 유저 정보 저장
+        console.log(">>>", response.data);
+      } catch (error) {
+        console.error("유저 정보를 가져오는 데 실패했습니다.", error);
+      } finally {
+        setLoading(false); // 로딩 종료
+      }
+    };
+
+    fetchUserProfile();
+  }, [email]);
+
+  // 온도 이미지를 결정하는 함수
+  const getTemperatureImage = (temperature) => {
+    if (temperature >= 0 && temperature <= 10) {
+      return fire1;
+    } else if (temperature >= 11 && temperature <= 30) {
+      return fire2;
+    } else if (temperature > 30 && temperature <= 50) {
+      return fire3;
+    } else if (temperature > 50 && temperature <= 70) {
+      return fire4;
+    } else if (temperature > 70 && temperature <= 90) {
+      return fire5;
+    } else {
+      return fire6;
+    }
+  };
+
+  // 유저 정보가 로드되지 않은 경우 로딩 표시
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // SCORE로 temperature 계산
+  const temperature = (300.0 + parseInt(userProfile.score)) / 10.0;
+  const temperatureImage = getTemperatureImage(temperature);
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
   const handleReportChange = (event) => {
-    setReportReason(event.target.value); // 신고 사유 변경 시 상태 업데이트
+    setReportReason(event.target.value);
   };
   const handleReportSubmit = () => {
     if (!reportReason || reportReason.trim() === "") {
-      alert("신고 사유를 작성해 주세요."); // 신고 사유가 비어 있으면 알림
+      alert("신고 사유를 작성해 주세요.");
       return;
     }
 
-    // 신고 완료 상태 설정
     setIsReported(true);
   };
 
   const handleModalClose = () => {
-    setIsReported(false); // 신고 완료 후 모달을 닫을 때 초기화
-    setModalOpen(false); // 모달 닫기
+    setIsReported(false);
+    setModalOpen(false);
     setReportReason("");
   };
 
@@ -66,11 +94,11 @@ export const OtherUser = ({ email }) => {
         <div className="box">
           <div className="userInfo">
             <ProfileImgDownloader
-              imgfile={imagePath}
+              imgfile={userProfile.PROFILE_IMG} // DB에서 가져온 프로필 이미지
               width="120px"
               height="120px"
             />
-            <h4>상대유저명</h4>
+            <h4>{userProfile.nickname}</h4> {/* DB에서 가져온 닉네임 */}
           </div>
           <div className="temp">
             <img
@@ -79,7 +107,7 @@ export const OtherUser = ({ email }) => {
               className="temperature-image"
             />
             <div className="gauge">
-              <p>{temperature} ℃</p>
+              <p>{temperature.toFixed(1)} ℃</p> {/* 온도 표시 */}
             </div>
           </div>
           <Review>
@@ -94,12 +122,11 @@ export const OtherUser = ({ email }) => {
               ].map((item, index) => (
                 <div key={index} className="review-item">
                   <span className={`review-tag ${item.id}`}>{item.tag}</span>
-                  <span className="review-count">{item.count}개</span>
+                  <span className="review-count">({item.count}개)</span>
                 </div>
               ))}
             </div>
           </Review>
-
           <Button onClick={toggleModal}>신고하기</Button>
         </div>
       </UserProfileBox>
@@ -108,8 +135,6 @@ export const OtherUser = ({ email }) => {
           <ModalContent>
             <h2>신고하기</h2>
             <p>상대유저를 신고하시겠습니까?</p>
-
-            {/* 신고 사유 입력 칸 */}
             <TextArea
               value={reportReason}
               onChange={handleReportChange}

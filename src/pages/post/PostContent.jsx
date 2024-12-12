@@ -27,6 +27,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
+import ReviewAPI from "../../api/ReviewAPI";
 import resetIcon from "../../images/reset_icon.png";
 
 const PostContent = () => {
@@ -39,6 +40,7 @@ const PostContent = () => {
   const [postData, setPostData] = useState([]);
   const [imgData, setImgData] = useState([]);
   const [writerData, setWriterData] = useState([]);
+  const [reviewData, setReviewData] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [duration, setDuration] = useState(0);
@@ -50,11 +52,8 @@ const PostContent = () => {
     const fetchData = async () => {
       const responseData = await PostAPI.PostContentDetail(postId);
       setPostData(responseData.data);
-      const responseProfile = await UserProfileAPI.getUserProfile(
-        responseData.data.postEmail
-      );
+      const responseProfile = await UserProfileAPI.getUserProfile(postId);
       setWriterData(responseProfile.data);
-      console.log("profile : ", responseProfile.data);
       const responseBookmark = await PostAPI.IsBookmarked(
         responseData.data.postEmail,
         postId
@@ -62,7 +61,9 @@ const PostContent = () => {
       setIsBookmarked(responseBookmark.data);
       const responseImg = await PostAPI.PostImages(postId);
       setImgData(responseImg.data);
-      console.log(">>>", imgData);
+      console.log(">>>imgData", imgData);
+      const reponseReview = await ReviewAPI.PostReview(postId);
+      setReviewData(reponseReview.data);
     };
     fetchData();
   }, []);
@@ -166,7 +167,7 @@ const PostContent = () => {
             />
             <div className="post-content-userinfo">
               <p className="post-content-nick">{writerData.nickname}</p>
-              <p className="post-content-region">사용자 지역</p>
+              <p className="post-content-region">{writerData.areaCode}</p>
             </div>
             <div className="post-content-temp">
               <img className="temp-img" src={Logo} alt="온도이미지" />
@@ -323,9 +324,14 @@ const PostContent = () => {
         </div>
 
         {selectedTab === "제품 상세 정보" && (
-          <ViewItemInfo postData={postData} />
+          <>
+            <ViewItemInfo postData={postData} />
+            <ViewReview reviewData={reviewData} />
+          </>
         )}
-        {selectedTab === "사용자 리뷰" && <ViewReview />}
+        {selectedTab === "사용자 리뷰" && (
+          <ViewReview reviewData={reviewData} />
+        )}
       </PostContentBottom>
       <FooterCom />
     </Container>

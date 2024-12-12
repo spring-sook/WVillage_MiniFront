@@ -12,8 +12,8 @@ const UserProfileAPI = {
   getPostList: async (email) => {
     return await axios.get(SERVER + `/board/userProfile/${email}`);
   },
-  getUserProfile: async (email) => {
-    return await axios.get(SERVER + `/userProfile/profile/${email}`);
+  getUserProfile: async (postId) => {
+    return await axios.get(SERVER + `/userProfile/post/${postId}`);
   },
 };
 

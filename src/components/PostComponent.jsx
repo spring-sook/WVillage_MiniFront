@@ -29,6 +29,17 @@ const ViewItemContainer = styled.div`
   }
 `;
 
+const ViewPostReview = styled.div`
+  width: 1200px;
+  padding: 50px 100px;
+  margin: 0 auto 50px;
+  border-bottom: 1px solid #ccc;
+
+  .no-review {
+    text-align: center;
+  }
+`;
+
 export const GenerateExcludedTimes = (startDate, endDate) => {
   const excludedTimes = [];
   let currentTime = new Date(startDate);
@@ -43,7 +54,6 @@ export const GenerateExcludedTimes = (startDate, endDate) => {
 };
 
 export const ViewItemInfo = (postData) => {
-  console.log("데이터 넘김 : ", postData);
   return (
     <ViewItemContainer>
       <p>
@@ -59,11 +69,16 @@ export const ViewItemInfo = (postData) => {
   );
 };
 
-export const ViewReview = () => {
+export const ViewReview = (reviewData) => {
+  console.log("데이터 넘김 : ", reviewData);
   return (
-    <>
-      <div>여기는 사용자 리뷰</div>
-    </>
+    <ViewPostReview>
+      {reviewData.data ? (
+        <div>여기는 사용자 리뷰:</div>
+      ) : (
+        <div className="no-review">리뷰가 없습니다.</div>
+      )}
+    </ViewPostReview>
   );
 };
 

@@ -1,6 +1,5 @@
 import { PostsContainer } from "../../components/PostListComponent";
 import { ReserveItem } from "../../components/PostItemComponent";
-
 import {
   MyResManageContainer,
   ResManage,
@@ -25,7 +24,7 @@ export const MyResManage = () => {
     { state: "예약완료", id: 2 },
     { state: "예약거절", id: 3 },
     { state: "거래완료", id: 4, tags: ["친절", "빠른 처리", "상태 좋음"] },
-    { state: "예약취소", id: 5, reason: "사용자가 취소 요청" },
+    { state: "예약취소", id: 5, reason: "여기에 취소사유 작성" },
   ];
 
   const filteredData = () => {
@@ -53,7 +52,7 @@ export const MyResManage = () => {
       setCurrentItem(item);
       setModalType("reservationPending");
     } else if (item.state === "예약취소") {
-      setCancelReason(item.reason || "취소 사유 없음");
+      setCancelReason(item.reason);
       setModalType("reservationCancel");
     } else if (item.state === "거래완료") {
       setCurrentItem(item);
@@ -164,11 +163,11 @@ export const MyResManage = () => {
             {/* 예약 거절 사유 입력창 */}
             {rejectionReasonVisible ? (
               <>
-        <textarea
-          placeholder="예약거절 사유를 작성해주세요."
-          value={rejectionReason}
-          onChange={(e) => setRejectionReason(e.target.value)}
-        />
+                <textarea
+                  placeholder="예약거절 사유를 작성해주세요."
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                />
                 <button onClick={completeRejection} className="confirm">
                   완료
                 </button>
@@ -188,7 +187,6 @@ export const MyResManage = () => {
             </button>
           </div>
         </Modal>
-
       )}
 
       {/* 예약취소 모달 */}

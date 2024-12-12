@@ -160,3 +160,101 @@ export const BottomButtonContainer = styled.div`
     }
   }
 `;
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999; /* 다른 요소보다 위에 배치 */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 배경 페이드인 효과만 적용 */
+  animation: fadeBackground 0.3s ease;
+
+  @keyframes fadeBackground {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    height: 400px;
+    text-align: center;
+
+    /* 모달 내용에만 확대 애니메이션 적용 */
+    animation: scaleUp 0.3s ease;
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.8);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    h2 {
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .button-container {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column; /* 세로 정렬 */
+      align-items: center; /* 가운데 정렬 */
+
+      button {
+        width: 80%;
+        padding: 12px;
+        background-color: #1b5e96;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+
+        &:hover {
+          background-color: #145a86;
+        }
+      }
+
+      button:nth-child(2) {
+        background-color: #ccc;
+        margin-top: 5px;
+
+        &:hover {
+          background-color: #999;
+        }
+      }
+    }
+  }
+`;

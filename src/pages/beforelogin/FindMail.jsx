@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
+import AuthAPI from "../../api/AuthAPI";
 
 const FindMail = () => {
   const navigate = useNavigate();
@@ -27,14 +28,21 @@ const FindMail = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleFindMail = () => {
+  const handleFindMail = async () => {
     if (!validateForm()) {
       return;
     }
-    alert(
-      `이메일 찾기 완료! 이름: ${formData.name}, 전화번호: ${formData.phone}`
-    );
-    navigate("/passwordreset");
+    try {
+      const response = await AuthAPI.FindEmail(formData.name, formData.phone);
+      console.log(response);
+      alert(
+        `이메일 찾기 완료! 이름: ${formData.name}, 전화번호: ${formData.phone}`
+      );
+      navigate("/passwordreset");
+    } catch (err) {
+      console.error("에러 발생: ", err);
+      alert("이메일 찾기에 실패했습니다. 정보를 확인해주세요.");
+    }
   };
 
   return (

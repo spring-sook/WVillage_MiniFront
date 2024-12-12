@@ -170,18 +170,24 @@ export const ModalContent = styled.div`
     margin-bottom: 20px;
     font-size: 16px;
   }
+  .ReportButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    button {
+      background-color: #1b5e96;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
 
-  button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-
-    &:hover {
-      background-color: #d32f2f;
+      &:hover {
+        opacity: 0.7;
+      }
     }
   }
 `;
@@ -194,4 +200,43 @@ export const TextArea = styled.textarea`
   margin-bottom: 20px;
   resize: vertical;
   font-size: 16px;
+`;
+
+export const Review = styled.div`
+  .container {
+    height: 330px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .review-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-left: -10px;
+  }
+
+  .review-tag {
+    padding: 8px 15px;
+    border: 1px solid black;
+    border-radius: 50px;
+    font-weight: bold;
+    &.good {
+      border-color: #a4d8b9;
+    }
+    &.bad {
+      border-color: #ecb1ab;
+    }
+  }
+
+  .review-count {
+    color: #555;
+    text-align: right;
+  }
 `;

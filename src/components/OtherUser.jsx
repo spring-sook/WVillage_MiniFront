@@ -1,11 +1,11 @@
 import { ProfileImgDownloader } from "./Profile";
-import { UserReviewRecord } from "./UserReviewRecord";
 import {
   UserProfileBox,
   Button,
   Modal,
   ModalContent,
   TextArea,
+  Review,
 } from "../styles/OtherUserStyled";
 import fire1 from "../../src/images/fire1.jpg";
 import fire2 from "../../src/images/fire2.jpg";
@@ -82,7 +82,24 @@ export const OtherUser = ({ email }) => {
               <p>{temperature} ℃</p>
             </div>
           </div>
-          <UserReviewRecord email={email} />
+          <Review>
+            <div className="container">
+              {[
+                { tag: "친절해요", count: 10, id: "good" },
+                { tag: "시간엄수", count: 8, id: "good" },
+                { tag: "상품좋아요", count: 12, id: "good" },
+                { tag: "싫어요", count: 5, id: "bad" },
+                { tag: "별로에요", count: 9, id: "bad" },
+                { tag: "짜증나요", count: 7, id: "bad" },
+              ].map((item, index) => (
+                <div key={index} className="review-item">
+                  <span className={`review-tag ${item.id}`}>{item.tag}</span>
+                  <span className="review-count">{item.count}개</span>
+                </div>
+              ))}
+            </div>
+          </Review>
+
           <Button onClick={toggleModal}>신고하기</Button>
         </div>
       </UserProfileBox>
@@ -98,7 +115,7 @@ export const OtherUser = ({ email }) => {
               onChange={handleReportChange}
               placeholder="신고 사유를 작성하세요..."
             />
-            <div>
+            <div className="ReportButton">
               <Button
                 onClick={handleReportSubmit}
                 disabled={reportReason.trim() === ""}
@@ -114,7 +131,7 @@ export const OtherUser = ({ email }) => {
         <Modal>
           <ModalContent>
             <h2>신고가 완료되었습니다.</h2>
-            <div>
+            <div className="ReportButton">
               <Button onClick={handleModalClose}>닫기</Button>
             </div>
           </ModalContent>

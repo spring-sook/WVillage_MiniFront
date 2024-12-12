@@ -35,11 +35,11 @@ const PostList = () => {
       setPosts([]); // 초기화
 
       try {
-        const rspRegion = await UserProfileAPI.getRegion(region);
-        const regionData = rspRegion.data[0];
-        const filteredRegion = Object.values(regionData)
-          .filter((value) => value && value !== "nan")
-          .join(" ");
+        // const rspRegion = await UserProfileAPI.getRegion(region);
+        // const regionData = rspRegion.data[0];
+        // const filteredRegion = Object.values(regionData)
+        //   .filter((value) => value && value !== "nan")
+        //   .join(" ");
 
         let response;
         if (category === "all") {
@@ -48,20 +48,40 @@ const PostList = () => {
           response = await PostAPI.CommonCategoryList(region, category);
         }
 
-        const updatedPosts = response.data.map((post) => ({
-          ...post,
-          region: filteredRegion,
-        }));
-
-        setPosts(updatedPosts);
+        // const updatedPosts = response.data.map((post) => ({
+        //   ...post,
+        //   region: filteredRegion,
+        // }));
+        const fetchedPosts = response.data;
+        fetchedPosts.sort(
+          (a, b) => new Date(b.postDate) - new Date(a.postDate)
+        );
+        setPosts(fetchedPosts);
       } catch (error) {
         console.error("데이터를 가져오는 중 오류 발생:", error);
       }
     };
-
     fetchData();
-    console.log(posts);
   }, [category, userInfo.areaCode]);
+
+  useEffect(() => {
+    // 정렬 함수
+    const sortPosts = () => {
+      if (order === "최신순") {
+        setPosts((prevPosts) =>
+          [...prevPosts].sort(
+            (a, b) => new Date(b.postDate) - new Date(a.postDate)
+          )
+        );
+      } else if (order === "인기순") {
+        setPosts((prevPosts) =>
+          [...prevPosts].sort((a, b) => b.postViews - a.postViews)
+        );
+      }
+    };
+
+    sortPosts();
+  }, [order]);
 
   const handleClickIcon = () => {
     setDropdownView(!isDropdownView);
@@ -119,7 +139,7 @@ const PostList = () => {
                   thumbnail={post.postThumbnail}
                   title={post.postTitle}
                   price={post.postPrice}
-                  region={post.region}
+                  postRegion={post.postRegion}
                   postId={post.postId}
                   post={post}
                 />

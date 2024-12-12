@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import AuthAPI from "../../api/AuthAPI";
 
 const ICONS = {
   eye: faEye,
@@ -17,6 +18,9 @@ const PasswordReset2 = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get("email");
 
   const handleReset = () => {
     if (!newPassword || !confirmPassword) {
@@ -36,6 +40,40 @@ const PasswordReset2 = () => {
 
   const handleCloseModal = () => {
     navigate("/");
+  };
+
+  console.log("전달된 이메일: ", email);
+
+  if (!email) {
+    alert("이메일 정보가 없습니다. 이전 화면으로 돌아갑니다.");
+    navigate("/passwordreset");
+  }
+
+  const handlePasswordReset = async () => {
+    if (!newPassword || !confirmPassword) {
+      alert("새 비밀번호와 비밀번호 확인을 입력해주세요.");
+      return;
+    }
+    if (newPassword.length < 8) {
+      alert("비밀번호는 최소 8자 이상 문자, 특수문자가 포함되어야 합니다.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    try {
+      const response = await AuthAPI.resetPassword(
+        email,
+        newPassword,
+        confirmPassword
+      );
+      alert(response);
+      navigate("/login");
+    } catch (error) {
+      alert("비밀번호 변경 실패: " + error.response.data);
+    }
   };
 
   return (

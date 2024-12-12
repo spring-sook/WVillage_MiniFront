@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
+import AuthAPI from "../../api/AuthAPI";
 
 const PasswordReset = () => {
   const [email, setEmail] = useState("");
@@ -22,6 +23,25 @@ const PasswordReset = () => {
     }
   };
 
+  const handleResetRequest = async () => {
+    if (!email || !phone) {
+      alert("이메일과 전화번호를 입력해주세요.");
+      return;
+    }
+    if (!isEmailValid) {
+      alert("유효한 이메일 주소를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await AuthAPI.requestPasswordReset(email, phone);
+      alert(response);
+      navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
+    } catch (error) {
+      alert("사용자 인증 실패: " + error.response.data);
+    }
+  };
+
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
@@ -37,7 +57,7 @@ const PasswordReset = () => {
       alert("유효한 이메일 주소를 입력해주세요.");
       return;
     }
-    navigate("/passwordreset2");
+    navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
   };
 
   return (

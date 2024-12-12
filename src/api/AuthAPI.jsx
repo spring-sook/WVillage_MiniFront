@@ -22,6 +22,22 @@ const AuthAPI = {
     console.log("결과: ", response);
     return response.data;
   },
+
+  requestPasswordReset: async (email, phone) => {
+    const response = await axios.post(SERVER + `/auth/password-reset-request`, {
+      email,
+      phone,
+    });
+    return response.data;
+  },
+  resetPassword: async (email, newPassword, confirmPassword) => {
+    const response = await axios.post(SERVER + `/auth/password-reset`, {
+      email,
+      newPassword,
+      confirmPassword,
+    });
+    return response.data;
+  },
 };
 
 export default AuthAPI;

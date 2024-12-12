@@ -80,35 +80,44 @@ export const ReserveState = styled.div`
   background-color: ${(props) => {
     switch (props.state) {
       case "예약대기":
-        return "#fdc264";
+        return "#f8d294";
       case "예약완료":
-        return "#2ecc71";
+        return "#66e299";
       case "예약거절":
-        return "#f85f4e";
+        return "#f07e72";
       case "거래완료":
-        return "#3498db";
+        return "#73bbeb";
       case "예약취소":
-        return "#95a5a6";
+        return "#dac2e0";
       default:
         return "#bdc3c7"; // 기본 색상 (회색)
     }
   }};
 `;
 export const Modal = styled.div`
-  width: 650px;
-  height: 600px;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 650px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   h2 {
     color: #1b5e96;
   }
@@ -195,18 +204,12 @@ export const Modal = styled.div`
       opacity: 0.7; /* 투명도 설정 */
     }
 
-    /* 좋은 리뷰 선택된 태그 색상 */
     .tag.good-review.selected {
-      /* background-color: #a4d8b9; */
       border: 1px solid #a4d8b9;
-      /* color: white; */
     }
 
-    /* 나쁜 리뷰 선택된 태그 색상 */
     .tag.bad-review.selected {
-      /* background-color: #ecb1ab; */
       border: 1px solid #ecb1ab;
-      /* color: white; */
     }
   }
 

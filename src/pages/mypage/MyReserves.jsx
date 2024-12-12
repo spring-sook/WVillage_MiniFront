@@ -3,7 +3,6 @@ import {
   Reserves,
   ReserveHeader,
   Modal,
-  ModalOverlay,
 } from "../../styles/MyReserveStyled";
 import { PostsContainer } from "../../components/PostListComponent";
 import { ReserveItem } from "../../components/PostItemComponent";
@@ -12,9 +11,10 @@ import { useState } from "react";
 
 export const MyReserve = () => {
   const [selectState, setSelectState] = useState("전체");
-  //모달
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [modalType, setModalType] = useState(null);
+
   const [selectedTags, setSelectedTags] = useState([]); // 선택된 태그 상태
   const [selectedReviewType, setSelectedReviewType] = useState("좋은 리뷰"); // 리뷰 타입 상태
   const goodReviewTags = [
@@ -46,7 +46,16 @@ export const MyReserve = () => {
 
   const handleItemClick = (state) => {
     if (state === "거래완료") {
+      setModalType("reservationCancle");
       setModalContent("리뷰 태그를 선택 해 주세요."); // 모달 내용 설정
+      setShowModal(true); // 모달 표시
+    } else if (state === "예약대기") {
+      setModalType("reservationComplete");
+      setModalContent("예약을 취소하시겠습니까?");
+      setShowModal(true); // 모달 표시
+    } else if (state === "예약완료") {
+      setModalType("reservationComplete");
+      setModalContent("예약을 취소하시겠습니까?");
       setShowModal(true); // 모달 표시
     }
   };
@@ -138,10 +147,10 @@ export const MyReserve = () => {
           )}
         </PostsContainer>
       </Reserves>
-      {showModal && (
-        <>
-          {/* 오버레이 추가 */}
-          <ModalOverlay onClick={closeModal} />
+
+      {/* 거래완료 모달 */}
+      {modalType === "reservationComplete" ||
+        (showModal && (
           <Modal>
             <div className="modal-content">
               <h2>{modalContent}</h2>
@@ -208,8 +217,21 @@ export const MyReserve = () => {
               </div>
             </div>
           </Modal>
-        </>
-      )}
+        ))}
+      {/* 예약취소 모달 */}
+      {modalType === "reservationCancle" ||
+        (showModal && (
+          <Modal>
+            <div className="modal-content">
+              <h2>{modalContent}</h2>
+
+              <div className="modal-buttons">
+                <button onClick={closeModal}>완료</button>
+                <button onClick={closeModal}>취소</button>
+              </div>
+            </div>
+          </Modal>
+        ))}
     </MyReserveContainer>
   );
 };

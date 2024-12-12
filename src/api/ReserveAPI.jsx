@@ -18,6 +18,12 @@ const ReserveAPI = {
     };
     return await axios.post(SERVER + `/reserve/reservation`, resInfo);
   },
+  MyReserveList: async (email) => {
+    return await axios.get(SERVER + `/reserve/myReserveList/${email}`);
+  },
+  GetMyResManage: async (email) => {
+    return await axios.get(SERVER + `/reserve/myReserveManagement/${email}`);
+  },
 };
 
 export default ReserveAPI;

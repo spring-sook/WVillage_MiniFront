@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserStore";
 
 const UserInfo = () => {
   const { userInfo } = useContext(UserContext); // UserContext에서 userInfo를 가져옵니다.
+  console.log(userInfo);
 
   // userInfo가 존재하는지 확인하고 출력
   return (
@@ -12,6 +13,7 @@ const UserInfo = () => {
           <h3>사용자 정보</h3>
           <p>이메일: {userInfo.email}</p>
           <p>닉네임: {userInfo.nickname}</p>
+          <p>핸드폰 : {userInfo.phone}</p>
           <p>점수: {userInfo.score}</p>
           <p>등급: {userInfo.grade}</p>
           <p>지역 코드: {userInfo.areaCode}</p>

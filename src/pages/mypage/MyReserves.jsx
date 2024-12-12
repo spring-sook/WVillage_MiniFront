@@ -7,13 +7,17 @@ import {
 import { PostsContainer } from "../../components/PostListComponent";
 import { ReserveItem } from "../../components/PostItemComponent";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import ReserveAPI from "../../api/ReserveAPI";
+import { UserContext } from "../../context/UserStore";
 
 export const MyReserve = () => {
+  const { userInfo } = useContext(UserContext);
   const [selectState, setSelectState] = useState("전체");
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [modalType, setModalType] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   const [selectedTags, setSelectedTags] = useState([]); // 선택된 태그 상태
   const [selectedReviewType, setSelectedReviewType] = useState("좋은 리뷰"); // 리뷰 타입 상태
@@ -43,6 +47,30 @@ export const MyReserve = () => {
     "가격이 비싸요",
     "설명이 부족해요",
   ];
+
+  useEffect(() => {
+    const getMyReserves = async () => {
+      const responseMyRes = await ReserveAPI.GetMyResManage(userInfo.email);
+      const reserveStateMapping = {
+        wait: "예약대기",
+        accept: "예약완료",
+        deny: "예약거절",
+        complete: "거래완료",
+        cancel: "예약취소",
+      };
+      const transformedData = responseMyRes.data.map((item) => ({
+        ...item,
+        reserve: {
+          ...item.reserve,
+          reserveState:
+            reserveStateMapping[item.reserve.reserveState] || "알 수 없음",
+        },
+      }));
+      setPosts(transformedData);
+      console.log("예약 : ", transformedData);
+    };
+    getMyReserves();
+  }, []);
 
   const handleItemClick = (state) => {
     if (state === "거래완료") {
@@ -139,7 +167,7 @@ export const MyReserve = () => {
             </span>
           </div>
         </ReserveHeader>
-        <PostsContainer>
+        {/* <PostsContainer>
           {selectState === "전체" && (
             <>
               {["예약대기", "예약완료", "예약거절", "거래완료", "예약취소"].map(
@@ -161,6 +189,27 @@ export const MyReserve = () => {
               onClick={() => handleItemClick(selectState)}
             />
           )}
+        </PostsContainer> */}
+        <PostsContainer>
+          {posts &&
+            posts
+              .filter((post) =>
+                selectState === "전체"
+                  ? true
+                  : post.reserve.reserveState === selectState
+              )
+              .map((post, index) => (
+                <div key={index}>
+                  <ReserveItem
+                    thumbnail={post.post.postThumbnail}
+                    title={post.post.postTitle}
+                    region={post.post.postRegion}
+                    state={post.reserve.reserveState}
+                    onClick={() => handleItemClick(post.reserve.reserveState)}
+                  />
+                  <hr />
+                </div>
+              ))}
         </PostsContainer>
       </Reserves>
 

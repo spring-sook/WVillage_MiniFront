@@ -53,7 +53,9 @@ const PostContent = () => {
   const [reserveTimes, setReserveTimes] = useState([]);
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
-  const imagePath = "snow_village.webp";
+  const [showModal, setShowModal] = useState(false);
+  const [showCompletedModal, setShowCompletedModal] = useState(false);
+  // const imagePath = "snow_village.webp";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +63,7 @@ const PostContent = () => {
       setPostData(responseData.data);
       const responseProfile = await UserProfileAPI.getUserProfile(postId);
       setWriterData(responseProfile.data);
+      console.log(responseProfile.data);
       const responseBookmark = await PostAPI.IsBookmarked(
         responseData.data.postEmail,
         postId
@@ -136,7 +139,30 @@ const PostContent = () => {
       await PostAPI.DeleteBookmark(postId, userInfo.email);
     }
   };
-  const handleReserveClick = async () => {
+  const closeModal = () => {
+    setShowModal(false);
+    window.location.reload();
+  };
+  const Modal = ({ message, onClose, onConfirm }) => {
+    return (
+      <div className="modal-overlay">
+        <div className="modal">
+          <p>{message}</p>
+          <div>
+            {onConfirm ? (
+              <>
+                <button onClick={onConfirm}>확인</button>
+                <button onClick={onClose}>닫기</button>
+              </>
+            ) : (
+              <button onClick={onClose}>닫기</button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  const handleConfirmReservation = async () => {
     const responseReserve = await ReserveAPI.InsertReserve(
       postId,
       userInfo.email,
@@ -144,7 +170,13 @@ const PostContent = () => {
       endDate
     );
     console.log(responseReserve);
-    alert("예약 완료");
+
+    setShowModal(false); // 예약 확인 모달 닫기
+    setShowCompletedModal(true); // 예약 완료 모달 띄우기
+  };
+  const closeCompletedModal = () => {
+    setShowCompletedModal(false); // 예약 완료 모달 닫기
+    window.location.reload(); // 페이지 새로고침
   };
 
   return (
@@ -192,21 +224,13 @@ const PostContent = () => {
             ) : (
               <p>이미지가 없습니다.</p>
             )}
-            {/* <Slider {...settings}>
-              {imgData.map((imgfile, index) => (
-                <div key={index}>
-                  <ImgDownloader imgfile={imgfile} />
-                </div>
-              ))}
-            </Slider> */}
-            {/* <ImageSlider imgs={imgData} /> */}
           </div>
           <div
             className="post-content-user"
             onClick={() => navigate(`/userProfile?email=${writerData.email}`)}
           >
             <ProfileImgDownloader
-              imgfile={imagePath}
+              imgfile={writerData.profileImg}
               width="40px"
               height="40px"
             />
@@ -220,7 +244,6 @@ const PostContent = () => {
                 score={writerData.score}
                 height={"40px"}
               />
-              {/* <img className="temp-img" src={Logo} alt="온도이미지" /> */}
               <p>
                 {((300.0 + parseInt(writerData.score)) / 10.0).toFixed(1)} ℃
               </p>
@@ -354,9 +377,22 @@ const PostContent = () => {
             )}
           </div>
           <div className="post-reserve-button">
-            <ReserveButton disabled={!endDate} onClick={handleReserveClick}>
+            <ReserveButton
+              disabled={!endDate}
+              onClick={() => setShowModal(true)}
+            >
               예약하기
             </ReserveButton>
+            {showModal && (
+              <Modal
+                className="post-reserve-modal"
+                message={`예약을 진행하시겠습니까?\n예약 시작: ${startDate.toLocaleString()}\n예약 종료: ${endDate.toLocaleString()}\n계산된 금액: ${
+                  duration * (postData.postPrice || 0).toLocaleString()
+                } 포인트`}
+                onConfirm={handleConfirmReservation} // 확인 버튼 클릭 시 예약 진행
+                onClose={closeModal} // 닫기 버튼 클릭 시 모달 닫기
+              />
+            )}
           </div>
         </div>
       </PostContentTop>

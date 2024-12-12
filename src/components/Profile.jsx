@@ -9,7 +9,7 @@ import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
 import { UserContext } from "../context/UserStore";
 
-export const ProfileImgDownloader = ({ imgfile, width, height }) => {
+export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const { userInfo } = useContext(UserContext);
@@ -53,6 +53,7 @@ export const ProfileImgDownloader = ({ imgfile, width, height }) => {
           borderRadius: "50%",
           width: width || "40px",
           height: height || "40px",
+          backgroundColor: backColor || "white",
         }}
       />
     </>

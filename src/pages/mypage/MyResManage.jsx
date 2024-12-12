@@ -8,15 +8,43 @@ import {
   ReviewTag,
   ReservationPendingBtn,
 } from "../../styles/MyResManageStyled";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { UserContext } from "../../context/UserStore";
+import ReserveAPI from "../../api/ReserveAPI";
 
 export const MyResManage = () => {
+  const { userInfo } = useContext(UserContext);
   const [selectState, setSelectState] = useState("전체");
   const [modalType, setModalType] = useState(null);
   const [currentItem, setCurrentItem] = useState(null); // 현재 선택한 예약 데이터
   const [rejectionReason, setRejectionReason] = useState(""); // 예약거절 사유
   const [cancelReason, setCancelReason] = useState(""); // 예약취소 사유
   const [rejectionReasonVisible, setRejectionReasonVisible] = useState(false); // 거절 사유 입력창 보이기/숨기기
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getMyReserves = async () => {
+      const responseMyRes = await ReserveAPI.MyReserveList(userInfo.email);
+      const reserveStateMapping = {
+        wait: "예약대기",
+        accept: "예약완료",
+        deny: "예약거절",
+        complete: "거래완료",
+        cancel: "예약취소",
+      };
+      const transformedData = responseMyRes.data.map((item) => ({
+        ...item,
+        reserve: {
+          ...item.reserve,
+          reserveState:
+            reserveStateMapping[item.reserve.reserveState] || "알 수 없음",
+        },
+      }));
+      setPosts(transformedData);
+      console.log("예약 관리 : ", transformedData);
+    };
+    getMyReserves();
+  }, []);
 
   // 상태별 데이터 필터링
   const reserveData = [
@@ -27,23 +55,38 @@ export const MyResManage = () => {
     { state: "예약취소", id: 5, reason: "여기에 취소사유 작성" },
   ];
 
+  // const filteredData = () => {
+  //   switch (selectState) {
+  //     case "전체":
+  //       return reserveData;
+  //     case "승인대기":
+  //       return reserveData.filter((item) => item.state === "예약대기");
+  //     case "승인완료":
+  //       return reserveData.filter(
+  //         (item) => item.state === "예약완료" || item.state === "예약거절"
+  //       );
+  //     case "거래완료":
+  //       return reserveData.filter((item) => item.state === "거래완료");
+  //     case "예약취소":
+  //       return reserveData.filter((item) => item.state === "예약취소");
+  //     default:
+  //       return [];
+  //   }
+  // };
   const filteredData = () => {
-    switch (selectState) {
-      case "전체":
-        return reserveData;
-      case "승인대기":
-        return reserveData.filter((item) => item.state === "예약대기");
-      case "승인완료":
-        return reserveData.filter(
-          (item) => item.state === "예약완료" || item.state === "예약거절"
-        );
-      case "거래완료":
-        return reserveData.filter((item) => item.state === "거래완료");
-      case "예약취소":
-        return reserveData.filter((item) => item.state === "예약취소");
-      default:
-        return [];
-    }
+    const reserveStateMapping = {
+      전체: () => posts,
+      승인대기: () =>
+        posts.filter((post) => post.reserve.reserveState === "예약대기"),
+      승인완료: () =>
+        posts.filter((post) => post.reserve.reserveState === "예약완료"),
+      거래완료: () =>
+        posts.filter((post) => post.reserve.reserveState === "거래완료"),
+      예약취소: () =>
+        posts.filter((post) => post.reserve.reserveState === "예약취소"),
+    };
+
+    return reserveStateMapping[selectState]?.() || [];
   };
 
   // 상태별 액션 처리
@@ -142,12 +185,26 @@ export const MyResManage = () => {
             </span>
           </div>
         </ReserveManageHeader>
-        <PostsContainer>
+        {/* <PostsContainer>
           {filteredData().map((item) => (
             <div key={item.id}>
               <ReserveItem
                 state={item.state}
                 onClick={() => handleStateAction(item)}
+              />
+              <hr />
+            </div>
+          ))}
+        </PostsContainer> */}
+        <PostsContainer>
+          {filteredData().map((post, index) => (
+            <div key={index}>
+              <ReserveItem
+                thumbnail={post.post.postThumbnail} // ReserveItem에 필요한 데이터 추가
+                title={post.post.postTitle}
+                region={post.post.postRegion}
+                state={post.reserve.reserveState}
+                onClick={() => handleStateAction(post)}
               />
               <hr />
             </div>

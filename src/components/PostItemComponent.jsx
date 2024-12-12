@@ -82,7 +82,9 @@ export const PostItem = ({
 export const ReserveItem = ({ thumbnail, title, region, state, onClick }) => {
   return (
     <ReserveItemContainer>
-      <ReserveItemThumbnail>{thumbnail}</ReserveItemThumbnail>
+      <ReserveItemThumbnail>
+        {thumbnail && <ImgDownloader imgfile={thumbnail} height={"100%"} />}
+      </ReserveItemThumbnail>
       <ReserveItemInfo>
         <p className="reserve-item-info-title">{title || "제목 입니다."}</p>
         <p className="reserve-item-info-region">{region || "지역 입니다."}</p>

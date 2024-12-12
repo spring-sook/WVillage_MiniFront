@@ -37,6 +37,7 @@ export const MainRecomm = styled.div`
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
+  
 
   .swiper {
     width: 70%;
@@ -165,6 +166,11 @@ export const MainBanner = styled.div`
   height: 500px;
   width: 100%;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 설정 */
+  background-image: url(${mainImg});
+  background-size: cover; /* 이미지를 전체 영역에 맞춤 */
+  background-position: center; /* 배경 이미지 위치 */
+  background-repeat: no-repeat; /* 반복 방지 */
+
 
   .catch,
   .explain {
@@ -175,19 +181,27 @@ export const MainBanner = styled.div`
     animation-fill-mode: forwards; /* 애니메이션 종료 후 상태 유지 */
     height: 130px;
     width: 35vw;
-    margin: 20px;
+    
     background-color: transparent;
     display: flex;
     align-items: center;
     font-size: 30px;
     font-weight: bold;
+    color: #1b5e96;
+
   }
 
   .catch {
+    text-shadow: 
+    -2px -2px 0 #fff, /* 왼쪽 위 */
+     2px -2px 0 #fff, /* 오른쪽 위 */
+    -2px  2px 0 #fff, /* 왼쪽 아래 */
+     2px  2px 0 #fff; /* 오른쪽 아래 */
     animation-name: slideInCatch;
   }
 
   .explain {
+    color: black;
     animation-name: slideInExplain;
     animation-delay: 1s; /* 'explain'은 'catch'가 끝난 후 1초 뒤에 시작 */
   }
@@ -349,11 +363,18 @@ export const TextContainer = styled.div`
   align-items: flex-start; /* 왼쪽 정렬 */
   margin-left: 20px; /* 왼쪽 여백 */
   height: 60%; /* 부모 컨테이너의 높이를 채움 */
+  h1, h4 {
+  color: #1b5e96; /* 텍스트 색상 */
+  text-shadow: 
+    -2px -2px 0 #fff, /* 왼쪽 위 */
+     2px -2px 0 #fff, /* 오른쪽 위 */
+    -2px  2px 0 #fff, /* 왼쪽 아래 */
+     2px  2px 0 #fff; /* 오른쪽 아래 */
+}
 
   h1 {
     font-size: 80px;
     font-weight: bold;
-    color: #1b5e96;
     margin: 0;
     animation: ${slideIn} 3s ease-out; /* 슬라이드 애니메이션 추가 */
   }

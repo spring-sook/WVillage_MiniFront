@@ -18,6 +18,7 @@ import {
   Modal,
   DeleteModal,
   EditAccount,
+  DeleteButtonContainer,
 } from "../../styles/EditProfileStyled";
 import { UserContext } from "../../context/UserStore";
 import AccountAPI from "../../api/AccountAPI";
@@ -292,6 +293,9 @@ export const EditProfile = () => {
               />
             </div>
           </ProfileBox>
+          <DeleteButtonContainer>
+            <button onClick={() => setActiveMenu("회원탈퇴")}>회원탈퇴</button>
+          </DeleteButtonContainer>
         </EditProfileContainer>
       )}
 

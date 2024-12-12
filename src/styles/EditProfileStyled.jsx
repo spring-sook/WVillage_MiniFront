@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+export const DeleteButtonContainer = styled.div`
+  position: absolute;
+  bottom: 20px; /* EditProfileContainer의 하단 */
+  right: 20px; /* EditProfileContainer의 오른쪽 끝 */
+
+  button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e60000;
+    }
+  }
+`;
+
 export const ProfileBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,7 +104,26 @@ export const MenuContainer = styled.div`
     border-bottom: 2px solid #007bff;
   }
 `;
+export const DeleteAccountContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  .delete-link {
+    color: #ff4d4d;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: #e60000;
+    }
+  }
+`;
+
 export const EditProfileContainer = styled.div`
+  position: relative;
   width: 78%;
   margin: 30px auto;
   background-color: #ffffff;

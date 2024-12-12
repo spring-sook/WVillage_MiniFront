@@ -1,7 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 
-// 지숙's Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBtQu-n_Qm7w-gVOnKV5ulAHPYmHXnSBVk",
   authDomain: "study-react-84362.firebaseapp.com",

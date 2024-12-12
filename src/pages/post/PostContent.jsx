@@ -1,18 +1,20 @@
 import { Container } from "../../styles/GlobalStyled";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, Pagination } from "swiper/modules";
 import { ImgDownloader } from "../../components/ImgComponent";
 import {
   PostContentBottom,
   PostContentTop,
   ReserveButton,
+  ButtonContainer,
+  Button,
 } from "../../styles/PostStyled";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { useContext, useEffect, useState } from "react";
-import Logo from "../../images/logo.png";
 import BookmarkNo from "../../images/bookmark_no.png";
 import BookmarkYes from "../../images/bookmark_yes.png";
 import { ProfileImgDownloader } from "../../components/Profile";
@@ -23,7 +25,7 @@ import {
   ViewItemInfo,
   ViewReview,
 } from "../../components/PostComponent";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
@@ -33,6 +35,7 @@ import { ProfileFireImg } from "../../components/Profile";
 
 const PostContent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   // const { post } = location.state || {};
   const now = new Date();
   const { postId } = useParams();
@@ -79,15 +82,15 @@ const PostContent = () => {
     }
   }, [startDate, endDate]);
 
-  const settings = {
-    dots: true, // 페이지네이션 점 표시
-    infinite: true, // 무한 슬라이드
-    speed: 500, // 슬라이드 전환 속도
-    slidesToShow: 1, // 한 번에 보여줄 이미지 개수
-    slidesToScroll: 1, // 한 번에 이동할 이미지 개수
-    autoplay: false, // 자동 슬라이드
-    autoplaySpeed: 2000, // 자동 슬라이드 간격
-  };
+  // const settings = {
+  //   dots: true, // 페이지네이션 점 표시
+  //   infinite: true, // 무한 슬라이드
+  //   speed: 500, // 슬라이드 전환 속도
+  //   slidesToShow: 1, // 한 번에 보여줄 이미지 개수
+  //   slidesToScroll: 1, // 한 번에 이동할 이미지 개수
+  //   autoplay: false, // 자동 슬라이드
+  //   autoplaySpeed: 2000, // 자동 슬라이드 간격
+  // };
 
   const exTime = [
     {
@@ -151,17 +154,49 @@ const PostContent = () => {
               }}
               className="bookmark-icon"
             />
-            이미지
-            <Slider {...settings}>
+            {imgData && imgData.length > 1 ? (
+              // 이미지가 여러 개일 때 Swiper 사용
+              <Swiper
+                navigation={{
+                  nextEl: ".next",
+                  prevEl: ".prev",
+                }}
+                pagination={{
+                  type: "fraction",
+                }}
+                modules={[Navigation, Pagination]}
+                loop={true}
+                slidesPerView={1}
+                simulateTouch={true}
+              >
+                {imgData.map((imgfile, index) => (
+                  <SwiperSlide key={index}>
+                    <ImgDownloader imgfile={imgfile} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : imgData && imgData.length === 1 ? (
+              <ImgDownloader imgfile={imgData[0]} />
+            ) : (
+              <p>이미지가 없습니다.</p>
+            )}
+            <ButtonContainer>
+              <Button className="prev" />
+              <Button className="next" />
+            </ButtonContainer>
+            {/* <Slider {...settings}>
               {imgData.map((imgfile, index) => (
                 <div key={index}>
                   <ImgDownloader imgfile={imgfile} />
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
             {/* <ImageSlider imgs={imgData} /> */}
           </div>
-          <div className="post-content-user">
+          <div
+            className="post-content-user"
+            onClick={() => navigate(`/userProfile?email=${writerData.email}`)}
+          >
             <ProfileImgDownloader
               imgfile={imagePath}
               width="40px"

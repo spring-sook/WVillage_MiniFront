@@ -17,6 +17,7 @@ const UserInfo = () => {
           <p>지역 코드: {userInfo.areaCode}</p>
           <p>지역명 : {userInfo.filteredRegion}</p>
           <p>포인트: {userInfo.point}</p>
+          <p>프로필 이미지 경로 : {userInfo.profileImg}</p>
         </div>
       ) : (
         <p>로그인되지 않았습니다.</p>

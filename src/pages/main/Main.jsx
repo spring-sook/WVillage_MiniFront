@@ -16,6 +16,11 @@ import axios from "axios";
 import { ImgDownloader } from "../../components/ImgComponent";
 import { useNavigate } from "react-router-dom";
 import PostAPI from "../../api/PostAPI";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, Pagination } from "swiper/modules";
+import { SlickBtnContainer, SlickBtn } from "../../styles/MainStyled";
 
 // 이미지가 더 추가될 수 있습니다
 
@@ -70,15 +75,15 @@ const Main = () => {
             <h2>인기 게시물</h2>
 
             {/* 왼쪽 버튼 */}
-            <Button
+            {/* <Button
               left
               onClick={goToPrevious}
               disabled={currentIndex === -2} // 왼쪽 끝일 때 비활성화
             >
               ◀
-            </Button>
+            </Button> */}
 
-            <MainRecomm>
+            {/* <MainRecomm>
               <BoxContainer
                 slideWidth={`${posts.length * (boxWidth + margin)}px`}
                 style={{
@@ -101,15 +106,51 @@ const Main = () => {
                   </Box>
                 ))}
               </BoxContainer>
+            </MainRecomm> */}
+            <MainRecomm>
+              <Swiper
+                className="swiper"
+                navigation={{
+                  nextEl: ".next",
+                  prevEl: ".prev",
+                }}
+                pagination={false}
+                modules={[Navigation]}
+                loop={true}
+                slidesPerView={4}
+                slidesPerGroup={1}
+                spaceBetween={10}
+                simulateTouch={true}
+              >
+                {posts.map((post, index) => (
+                  <SwiperSlide key={index}>
+                    <Box key={index} onClick={() => handleBoxClick(post)}>
+                      <ImgDownloader
+                        imgfile={post.postThumbnail}
+                        width="100%" // Box에 맞춰 크기 조정
+                        height="82%" // 높이를 80%로 설정
+                      />
+                      <div className="post-info">
+                        <h3>{post.postTitle}</h3>
+                        <p>{post.postRegion}</p>
+                      </div>
+                    </Box>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <SlickBtnContainer>
+                <SlickBtn className="prev" />
+                <SlickBtn className="next" />
+              </SlickBtnContainer>
             </MainRecomm>
 
             {/* 오른쪽 버튼 */}
-            <Button
+            {/* <Button
               onClick={goToNext}
               disabled={currentIndex === posts.length - 6}
             >
               ▶
-            </Button>
+            </Button> */}
           </RecommBox>
           <MainBanner>
             <div className="catch">

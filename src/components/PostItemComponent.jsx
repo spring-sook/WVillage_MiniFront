@@ -39,6 +39,7 @@ export const PostItem = ({
   title,
   price,
   postRegion,
+  postLocation,
   postId,
   post,
   width,
@@ -73,6 +74,7 @@ export const PostItem = ({
       <h3>{title}</h3>
       <p className="price">{price.toLocaleString()} 원</p>
       <p className="region">{postRegion}</p>
+      <p className="region">{postLocation}</p>
     </PostItemStyled>
   );
 };

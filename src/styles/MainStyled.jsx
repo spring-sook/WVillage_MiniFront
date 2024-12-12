@@ -28,7 +28,7 @@ export const RecommBox = styled.div`
 
 export const MainRecomm = styled.div`
   height: 450px;
-  width: 1300px;
+  width: 100%;
   background-color: #f5f6fa;
   display: flex;
   align-items: center;
@@ -36,6 +36,70 @@ export const MainRecomm = styled.div`
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
+
+  .swiper {
+    width: 70%;
+  }
+`;
+
+export const SlickBtnContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 120px;
+  width: 98%;
+  height: 200px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+`;
+
+export const SlickBtn = styled.button`
+  display: flex;
+  position: relative;
+  width: 50px; /* 버튼 크기 조정 */
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  background-color: transparent;
+  border-radius: 50%; /* 원형으로 만들기 */
+  z-index: 10;
+  /* transition: background-color 0.3s ease; */
+
+  /* &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  } */
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background-color: #333; /* 화살표 색상 */
+    transform: translateX(-50%) rotate(-45deg);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background-color: #333; /* 화살표 색상 */
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  /* 다음 버튼(화살표 방향을 반대로 설정) */
+  &.next::before {
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  &.next::after {
+    transform: translateX(-50%) rotate(-45deg);
+  }
 `;
 
 export const BoxContainer = styled.div`

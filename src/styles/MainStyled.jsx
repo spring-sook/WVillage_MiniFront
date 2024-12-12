@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import mainImg from "./../images/Hallstatt-Cover.jpg"
 
 //메인 크기
 export const MainBody = styled.div`
@@ -203,7 +204,8 @@ export const Title = styled.div`
 export const Sidebar = styled.div`
   position: fixed;
   right: ${(props) => (props.isOpen ? "0" : "-250px")}; /* 우측 끝 기준 */
-  height: calc(100% - 50px); /* 약간 아래로 내려오게 */
+  top: 60px;
+  height: calc(100% - 60px); /* 약간 아래로 내려오게 */
   width: 250px;
   background-color: #ffffff;
   transition: right 0.5s ease; /* 부드럽게 열리고 닫히는 애니메이션 */
@@ -212,6 +214,7 @@ export const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px 0 0 0;
+  
 
   .close-btn {
     align-self: flex-end; /* 닫기 버튼을 오른쪽에 배치 */
@@ -248,4 +251,54 @@ export const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   display: ${(props) => (props.isOpen ? "block" : "none")};
+`;
+
+export const Wrapper = styled.div`
+  background-image: url(${mainImg});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; /* 전체 화면 크기 */
+  display: flex;
+  flex-direction: column;
+  flex-direction: column;
+  position: relative;
+`;
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(-100%); /* 화면 왼쪽에서 시작 */
+    opacity: 0; /* 투명도 0 */
+  }
+  to {
+    transform: translateX(0); /* 원래 위치로 */
+    opacity: 1; /* 완전히 보임 */
+  }
+`;
+
+// TextContainer 스타일
+export const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 가운데 정렬 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+  margin-left: 20px; /* 왼쪽 여백 */
+  height: 60%; /* 부모 컨테이너의 높이를 채움 */
+
+  h1 {
+    font-size: 80px;
+    font-weight: bold;
+    color: #1b5e96;
+    margin: 0;
+    animation: ${slideIn} 3s ease-out; /* 슬라이드 애니메이션 추가 */
+  }
+
+  h4 {
+    font-size: 40px;
+    font-weight: normal;
+    color: #333;
+    margin-top: 10px;
+    animation: ${slideIn} 3.5s ease-out; /* 약간 느리게 슬라이드 애니메이션 */
+  }
 `;

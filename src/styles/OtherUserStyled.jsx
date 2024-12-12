@@ -114,3 +114,84 @@ export const UserProfileBox = styled.div`
     }
   }
 `;
+export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 77, 79, 0.8);
+  color: white;
+  border: none;
+  height: 35px;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 120, 117, 0.7);
+  }
+
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    background-color: #ff2a2a;
+  }
+`;
+
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 다른 내용 위에 나타나게 */
+`;
+
+// 모달 내용 박스
+export const ModalContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+`;
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  resize: vertical;
+  font-size: 16px;
+`;

@@ -26,10 +26,16 @@ export const ReserveManageHeader = styled.div`
     box-sizing: border-box;
     padding: 20px 30px;
   }
+  .sort-menu.disabled {
+    text-decoration: none;
+    color: black;
+  }
 
   .sort-menu {
     cursor: pointer;
     font-weight: bold;
+    text-decoration: underline;
+    color: #3c8dbc;
     &:hover {
       text-decoration: underline;
       color: #1b5e96;

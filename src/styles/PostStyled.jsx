@@ -351,7 +351,7 @@ export const PostContentTop = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
-  top: 90px;
+  top: 120px;
   width: 350px;
   height: 50px;
   justify-content: space-between;
@@ -367,7 +367,6 @@ export const Button = styled.button`
   border: none;
   cursor: pointer;
   background-color: transparent;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   z-index: 10;
   & + & {
     margin-left: 20px;

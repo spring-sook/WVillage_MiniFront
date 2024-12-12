@@ -155,35 +155,36 @@ const PostContent = () => {
               className="bookmark-icon"
             />
             {imgData && imgData.length > 1 ? (
-              // 이미지가 여러 개일 때 Swiper 사용
-              <Swiper
-                navigation={{
-                  nextEl: ".next",
-                  prevEl: ".prev",
-                }}
-                pagination={{
-                  type: "fraction",
-                }}
-                modules={[Navigation, Pagination]}
-                loop={true}
-                slidesPerView={1}
-                simulateTouch={true}
-              >
-                {imgData.map((imgfile, index) => (
-                  <SwiperSlide key={index}>
-                    <ImgDownloader imgfile={imgfile} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <>
+                <Swiper
+                  navigation={{
+                    nextEl: ".next",
+                    prevEl: ".prev",
+                  }}
+                  pagination={{
+                    type: "fraction",
+                  }}
+                  modules={[Navigation, Pagination]}
+                  loop={true}
+                  slidesPerView={1}
+                  simulateTouch={true}
+                >
+                  {imgData.map((imgfile, index) => (
+                    <SwiperSlide key={index}>
+                      <ImgDownloader imgfile={imgfile} height={"97%"} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                <ButtonContainer>
+                  <Button className="prev" />
+                  <Button className="next" />
+                </ButtonContainer>
+              </>
             ) : imgData && imgData.length === 1 ? (
-              <ImgDownloader imgfile={imgData[0]} />
+              <ImgDownloader imgfile={imgData[0]} height={"97%"} />
             ) : (
               <p>이미지가 없습니다.</p>
             )}
-            <ButtonContainer>
-              <Button className="prev" />
-              <Button className="next" />
-            </ButtonContainer>
             {/* <Slider {...settings}>
               {imgData.map((imgfile, index) => (
                 <div key={index}>

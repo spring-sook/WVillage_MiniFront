@@ -16,6 +16,8 @@ import {
   BottomButtonContainer,
   ProfileBox,
   Modal,
+  DeleteModal,
+  EditAccount,
 } from "../../styles/EditProfileStyled";
 import { UserContext } from "../../context/UserStore";
 import AccountAPI from "../../api/AccountAPI";
@@ -28,6 +30,8 @@ export const EditProfile = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [showModal, setShowModal] = useState(false); // 모달 열기/닫기
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // 계좌 삭제 확인 모달
+  const [selectedAccount, setSelectedAccount] = useState(null); // 삭제할 계좌 정보
   const [newAccount, setNewAccount] = useState({ bank: "", accountNumber: "" }); // 새 계좌 정보
   const [accounts, setAccounts] = useState([]);
   const { userInfo, updateUserPoints } = useContext(UserContext); // UserContext에서 userInfo 가져오기
@@ -88,6 +92,44 @@ export const EditProfile = () => {
       console.error("계좌 추가 중 오류 발생:", error);
       alert("계좌 추가 중 오류가 발생했습니다.");
     }
+  };
+
+  // 계좌 삭제 버튼 클릭 시 모달 열기
+  const handleDeleteClick = (account) => {
+    setSelectedAccount(account);
+    setShowDeleteModal(true); // 삭제 모달 열기
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (selectedAccount) {
+      const { accountNo, accountBank } = selectedAccount;
+      try {
+        const response = await axios.delete(
+          `http://localhost:8111/account/delete?accountNo=${accountNo}&accountBank=${accountBank}`
+        );
+        if (response.data) {
+          setAccounts(
+            accounts.filter(
+              (account) =>
+                account.accountNo !== accountNo ||
+                account.accountBank !== accountBank
+            )
+          );
+          setShowDeleteModal(false); // 삭제 모달 닫기
+          alert("계좌가 삭제되었습니다.");
+        } else {
+          alert("계좌 삭제 실패");
+        }
+      } catch (error) {
+        console.error("계좌 삭제 중 오류 발생:", error);
+        alert("계좌 삭제 중 오류가 발생했습니다.");
+      }
+    }
+  };
+
+  // 계좌 삭제 취소
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false); // 삭제 모달 닫기
   };
 
   useEffect(() => {
@@ -255,16 +297,25 @@ export const EditProfile = () => {
 
       {activeMenu === "계좌정보" && (
         <EditProfileContainer>
-          <div className="EditAccount">
+          <EditAccount>
             <p>계좌 리스트</p>
 
             {accounts.map((account, index) => (
-              <option key={index} value={account.accountNo}>
-                {account.accountBank} - {account.accountNo}
-              </option>
+              <div key={index} className="account-item">
+                <option value={account.accountNo}>
+                  {account.accountBank} - {account.accountNo}
+                </option>
+                <button
+                  onClick={() => handleDeleteClick(account)} // 계좌 삭제 클릭 시 모달 띄우기
+                >
+                  x
+                </button>
+              </div>
             ))}
 
-            <button onClick={handleOpenModal}>계좌 추가하기</button>
+            <button onClick={handleOpenModal} className="addaccount">
+              계좌 추가하기
+            </button>
             {showModal && (
               <Modal>
                 <div className="modal-content">
@@ -298,7 +349,18 @@ export const EditProfile = () => {
                 </div>
               </Modal>
             )}
-          </div>
+            {showDeleteModal && (
+              <DeleteModal>
+                <div className="modal-content">
+                  <h2>정말로 삭제하시겠습니까?</h2>
+                  <div className="button-container">
+                    <button onClick={handleDeleteConfirm}>삭제</button>
+                    <button onClick={handleDeleteCancel}>취소</button>
+                  </div>
+                </div>
+              </DeleteModal>
+            )}
+          </EditAccount>
         </EditProfileContainer>
       )}
     </ParentContainer>

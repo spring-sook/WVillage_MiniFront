@@ -73,13 +73,35 @@ export const OtherUser = ({ email }) => {
   const handleReportChange = (event) => {
     setReportReason(event.target.value);
   };
-  const handleReportSubmit = () => {
+  const handleReportSubmit = async () => {
     if (!reportReason || reportReason.trim() === "") {
       alert("신고 사유를 작성해 주세요.");
       return;
     }
 
-    setIsReported(true);
+    try {
+      // 서버로 신고 정보 전송
+      const response = await fetch("/report", {
+        method: "POST",
+        body: JSON.stringify({
+          reportReporter: email, // 신고한 사람의 이메일
+          reportReported: userProfile.email, // 신고당한 사람의 이메일
+          reportContent: reportReason, // 신고 사유
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setIsReported(true); // 신고 완료 상태로 변경
+      } else {
+        alert("신고 처리에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("Error during reporting:", error);
+      alert("신고 처리 중 오류가 발생했습니다.");
+    }
   };
 
   const handleModalClose = () => {

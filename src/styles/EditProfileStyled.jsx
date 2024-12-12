@@ -156,6 +156,66 @@ export const BottomButtonContainer = styled.div`
     }
   }
 `;
+
+export const EditAccount = styled.div`
+  font-size: 16px;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .account-item option {
+    font-size: 16px;
+  }
+
+  .account-item button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 50px;
+  }
+
+  .account-item button:hover {
+    background-color: #e60000;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #1b5e96;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 0.3;
+    }
+  }
+  button.addaccount {
+    display: block; /* 블록 요소로 설정 */
+    margin: 180px auto 0 auto; /* 가로 가운데 정렬 */
+  }
+`;
+
 export const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -246,6 +306,83 @@ export const Modal = styled.div`
       button:nth-child(2) {
         background-color: #ccc;
         margin-top: 5px;
+
+        &:hover {
+          background-color: #999;
+        }
+      }
+    }
+  }
+`;
+export const DeleteModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: fadeBackground 0.3s ease;
+
+  @keyframes fadeBackground {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    height: 180px;
+    text-align: center;
+
+    animation: scaleUp 0.3s ease;
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.8);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    h2 {
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        margin-top: 25px;
+        width: 45%;
+        padding: 10px;
+        background-color: #1b5e96;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          opacity: 0.3;
+        }
+      }
+
+      button:nth-child(2) {
+        background-color: #ccc;
 
         &:hover {
           background-color: #999;

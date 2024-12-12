@@ -29,6 +29,7 @@ import PostAPI from "../../api/PostAPI";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
 import ReviewAPI from "../../api/ReviewAPI";
 import resetIcon from "../../images/reset_icon.png";
+import { ProfileFireImg } from "../../components/Profile";
 
 const PostContent = () => {
   const location = useLocation();
@@ -171,8 +172,15 @@ const PostContent = () => {
               <p className="post-content-region">{writerData.areaCode}</p>
             </div>
             <div className="post-content-temp">
-              <img className="temp-img" src={Logo} alt="온도이미지" />
-              <p>36.5℃</p>
+              <ProfileFireImg
+                className="temp-img"
+                score={writerData.score}
+                height={"40px"}
+              />
+              {/* <img className="temp-img" src={Logo} alt="온도이미지" /> */}
+              <p>
+                {((300.0 + parseInt(writerData.score)) / 10.0).toFixed(1)} ℃
+              </p>
             </div>
           </div>
         </div>

@@ -21,6 +21,7 @@ export const MyResManage = () => {
   const [cancelReason, setCancelReason] = useState(""); // 예약취소 사유
   const [rejectionReasonVisible, setRejectionReasonVisible] = useState(false); // 거절 사유 입력창 보이기/숨기기
   const [posts, setPosts] = useState([]);
+  const [waitCnt, setWaitCnt] = useState(0);
 
   useEffect(() => {
     const getMyReserves = async () => {
@@ -42,9 +43,17 @@ export const MyResManage = () => {
       }));
       setPosts(transformedData);
       console.log("예약 관리 : ", transformedData);
+
+      const waitings = transformedData.filter(
+        (item) => item.reserve.reserveState === "예약대기"
+      );
+      setWaitCnt(waitings.length);
     };
     getMyReserves();
   }, []);
+
+  // 대기 수가 변경될때마다 전체변수에 반영되야되는데, 그럴라면.. 로그인 했을때 그냥 개수 받아오는 로직 하나 짜는게 나을듯.
+  // 로그인하고 userInfo에 넣어두기
 
   // 상태별 데이터 필터링
   const reserveData = [
@@ -139,6 +148,9 @@ export const MyResManage = () => {
       <ResManage>
         <ReserveManageHeader>
           <div>
+            {waitCnt !== 0 ? (
+              <span className="header-alarm">{waitCnt}</span>
+            ) : null}
             <span
               className={`sort-menu ${
                 selectState !== "전체" ? "disabled" : ""

@@ -21,6 +21,21 @@ export const ReserveManageHeader = styled.div`
   margin-left: 10px;
   margin-bottom: 20px;
   font-size: 15px;
+  display: flex;
+  position: relative;
+
+  .header-alarm {
+    display: flex;
+    position: absolute;
+    left: 157px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
 
   .line {
     box-sizing: border-box;

@@ -42,7 +42,7 @@ export const EditProfile = () => {
   return (
     <ParentContainer>
       <MenuContainer>
-        {["수정", "계좌정보", "회원탈퇴"].map((menu) => (
+        {["수정", "계좌정보"].map((menu) => (
           <button
             key={menu}
             className={activeMenu === menu ? "active" : ""}
@@ -189,11 +189,6 @@ export const EditProfile = () => {
       {activeMenu === "계좌정보" && (
         <EditProfileContainer>
           계좌정보 탭 내용이 여기에 표시됩니다.
-        </EditProfileContainer>
-      )}
-      {activeMenu === "회원탈퇴" && (
-        <EditProfileContainer>
-          회원탈퇴 탭 내용이 여기에 표시됩니다.
         </EditProfileContainer>
       )}
     </ParentContainer>

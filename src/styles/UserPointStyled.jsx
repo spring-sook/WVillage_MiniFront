@@ -8,6 +8,7 @@ export const PointBox = styled.div`
   align-items: center;
   gap: 10px;
   color: #1b5e96;
+
   .select {
     width: 90%;
     height: 100px;

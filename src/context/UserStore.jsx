@@ -20,6 +20,7 @@ export const UserStore = (props) => {
   };
 
   useEffect(() => {
+    // fetchRegion은 조만간 삭제할 예정
     const fetchRegion = async () => {
       if (!userInfo || !userInfo.areaCode) return; // userInfo 또는 areaCode가 없으면 중단
 

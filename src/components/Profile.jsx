@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { storage } from "../api/Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 import fire1 from "../../src/images/fire1.jpg";
@@ -7,20 +7,23 @@ import fire3 from "../../src/images/fire3.jpg";
 import fire4 from "../../src/images/fire4.jpg";
 import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
+import { UserContext } from "../context/UserStore";
 
 export const ProfileImgDownloader = ({ imgfile, width, height }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { userInfo } = useContext(UserContext);
   const storedImageUrl = localStorage.getItem("profileImageUrl");
 
   useEffect(() => {
     if (storedImageUrl) {
+      console.log(userInfo.profileImg);
       // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
       setImageUrl(storedImageUrl);
       setLoading(false); // 로딩 완료
     } else {
       // 로컬 스토리지에 이미지가 없으면 Firebase에서 가져옴
-      const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
+      const fileRef = ref(storage, userInfo.profileImg); // Firebase에서 이미지 경로 설정
 
       getDownloadURL(fileRef)
         .then((url) => {

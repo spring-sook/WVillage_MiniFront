@@ -22,6 +22,7 @@ const PostList = () => {
   const [isDropdownView, setDropdownView] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
+  const [order, setOrder] = useState("최신순");
   const { userInfo } = useContext(UserContext);
 
   const searchKeyword = searchParams.get("search");
@@ -59,6 +60,7 @@ const PostList = () => {
     };
 
     fetchData();
+    console.log(posts);
   }, [category, userInfo.areaCode]);
 
   const handleClickIcon = () => {
@@ -99,9 +101,9 @@ const PostList = () => {
         </PostMainFilter>
         <PostMainList>
           <div>
-            <button>최신순</button>
+            <button onClick={() => setOrder("최신순")}>최신순</button>
             <span>|</span>
-            <button>인기순</button>
+            <button onClick={() => setOrder("인기순")}>인기순</button>
             <button
               className="write-post-button"
               onClick={() => navigate("/postWrite")}

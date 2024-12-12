@@ -73,7 +73,9 @@ export const HeaderCom = () => {
 
   const handleLogout = () => {
     // 로그아웃 실행
-    localStorage.removeItem("userInfo");
+    // localStorage.removeItem("userInfo");
+    // localStorage.removeItem("profileImageUrl");
+    localStorage.clear();
     setShowLogoutModal(false);
     navigate("/");
   };

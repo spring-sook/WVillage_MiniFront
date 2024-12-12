@@ -49,6 +49,8 @@ const PostContent = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [duration, setDuration] = useState(0);
+  const [exTime, setExTime] = useState([]);
+  const [reserveTimes, setReserveTimes] = useState([]);
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const imagePath = "snow_village.webp";
@@ -59,7 +61,6 @@ const PostContent = () => {
       setPostData(responseData.data);
       const responseProfile = await UserProfileAPI.getUserProfile(postId);
       setWriterData(responseProfile.data);
-      console.log(responseProfile.data);
       const responseBookmark = await PostAPI.IsBookmarked(
         responseData.data.postEmail,
         postId
@@ -67,7 +68,6 @@ const PostContent = () => {
       setIsBookmarked(responseBookmark.data);
       const responseImg = await PostAPI.PostImages(postId);
       setImgData(responseImg.data);
-      console.log(">>>imgData", imgData);
       const reponseReview = await ReviewAPI.PostReview(postId);
       setReviewData(reponseReview.data);
       const responseReserve = await ReserveAPI.GetPostReserve(postId);
@@ -85,34 +85,23 @@ const PostContent = () => {
     }
   }, [startDate, endDate]);
 
-  const exTime = [
-    {
-      start: new Date("2024-12-11 10:00:00"),
-      end: new Date("2024-12-12 9:00:00"),
-    },
-    {
-      start: new Date("2024-12-14 13:00:00"),
-      end: new Date("2024-12-14 20:00:00"),
-    },
-  ];
-  const reserveTimes = exTime.flatMap((item) => {
-    return GenerateExcludedTimes(item.start, item.end);
-  });
-  // useEffect(() => {
-  //   // reserveData 기반으로 reserveTimes 업데이트
-  //   if (reserveData.length > 0) {
-  //     const exTime = reserveData.map((reserve) => ({
-  //       start: new Date(reserve.reserveStart),
-  //       end: new Date(reserve.reserveEnd),
-  //     }));
+  useEffect(() => {
+    if (reserveData.length > 0) {
+      console.log("여기를 봐야됨 : ", reserveData);
+      const newExTime = reserveData.map((reserve) => ({
+        start: new Date(reserve.reserveStart),
+        end: new Date(reserve.reserveEnd),
+      }));
 
-  //     const reserveTimes = exTime.flatMap((item) =>
-  //       GenerateExcludedTimes(item.start, item.end)
-  //     );
-  //     setExcludeTimes(reserveTimes);
-  //     console.log(excludeTimes);
-  //   }
-  // }, [reserveData]);
+      const generatedReserveTimes = newExTime.flatMap((item) =>
+        GenerateExcludedTimes(item.start, item.end)
+      );
+
+      setExTime(newExTime);
+      setReserveTimes(generatedReserveTimes);
+      setExcludeTimes(generatedReserveTimes);
+    }
+  }, [reserveData]);
   const handleStartDateChange = (date) => {
     setStartDate(date);
 
@@ -147,7 +136,16 @@ const PostContent = () => {
       await PostAPI.DeleteBookmark(postId, userInfo.email);
     }
   };
-  const handleReserveClick = async () => {};
+  const handleReserveClick = async () => {
+    const responseReserve = await ReserveAPI.InsertReserve(
+      postId,
+      userInfo.email,
+      startDate,
+      endDate
+    );
+    console.log(responseReserve);
+    alert("예약 완료");
+  };
 
   return (
     <Container>

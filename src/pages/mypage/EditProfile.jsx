@@ -40,11 +40,13 @@ export const EditProfile = () => {
   const [selectedAccount, setSelectedAccount] = useState(null); // 삭제할 계좌 정보
   const [newAccount, setNewAccount] = useState({ bank: "", accountNumber: "" }); // 새 계좌 정보
   const [accounts, setAccounts] = useState([]);
-  const { userInfo, updateUserPoints } = useContext(UserContext); // UserContext에서 userInfo 가져오기
+  const { userInfo } = useContext(UserContext); // UserContext에서 userInfo 가져오기
   const [sidoOpt, setSidoOpt] = useState([]);
   const [sigunguOpt, setSigunguOpt] = useState([]);
   const [emdOpt, setEmdOpt] = useState([]);
   const [riOpt, setRiOpt] = useState([]);
+  const [searchArea, setSearchArea] = useState("");
+
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
     sigungu: null,
@@ -232,13 +234,13 @@ export const EditProfile = () => {
             <InfoSection>
               <div className="info-item">
                 <label>이메일:</label>
-                <input type="email" defaultValue="user@example.com" disabled />
+                <input type="email" defaultValue={userInfo.email} disabled />
               </div>
               <div className="info-item">
                 <label>이름:</label>
                 <input
                   type="text"
-                  defaultValue="장원영"
+                  defaultValue={userInfo.name}
                   disabled={!isEditing}
                 />
               </div>
@@ -246,15 +248,15 @@ export const EditProfile = () => {
                 <label>닉네임:</label>
                 <input
                   type="text"
-                  defaultValue="닉네임123"
+                  defaultValue={userInfo.nickname}
                   disabled={!isEditing}
                 />
               </div>
               <div className="info-item">
                 <label>전화번호:</label>
                 <input
-                  type="text"
-                  defaultValue="010-1234-5678"
+                  type="number"
+                  defaultValue={userInfo.phone}
                   disabled={!isEditing}
                 />
               </div>
@@ -279,7 +281,7 @@ export const EditProfile = () => {
                   />
                   <input
                     type={showPassword ? "text" : "password"}
-                    defaultValue="password123"
+                    defaultValue={userInfo.password}
                     disabled={!isEditing}
                     style={{ paddingLeft: 30 }}
                     className="password"
@@ -319,7 +321,7 @@ export const EditProfile = () => {
                   />
                   <input
                     type={showConfirmPassword ? "text" : "password"}
-                    defaultValue="password123"
+                    defaultValue={userInfo.password}
                     disabled={!isEditing}
                     style={{ paddingLeft: 30 }}
                     className="password"
@@ -354,6 +356,7 @@ export const EditProfile = () => {
                   setSearchParams={setSearchParams}
                   setRegionFilter={setRegionFilter}
                   handleRegionChange={handleRegionChange}
+                  setSearchArea={setSearchArea}
                 />
               ) : (
                 <span>{userInfo.filteredRegion}</span>

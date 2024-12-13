@@ -30,13 +30,33 @@ const AuthAPI = {
     });
     return response.data;
   },
+
   resetPassword: async (email, newPassword, confirmPassword) => {
-    const response = await axios.post(SERVER + `/auth/password-reset`, {
-      email,
-      newPassword,
-      confirmPassword,
-    });
-    return response.data;
+    try {
+      console.log("비밀번호 재설정 요청: ", {
+        email,
+        newPassword,
+        confirmPassword,
+      });
+
+      const response = await axios.post(SERVER + `/auth/password-reset`, {
+        email,
+        newPassword,
+        confirmPassword,
+      });
+
+      console.log("서버 응답 데이터:", response.data);
+      return response;
+    } catch (error) {
+      console.error(
+        "비밀번호 재설정 요청 실패:",
+        error.response || error.message
+      );
+
+      throw new Error(
+        error.response?.data || "비밀번호 재설정 중 오류가 발생했습니다."
+      );
+    }
   },
 
   signup: async (data) => {

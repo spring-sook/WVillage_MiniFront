@@ -11,6 +11,7 @@ export const RegionSelect = ({
   riOpt,
   setRiOpt,
   setRegionFilter,
+  setSearchArea,
 }) => {
   useEffect(() => {
     const fetchRegionData = async () => {
@@ -114,6 +115,7 @@ export const RegionSelect = ({
   const handleRegionChange = (key) => (e) => {
     const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
     const regionNameKey = `${key}Name`; // 예: sido -> sidoName
+    setSearchArea(e.target.value);
 
     setRegionFilter((prevState) => ({
       ...prevState,

@@ -20,6 +20,7 @@ const Signup = () => {
   const [sigunguOpt, setSigunguOpt] = useState([]);
   const [emdOpt, setEmdOpt] = useState([]);
   const [riOpt, setRiOpt] = useState([]);
+  const [searchArea, setSearchArea] = useState("");
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
     sigungu: null,
@@ -86,23 +87,23 @@ const Signup = () => {
     fetchRegionData();
 
     const updateAddress = () => {
-      const address = regionFilter.ri || regionFilter.emd || ""; // ri 값이 있으면 ri, 없으면 emd 값 사용
+      const address = regionFilter.ri || regionFilter.emd || "";
       setFormData((prevData) => ({
         ...prevData,
-        address: address, // address에 해당 값을 설정
+        address: address,
       }));
     };
     updateAddress();
   }, [regionFilter]);
 
   const handleRegionChange = (key) => (e) => {
-    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
-    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const regionNameKey = `${key}Name`;
 
     setRegionFilter((prevState) => ({
       ...prevState,
-      [key]: e.target.value, // 코드 값
-      [regionNameKey]: selectedOption.text, // 지역 이름
+      [key]: e.target.value,
+      [regionNameKey]: selectedOption.text,
     }));
   };
 
@@ -210,24 +211,15 @@ const Signup = () => {
   };
 
   const handleSignup = async () => {
+    console.log("회원가입 요청 데이터:", formData);
     try {
-      const response = await AuthAPI.signup({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-        nickname: formData.nickname,
-        phone: formData.phone,
-        areaCode: formData.address,
-      });
-
-      if (response.status === 200 && response.data) {
-        console.log("회원가입 성공:", response.data);
+      const response = await AuthAPI.signup(formData);
+      console.log("서버 응답:", response);
+      if (response.status === 200) {
         alert("회원가입이 완료되었습니다.");
-        navigate("/main");
       }
     } catch (error) {
-      console.error("회원가입 실패:", error.response || error.message);
-      alert(error.response?.data || "회원가입 중 오류가 발생했습니다.");
+      console.error("회원가입 요청 실패:", error.response || error.message);
     }
   };
 
@@ -396,6 +388,7 @@ const Signup = () => {
               setSearchParams={setSearchParams}
               setRegionFilter={setRegionFilter}
               handleRegionChange={handleRegionChange}
+              setSearchArea={setSearchArea}
             />
           </InputWrapper>
         </InputContainer>

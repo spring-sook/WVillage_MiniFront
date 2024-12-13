@@ -7,13 +7,12 @@ import AuthAPI from "../../api/AuthAPI";
 const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [emailMessage, setEmailMessage] = useState(""); // 이메일 상태 메시지
-  const [isEmailValid, setIsEmailValid] = useState(null); // 유효성 검사 상태
+  const [emailMessage, setEmailMessage] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(null);
   const navigate = useNavigate();
 
-  // 이메일 유효성 검사
   const validateEmail = (value) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 정규식
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(value)) {
       setEmailMessage("유효한 이메일입니다.");
       setIsEmailValid(true);
@@ -23,7 +22,7 @@ const PasswordReset = () => {
     }
   };
 
-  const handleResetRequest = async () => {
+  const handlePasswordResetRequest = async () => {
     if (!email || !phone) {
       alert("이메일과 전화번호를 입력해주세요.");
       return;
@@ -35,10 +34,23 @@ const PasswordReset = () => {
 
     try {
       const response = await AuthAPI.requestPasswordReset(email, phone);
-      alert(response);
-      navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
+
+      if (response && response.status === 200) {
+        alert(response.message || "비밀번호 재설정 요청이 완료되었습니다.");
+        navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
+      } else {
+        alert("요청 처리에 문제가 발생했습니다. 다시 시도해주세요.");
+      }
     } catch (error) {
-      alert("사용자 인증 실패: " + error.response.data);
+      console.error(
+        "비밀번호 재설정 요청 실패:",
+        error.response || error.message
+      );
+
+      alert(
+        error.response?.data?.message ||
+          "비밀번호 재설정 요청 중 문제가 발생했습니다."
+      );
     }
   };
 
@@ -94,6 +106,7 @@ const PasswordReset = () => {
             />
           </InputWrapper>
         </InputContainer>
+        {/* 비밀번호 재설정 페이지 이동 버튼 */}
         <Button onClick={handleReset}>비밀번호 재설정</Button>
       </PasswordResetBox>
     </PasswordResetContainer>

@@ -15,13 +15,32 @@ export const HeaderCom = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
   const location = useLocation();
 
-  const isActive = (path) => {
-    const currentPath = new URL(window.location.href); // 현재 URL 객체 생성
-    const targetPath = new URL(path, window.location.origin); // target URL 객체 생성
-    return (
-      currentPath.pathname === targetPath.pathname &&
-      currentPath.search === targetPath.search
-    );
+  const isActive = (path, queryParams = null) => {
+    const currentPath = location.pathname; // 현재 경로
+    const currentSearch = location.search; // 현재 쿼리 파라미터
+
+    // '전체' 링크 처리 (쿼리 파라미터가 없는 경우에만 활성화)
+    if (path === "/post" && !queryParams) {
+      // 경로가 /post 이고 쿼리 파라미터가 없을 경우 활성화
+      return currentPath === path && currentSearch === "";
+    }
+
+    // 경로 비교
+    const isPathMatch = currentPath === path;
+
+    // 쿼리 파라미터 비교
+    if (queryParams) {
+      const currentParams = new URLSearchParams(currentSearch);
+      const targetParams = new URLSearchParams(queryParams);
+
+      const isQueryMatch = [...targetParams].every(
+        ([key, value]) => currentParams.get(key) === value
+      );
+      return isPathMatch && isQueryMatch; // 경로와 쿼리 파라미터가 모두 일치하는지 확인
+    }
+
+    // 쿼리 파라미터가 없는 경우 (전체 링크의 경우)
+    return isPathMatch;
   };
 
   const navigate = useNavigate();
@@ -99,21 +118,27 @@ export const HeaderCom = () => {
         <p>/</p>
         <Link
           to="/post?category=제품"
-          className={`tag ${isActive("/post?category=제품") ? "active" : ""}`}
+          className={`tag ${
+            isActive("/post", "category=제품") ? "active" : ""
+          }`}
         >
           제품
         </Link>
         <p>/</p>
         <Link
           to="/post?category=구인"
-          className={`tag ${isActive("/post?category=구인") ? "active" : ""}`}
+          className={`tag ${
+            isActive("/post", "category=구인") ? "active" : ""
+          }`}
         >
           구인
         </Link>
         <p>/</p>
         <Link
           to="/post?category=장소"
-          className={`tag ${isActive("/post?category=장소") ? "active" : ""}`}
+          className={`tag ${
+            isActive("/post", "category=장소") ? "active" : ""
+          }`}
         >
           장소
         </Link>

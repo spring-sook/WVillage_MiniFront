@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import {
   AdminProfileBox,
   AdminBox,
@@ -6,47 +6,65 @@ import {
   Modal,
   ModalContent,
 } from "../../styles/AdminStyled";
+import ReportAPI from "../../api/ReportAPI";
 
 export const Adminpage = () => {
+  const [reports, setReports] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null);
 
-  const reports = [
-    {
-      id: 1,
-      reporterEmail: "user01@example.com", // 신고자 이메일
-      reportedEmail: "user02@example.com", // 피신고자 이메일
-      reporterProfileImg: "https://via.placeholder.com/50",
-      reportedProfileImg: "https://via.placeholder.com/50",
-      reportDate: "2024-12-12",
-      reason: "부적절한 언어 사용",
-    },
-    {
-      id: 2,
-      reporterEmail: "user03@example.com",
-      reportedEmail: "user04@m",
-      reporterProfileImg: "https://via.placeholder.com/50",
-      reportedProfileImg: "https://via.placeholder.com/50",
-      reportDate: "2024-12-11",
-      reason: "스팸 메시지 전송",
-    },
-  ];
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const reportData = await ReportAPI.getReportList();
+        setReports(reportData);
+      } catch (error) {
+        console.error("Error in Adminpage:", error);
+        setReports([]); // 에러 발생 시 빈 배열 설정 (선택적)
+      }
+    };
 
-  const handleApprove = (email) => {
-    console.log(`신고 확인: ${email}`);
-    setModalOpen(false);
+    fetchReports();
+  }, []);
+
+  const handleApprove = async (reportId) => {
+    await updateReportStatus(reportId, "accept");
   };
 
-  const handleReject = (email) => {
-    console.log(`신고 거부: ${email}`);
-    setModalOpen(false);
+  const handleReject = async (reportId) => {
+    await updateReportStatus(reportId, "deny");
+  };
+
+  const updateReportStatus = async (reportId, reportState) => {
+    try {
+      const response = await ReportAPI.updateReport({reportId: reportId, reportState: reportState});
+      console.log(response.toString());
+      if (response) {
+        alert("정상적으로 처리되었습니다.")
+        setModalOpen(false);
+        window.location.reload()
+      } else {
+        alert("처리 중 오류가 발생했습니다.");
+      }
+    } catch (error) {
+      console.error("신고 상태 변경 중 오류 발생:", error);
+      if (error.response) {
+        console.error("서버 응답 데이터:", error.response.data);
+        console.error("서버 응답 상태:", error.response.status);
+        console.error("서버 응답 헤더:", error.response.headers);
+      } else if (error.request) {
+        console.error("요청:", error.request);
+      } else {
+        console.error('요청 설정 중 오류:', error.message);
+      }
+      alert("신고 상태 변경 중 오류가 발생했습니다.")
+    }
   };
 
   const handleCheck = (report) => {
-    setSelectedReport(report);
+    setSelectedReport({...report, reportState: modalOpen ? selectedReport.reportState : "accept"});
     setModalOpen(true);
   };
-
   return (
     <AdminBox>
       <AdminProfileBox>
@@ -66,11 +84,11 @@ export const Adminpage = () => {
                 />
                 <div className="userInfo">
                   <span>{report.reportedEmail}</span>
-                  <small>nick: {report.id}</small>
+                  <small>nick: {report.reportedNickName}</small>
                 </div>
               </div>
               <div className="reportDetails">
-                <p className="reason">사유: {report.reason}</p>
+                <p className="reason">사유: {report.reportContent}</p>
                 <p className="date">신고일: {report.reportDate}</p>
               </div>
               <div className="actions">
@@ -107,13 +125,13 @@ export const Adminpage = () => {
             <div className="modalActions">
               <button
                 className="approve"
-                onClick={() => handleApprove(selectedReport.reportedEmail)}
+                onClick={() => handleApprove(selectedReport.reportId)}
               >
                 승인
               </button>
               <button
                 className="reject"
-                onClick={() => handleReject(selectedReport.reportedEmail)}
+                onClick={() => handleReject(selectedReport.reportId)}
               >
                 거절
               </button>

@@ -210,47 +210,24 @@ const Signup = () => {
   };
 
   const handleSignup = async () => {
-    const { name, nickname, email, password, confirmPassword, phone, address } =
-      formData;
-
-    if (
-      !name ||
-      !nickname ||
-      !email ||
-      !password ||
-      !confirmPassword ||
-      !address
-    ) {
-      alert("모든 공백을 채워주세요.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
     try {
       const response = await AuthAPI.signup({
-        name,
-        nickname,
-        email,
-        password,
-        phone,
-        areaCode: address,
-        grade: "USER",
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        nickname: formData.nickname,
+        phone: formData.phone,
+        areaCode: formData.address,
       });
 
-      if (response.status === 200) {
-        alert(response.data);
+      if (response.status === 200 && response.data) {
+        console.log("회원가입 성공:", response.data);
+        alert("회원가입이 완료되었습니다.");
         navigate("/main");
       }
     } catch (error) {
       console.error("회원가입 실패:", error.response || error.message);
-      alert(
-        error.response?.data ||
-          "회원가입 중 오류가 발생했습니다. 다시 시도해주세요."
-      );
+      alert(error.response?.data || "회원가입 중 오류가 발생했습니다.");
     }
   };
 

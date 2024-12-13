@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import AuthAPI from "../../api/AuthAPI";
+import CommonAPI from "../../api/CommonAPI";
 import { RegionSelect } from "../../components/RegionSelect";
 
 const ICONS = {
@@ -14,6 +15,20 @@ const ICONS = {
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [sidoOpt, setSidoOpt] = useState([]);
+  const [sigunguOpt, setSigunguOpt] = useState([]);
+  const [emdOpt, setEmdOpt] = useState([]);
+  const [riOpt, setRiOpt] = useState([]);
+  const [regionFilter, setRegionFilter] = useState({
+    sido: null,
+    sigungu: null,
+    emd: null,
+    ri: null,
+    sidoName: null,
+    sigunguName: null,
+    emdName: null,
+    riName: null,
+  });
 
   const [formData, setFormData] = useState({
     name: "",
@@ -36,6 +51,59 @@ const Signup = () => {
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  useEffect(() => {
+    const getSido = async () => {
+      const responseSido = await CommonAPI.GetSido();
+      setSidoOpt(responseSido.data);
+    };
+    getSido();
+  }, []);
+
+  useEffect(() => {
+    const fetchRegionData = async () => {
+      try {
+        let responseRegion;
+        if (regionFilter.emd) {
+          responseRegion = await CommonAPI.GetRegionFilter(regionFilter.emd);
+          setRiOpt(responseRegion.data);
+        } else if (regionFilter.sigungu) {
+          responseRegion = await CommonAPI.GetRegionFilter(
+            regionFilter.sigungu
+          );
+          setEmdOpt(responseRegion.data);
+        } else if (regionFilter.sido) {
+          responseRegion = await CommonAPI.GetRegionFilter(regionFilter.sido);
+          setSigunguOpt(responseRegion.data);
+        } else {
+          return;
+        }
+      } catch (error) {
+        console.error("Error fetching region data: ", error);
+      }
+    };
+    fetchRegionData();
+
+    const updateAddress = () => {
+      const address = regionFilter.ri || regionFilter.emd || ""; // ri 값이 있으면 ri, 없으면 emd 값 사용
+      setFormData((prevData) => ({
+        ...prevData,
+        address: address, // address에 해당 값을 설정
+      }));
+    };
+    updateAddress();
+  }, [regionFilter]);
+
+  const handleRegionChange = (key) => (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
+    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
+
+    setRegionFilter((prevState) => ({
+      ...prevState,
+      [key]: e.target.value, // 코드 값
+      [regionNameKey]: selectedOption.text, // 지역 이름
+    }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -338,19 +406,14 @@ const Signup = () => {
 
           {/* 주소 */}
           <InputWrapper>
-            <Select
-              name="address"
-              value={formData.address}
-              onChange={(e) =>
-                setFormData({ ...formData, address: e.target.value })
-              }
-            >
-              <option value="">주소를 선택하세요</option>
-              <option value="서울특별시 강남구">서울특별시 강남구</option>
-              <option value="서울특별시 송파구">서울특별시 송파구</option>
-              <option value="부산광역시 해운대구">부산광역시 해운대구</option>
-              <option value="custom">직접 입력</option>
-            </Select>
+            <RegionSelect
+              regionFilter={regionFilter}
+              sidoOpt={sidoOpt}
+              sigunguOpt={sigunguOpt}
+              emdOpt={emdOpt}
+              riOpt={riOpt}
+              handleRegionChange={handleRegionChange}
+            />
           </InputWrapper>
         </InputContainer>
 
@@ -427,6 +490,17 @@ const InputContainer = styled.div`
 const InputWrapper = styled.div`
   position: relative;
   margin-bottom: 7px;
+
+  .select-region {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
+    }
+  }
 `;
 
 const Input = styled.input`

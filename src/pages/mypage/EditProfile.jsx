@@ -22,6 +22,8 @@ import {
 } from "../../styles/EditProfileStyled";
 import { UserContext } from "../../context/UserStore";
 import AccountAPI from "../../api/AccountAPI";
+import CommonAPI from "../../api/CommonAPI";
+import { RegionSelect } from "../../components/RegionSelect";
 import axios from "axios";
 
 export const EditProfile = () => {
@@ -36,6 +38,53 @@ export const EditProfile = () => {
   const [newAccount, setNewAccount] = useState({ bank: "", accountNumber: "" }); // 새 계좌 정보
   const [accounts, setAccounts] = useState([]);
   const { userInfo, updateUserPoints } = useContext(UserContext); // UserContext에서 userInfo 가져오기
+  const [sidoOpt, setSidoOpt] = useState([]);
+  const [sigunguOpt, setSigunguOpt] = useState([]);
+  const [emdOpt, setEmdOpt] = useState([]);
+  const [riOpt, setRiOpt] = useState([]);
+  const [regionFilter, setRegionFilter] = useState({
+    sido: null,
+    sigungu: null,
+    emd: null,
+    ri: null,
+    sidoName: null,
+    sigunguName: null,
+    emdName: null,
+    riName: null,
+  });
+
+  useEffect(() => {
+    const getSido = async () => {
+      const responseSido = await CommonAPI.GetSido();
+      setSidoOpt(responseSido.data);
+    };
+    getSido();
+  }, []);
+
+  useEffect(() => {
+    const fetchRegionData = async () => {
+      try {
+        let responseRegion;
+        if (regionFilter.emd) {
+          responseRegion = await CommonAPI.GetRegionFilter(regionFilter.emd);
+          setRiOpt(responseRegion.data);
+        } else if (regionFilter.sigungu) {
+          responseRegion = await CommonAPI.GetRegionFilter(
+            regionFilter.sigungu
+          );
+          setEmdOpt(responseRegion.data);
+        } else if (regionFilter.sido) {
+          responseRegion = await CommonAPI.GetRegionFilter(regionFilter.sido);
+          setSigunguOpt(responseRegion.data);
+        } else {
+          return;
+        }
+      } catch (error) {
+        console.error("Error fetching region data: ", error);
+      }
+    };
+    fetchRegionData();
+  }, [regionFilter]);
 
   const toggleEditing = () => {
     setIsEditing(!isEditing);
@@ -148,6 +197,17 @@ export const EditProfile = () => {
         });
     }
   }, [userInfo]); // userInfo가 변경될 때마다 실행
+
+  const handleRegionChange = (key) => (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
+    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
+
+    setRegionFilter((prevState) => ({
+      ...prevState,
+      [key]: e.target.value, // 코드 값
+      [regionNameKey]: selectedOption.text, // 지역 이름
+    }));
+  };
 
   return (
     <ParentContainer>
@@ -262,6 +322,14 @@ export const EditProfile = () => {
                 </div>
               </div>
             </InfoSection>
+            <RegionSelect
+              regionFilter={regionFilter}
+              sidoOpt={sidoOpt}
+              sigunguOpt={sigunguOpt}
+              emdOpt={emdOpt}
+              riOpt={riOpt}
+              handleRegionChange={handleRegionChange}
+            />
 
             <BottomButtonContainer>
               <button onClick={toggleEditing}>

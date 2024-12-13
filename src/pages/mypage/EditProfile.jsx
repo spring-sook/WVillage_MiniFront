@@ -367,6 +367,33 @@ export const EditProfile = () => {
           </EditAccount>
         </EditProfileContainer>
       )}
+
+      {activeMenu === "회원탈퇴" && (
+        <EditProfileContainer>
+          <Edit>
+            <InfoSection>
+              <h2>회원탈퇴</h2>
+              <p>회원탈퇴 시 모든 정보가 삭제되며 복구가 불가능합니다.</p>
+              <p>탈퇴를 원하시면 아래 버튼을 클릭하여 절차를 진행하세요.</p>
+              <BottomButtonContainer>
+                <button
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "정말로 회원 탈퇴를 진행하시겠습니까? 탈퇴 후에는 복구할 수 없습니다."
+                      )
+                    ) {
+                      alert("회원탈퇴가 완료되었습니다.");
+                    }
+                  }}
+                >
+                  회원탈퇴 진행
+                </button>
+              </BottomButtonContainer>
+            </InfoSection>
+          </Edit>
+        </EditProfileContainer>
+      )}
     </ParentContainer>
   );
 };

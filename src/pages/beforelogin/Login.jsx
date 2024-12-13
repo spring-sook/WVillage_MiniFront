@@ -25,8 +25,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [emailMessage, setEmailMessage] = useState(""); // 이메일 상태 메시지
-  const [isEmailValid, setIsEmailValid] = useState(null); // 유효성 검사 상태
+  const [emailMessage, setEmailMessage] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(null);
 
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,12 +53,6 @@ const Login = () => {
     } else {
       alert("이메일 또는 비밀번호가 잘못되었습니다.");
     }
-    // if (email === "test@example.com" && password === "password123") {
-    //   alert("로그인 성공!");
-    //   navigate("/main");
-    // } else {
-    //   alert("이메일 또는 비밀번호가 잘못되었습니다.");
-    // }
   };
 
   return (

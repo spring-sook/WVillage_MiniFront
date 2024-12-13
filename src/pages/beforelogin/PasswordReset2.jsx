@@ -22,34 +22,12 @@ const PasswordReset2 = () => {
   const queryParams = new URLSearchParams(location.search);
   const email = queryParams.get("email");
 
-  const handleReset = () => {
-    if (!newPassword || !confirmPassword) {
-      alert("새 비밀번호와 비밀번호 확인을 입력해주세요.");
-      return;
-    }
-    if (newPassword.length < 8) {
-      alert("비밀번호는 최소 8자 이상 문자, 특수문자가 포함되어야 합니다.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    navigate("/");
-  };
-
-  console.log("전달된 이메일: ", email);
-
   if (!email) {
     alert("이메일 정보가 없습니다. 이전 화면으로 돌아갑니다.");
     navigate("/passwordreset");
   }
 
-  const handlePasswordReset = async () => {
+  const handleReset = async () => {
     if (!newPassword || !confirmPassword) {
       alert("새 비밀번호와 비밀번호 확인을 입력해주세요.");
       return;
@@ -63,17 +41,45 @@ const PasswordReset2 = () => {
       return;
     }
 
+    await handlePasswordReset();
+  };
+
+  const handlePasswordReset = async () => {
     try {
+      console.log("비밀번호 재설정 요청 중: ", {
+        email,
+        newPassword,
+        confirmPassword,
+      });
+
       const response = await AuthAPI.resetPassword(
         email,
         newPassword,
         confirmPassword
       );
-      alert(response);
-      navigate("/login");
+
+      if (response.status === 200) {
+        console.log("비밀번호 변경 성공:", response.data);
+        alert("비밀번호가 성공적으로 변경되었습니다!");
+        setIsModalOpen(true);
+      } else {
+        console.log("비밀번호 변경 실패:", response.data);
+        alert("비밀번호 변경 실패: " + response.data);
+      }
     } catch (error) {
-      alert("비밀번호 변경 실패: " + error.response.data);
+      console.error(
+        "비밀번호 변경 요청 실패:",
+        error.response || error.message
+      );
+      alert(
+        error.response?.data ||
+          "비밀번호 변경 중 오류가 발생했습니다. 다시 시도해주세요."
+      );
     }
+  };
+
+  const handleCloseModal = () => {
+    navigate("/");
   };
 
   return (

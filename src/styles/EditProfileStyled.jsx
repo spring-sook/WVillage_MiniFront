@@ -109,14 +109,12 @@ export const MenuContainer = styled.div`
 
 export const EditProfileContainer = styled.div`
   position: relative;
-  width: 78%;
-  margin: 30px auto;
-  border: 1px solid purple;
+  width: 90%;
+  margin: 10px auto;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 30px;
   gap: 20px;
   font-family: Arial, sans-serif;
@@ -127,7 +125,6 @@ export const Edit = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  border: 1px solid black;
 `;
 
 export const InfoSection = styled.div`
@@ -140,7 +137,6 @@ export const InfoSection = styled.div`
     align-items: center;
     justify-content: center;
     gap: 10px;
-    border: 1px solid blue;
   }
 
   label {
@@ -148,7 +144,6 @@ export const InfoSection = styled.div`
     font-weight: bold;
     text-align: right;
     min-width: 90px;
-    border: 1px solid orange;
   }
 
   input {
@@ -158,7 +153,8 @@ export const InfoSection = styled.div`
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-
+  .password {
+  }
   p {
     font-size: 14px;
     color: #333;
@@ -187,7 +183,6 @@ export const BottomButtonContainer = styled.div`
 
 // kh account profile 수정----------------------------
 export const EditAccount = styled.div`
-  font-size: 16px;
   padding: 20px;
   width: 100%;
   height: 100%;
@@ -427,5 +422,15 @@ export const Region = styled.div`
     margin-right: 10px;
     height: 30px;
     width: 150px;
+    border: 1px solid #1b5e96;
+    border-radius: 50px;
+  }
+  p {
+    font-size: 12px;
+    margin-right: 20px;
+    font-weight: bold;
+    min-width: 90px;
+    text-align: right;
+    padding: 5px;
   }
 `;

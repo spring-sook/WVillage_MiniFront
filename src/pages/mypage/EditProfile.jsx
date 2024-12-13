@@ -276,6 +276,7 @@ export const EditProfile = () => {
                     defaultValue="password123"
                     disabled={!isEditing}
                     style={{ paddingLeft: 30 }}
+                    className="password"
                   />
                   <FontAwesomeIcon
                     icon={showPassword ? faEyeSlash : faEye}
@@ -326,6 +327,7 @@ export const EditProfile = () => {
               </div>
             </InfoSection>
             <Region>
+              <p>주소: </p>
               <RegionSelect
                 regionFilter={regionFilter}
                 sidoOpt={sidoOpt}

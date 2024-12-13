@@ -27,8 +27,6 @@ import { SlickBtnContainer, SlickBtn } from "../../styles/MainStyled";
 const Main = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]); // API에서 받은 게시물 목록 상태
-  const boxWidth = 315; // 각 이미지의 너비
-  const margin = 10; // 이미지 사이의 여백
   const [currentIndex, setCurrentIndex] = useState(0); // 초기값 0
 
   useEffect(() => {

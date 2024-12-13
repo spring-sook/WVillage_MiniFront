@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import mainImg from "./../images/Hallstatt-Cover.jpg"
+import mainImg from "./../images/Hallstatt-Cover.jpg";
 
 //메인 크기
 export const MainBody = styled.div`
@@ -29,7 +29,7 @@ export const RecommBox = styled.div`
 
 export const MainRecomm = styled.div`
   height: 450px;
-  width: 100%;
+  width: 2000px;
   background-color: #f5f6fa;
   display: flex;
   align-items: center;
@@ -37,7 +37,6 @@ export const MainRecomm = styled.div`
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
-  
 
   .swiper {
     width: 70%;
@@ -171,7 +170,6 @@ export const MainBanner = styled.div`
   background-position: center; /* 배경 이미지 위치 */
   background-repeat: no-repeat; /* 반복 방지 */
 
-
   .catch,
   .explain {
     opacity: 0; /* 처음엔 텍스트가 보이지 않음 */
@@ -181,22 +179,18 @@ export const MainBanner = styled.div`
     animation-fill-mode: forwards; /* 애니메이션 종료 후 상태 유지 */
     height: 130px;
     width: 35vw;
-    
+
     background-color: transparent;
     display: flex;
     align-items: center;
     font-size: 30px;
     font-weight: bold;
     color: #1b5e96;
-
   }
 
   .catch {
-    text-shadow: 
-    -2px -2px 0 #fff, /* 왼쪽 위 */
-     2px -2px 0 #fff, /* 오른쪽 위 */
-    -2px  2px 0 #fff, /* 왼쪽 아래 */
-     2px  2px 0 #fff; /* 오른쪽 아래 */
+    text-shadow: -2px -2px 0 #fff, /* 왼쪽 위 */ 2px -2px 0 #fff,
+      /* 오른쪽 위 */ -2px 2px 0 #fff, /* 왼쪽 아래 */ 2px 2px 0 #fff; /* 오른쪽 아래 */
     animation-name: slideInCatch;
   }
 
@@ -292,7 +286,6 @@ export const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px 0 0 0;
-  
 
   .close-btn {
     align-self: flex-end; /* 닫기 버튼을 오른쪽에 배치 */
@@ -363,14 +356,12 @@ export const TextContainer = styled.div`
   align-items: flex-start; /* 왼쪽 정렬 */
   margin-left: 20px; /* 왼쪽 여백 */
   height: 60%; /* 부모 컨테이너의 높이를 채움 */
-  h1, h4 {
-  color: #1b5e96; /* 텍스트 색상 */
-  text-shadow: 
-    -2px -2px 0 #fff, /* 왼쪽 위 */
-     2px -2px 0 #fff, /* 오른쪽 위 */
-    -2px  2px 0 #fff, /* 왼쪽 아래 */
-     2px  2px 0 #fff; /* 오른쪽 아래 */
-}
+  h1,
+  h4 {
+    color: #1b5e96; /* 텍스트 색상 */
+    text-shadow: -2px -2px 0 #fff, /* 왼쪽 위 */ 2px -2px 0 #fff,
+      /* 오른쪽 위 */ -2px 2px 0 #fff, /* 왼쪽 아래 */ 2px 2px 0 #fff; /* 오른쪽 아래 */
+  }
 
   h1 {
     font-size: 80px;

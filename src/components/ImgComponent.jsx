@@ -10,9 +10,7 @@ export const ImgUpload = async (files) => {
 
   for (const file of files) {
     // const fileRef = storageRef.child(`${userInfo.phone}_${file.name}`);
-    const fileName = file?.name || "profile_basic.png";
-    const fileRef = storageRef.child(fileName);
-    // const fileRef = storageRef.child(file.name);
+    const fileRef = storageRef.child(file.name);
     console.log(file.name);
     fileRef
       .put(file) // 파일 업로드
@@ -37,7 +35,9 @@ export const ImgDownloader = ({ imgfile, width, height }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
+    const filePath = imgfile || "profile_basic.png"; // imgfile이 없으면 기본값 설정
+    const fileRef = ref(storage, filePath);
+    //const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
 
     getDownloadURL(fileRef)
       .then((url) => {

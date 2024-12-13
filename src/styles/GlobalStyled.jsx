@@ -22,7 +22,6 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   gap: 20px;
   margin: 5px;
   width: 93vw;
@@ -136,7 +135,6 @@ export const Header = styled.div`
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
-
   .search-options.active {
     opacity: 1;
     transform: translateY(0);
@@ -259,13 +257,18 @@ export const Header = styled.div`
         color: black;
       }
     }
-  }
+ }
+
+ @media (max-width: 747px) {
+
+
+}
 `;
 
 // nav 스타일
 export const Nav = styled.div`
   height: 40px;
-  width: 100%; /* 컨테이너의 너비를 100%로 설정하여 창 크기에 맞게 조정 */
+  width: 100%;
   display: flex;
   justify-content: space-between;
   max-width: 350px;
@@ -291,6 +294,20 @@ export const Nav = styled.div`
     color: #1b5e96;
     margin: -10px;
   }
+  @media (max-width: 747px) {
+    position: fixed; /* Nav를 화면 하단에 고정 */
+    left: 0px;
+    bottom: 0;
+    max-width: 747px;
+    width: 100%;
+    justify-content: center; 
+    background-color: #f8f8f8; /* 배경색 */
+    z-index: 10;
+
+    .tag {
+      font: 20px;
+    }
+  }
 `;
 
 // 푸터 스타일
@@ -308,6 +325,9 @@ export const Footer = styled.div`
   }
   p {
     font-size: smaller;
+  }
+  @media (max-width: 747px) {
+    display: none; /* 모바일 화면에서 푸터 숨기기 */
   }
 `;
 

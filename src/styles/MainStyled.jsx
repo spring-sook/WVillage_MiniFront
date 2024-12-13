@@ -8,6 +8,9 @@ export const MainBody = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  @media (max-width: 747px) {
+    max-width: 747px;
+  }
 `;
 
 // 추천 배너
@@ -20,6 +23,9 @@ export const RecommBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  @media (max-width: 747px) {
+    max-width: 747px;
+  }
   h2 {
     font-size: 25px;
     color: #1b5e96;
@@ -29,7 +35,7 @@ export const RecommBox = styled.div`
 
 export const MainRecomm = styled.div`
   height: 450px;
-  width: 2000px;
+  width: 1500px;
   background-color: #f5f6fa;
   display: flex;
   align-items: center;
@@ -37,7 +43,9 @@ export const MainRecomm = styled.div`
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
-
+  @media (max-width: 747px) {
+    max-width: 100%;
+  }
   .swiper {
     width: 70%;
   }
@@ -109,6 +117,11 @@ export const BoxContainer = styled.div`
   width: ${(props) =>
     props.slideWidth ||
     "auto"}; /* 이미지가 몇 개 보일지에 맞게 동적으로 조정 */
+      @media (max-width: 747px) {
+        width: ${(props) =>
+    props.slideWidth ||
+    "2"};
+  }
 `;
 
 export const Box = styled.div`
@@ -221,6 +234,11 @@ export const MainBanner = styled.div`
     100% {
       opacity: 1; /* 마지막엔 선명해짐 */
       transform: translateX(0); /* 원래 위치로 이동 */
+    }
+  }
+  @media (max-width: 747px) {
+    .explain {
+      width: 300px;
     }
   }
 `;

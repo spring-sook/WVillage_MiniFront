@@ -12,9 +12,10 @@ import Signup from "./pages/beforelogin/Signup";
 import Intro from "./pages/main/Intro";
 import FindMail from "./pages/beforelogin/FindMail";
 import PasswordReset2 from "./pages/beforelogin/PasswordReset2";
-import OtherUserProfile from "./pages/OtherUserProfile";
+import OtherUserProfile from "./pages/others/OtherUserProfile";
 import MyPageMain from "./pages/mypage/MyPageMain";
 import UserInfo from "./pages/test";
+import Adminpage from "./pages/others/Adminpage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/userProfile" element={<OtherUserProfile />} />
             <Route path="/mypage" element={<MyPageMain />} />
             <Route path="/test" element={<UserInfo />} />
+            <Route path="/admin" element={<Adminpage />} />
           </Routes>
         </Router>
       </UserStore>

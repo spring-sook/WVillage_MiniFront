@@ -1,6 +1,6 @@
 import { Container } from "../../styles/GlobalStyled";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { UserInfoFrame } from "../OtherUserProfile";
+import { UserInfoFrame } from "../others/OtherUserProfile";
 import OtherUser from "../../components/OtherUser";
 import { User } from "../../components/User";
 import { useContext, useEffect, useState } from "react";
@@ -12,7 +12,6 @@ import { EditProfile } from "./EditProfile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import { MyResManage } from "./MyResManage";
-// import { UserMain } from "../../styles/MyPostStyled";
 
 export const MyPageMain = () => {
   const location = useLocation();

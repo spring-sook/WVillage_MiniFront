@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 export const DeleteButtonContainer = styled.div`
   position: absolute;
-  bottom: 20px; /* EditProfileContainer의 하단 */
+  bottom: 35px; /* EditProfileContainer의 하단 */
   right: 20px; /* EditProfileContainer의 오른쪽 끝 */
 
   button {
-    background-color: #ff4d4d;
-    color: white;
+    background-color: #ffffff;
+    color: #000000;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 10px 13px;
+    font-size: 12px;
     cursor: pointer;
 
     &:hover {
@@ -128,38 +128,67 @@ export const Edit = styled.div`
 `;
 
 export const InfoSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%; /* 전체 너비 */
+    max-width: 600px; /* 최대 너비 제한 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
 
   .info-item {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  label {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: right;
-    min-width: 90px;
-  }
-
-  input {
-    width: 80%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .password {
+    align-items: center; /* 수직 정렬 */
+    gap: 10px; /* 레이블과 입력창 사이 간격 */
     width: 100%;
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      min-width: 100px; /* 레이블 고정 너비 */
+      text-align: left; /* 텍스트 왼쪽 정렬 */
+    }
+
+    input {
+      flex: 1; /* 입력창이 남은 공간을 차지 */
+      height: 40px;
+      padding: 0 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+
+      &:focus {
+        border-color: #007bff; /* 포커스 테두리 */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 그림자 */
+        outline: none;
+      }
+    }
   }
-  p {
-    font-size: 14px;
-    color: #333;
-    margin-top: 5px;
+
+  .password-container {
+    position: relative;
+    flex: 1;
+
+    input {
+      width: 100%;
+      padding-right: 40px;
+    }
+
+    .toggle-visibility {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #007bff;
+
+      &:hover {
+        color: #0056b3;
+      }
+    }
   }
 `;
 
@@ -183,14 +212,21 @@ export const BottomButtonContainer = styled.div`
 `;
 
 // kh account profile 수정----------------------------
+
 export const EditAccount = styled.div`
-  padding: 20px;
+  padding: 174px;
   width: 100%;
-  height: 100%;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+
   p {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: #1b5e96;
   }
 
   .account-item {
@@ -201,46 +237,49 @@ export const EditAccount = styled.div`
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 100%;
+    background: #ffffff;
+
+    &:hover {
+      background-color: #f4f8ff;
+      border-color: #007bff;
+    }
+
+    span {
+      font-size: 100px;
+      color: #333;
+    }
+
+    button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
   }
 
-  .account-item option {
-    font-size: 16px;
-  }
-
-  .account-item button {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 50px;
-  }
-
-  .account-item button:hover {
-    background-color: #e60000;
-  }
-
-  button {
-    font-size: 14px;
-    padding: 10px 20px;
-    cursor: pointer;
+  button.addaccount {
+    margin-top: 40px;
+    width: 200px;
+    height: 60px;
     background-color: #1b5e96;
     color: white;
     border: none;
     border-radius: 5px;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+
     &:hover {
-      opacity: 0.3;
+      background-color: #0056b3;
     }
   }
-  button.addaccount {
-    display: block; /* 블록 요소로 설정 */
-    margin: 180px auto 0 auto; /* 가로 가운데 정렬 */
-  }
 `;
-
 export const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -274,7 +313,6 @@ export const Modal = styled.div`
     height: 400px;
     text-align: center;
 
-    /* 모달 내용에만 확대 애니메이션 적용 */
     animation: scaleUp 0.3s ease;
 
     @keyframes scaleUp {
@@ -309,8 +347,8 @@ export const Modal = styled.div`
     .button-container {
       margin-top: 10px;
       display: flex;
-      flex-direction: column; /* 세로 정렬 */
-      align-items: center; /* 가운데 정렬 */
+      flex-direction: column;
+      align-items: center;
 
       button {
         width: 80%;
@@ -339,6 +377,85 @@ export const Modal = styled.div`
     }
   }
 `;
+export const DeleteAccount = styled.div`
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff9f9;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+
+  p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-bottom: 15px;
+  }
+
+  .delete-description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .delete-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+`;
+export const DeleteAccountContainer = styled.div`
+  padding: 171px;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+
+  p {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-bottom: 30px;
+  }
+
+  .delete-description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .delete-button {
+    display: inline-block;
+    width: auto;
+    padding: 12px 30px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+`;
+
 export const DeleteModal = styled.div`
   position: fixed;
   top: 0;
@@ -427,7 +544,7 @@ export const Region = styled.div`
     border-radius: 50px;
   }
   p {
-    font-size: 12px;
+    font-size: 15px;
     margin-right: 20px;
     font-weight: bold;
     min-width: 90px;

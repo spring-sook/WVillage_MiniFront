@@ -19,6 +19,7 @@ import {
   DeleteModal,
   EditAccount,
   DeleteButtonContainer,
+  DeleteAccountContainer,
   Region,
 } from "../../styles/EditProfileStyled";
 import { UserContext } from "../../context/UserStore";
@@ -236,112 +237,71 @@ export const EditProfile = () => {
         <EditProfileContainer>
           <Edit>
             <InfoSection>
-              <div className="info-item">
-                <label>이메일:</label>
-                <input type="email" defaultValue={userInfo.email} disabled />
-              </div>
-              <div className="info-item">
-                <label>이름:</label>
-                <input
-                  type="text"
-                  defaultValue={userInfo.name}
-                  disabled={!isEditing}
-                />
-              </div>
-              <div className="info-item">
-                <label>닉네임:</label>
-                <input
-                  type="text"
-                  defaultValue={userInfo.nickname}
-                  disabled={!isEditing}
-                />
-              </div>
-              <div className="info-item">
-                <label>전화번호:</label>
-                <input
-                  type="text"
-                  defaultValue={userInfo.phone}
-                  disabled={!isEditing}
-                />
-              </div>
-              <div className="info-item">
-                <label>비밀번호:</label>
-                <div
-                  style={{
-                    position: "relative",
-                    display: "flex",
-                    width: "80%",
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faLock}
-                    style={{
-                      position: "absolute",
-                      left: 10,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      color: "#ccc",
-                    }}
-                  />
+              <div className="form-container">
+                <div className="info-item">
+                  <label>이메일:</label>
+                  <input type="email" value={userInfo.email || ""} disabled />
+                </div>
+
+                <div className="info-item">
+                  <label>이름:</label>
                   <input
-                    type={showPassword ? "text" : "password"}
-                    defaultValue={userInfo.password}
+                    type="text"
+                    value={userInfo.name || ""}
                     disabled={!isEditing}
-                    style={{ paddingLeft: 30 }}
-                    className="password"
-                  />
-                  <FontAwesomeIcon
-                    icon={showPassword ? faEyeSlash : faEye}
-                    style={{
-                      position: "absolute",
-                      right: 10,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      cursor: "pointer",
-                      color: "#007bff",
-                    }}
-                    onClick={() => setShowPassword(!showPassword)}
                   />
                 </div>
-              </div>
-              <div className="info-item">
-                <label>비밀번호 확인:</label>
-                <div
-                  style={{
-                    position: "relative",
-                    display: "flex",
-                    width: "80%",
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faLock}
-                    style={{
-                      position: "absolute",
-                      left: 10,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      color: "#ccc",
-                    }}
-                  />
+
+                <div className="info-item">
+                  <label>닉네임:</label>
                   <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    defaultValue={password}
+                    type="text"
+                    value={userInfo.nickname || ""}
                     disabled={!isEditing}
-                    style={{ paddingLeft: 30 }}
-                    className="password"
                   />
-                  <FontAwesomeIcon
-                    icon={showConfirmPassword ? faEyeSlash : faEye}
-                    style={{
-                      position: "absolute",
-                      right: 10,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      cursor: "pointer",
-                      color: "#007bff",
-                    }}
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                </div>
+
+                <div className="info-item">
+                  <label>전화번호:</label>
+                  <input
+                    type="text"
+                    value={userInfo.phone || ""}
+                    disabled={!isEditing}
                   />
+                </div>
+
+                <div className="info-item">
+                  <label>비밀번호:</label>
+                  <div className="password-container">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={userInfo.password || ""}
+                      disabled={!isEditing}
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      className="toggle-visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  </div>
+                </div>
+
+                <div className="info-item">
+                  <label>비밀번호 확인:</label>
+                  <div className="password-container">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={userInfo.password || ""}
+                      disabled={!isEditing}
+                    />
+                    <FontAwesomeIcon
+                      icon={showConfirmPassword ? faEyeSlash : faEye}
+                      className="toggle-visibility"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </InfoSection>
@@ -474,28 +434,28 @@ export const EditProfile = () => {
 
       {activeMenu === "회원탈퇴" && (
         <EditProfileContainer>
-          <Edit>
-            <InfoSection>
-              <h2>회원탈퇴</h2>
-              <p>회원탈퇴 시 모든 정보가 삭제되며 복구가 불가능합니다.</p>
-              <p>탈퇴를 원하시면 아래 버튼을 클릭하여 절차를 진행하세요.</p>
-              <BottomButtonContainer>
-                <button
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "정말로 회원 탈퇴를 진행하시겠습니까? 탈퇴 후에는 복구할 수 없습니다."
-                      )
-                    ) {
-                      alert("회원탈퇴가 완료되었습니다.");
-                    }
-                  }}
-                >
-                  회원탈퇴 진행
-                </button>
-              </BottomButtonContainer>
-            </InfoSection>
-          </Edit>
+          <DeleteAccountContainer>
+            <p>회원탈퇴 안내</p>
+            <p className="delete-description">
+              회원탈퇴를 진행하시면 모든 정보가 삭제되며 복구가 불가능합니다.
+              탈퇴를 원하시면 아래 버튼을 클릭하여 절차를 진행해주세요.
+            </p>
+            <button
+              className="delete-button"
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "정말로 회원 탈퇴를 진행하시겠습니까? 탈퇴 후에는 복구할 수 없습니다."
+                  )
+                ) {
+                  alert("회원탈퇴가 완료되었습니다.");
+                  // 회원탈퇴 API 호출 로직 추가
+                }
+              }}
+            >
+              회원탈퇴
+            </button>
+          </DeleteAccountContainer>
         </EditProfileContainer>
       )}
     </ParentContainer>

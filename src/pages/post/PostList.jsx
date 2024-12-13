@@ -8,23 +8,23 @@ import {
   PostDisplay,
 } from "../../styles/PostStyled";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import CommonAPI from "../../api/CommonAPI";
 import { PostItem } from "../../components/PostItemComponent";
 import { RegionSelect } from "../../components/RegionSelect";
+import axios from "axios";
 
 const PostList = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   // const [startDate, setStartDate] = useState("");
   // const [endDate, setEndDate] = useState("");
-  const [isDropdownView, setIsDropdownView] = useState(false);
   // const [searchParams, setSearchParams] = useSearchParams();
   const [searchParams] = useSearchParams();
   const [category, setCategory] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [searchArea, setSearchArea] = useState("");
   const [posts, setPosts] = useState([]);
   const [order, setOrder] = useState("최신순");
   const { userInfo } = useContext(UserContext);
@@ -46,7 +46,7 @@ const PostList = () => {
   useEffect(() => {
     setCategory(searchParams.get("category") || "");
     setKeyword(searchParams.get("search") || "");
-  });
+  }, []);
   // const searchKeyword = searchParams.get("search");
   // const queryParams = new URLSearchParams(location.search);
   // const category = queryParams.get("category");
@@ -92,7 +92,6 @@ const PostList = () => {
     }));
   };
   const handleReset = () => {
-    setIsDropdownView(false);
     setRegionFilter({
       sido: null,
       sigungu: null,
@@ -102,6 +101,10 @@ const PostList = () => {
     setSigunguOpt([]);
     setEmdOpt([]);
     setRiOpt([]);
+    setKeyword("");
+    const newSearchParams = new URLSearchParams(window.location.search);
+    newSearchParams.delete("search"); // 'search' 키 삭제
+    navigate(`?${newSearchParams.toString()}`);
   };
 
   useEffect(() => {
@@ -123,11 +126,11 @@ const PostList = () => {
     sortPosts();
   }, [order]);
 
-  const handleClickIcon = () => {
-    setIsDropdownView(!isDropdownView);
-  };
-
   const isResetVisible = keyword || regionFilter.sido;
+
+  const handleSearchClick = async () => {
+    const response = await PostAPI.SearchPostList();
+  };
 
   return (
     <Container>
@@ -166,8 +169,11 @@ const PostList = () => {
             setRiOpt={setRiOpt}
             setRegionFilter={setRegionFilter}
             handleRegionChange={handleRegionChange}
+            setSearchArea={setSearchArea}
           />
-          <button className="condition-search">검색</button>
+          <button className="condition-search" onClick={handleSearchClick}>
+            검색
+          </button>
         </PostMainFilter>
         <PostMainList>
           <div>

@@ -15,6 +15,15 @@ const PostAPI = {
     };
     return await axios.get(SERVER + `/board/postList`, { params });
   },
+  // 게시물 검색
+  SearchPostList: async (region, category, keyword) => {
+    const params = {
+      region: region,
+      category: category,
+      keyword: keyword,
+    };
+    return await axios.get(SERVER + `/board/postList`, { params });
+  },
   // 특정 유저가 작성한 게시물 조회
   UserPostList: async (email) => {
     return await axios.get(SERVER + `/board/userProfile/${email}`);

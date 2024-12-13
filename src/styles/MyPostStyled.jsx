@@ -38,4 +38,14 @@ export const PostBody = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+
+  .disablePost {
+    width: 91%;
+    height: 75%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    position: absolute;
+    top: 3%;
+    left: 5%;
+  }
 `;

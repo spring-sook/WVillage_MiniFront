@@ -4,19 +4,25 @@ const SERVER = "http://localhost:8111";
 
 const PostAPI = {
   // 특정 지역 게시물 전체 조회
-  CommonAllList: async (region) => {
-    return await axios.get(SERVER + `/board/postList/${region}`);
+  CommonAllList: async (region, keyword) => {
+    const params = {
+      region: region,
+      keyword: keyword,
+    };
+    return await axios.get(SERVER + `/board/postList`, { params });
   },
   // 특정 지역+카테고리 게시물 조회
-  CommonCategoryList: async (region, category) => {
+  CommonCategoryList: async (region, category, keyword) => {
     const params = {
       region: region,
       category: category,
+      keyword: keyword,
     };
     return await axios.get(SERVER + `/board/postList`, { params });
   },
   // 게시물 검색
   SearchPostList: async (region, category, keyword) => {
+    console.log("****** : ", region, category, keyword);
     const params = {
       region: region,
       category: category,
@@ -92,6 +98,14 @@ const PostAPI = {
   IsBookmarked: async (email, postId) => {
     return await axios.get(SERVER + `/bookmark/isBookmarking`, {
       params: { email: email, postId: postId },
+    });
+  },
+  UpdateActivation: async (postDisable, postId) => {
+    return await axios.post(SERVER + `/post/postActivate`, null, {
+      params: {
+        postDisable: postDisable,
+        postId: postId,
+      },
     });
   },
 };

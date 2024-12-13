@@ -190,6 +190,14 @@ const PostContent = () => {
     setShowCompletedModal(false); // 예약 완료 모달 닫기
     window.location.reload(); // 페이지 새로고침
   };
+  const handleActivation = async () => {
+    console.log(!postData.postDisable);
+    const response = await PostAPI.UpdateActivation(
+      !postData.postDisable,
+      postId
+    );
+    window.location.reload();
+  };
 
   return (
     <Container>
@@ -232,7 +240,11 @@ const PostContent = () => {
                 </ButtonContainer>
               </>
             ) : imgData && imgData.length === 1 ? (
-              <ImgDownloader imgfile={imgData[0]} height={"97%"} />
+              <ImgDownloader
+                imgfile={imgData[0]}
+                height={"97%"}
+                postDisable={postData.postDisable}
+              />
             ) : (
               <p>이미지가 없습니다.</p>
             )}
@@ -270,6 +282,7 @@ const PostContent = () => {
                 className={`activate-button ${
                   postData.postDisable ? "enabled" : "disabled"
                 }`}
+                onClick={handleActivation}
               >
                 {postData.postDisable ? "활성화" : "비활성화"}
               </button>
@@ -399,7 +412,7 @@ const PostContent = () => {
           </div>
           <div className="post-reserve-button">
             <ReserveButton
-              disabled={!endDate}
+              disabled={!endDate || postData.postDisable}
               onClick={() => setShowModal(true)}
             >
               예약하기

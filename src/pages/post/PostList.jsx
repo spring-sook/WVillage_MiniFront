@@ -14,20 +14,20 @@ import PostAPI from "../../api/PostAPI";
 import CommonAPI from "../../api/CommonAPI";
 import { PostItem } from "../../components/PostItemComponent";
 import { RegionSelect } from "../../components/RegionSelect";
-import axios from "axios";
 
 const PostList = () => {
   const navigate = useNavigate();
+  const { userInfo } = useContext(UserContext);
   // const [startDate, setStartDate] = useState("");
   // const [endDate, setEndDate] = useState("");
   // const [searchParams, setSearchParams] = useSearchParams();
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
+  const location = useLocation();
   const [category, setCategory] = useState("");
   const [keyword, setKeyword] = useState("");
-  const [searchArea, setSearchArea] = useState("");
+  const [searchArea, setSearchArea] = useState(userInfo.areaCode || "");
   const [posts, setPosts] = useState([]);
   const [order, setOrder] = useState("최신순");
-  const { userInfo } = useContext(UserContext);
   const [sidoOpt, setSidoOpt] = useState([]);
   const [sigunguOpt, setSigunguOpt] = useState([]);
   const [emdOpt, setEmdOpt] = useState([]);
@@ -44,25 +44,43 @@ const PostList = () => {
   });
 
   useEffect(() => {
-    setCategory(searchParams.get("category") || "");
-    setKeyword(searchParams.get("search") || "");
-  }, []);
+    const queryParams = new URLSearchParams(location.search);
+    const urlCategory = queryParams.get("category") || "";
+    const urlKeyword = queryParams.get("search") || "";
+
+    setCategory(urlCategory);
+    setKeyword(urlKeyword);
+    // console.log("변경된 category : ", urlCategory);
+    // console.log("변경된 keyword : ", urlKeyword);
+  }, [location.search, location.category]);
   // const searchKeyword = searchParams.get("search");
   // const queryParams = new URLSearchParams(location.search);
   // const category = queryParams.get("category");
+  useEffect(() => {
+    setSearchArea(
+      regionFilter.ri ||
+        regionFilter.emd ||
+        regionFilter.sigungu ||
+        regionFilter.sido ||
+        userInfo.areaCode
+    );
+  }, [regionFilter]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const region = userInfo.areaCode;
+      console.log(category);
       setPosts([]); // 초기화
 
       try {
         let response;
-        if (category === "all") {
-          console.log(">>>>>>", region);
-          response = await PostAPI.CommonAllList(region);
+        if (category !== "제품" && category !== "구인" && category !== "장소") {
+          response = await PostAPI.CommonAllList(searchArea, keyword);
         } else {
-          response = await PostAPI.CommonCategoryList(region, category);
+          response = await PostAPI.CommonCategoryList(
+            searchArea,
+            category,
+            keyword
+          );
         }
         const fetchedPosts = response.data;
         fetchedPosts.sort(
@@ -79,8 +97,7 @@ const PostList = () => {
     };
     fetchData();
     getSido();
-    setSearchArea(userInfo.areaCode);
-  }, [category, userInfo.areaCode]);
+  }, [category, keyword]);
 
   const handleRegionChange = (key) => (e) => {
     const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
@@ -146,13 +163,14 @@ const PostList = () => {
       <PostBody>
         <PostMainFilter>
           <h2>
-            {regionFilter.sidoName
-              ? `${regionFilter.sidoName} ${
-                  regionFilter.sigunguName ? regionFilter.sigunguName : ""
-                } ${regionFilter.emdName ? regionFilter.emdName : ""} ${
-                  regionFilter.riName ? regionFilter.riName : ""
-                }`
-              : userInfo.filteredRegion}
+            {regionFilter.sidoName ||
+            regionFilter.sigunguName ||
+            regionFilter.emdName ||
+            regionFilter.riName
+              ? `${regionFilter.sidoName || ""} ${
+                  regionFilter.sigunguName || ""
+                } ${regionFilter.emdName || ""} ${regionFilter.riName || ""}`
+              : userInfo.filteredRegion || "지역 정보 없음"}
           </h2>
           {keyword ? <h3>"{keyword}" 검색 결과</h3> : null}
           <p>

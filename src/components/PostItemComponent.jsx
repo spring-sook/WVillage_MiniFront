@@ -49,6 +49,7 @@ export const PostItem = ({
   regionFontSize,
   margin,
   priceMargin,
+  postDisable,
 }) => {
   const navigate = useNavigate();
   const handleOnClick = async () => {
@@ -70,7 +71,7 @@ export const PostItem = ({
       priceMargin={priceMargin}
       onClick={handleOnClick}
     >
-      <ImgDownloader imgfile={thumbnail} />
+      <ImgDownloader imgfile={thumbnail} postDisable={postDisable} />
       <h3>{title}</h3>
       <p className="price">{price.toLocaleString()} 원</p>
       <p className="region">{postRegion}</p>
@@ -79,7 +80,13 @@ export const PostItem = ({
   );
 };
 
-export const ReserveItem = ({ thumbnail, title, region, state, onClick }) => {
+export const ReserveItem = ({
+  thumbnail,
+  title,
+  region,
+  state,
+  onStateClick,
+}) => {
   return (
     <ReserveItemContainer>
       <ReserveItemThumbnail>
@@ -91,7 +98,7 @@ export const ReserveItem = ({ thumbnail, title, region, state, onClick }) => {
       </ReserveItemInfo>
       <ReserveState
         state={state}
-        onClick={() => onClick && onClick(state)} // ReserveState에 클릭 핸들러 추가
+        onClick={() => onStateClick && onStateClick(state)} // ReserveState에 클릭 핸들러 추가
         style={{ cursor: "pointer" }} // 클릭 가능 표시
       >
         {state || "상태 영역"}

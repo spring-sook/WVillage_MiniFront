@@ -49,19 +49,27 @@ export const MyPosts = () => {
         </PostHeader>
         <PostBody>
           {Array.isArray(posts) &&
-            posts.map((post, index) => (
-              <PostItem
-                key={index}
-                thumbnail={post.postThumbnail}
-                title={post.postTitle}
-                price={post.postPrice}
-                postLocation={post.PostLocation}
-                postId={post.postId}
-                post={post}
-                width={"210px"}
-                height={"270px"}
-              />
-            ))}
+            posts.map((post, index) => {
+              return (
+                <div
+                  key={index}
+                  className="post-item-wrapper"
+                  style={{ position: "relative" }}
+                >
+                  <PostItem
+                    thumbnail={post.postThumbnail}
+                    title={post.postTitle}
+                    price={post.postPrice}
+                    postLocation={post.PostLocation}
+                    postId={post.postId}
+                    post={post}
+                    width={"210px"}
+                    height={"270px"}
+                    postDisable={post.postDisable}
+                  />
+                </div>
+              );
+            })}
         </PostBody>
       </Posts>
     </MyPostContainer>

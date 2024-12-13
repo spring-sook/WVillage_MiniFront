@@ -10,6 +10,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import AuthAPI from "../../api/AuthAPI";
+import UserProfileAPI from "../../api/OtherUserProfileAPI";
 import { UserContext } from "../../context/UserStore";
 
 const ICONS = {
@@ -48,7 +49,12 @@ const Login = () => {
   const handleLogin = async () => {
     const response = await AuthAPI.login(email, password);
     if (response) {
-      setUserInfo(response);
+      const responseAlarm = await UserProfileAPI.getAlarm(email);
+      const alarmCount = responseAlarm.data;
+      setUserInfo({
+        ...response,
+        alarmCount,
+      });
       navigate("/main");
     } else {
       alert("이메일 또는 비밀번호가 잘못되었습니다.");

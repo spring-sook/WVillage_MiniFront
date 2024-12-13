@@ -18,7 +18,6 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
 
   useEffect(() => {
     if (storedImageUrl) {
-      console.log(userInfo.profileImg);
       // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
       setImageUrl(storedImageUrl);
       setLoading(false); // 로딩 완료

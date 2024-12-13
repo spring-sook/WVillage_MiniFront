@@ -261,7 +261,7 @@ export const PostContentTop = styled.div`
       position: absolute;
       justify-content: center;
       align-items: center;
-      right: 20px;
+      right: -100px;
       font-size: 15px;
       border: none;
       background-color: #ccc;

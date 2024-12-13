@@ -2,8 +2,9 @@ import { Header, Nav, Footer } from "../styles/GlobalStyled";
 import LogoImg from "../images/logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ProfileImgDownloader } from "./Profile";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { FaSearch } from "react-icons/fa";
+import { UserContext } from "../context/UserStore";
 
 export const HeaderCom = () => {
   const [showOptions, setShowOptions] = useState(false);
@@ -14,6 +15,7 @@ export const HeaderCom = () => {
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
   const location = useLocation();
+  const { userInfo } = useContext(UserContext);
 
   const isActive = (path, queryParams = null) => {
     const currentPath = location.pathname; // 현재 경로
@@ -195,7 +197,8 @@ export const HeaderCom = () => {
             height="60px"
           />
         </Link>
-        {hasNotification && <div className="badge">10</div>} {/* 알림 뱃지 */}
+        {hasNotification && <div className="badge">{userInfo.alarmCount}0</div>}{" "}
+        {/* 알림 뱃지 */}
         {showUserMenu && (
           <div className="dropdown">
             <Link to="/mypage" className="dropdown-item">

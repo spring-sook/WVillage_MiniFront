@@ -7,7 +7,6 @@ const CommonAPI = {
     return await axios.get(SERVER + `/common/sidoChoice`);
   },
   GetRegionFilter: async (areaCode) => {
-    console.log(areaCode);
     return await axios.get(SERVER + `/common/regionFilter/${areaCode}`);
   },
 };

@@ -205,7 +205,9 @@ export const MyReserve = () => {
                     title={post.post.postTitle}
                     region={post.post.postRegion}
                     state={post.reserve.reserveState}
-                    onClick={() => handleItemClick(post.reserve.reserveState)}
+                    onStateClick={() =>
+                      handleItemClick(post.reserve.reserveState)
+                    }
                   />
                   <hr />
                 </div>

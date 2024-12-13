@@ -18,6 +18,10 @@ const UserProfileAPI = {
   getOtherUserProfile: async (email) => {
     return await axios.get(SERVER + `/userProfile/profile/${email}`);
   },
+  getAlarm: async (email) => {
+    const params = { email: email };
+    return await axios.get(SERVER + `/userProfile/reserveMsg`, { params });
+  },
 };
 
 export default UserProfileAPI;

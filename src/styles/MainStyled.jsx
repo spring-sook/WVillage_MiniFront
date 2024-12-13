@@ -48,6 +48,8 @@ export const MainRecomm = styled.div`
   }
   .swiper {
     width: 70%;
+    position: relative;
+    z-index: 1;
   }
 `;
 
@@ -61,6 +63,7 @@ export const SlickBtnContainer = styled.div`
   align-items: center;
   z-index: 5;
   border: 1px solid black;
+  z-index: 0;
 `;
 
 export const SlickBtn = styled.button`
@@ -118,10 +121,8 @@ export const BoxContainer = styled.div`
   width: ${(props) =>
     props.slideWidth ||
     "auto"}; /* 이미지가 몇 개 보일지에 맞게 동적으로 조정 */
-      @media (max-width: 747px) {
-        width: ${(props) =>
-    props.slideWidth ||
-    "2"};
+  @media (max-width: 747px) {
+    width: ${(props) => props.slideWidth || "2"};
   }
 `;
 

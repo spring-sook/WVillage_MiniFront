@@ -1,12 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { storage } from "../api/Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
-import { UserContext } from "../context/UserStore";
 
 export const ImgUpload = async (files) => {
   const uploadedFileUrls = [];
   const storageRef = storage.ref(); // Firebase Storage 참조
-  const { userInfo } = useContext(UserContext);
 
   for (const file of files) {
     // const fileRef = storageRef.child(`${userInfo.phone}_${file.name}`);
@@ -31,7 +29,7 @@ export const ImgUpload = async (files) => {
   return uploadedFileUrls; // 업로드된 파일들의 URL을 반환
 };
 
-export const ImgDownloader = ({ imgfile, width, height }) => {
+export const ImgDownloader = ({ imgfile, width, height, postDisable }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
@@ -56,6 +54,8 @@ export const ImgDownloader = ({ imgfile, width, height }) => {
           width: width || "100%",
           height: height || "80%",
           objectFit: "cover",
+          filter: postDisable ? "grayscale(100%)" : "none",
+          opacity: postDisable ? 0.5 : 1,
         }}
       />
     </>

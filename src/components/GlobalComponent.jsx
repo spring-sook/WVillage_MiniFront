@@ -93,10 +93,7 @@ export const HeaderCom = () => {
         </Link>
       </div>
       <Nav>
-        <Link
-          to="/post"
-          className={`tag ${isActive("/post?category=all") ? "active" : ""}`}
-        >
+        <Link to="/post" className={`tag ${isActive("/post") ? "active" : ""}`}>
           전체
         </Link>
         <p>/</p>

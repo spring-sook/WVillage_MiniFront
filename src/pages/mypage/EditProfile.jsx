@@ -260,7 +260,13 @@ export const EditProfile = () => {
               </div>
               <div className="info-item">
                 <label>비밀번호:</label>
-                <div style={{ position: "relative", display: "flex" }}>
+                <div
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    width: "80%",
+                  }}
+                >
                   <FontAwesomeIcon
                     icon={faLock}
                     style={{
@@ -294,7 +300,13 @@ export const EditProfile = () => {
               </div>
               <div className="info-item">
                 <label>비밀번호 확인:</label>
-                <div style={{ position: "relative", display: "flex" }}>
+                <div
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    width: "80%",
+                  }}
+                >
                   <FontAwesomeIcon
                     icon={faLock}
                     style={{
@@ -310,6 +322,7 @@ export const EditProfile = () => {
                     defaultValue="password123"
                     disabled={!isEditing}
                     style={{ paddingLeft: 30 }}
+                    className="password"
                   />
                   <FontAwesomeIcon
                     icon={showConfirmPassword ? faEyeSlash : faEye}
@@ -328,19 +341,23 @@ export const EditProfile = () => {
             </InfoSection>
             <Region>
               <p>주소: </p>
-              <RegionSelect
-                regionFilter={regionFilter}
-                sidoOpt={sidoOpt}
-                sigunguOpt={sigunguOpt}
-                setSigunguOpt={setSigunguOpt}
-                emdOpt={emdOpt}
-                setEmdOpt={setEmdOpt}
-                riOpt={riOpt}
-                setRiOpt={setRiOpt}
-                setSearchParams={setSearchParams}
-                setRegionFilter={setRegionFilter}
-                handleRegionChange={handleRegionChange}
-              />
+              {isEditing ? (
+                <RegionSelect
+                  regionFilter={regionFilter}
+                  sidoOpt={sidoOpt}
+                  sigunguOpt={sigunguOpt}
+                  setSigunguOpt={setSigunguOpt}
+                  emdOpt={emdOpt}
+                  setEmdOpt={setEmdOpt}
+                  riOpt={riOpt}
+                  setRiOpt={setRiOpt}
+                  setSearchParams={setSearchParams}
+                  setRegionFilter={setRegionFilter}
+                  handleRegionChange={handleRegionChange}
+                />
+              ) : (
+                <span>{userInfo.filteredRegion}</span>
+              )}
             </Region>
 
             <BottomButtonContainer>

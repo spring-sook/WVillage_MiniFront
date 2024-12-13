@@ -154,6 +154,7 @@ export const InfoSection = styled.div`
     border-radius: 5px;
   }
   .password {
+    width: 100%;
   }
   p {
     font-size: 14px;

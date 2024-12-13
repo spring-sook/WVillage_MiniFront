@@ -5,7 +5,7 @@ const SERVER = "http://localhost:8111";
 const PostAPI = {
   // 특정 지역 게시물 전체 조회
   CommonAllList: async (region) => {
-    return await axios.get(SERVER + `/board/commonAllList/${region}`);
+    return await axios.get(SERVER + `/board/postList/${region}`);
   },
   // 특정 지역+카테고리 게시물 조회
   CommonCategoryList: async (region, category) => {
@@ -13,7 +13,7 @@ const PostAPI = {
       region: region,
       category: category,
     };
-    return await axios.get(SERVER + `/board/commonCategoryList`, { params });
+    return await axios.get(SERVER + `/board/postList`, { params });
   },
   // 특정 유저가 작성한 게시물 조회
   UserPostList: async (email) => {

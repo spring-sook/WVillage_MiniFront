@@ -6,7 +6,7 @@ import {
   PostWriteSelect,
   Attachment,
 } from "../../styles/PostStyled";
-import { Modal } from "../../components/PostComponent";
+import { PostWriteModal } from "../../components/PostComponent";
 import { ImgUpload } from "../../components/ImgComponent";
 import { useContext, useEffect, useState } from "react";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
@@ -211,7 +211,7 @@ const PostWrite = () => {
           />
         </PostWriteContent>
       </PostWriteContainer>
-      {showModal && <Modal onClose={closeModal} />}
+      {showModal && <PostWriteModal onClose={closeModal} />}
       <FooterCom />
     </Container>
   );

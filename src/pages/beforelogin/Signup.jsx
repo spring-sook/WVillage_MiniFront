@@ -5,6 +5,7 @@ import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import AuthAPI from "../../api/AuthAPI";
+import { RegionSelect } from "../../components/RegionSelect";
 
 const ICONS = {
   eye: faEye,

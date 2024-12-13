@@ -94,7 +94,7 @@ export const HeaderCom = () => {
       </div>
       <Nav>
         <Link
-          to="/post?category=all"
+          to="/post"
           className={`tag ${isActive("/post?category=all") ? "active" : ""}`}
         >
           전체

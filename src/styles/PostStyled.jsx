@@ -101,7 +101,7 @@ export const PostMainFilter = styled.div`
     cursor: pointer;
   } */
 
-  .select-sido,
+  .select-region,
   .condition-search {
     margin-top: 2vh;
     width: 85%;
@@ -113,7 +113,7 @@ export const PostMainFilter = styled.div`
     border-radius: 20px;
     cursor: pointer;
   }
-  .select-sido {
+  .select-region {
     padding-left: 20px;
   }
 

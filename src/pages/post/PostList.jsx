@@ -8,7 +8,7 @@ import {
   PostDisplay,
 } from "../../styles/PostStyled";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import CommonAPI from "../../api/CommonAPI";

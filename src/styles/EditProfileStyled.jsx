@@ -15,7 +15,7 @@ export const DeleteButtonContainer = styled.div`
     cursor: pointer;
 
     &:hover {
-      background-color: #e60000;
+      opacity: 0.3;
     }
   }
 `;
@@ -39,7 +39,9 @@ export const ProfileBox = styled.div`
   .profile-image {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: cover;
+    overflow: hidden;
   }
 
   .placeholder-icon {
@@ -49,8 +51,8 @@ export const ProfileBox = styled.div`
 
   .upload-label {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    bottom: 10px;
+    right: 10px;
     background-color: #007bff;
     color: white;
     border-radius: 50%;
@@ -78,7 +80,7 @@ export const ParentContainer = styled.div`
 export const MenuContainer = styled.div`
   display: flex;
   justify-content: left;
-  width: 78%;
+  width: 100%;
   margin-top: 10px;
   padding: 10px 0;
 
@@ -104,32 +106,13 @@ export const MenuContainer = styled.div`
     border-bottom: 2px solid #007bff;
   }
 `;
-export const DeleteAccountContainer = styled.div`
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-
-  .delete-link {
-    color: #ff4d4d;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: underline;
-
-    &:hover {
-      color: #e60000;
-    }
-  }
-`;
 
 export const EditProfileContainer = styled.div`
   position: relative;
   width: 78%;
   margin: 30px auto;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid purple;
   border-radius: 8px;
-  height: 68%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -143,6 +126,8 @@ export const Edit = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+  border: 1px solid black;
 `;
 
 export const InfoSection = styled.div`
@@ -153,17 +138,21 @@ export const InfoSection = styled.div`
   .info-item {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
+    border: 1px solid blue;
   }
 
   label {
     font-size: 12px;
     font-weight: bold;
-    width: 100px;
+    text-align: right;
+    min-width: 90px;
+    border: 1px solid orange;
   }
 
   input {
-    width: 150px;
+    width: 80%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -196,6 +185,7 @@ export const BottomButtonContainer = styled.div`
   }
 `;
 
+// kh account profile 수정----------------------------
 export const EditAccount = styled.div`
   font-size: 16px;
   padding: 20px;
@@ -428,5 +418,14 @@ export const DeleteModal = styled.div`
         }
       }
     }
+  }
+`;
+// kh edit profile 수정----------------------------
+export const Region = styled.div`
+  display: flex;
+  .select-region {
+    margin-right: 10px;
+    height: 30px;
+    width: 150px;
   }
 `;

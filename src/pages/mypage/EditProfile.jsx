@@ -19,6 +19,7 @@ import {
   DeleteModal,
   EditAccount,
   DeleteButtonContainer,
+  Region,
 } from "../../styles/EditProfileStyled";
 import { UserContext } from "../../context/UserStore";
 import AccountAPI from "../../api/AccountAPI";
@@ -222,7 +223,7 @@ export const EditProfile = () => {
           </button>
         ))}
       </MenuContainer>
-
+      {/*  개인정보 수정 page----------------------------------------------------- */}
       {activeMenu === "수정" && (
         <EditProfileContainer>
           <Edit>
@@ -322,7 +323,7 @@ export const EditProfile = () => {
                 </div>
               </div>
             </InfoSection>
-            <div className="info-item">
+            <Region>
               <RegionSelect
                 regionFilter={regionFilter}
                 sidoOpt={sidoOpt}
@@ -331,7 +332,7 @@ export const EditProfile = () => {
                 riOpt={riOpt}
                 handleRegionChange={handleRegionChange}
               />
-            </div>
+            </Region>
 
             <BottomButtonContainer>
               <button onClick={toggleEditing}>
@@ -368,7 +369,7 @@ export const EditProfile = () => {
           </DeleteButtonContainer>
         </EditProfileContainer>
       )}
-
+      {/*  계좌정보 수정 page----------------------------------------------------- */}
       {activeMenu === "계좌정보" && (
         <EditProfileContainer>
           <EditAccount>

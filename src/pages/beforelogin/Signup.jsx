@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,7 @@ const ICONS = {
 };
 
 const Signup = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [sidoOpt, setSidoOpt] = useState([]);
   const [sigunguOpt, setSigunguOpt] = useState([]);
@@ -387,8 +388,13 @@ const Signup = () => {
               regionFilter={regionFilter}
               sidoOpt={sidoOpt}
               sigunguOpt={sigunguOpt}
+              setSigunguOpt={setSigunguOpt}
               emdOpt={emdOpt}
+              setEmdOpt={setEmdOpt}
               riOpt={riOpt}
+              setRiOpt={setRiOpt}
+              setSearchParams={setSearchParams}
+              setRegionFilter={setRegionFilter}
               handleRegionChange={handleRegionChange}
             />
           </InputWrapper>

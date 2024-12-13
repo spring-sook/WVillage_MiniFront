@@ -55,12 +55,6 @@ const PostList = () => {
       setPosts([]); // 초기화
 
       try {
-        // const rspRegion = await UserProfileAPI.getRegion(region);
-        // const regionData = rspRegion.data[0];
-        // const filteredRegion = Object.values(regionData)
-        //   .filter((value) => value && value !== "nan")
-        //   .join(" ");
-
         let response;
         if (category === "all") {
           console.log(">>>>>>", region);
@@ -68,11 +62,6 @@ const PostList = () => {
         } else {
           response = await PostAPI.CommonCategoryList(region, category);
         }
-
-        // const updatedPosts = response.data.map((post) => ({
-        //   ...post,
-        //   region: filteredRegion,
-        // }));
         const fetchedPosts = response.data;
         fetchedPosts.sort(
           (a, b) => new Date(b.postDate) - new Date(a.postDate)
@@ -90,43 +79,28 @@ const PostList = () => {
     getSido();
   }, [category, userInfo.areaCode]);
 
-  useEffect(() => {
-    const fetchRegionData = async () => {
-      try {
-        let responseRegion;
-        if (regionFilter.emd) {
-          console.log("전달하는 읍면동 areacode : ", regionFilter.emd);
-          responseRegion = await CommonAPI.GetRegionFilter(regionFilter.emd);
-          setRiOpt(responseRegion.data);
-          console.log("리 : ", responseRegion.data);
-        } else if (regionFilter.sigungu) {
-          console.log("전달하는 시군구 areacode : ", regionFilter.sigungu);
-          responseRegion = await CommonAPI.GetRegionFilter(
-            regionFilter.sigungu
-          );
-          setEmdOpt(responseRegion.data);
-          console.log("시군구 : ", responseRegion.data);
-        } else if (regionFilter.sido) {
-          responseRegion = await CommonAPI.GetRegionFilter(regionFilter.sido);
-          setSigunguOpt(responseRegion.data);
-        } else {
-          console.log("No region filter selected");
-          return;
-        }
-      } catch (error) {
-        console.error("Error fetching region data: ", error);
-      }
-    };
-    fetchRegionData();
+  const handleRegionChange = (key) => (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
+    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
 
-    const newParams = new URLSearchParams();
-    if (regionFilter.sido) newParams.set("sido", regionFilter.sidoName);
-    if (regionFilter.sigungu)
-      newParams.set("sigungu", regionFilter.sigunguName);
-    if (regionFilter.emd) newParams.set("emd", regionFilter.emdName);
-    if (regionFilter.ri) newParams.set("ri", regionFilter.riName);
-    setSearchParams(newParams);
-  }, [regionFilter]);
+    setRegionFilter((prevState) => ({
+      ...prevState,
+      [key]: e.target.value, // 코드 값
+      [regionNameKey]: selectedOption.text, // 지역 이름
+    }));
+  };
+  const handleReset = () => {
+    setIsDropdownView(false);
+    setRegionFilter({
+      sido: null,
+      sigungu: null,
+      emd: null,
+      ri: null,
+    });
+    setSigunguOpt([]);
+    setEmdOpt([]);
+    setRiOpt([]);
+  };
 
   useEffect(() => {
     // 정렬 함수
@@ -151,32 +125,6 @@ const PostList = () => {
     setIsDropdownView(!isDropdownView);
   };
 
-  const handleReset = () => {
-    // setStartDate(null);
-    // setEndDate(null);
-    setIsDropdownView(false);
-    setRegionFilter({
-      sido: null,
-      sigungu: null,
-      emd: null,
-      ri: null,
-    });
-    setSigunguOpt([]);
-    setEmdOpt([]);
-    setRiOpt([]);
-  };
-
-  const handleRegionChange = (key) => (e) => {
-    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
-    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
-
-    setRegionFilter((prevState) => ({
-      ...prevState,
-      [key]: e.target.value, // 코드 값
-      [regionNameKey]: selectedOption.text, // 지역 이름
-    }));
-  };
-
   const isResetVisible = searchKeyword || regionFilter.sido;
 
   return (
@@ -184,7 +132,15 @@ const PostList = () => {
       <HeaderCom />
       <PostBody>
         <PostMainFilter>
-          <h2>{userInfo.filteredRegion}</h2>
+          <h2>
+            {regionFilter.sidoName
+              ? `${regionFilter.sidoName} ${
+                  regionFilter.sigunguName ? regionFilter.sigunguName : ""
+                } ${regionFilter.emdName ? regionFilter.emdName : ""} ${
+                  regionFilter.riName ? regionFilter.riName : ""
+                }`
+              : userInfo.filteredRegion}
+          </h2>
           {searchKeyword ? <h3>"{searchKeyword}" 검색 결과</h3> : null}
           <p>
             필터
@@ -201,8 +157,13 @@ const PostList = () => {
             regionFilter={regionFilter}
             sidoOpt={sidoOpt}
             sigunguOpt={sigunguOpt}
+            setSigunguOpt={setSigunguOpt}
             emdOpt={emdOpt}
+            setEmdOpt={setEmdOpt}
             riOpt={riOpt}
+            setRiOpt={setRiOpt}
+            setSearchParams={setSearchParams}
+            setRegionFilter={setRegionFilter}
             handleRegionChange={handleRegionChange}
           />
           <button className="condition-search">검색</button>

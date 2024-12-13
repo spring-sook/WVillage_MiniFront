@@ -13,6 +13,7 @@ import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import CommonAPI from "../../api/CommonAPI";
 import { PostItem } from "../../components/PostItemComponent";
+import { RegionSelect } from "../../components/RegionSelect";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
 
 const PostList = () => {
@@ -34,11 +35,19 @@ const PostList = () => {
     sigungu: null,
     emd: null,
     ri: null,
+    sidoName: null,
+    sigunguName: null,
+    emdName: null,
+    riName: null,
   });
 
   const searchKeyword = searchParams.get("search");
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
+  // const sido = queryParams.get("sido");
+  // const sigungu = queryParams.get("sigungu");
+  // const emd = queryParams.get("emd");
+  // const ri = queryParams.get("ri");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +63,7 @@ const PostList = () => {
 
         let response;
         if (category === "all") {
+          console.log(">>>>>>", region);
           response = await PostAPI.CommonAllList(region);
         } else {
           response = await PostAPI.CommonCategoryList(region, category);
@@ -75,7 +85,6 @@ const PostList = () => {
     const getSido = async () => {
       const responseSido = await CommonAPI.GetSido();
       setSidoOpt(responseSido.data);
-      console.log("sido : ", responseSido);
     };
     fetchData();
     getSido();
@@ -86,25 +95,37 @@ const PostList = () => {
       try {
         let responseRegion;
         if (regionFilter.emd) {
+          console.log("전달하는 읍면동 areacode : ", regionFilter.emd);
           responseRegion = await CommonAPI.GetRegionFilter(regionFilter.emd);
+          setRiOpt(responseRegion.data);
+          console.log("리 : ", responseRegion.data);
         } else if (regionFilter.sigungu) {
+          console.log("전달하는 시군구 areacode : ", regionFilter.sigungu);
           responseRegion = await CommonAPI.GetRegionFilter(
             regionFilter.sigungu
           );
+          setEmdOpt(responseRegion.data);
+          console.log("시군구 : ", responseRegion.data);
         } else if (regionFilter.sido) {
           responseRegion = await CommonAPI.GetRegionFilter(regionFilter.sido);
+          setSigunguOpt(responseRegion.data);
         } else {
           console.log("No region filter selected");
           return;
         }
-
-        console.log("지역 데이터: ", responseRegion.data);
       } catch (error) {
         console.error("Error fetching region data: ", error);
       }
     };
-
     fetchRegionData();
+
+    const newParams = new URLSearchParams();
+    if (regionFilter.sido) newParams.set("sido", regionFilter.sidoName);
+    if (regionFilter.sigungu)
+      newParams.set("sigungu", regionFilter.sigunguName);
+    if (regionFilter.emd) newParams.set("emd", regionFilter.emdName);
+    if (regionFilter.ri) newParams.set("ri", regionFilter.riName);
+    setSearchParams(newParams);
   }, [regionFilter]);
 
   useEffect(() => {
@@ -140,12 +161,19 @@ const PostList = () => {
       emd: null,
       ri: null,
     });
+    setSigunguOpt([]);
+    setEmdOpt([]);
+    setRiOpt([]);
   };
 
   const handleRegionChange = (key) => (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
+    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
+
     setRegionFilter((prevState) => ({
       ...prevState,
-      [key]: e.target.value,
+      [key]: e.target.value, // 코드 값
+      [regionNameKey]: selectedOption.text, // 지역 이름
     }));
   };
 
@@ -169,20 +197,14 @@ const PostList = () => {
           </p>
           <hr />
           {/* <div className="PostFilterDatePicker"> */}
-          <select
-            id="select-sido"
-            className="select-sido"
-            value={regionFilter.sido || ""}
-            onChange={handleRegionChange("sido")}
-          >
-            <option value="">시/도 선택</option>
-            {sidoOpt &&
-              sidoOpt.map((sido, index) => (
-                <option key={index} value={sido.regionCode}>
-                  {sido.regionName}
-                </option>
-              ))}
-          </select>
+          <RegionSelect
+            regionFilter={regionFilter}
+            sidoOpt={sidoOpt}
+            sigunguOpt={sigunguOpt}
+            emdOpt={emdOpt}
+            riOpt={riOpt}
+            handleRegionChange={handleRegionChange}
+          />
           <button className="condition-search">검색</button>
         </PostMainFilter>
         <PostMainList>

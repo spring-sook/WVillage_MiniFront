@@ -82,7 +82,7 @@ export const ViewReview = (reviewData) => {
   );
 };
 
-export const Modal = ({ onClose }) => {
+export const PostWriteModal = ({ onClose }) => {
   return (
     <ModalOverlay>
       <ModalContainer>

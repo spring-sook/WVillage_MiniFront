@@ -322,14 +322,16 @@ export const EditProfile = () => {
                 </div>
               </div>
             </InfoSection>
-            <RegionSelect
-              regionFilter={regionFilter}
-              sidoOpt={sidoOpt}
-              sigunguOpt={sigunguOpt}
-              emdOpt={emdOpt}
-              riOpt={riOpt}
-              handleRegionChange={handleRegionChange}
-            />
+            <div className="info-item">
+              <RegionSelect
+                regionFilter={regionFilter}
+                sidoOpt={sidoOpt}
+                sigunguOpt={sigunguOpt}
+                emdOpt={emdOpt}
+                riOpt={riOpt}
+                handleRegionChange={handleRegionChange}
+              />
+            </div>
 
             <BottomButtonContainer>
               <button onClick={toggleEditing}>

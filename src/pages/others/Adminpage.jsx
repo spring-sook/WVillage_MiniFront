@@ -1,33 +1,52 @@
+import { useState } from "react";
 import {
   AdminProfileBox,
   AdminBox,
   ReportUser,
+  Modal,
+  ModalContent,
 } from "../../styles/AdminStyled";
 
 export const Adminpage = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedReport, setSelectedReport] = useState(null);
+
   const reports = [
     {
       id: 1,
-      username: "user01",
-      profileImg: "https://via.placeholder.com/50",
+      reporterEmail: "user01@example.com", // 신고자 이메일
+      reportedEmail: "user02@example.com", // 피신고자 이메일
+      reporterProfileImg: "https://via.placeholder.com/50",
+      reportedProfileImg: "https://via.placeholder.com/50",
       reportDate: "2024-12-12",
       reason: "부적절한 언어 사용",
     },
     {
       id: 2,
-      username: "user02",
-      profileImg: "https://via.placeholder.com/50",
+      reporterEmail: "user03@example.com",
+      reportedEmail: "user04@m",
+      reporterProfileImg: "https://via.placeholder.com/50",
+      reportedProfileImg: "https://via.placeholder.com/50",
       reportDate: "2024-12-11",
       reason: "스팸 메시지 전송",
     },
   ];
-  const handleApprove = (id) => {
-    console.log(`신고 확인: ${id}`);
+
+  const handleApprove = (email) => {
+    console.log(`신고 확인: ${email}`);
+    setModalOpen(false);
   };
 
-  const handleReject = (id) => {
-    console.log(`신고 거부: ${id}`);
+  const handleReject = (email) => {
+    console.log(`신고 거부: ${email}`);
+    setModalOpen(false);
   };
+
+  const handleCheck = (report) => {
+    setSelectedReport(report);
+    setModalOpen(true);
+  };
+
   return (
     <AdminBox>
       <AdminProfileBox>
@@ -42,12 +61,12 @@ export const Adminpage = () => {
             <div className="reportItem" key={report.id}>
               <div className="userProfile">
                 <img
-                  src={report.profileImg}
-                  alt={`${report.username} 프로필`}
+                  src={report.reportedProfileImg}
+                  alt={`${report.reportedEmail} 프로필`}
                 />
                 <div className="userInfo">
-                  <span>{report.username}</span>
-                  <small>ID: {report.id}</small>
+                  <span>{report.reportedEmail}</span>
+                  <small>nick: {report.id}</small>
                 </div>
               </div>
               <div className="reportDetails">
@@ -55,23 +74,53 @@ export const Adminpage = () => {
                 <p className="date">신고일: {report.reportDate}</p>
               </div>
               <div className="actions">
-                <button
-                  className="approve"
-                  onClick={() => handleApprove(report.id)}
-                >
+                <button className="check" onClick={() => handleCheck(report)}>
                   확인
-                </button>
-                <button
-                  className="reject"
-                  onClick={() => handleReject(report.id)}
-                >
-                  거부
                 </button>
               </div>
             </div>
           ))}
         </div>
       </ReportUser>
+
+      {modalOpen && selectedReport && (
+        <Modal>
+          <ModalContent>
+            <div className="modalHeader">
+              <div className="reporter">
+                <h5>신고자</h5>
+                <img
+                  src={selectedReport.reporterProfileImg}
+                  alt={`${selectedReport.reporterEmail} 프로필`}
+                />
+                <span>{selectedReport.reporterEmail}</span>
+              </div>
+              <div className="reported">
+                <h5>피신고자</h5>
+                <img
+                  src={selectedReport.reportedProfileImg}
+                  alt={`${selectedReport.reportedEmail} 프로필`}
+                />
+                <span>{selectedReport.reportedEmail}</span>
+              </div>
+            </div>
+            <div className="modalActions">
+              <button
+                className="approve"
+                onClick={() => handleApprove(selectedReport.reportedEmail)}
+              >
+                승인
+              </button>
+              <button
+                className="reject"
+                onClick={() => handleReject(selectedReport.reportedEmail)}
+              >
+                거절
+              </button>
+            </div>
+          </ModalContent>
+        </Modal>
+      )}
     </AdminBox>
   );
 };

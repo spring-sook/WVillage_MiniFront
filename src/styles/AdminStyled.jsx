@@ -71,8 +71,8 @@ export const ReportUser = styled.div`
 
   .reportItem {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between; /* 버튼을 오른쪽 끝에 배치 */
     border-bottom: 1px solid #eee;
     padding: 10px 0;
   }
@@ -106,22 +106,21 @@ export const ReportUser = styled.div`
   }
 
   .reportDetails {
-    flex-grow: 1;
-    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+    color: #555;
+  }
 
-    .reason {
-      font-size: 14px;
-      color: #555;
-    }
-
-    .date {
-      font-size: 12px;
-      color: #888;
-    }
+  .date {
+    font-size: 12px;
+    color: #888;
   }
 
   .actions {
     display: flex;
+    justify-content: flex-end;
     gap: 10px;
 
     button {
@@ -132,14 +131,87 @@ export const ReportUser = styled.div`
       font-size: 14px;
     }
 
-    .approve {
+    .check {
       background-color: #4caf50;
       color: #fff;
+    }
+  }
+`;
+
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const ModalContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+
+  .modalHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .reporter,
+  .reported {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    h5 {
+      font-size: 16px;
+      color: #1b5e96;
+    }
+  }
+
+  .modalActions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .approve {
+      background-color: #4caf50;
+      color: white;
     }
 
     .reject {
       background-color: #f44336;
-      color: #fff;
+      color: white;
     }
   }
 `;

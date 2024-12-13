@@ -38,6 +38,11 @@ const AuthAPI = {
     });
     return response.data;
   },
+
+  signup: async (data) => {
+    const response = await axios.post("http://localhost:8111/signup", data);
+    return response;
+  },
 };
 
 export default AuthAPI;

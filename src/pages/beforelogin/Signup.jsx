@@ -4,6 +4,7 @@ import styled from "styled-components";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import AuthAPI from "../../api/AuthAPI";
 
 const ICONS = {
   eye: faEye,
@@ -38,25 +39,21 @@ const Signup = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // 공백 제거
-    const trimmedValue = value.trimStart(); // 입력 시작 부분 공백 제거
+    const trimmedValue = value.trimStart();
     let sanitizedValue = trimmedValue;
 
     if (name === "phone") {
-      sanitizedValue = trimmedValue.replace(/[^0-9]/g, ""); // 숫자만 허용
+      sanitizedValue = trimmedValue.replace(/[^0-9]/g, "");
 
-      // 입력 길이를 제한
       if (sanitizedValue.length > 11) {
         sanitizedValue = sanitizedValue.slice(0, 11);
       }
 
-      // 전화번호는 010 또는 011로 시작해야 함
       if (
         sanitizedValue.length > 0 &&
         !sanitizedValue.startsWith("010") &&
         !sanitizedValue.startsWith("011")
       ) {
-        // 조건에 맞지 않는 경우 입력값을 무시
         return;
       }
     }
@@ -142,36 +139,55 @@ const Signup = () => {
     }
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
+    const { name, nickname, email, password, confirmPassword, phone, address } =
+      formData;
+
     if (
-      !formData.name ||
-      !formData.nickname ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword ||
-      !formData.address
+      !name ||
+      !nickname ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !address
     ) {
-      alert("공백을 전부 입력해주세요.");
+      alert("모든 공백을 채워주세요.");
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
+    if (password !== confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    alert("회원가입이 완료되었습니다!");
-    navigate("/");
+    try {
+      const response = await AuthAPI.signup({
+        name,
+        nickname,
+        email,
+        password,
+        phone,
+        areaCode: address,
+        grade: "USER",
+      });
+
+      if (response.status === 200) {
+        alert(response.data);
+        navigate("/main");
+      }
+    } catch (error) {
+      console.error("회원가입 실패:", error.response || error.message);
+      alert(
+        error.response?.data ||
+          "회원가입 중 오류가 발생했습니다. 다시 시도해주세요."
+      );
+    }
   };
 
   return (
     <SignupContainer>
       <Header>
-        <Logo
-          src={logo}
-          alt="로고"
-          onClick={() => navigate("/")} // 로고 클릭 시 인트로 페이지로 이동
-        />
+        <Logo src={logo} alt="로고" onClick={() => navigate("/")} />
         <Title>WVillage</Title>
       </Header>
 

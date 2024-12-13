@@ -1,8 +1,8 @@
-import { Container } from "../styles/GlobalStyled";
-import { HeaderCom } from "../components/GlobalComponent";
-import OtherUser from "../components/OtherUser";
+import { Container } from "../../styles/GlobalStyled";
+import { HeaderCom } from "../../components/GlobalComponent";
+import OtherUser from "../../components/OtherUser";
 import { useParams, useSearchParams } from "react-router-dom";
-import { PostListComponent } from "../components/PostListComponent";
+import { PostListComponent } from "../../components/PostListComponent";
 import styled from "styled-components";
 
 export const UserInfoFrame = styled.div`

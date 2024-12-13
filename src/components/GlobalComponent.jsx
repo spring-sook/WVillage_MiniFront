@@ -57,8 +57,8 @@ export const HeaderCom = () => {
     if (searchQuery.length < 2) {
       alert("검색어는 2자리 이상 입력해 주세요."); // 길이가 2자 미만일 경우 팝업
     } else {
-      console.log("검색어:", searchQuery);
-      navigate(`/post?search=${searchQuery}`);
+      navigate(`/post?category=${selectedOption}&search=${searchQuery}`);
+      setSearchQuery("");
     }
   };
   const handleKeyDown = (e) => {
@@ -147,7 +147,7 @@ export const HeaderCom = () => {
         >
           <div className="options-list">
             <p onClick={() => selectOption("전체")}>전체</p>
-            <p onClick={() => selectOption("물건")}>물건</p>
+            <p onClick={() => selectOption("제품")}>제품</p>
             <p onClick={() => selectOption("구인")}>구인</p>
             <p onClick={() => selectOption("장소")}>장소</p>
           </div>

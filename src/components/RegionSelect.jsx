@@ -36,14 +36,6 @@ export const RegionSelect = ({
       }
     };
     fetchRegionData();
-
-    const newParams = new URLSearchParams();
-    if (regionFilter.sido) newParams.set("sido", regionFilter.sidoName);
-    if (regionFilter.sigungu)
-      newParams.set("sigungu", regionFilter.sigunguName);
-    if (regionFilter.emd) newParams.set("emd", regionFilter.emdName);
-    if (regionFilter.ri) newParams.set("ri", regionFilter.riName);
-    setSearchParams(newParams);
   }, [regionFilter]);
 
   useEffect(() => {
@@ -84,14 +76,6 @@ export const RegionSelect = ({
       }
     };
     fetchRegionData();
-
-    const newParams = new URLSearchParams();
-    if (regionFilter.sido) newParams.set("sido", regionFilter.sidoName);
-    if (regionFilter.sigungu)
-      newParams.set("sigungu", regionFilter.sigunguName);
-    if (regionFilter.emd) newParams.set("emd", regionFilter.emdName);
-    if (regionFilter.ri) newParams.set("ri", regionFilter.riName);
-    setSearchParams(newParams);
   }, [regionFilter.sido]); // `regionFilter.sido` 변경 시에만 실행됩니다.
 
   useEffect(() => {

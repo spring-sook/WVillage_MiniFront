@@ -14,7 +14,6 @@ import PostAPI from "../../api/PostAPI";
 import CommonAPI from "../../api/CommonAPI";
 import { PostItem } from "../../components/PostItemComponent";
 import { RegionSelect } from "../../components/RegionSelect";
-import UserProfileAPI from "../../api/OtherUserProfileAPI";
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -22,7 +21,10 @@ const PostList = () => {
   // const [startDate, setStartDate] = useState("");
   // const [endDate, setEndDate] = useState("");
   const [isDropdownView, setIsDropdownView] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const [category, setCategory] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [posts, setPosts] = useState([]);
   const [order, setOrder] = useState("최신순");
   const { userInfo } = useContext(UserContext);
@@ -41,13 +43,13 @@ const PostList = () => {
     riName: null,
   });
 
-  const searchKeyword = searchParams.get("search");
-  const queryParams = new URLSearchParams(location.search);
-  const category = queryParams.get("category");
-  // const sido = queryParams.get("sido");
-  // const sigungu = queryParams.get("sigungu");
-  // const emd = queryParams.get("emd");
-  // const ri = queryParams.get("ri");
+  useEffect(() => {
+    setCategory(searchParams.get("category") || "");
+    setKeyword(searchParams.get("search") || "");
+  });
+  // const searchKeyword = searchParams.get("search");
+  // const queryParams = new URLSearchParams(location.search);
+  // const category = queryParams.get("category");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,7 +127,7 @@ const PostList = () => {
     setIsDropdownView(!isDropdownView);
   };
 
-  const isResetVisible = searchKeyword || regionFilter.sido;
+  const isResetVisible = keyword || regionFilter.sido;
 
   return (
     <Container>
@@ -141,7 +143,7 @@ const PostList = () => {
                 }`
               : userInfo.filteredRegion}
           </h2>
-          {searchKeyword ? <h3>"{searchKeyword}" 검색 결과</h3> : null}
+          {keyword ? <h3>"{keyword}" 검색 결과</h3> : null}
           <p>
             필터
             {isResetVisible && (
@@ -162,7 +164,6 @@ const PostList = () => {
             setEmdOpt={setEmdOpt}
             riOpt={riOpt}
             setRiOpt={setRiOpt}
-            setSearchParams={setSearchParams}
             setRegionFilter={setRegionFilter}
             handleRegionChange={handleRegionChange}
           />

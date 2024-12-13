@@ -55,12 +55,13 @@ const PostContent = () => {
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
   const [showModal, setShowModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
-  // const imagePath = "snow_village.webp";
 
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await PostAPI.PostContentDetail(postId);
       setPostData(responseData.data);
+      console.log("여기를 봐야됨 : ", responseData.data);
+
       const responseProfile = await UserProfileAPI.getUserProfile(postId);
       setWriterData(responseProfile.data);
       console.log(responseProfile.data);
@@ -90,7 +91,6 @@ const PostContent = () => {
 
   useEffect(() => {
     if (reserveData.length > 0) {
-      console.log("여기를 봐야됨 : ", reserveData);
       const newExTime = reserveData.map((reserve) => ({
         start: new Date(reserve.reserveStart),
         end: new Date(reserve.reserveEnd),
@@ -266,6 +266,15 @@ const PostContent = () => {
         <div className="post-content-reserve">
           <p className="post-content-title">
             {postData.postTitle}
+            {writerData.email === userInfo.email && (
+              <button
+                className={`activate-button ${
+                  postData.postDisable ? "enabled" : "disabled"
+                }`}
+              >
+                {postData.postDisable ? "활성화" : "비활성화"}
+              </button>
+            )}
             <p className="post-content-cnt">
               <span className="post-content-bookmark">
                 북마크 {postData.bookmarked}

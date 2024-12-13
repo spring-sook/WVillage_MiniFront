@@ -252,6 +252,39 @@ export const PostContentTop = styled.div`
     margin: 20px 30px;
     font-size: 23px;
     font-weight: 800;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .activate-button {
+      display: flex;
+      position: absolute;
+      justify-content: center;
+      align-items: center;
+      right: 20px;
+      font-size: 15px;
+      border: none;
+      background-color: #ccc;
+      width: 80px;
+      height: 30px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .activate-button.disabled {
+      background-color: #ccc;
+    }
+
+    .activate-button.disabled:hover {
+      background-color: #a8a8a8;
+    }
+
+    .activate-button.enabled {
+      background-color: #54c458;
+    }
+
+    .activate-button.enabled:hover {
+      background-color: #47b94d;
+    }
   }
 
   .post-content-cnt {

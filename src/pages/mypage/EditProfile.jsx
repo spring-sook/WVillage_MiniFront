@@ -25,8 +25,10 @@ import AccountAPI from "../../api/AccountAPI";
 import CommonAPI from "../../api/CommonAPI";
 import { RegionSelect } from "../../components/RegionSelect";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 export const EditProfile = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeMenu, setActiveMenu] = useState("수정");
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -327,8 +329,13 @@ export const EditProfile = () => {
                 regionFilter={regionFilter}
                 sidoOpt={sidoOpt}
                 sigunguOpt={sigunguOpt}
+                setSigunguOpt={setSigunguOpt}
                 emdOpt={emdOpt}
+                setEmdOpt={setEmdOpt}
                 riOpt={riOpt}
+                setRiOpt={setRiOpt}
+                setSearchParams={setSearchParams}
+                setRegionFilter={setRegionFilter}
                 handleRegionChange={handleRegionChange}
               />
             </div>

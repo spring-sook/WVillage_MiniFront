@@ -95,7 +95,7 @@ export const RegionSelect = ({
   }, [regionFilter.sido]); // `regionFilter.sido` 변경 시에만 실행됩니다.
 
   useEffect(() => {
-    if (regionFilter.sido) {
+    if (regionFilter.sigungu) {
       // 시도가 변경되면 시군구, 읍면동, 리를 초기화합니다.
       setEmdOpt([]);
       setRiOpt([]);
@@ -126,7 +126,7 @@ export const RegionSelect = ({
       }
     };
     fetchRegionData();
-  }, [regionFilter.sido]); // `regionFilter.sido` 변경 시에만 실행됩니다.
+  }, [regionFilter.sigungu]); // `regionFilter.sigungu` 변경 시에만 실행됩니다.
 
   const handleRegionChange = (key) => (e) => {
     const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션

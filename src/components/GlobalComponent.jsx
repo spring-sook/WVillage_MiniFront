@@ -76,7 +76,15 @@ export const HeaderCom = () => {
     if (searchQuery.length < 2) {
       alert("검색어는 2자리 이상 입력해 주세요."); // 길이가 2자 미만일 경우 팝업
     } else {
-      navigate(`/post?category=${selectedOption}&search=${searchQuery}`);
+      const params = new URLSearchParams();
+      if (selectedOption !== "전체") {
+        params.set("category", selectedOption);
+      }
+      if (searchQuery) {
+        params.set("search", searchQuery);
+      }
+      navigate(`/post?${params.toString()}`);
+      // navigate(`/post?category=${selectedOption}&search=${searchQuery}`);
       setSearchQuery("");
     }
   };

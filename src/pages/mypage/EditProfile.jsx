@@ -46,6 +46,8 @@ export const EditProfile = () => {
   const [emdOpt, setEmdOpt] = useState([]);
   const [riOpt, setRiOpt] = useState([]);
   const [searchArea, setSearchArea] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
 
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
@@ -64,6 +66,8 @@ export const EditProfile = () => {
       setSidoOpt(responseSido.data);
     };
     getSido();
+    setPhone(userInfo.phone);
+    setPassword(userInfo.password);
   }, []);
 
   useEffect(() => {
@@ -255,7 +259,7 @@ export const EditProfile = () => {
               <div className="info-item">
                 <label>전화번호:</label>
                 <input
-                  type="number"
+                  type="text"
                   defaultValue={userInfo.phone}
                   disabled={!isEditing}
                 />
@@ -321,7 +325,7 @@ export const EditProfile = () => {
                   />
                   <input
                     type={showConfirmPassword ? "text" : "password"}
-                    defaultValue={userInfo.password}
+                    defaultValue={password}
                     disabled={!isEditing}
                     style={{ paddingLeft: 30 }}
                     className="password"

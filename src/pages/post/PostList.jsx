@@ -79,6 +79,7 @@ const PostList = () => {
     };
     fetchData();
     getSido();
+    setSearchArea(userInfo.areaCode);
   }, [category, userInfo.areaCode]);
 
   const handleRegionChange = (key) => (e) => {
@@ -102,6 +103,7 @@ const PostList = () => {
     setEmdOpt([]);
     setRiOpt([]);
     setKeyword("");
+    setSearchArea(userInfo.areaCode);
     const newSearchParams = new URLSearchParams(window.location.search);
     newSearchParams.delete("search"); // 'search' 키 삭제
     navigate(`?${newSearchParams.toString()}`);
@@ -129,7 +131,13 @@ const PostList = () => {
   const isResetVisible = keyword || regionFilter.sido;
 
   const handleSearchClick = async () => {
-    const response = await PostAPI.SearchPostList();
+    setPosts([]);
+    const response = await PostAPI.SearchPostList(
+      searchArea,
+      category,
+      keyword
+    );
+    setPosts(response.data);
   };
 
   return (

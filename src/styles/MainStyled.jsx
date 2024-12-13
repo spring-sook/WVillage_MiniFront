@@ -55,11 +55,12 @@ export const SlickBtnContainer = styled.div`
   display: flex;
   position: absolute;
   top: 120px;
-  width: 98%;
+  width: 80%;
   height: 200px;
   justify-content: space-between;
   align-items: center;
   z-index: 5;
+  border: 1px solid black;
 `;
 
 export const SlickBtn = styled.button`
@@ -132,7 +133,6 @@ export const Box = styled.div`
   box-shadow: 3px 3px 5px #707070;
   background-size: cover;
   background-position: center;
-
   &:hover {
     cursor: pointer;
   }

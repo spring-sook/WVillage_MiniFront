@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const Usermy = styled.div`
   width: 400px;
   height: 750px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   position: relative;
-  .usermy {
+  
+    .usermy {
     position: absolute;
     top: 1%;
     left: 50%;
@@ -29,7 +29,7 @@ export const Usermy = styled.div`
     border: 3px double #1b5e96;
     border-radius: 30px;
     position: relative;
-    z-index: 1; /* .usermy보다 뒤로 배치 */
+    z-index: 1; /* .usermy보다 뒤로 배치 */  
   }
   .temp {
     position: absolute;
@@ -103,7 +103,9 @@ export const Usermy = styled.div`
       text-decoration: underline;
     }
   }
+  
 `;
+
 export const Modal = styled.div`
   position: fixed;
   top: 0;

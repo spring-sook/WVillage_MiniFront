@@ -45,6 +45,8 @@ export const EditProfile = () => {
   const [sigunguOpt, setSigunguOpt] = useState([]);
   const [emdOpt, setEmdOpt] = useState([]);
   const [riOpt, setRiOpt] = useState([]);
+  const [searchArea, setSearchArea] = useState("");
+
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
     sigungu: null,
@@ -354,6 +356,7 @@ export const EditProfile = () => {
                   setSearchParams={setSearchParams}
                   setRegionFilter={setRegionFilter}
                   handleRegionChange={handleRegionChange}
+                  setSearchArea={setSearchArea}
                 />
               ) : (
                 <span>{userInfo.filteredRegion}</span>

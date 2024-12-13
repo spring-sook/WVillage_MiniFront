@@ -211,27 +211,18 @@ const Signup = () => {
   };
 
   const handleSignup = async () => {
+    console.log("회원가입 요청 데이터:", formData);
     try {
-      console.log("회원가입 요청 데이터: ", formData);
-      const response = await AuthAPI.signup({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-        nickname: formData.nickname,
-        phone: formData.phone,
-        areaCode: formData.address,
-      });
-
-      if (response.status === 200 && response.data) {
-        console.log("회원가입 성공:", response.data);
+      const response = await AuthAPI.signup(formData);
+      console.log("서버 응답:", response);
+      if (response.status === 200) {
         alert("회원가입이 완료되었습니다.");
-        navigate("/main");
       }
     } catch (error) {
-      console.error("회원가입 실패:", error.response || error.message);
-      alert(error.response?.data || "회원가입 중 오류가 발생했습니다.");
+      console.error("회원가입 요청 실패:", error.response || error.message);
     }
   };
+
   return (
     <SignupContainer>
       <Header>

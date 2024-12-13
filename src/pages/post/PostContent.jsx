@@ -139,41 +139,54 @@ const PostContent = () => {
       await PostAPI.DeleteBookmark(postId, userInfo.email);
     }
   };
-  const closeModal = () => {
-    setShowModal(false);
-    window.location.reload();
-  };
-  const Modal = ({ message, onClose, onConfirm }) => {
+
+  const Modal = ({ className, message, onClose, onConfirm }) => {
     return (
-      <div className="modal-overlay">
-        <div className="modal">
+      <div className={`modal ${className}`}>
+        <div className="modal-container">
           <p>{message}</p>
-          <div>
+          <div className="modal-buttons">
             {onConfirm ? (
               <>
-                <button onClick={onConfirm}>확인</button>
-                <button onClick={onClose}>닫기</button>
+                <button className="modal-button" onClick={onConfirm}>
+                  확인
+                </button>
+                <button className="modal-button" onClick={onClose}>
+                  닫기
+                </button>
               </>
             ) : (
-              <button onClick={onClose}>닫기</button>
+              <button className="modal-button" onClick={onClose}>
+                닫기
+              </button>
             )}
           </div>
         </div>
       </div>
     );
   };
-  const handleConfirmReservation = async () => {
-    const responseReserve = await ReserveAPI.InsertReserve(
-      postId,
-      userInfo.email,
-      startDate,
-      endDate
-    );
-    console.log(responseReserve);
 
-    setShowModal(false); // 예약 확인 모달 닫기
-    setShowCompletedModal(true); // 예약 완료 모달 띄우기
+  const closeModal = () => {
+    setShowModal(false);
+    window.location.reload();
   };
+  const handleConfirmReservation = async () => {
+    try {
+      const responseReserve = await ReserveAPI.InsertReserve(
+        postId,
+        userInfo.email,
+        startDate,
+        endDate
+      );
+      console.log(responseReserve);
+
+      setShowModal(false); // 예약 확인 모달 닫기
+      setShowCompletedModal(true); // 예약 완료 모달 띄우기
+    } catch (error) {
+      console.error("예약 처리 중 오류 발생:", error);
+    }
+  };
+
   const closeCompletedModal = () => {
     setShowCompletedModal(false); // 예약 완료 모달 닫기
     window.location.reload(); // 페이지 새로고침
@@ -389,8 +402,16 @@ const PostContent = () => {
                 message={`예약을 진행하시겠습니까?\n예약 시작: ${startDate.toLocaleString()}\n예약 종료: ${endDate.toLocaleString()}\n계산된 금액: ${
                   duration * (postData.postPrice || 0).toLocaleString()
                 } 포인트`}
-                onConfirm={handleConfirmReservation} // 확인 버튼 클릭 시 예약 진행
-                onClose={closeModal} // 닫기 버튼 클릭 시 모달 닫기
+                onConfirm={handleConfirmReservation}
+                onClose={closeModal}
+              />
+            )}
+
+            {showCompletedModal && (
+              <Modal
+                className="post-completed-modal"
+                message="예약이 완료되었습니다!"
+                onClose={closeCompletedModal}
               />
             )}
           </div>

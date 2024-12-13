@@ -7,12 +7,12 @@ import AuthAPI from "../../api/AuthAPI";
 const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [emailMessage, setEmailMessage] = useState(""); // 이메일 상태 메시지
-  const [isEmailValid, setIsEmailValid] = useState(null); // 유효성 검사 상태
+  const [emailMessage, setEmailMessage] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(null);
   const navigate = useNavigate();
 
   const validateEmail = (value) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // 간단한 이메일 정규식
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(value)) {
       setEmailMessage("유효한 이메일입니다.");
       setIsEmailValid(true);
@@ -33,25 +33,20 @@ const PasswordReset = () => {
     }
 
     try {
-      // 서버 요청
       const response = await AuthAPI.requestPasswordReset(email, phone);
 
-      // 성공 시 알림 및 페이지 이동
       if (response && response.status === 200) {
         alert(response.message || "비밀번호 재설정 요청이 완료되었습니다.");
         navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
       } else {
-        // 서버가 성공 상태를 반환하지 않았을 때
         alert("요청 처리에 문제가 발생했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
-      // 에러 처리
       console.error(
         "비밀번호 재설정 요청 실패:",
         error.response || error.message
       );
 
-      // 오류 메시지 출력
       alert(
         error.response?.data?.message ||
           "비밀번호 재설정 요청 중 문제가 발생했습니다."

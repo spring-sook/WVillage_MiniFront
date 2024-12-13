@@ -86,23 +86,23 @@ const Signup = () => {
     fetchRegionData();
 
     const updateAddress = () => {
-      const address = regionFilter.ri || regionFilter.emd || ""; // ri 값이 있으면 ri, 없으면 emd 값 사용
+      const address = regionFilter.ri || regionFilter.emd || "";
       setFormData((prevData) => ({
         ...prevData,
-        address: address, // address에 해당 값을 설정
+        address: address,
       }));
     };
     updateAddress();
   }, [regionFilter]);
 
   const handleRegionChange = (key) => (e) => {
-    const selectedOption = e.target.options[e.target.selectedIndex]; // 선택된 옵션
-    const regionNameKey = `${key}Name`; // 예: sido -> sidoName
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const regionNameKey = `${key}Name`;
 
     setRegionFilter((prevState) => ({
       ...prevState,
-      [key]: e.target.value, // 코드 값
-      [regionNameKey]: selectedOption.text, // 지역 이름
+      [key]: e.target.value,
+      [regionNameKey]: selectedOption.text,
     }));
   };
 
@@ -211,6 +211,7 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
+      console.log("회원가입 요청 데이터: ", formData);
       const response = await AuthAPI.signup({
         email: formData.email,
         password: formData.password,
@@ -230,7 +231,6 @@ const Signup = () => {
       alert(error.response?.data || "회원가입 중 오류가 발생했습니다.");
     }
   };
-
   return (
     <SignupContainer>
       <Header>

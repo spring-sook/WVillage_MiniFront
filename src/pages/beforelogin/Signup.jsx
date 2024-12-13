@@ -20,6 +20,7 @@ const Signup = () => {
   const [sigunguOpt, setSigunguOpt] = useState([]);
   const [emdOpt, setEmdOpt] = useState([]);
   const [riOpt, setRiOpt] = useState([]);
+  const [searchArea, setSearchArea] = useState("");
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
     sigungu: null,
@@ -396,6 +397,7 @@ const Signup = () => {
               setSearchParams={setSearchParams}
               setRegionFilter={setRegionFilter}
               handleRegionChange={handleRegionChange}
+              setSearchArea={setSearchArea}
             />
           </InputWrapper>
         </InputContainer>

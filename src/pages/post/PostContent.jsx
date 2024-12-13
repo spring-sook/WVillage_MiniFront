@@ -36,7 +36,6 @@ import { ProfileFireImg } from "../../components/Profile";
 const PostContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // const { post } = location.state || {};
   const now = new Date();
   const { postId } = useParams();
   const { userInfo } = useContext(UserContext);

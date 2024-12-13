@@ -40,8 +40,13 @@ const AuthAPI = {
   },
 
   signup: async (data) => {
-    const response = await axios.post("http://localhost:8111/signup", data);
-    return response;
+    try {
+      const response = await axios.post(SERVER + `/auth/signup`, data);
+      return response;
+    } catch (error) {
+      console.error("회원가입 요청 실패:", error.response || error.message);
+      throw error;
+    }
   },
 };
 

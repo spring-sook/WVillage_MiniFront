@@ -197,7 +197,9 @@ export const HeaderCom = () => {
             height="60px"
           />
         </Link>
-        {hasNotification && <div className="badge">{userInfo.alarmCount}0</div>}{" "}
+        {hasNotification && (
+          <div className="badge">{userInfo.reserveMsgTotal}</div>
+        )}{" "}
         {/* 알림 뱃지 */}
         {showUserMenu && (
           <div className="dropdown">

@@ -216,7 +216,9 @@ export const MyResManage = () => {
                 title={post.post.postTitle}
                 region={post.post.postRegion}
                 state={post.reserve.reserveState}
-                onStateClick={() => handleStateAction(post)}
+                onStateClick={() =>
+                  handleStateAction(post.reserve.reserveState)
+                }
               />
               <hr />
             </div>

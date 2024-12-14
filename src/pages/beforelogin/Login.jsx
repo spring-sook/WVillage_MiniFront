@@ -51,9 +51,18 @@ const Login = () => {
     if (response) {
       const responseAlarm = await UserProfileAPI.getAlarm(email);
       const alarmCount = responseAlarm.data;
+      const reserveMsgLent = alarmCount.reserveMsgLent;
+      const reserveMsgLented = alarmCount.reserveMsgLented;
+      console.log(
+        reserveMsgLent,
+        reserveMsgLented,
+        reserveMsgLent + reserveMsgLented
+      );
       setUserInfo({
         ...response,
-        alarmCount,
+        reserveMsgLent: reserveMsgLent,
+        reserveMsgLented: reserveMsgLented,
+        reserveMsgTotal: reserveMsgLent + reserveMsgLented,
       });
       navigate("/main");
     } else {

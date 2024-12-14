@@ -299,7 +299,7 @@ export const Nav = styled.div`
     left: 0px;
     bottom: 0;
     max-width: 747px;
-    width: 100%;
+    width: 120%;
     justify-content: center; 
     background-color: #f8f8f8; /* 배경색 */
     z-index: 10;

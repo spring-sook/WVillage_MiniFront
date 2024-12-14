@@ -213,7 +213,17 @@ export const PostContentTop = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5vh;
+  @media (max-width: 747px) {
+     width: 100% ;
 
+.post-content-top-left{
+  margin-right: -50px;
+  scale: 90%;
+}
+.input-date-picker{
+  width: 80%;
+}
+    }
   .post-content-img {
     width: 350px;
     height: 300px;
@@ -297,6 +307,10 @@ export const PostContentTop = styled.div`
       height: 30px;
       border-radius: 5px;
       cursor: pointer;
+      @media (max-width: 747px) {
+        top: -60%;
+    right: -10%;
+    }
     }
     .activate-button.disabled {
       background-color: #ccc;
@@ -507,7 +521,11 @@ export const PostContentBottom = styled.div`
   flex-direction: column;
   margin-top: 20px;
   /* align-items: center; */
-
+  @media (max-width: 747px) {
+     max-width :100% ;
+     padding: 10px 20px;
+     
+    }
   .bottom-menu {
     display: flex;
     justify-content: space-between;
@@ -516,17 +534,29 @@ export const PostContentBottom = styled.div`
     font-size: 16px;
     margin: 0 auto;
     border-bottom: 1px solid #ccc;
+    @media (max-width: 747px) {
+      max-width :100% ;
+      padding: 10px 20px;
+    }
   }
 
   .line {
     width: 1px;
     height: 25px;
     background-color: black;
+    
   }
 
   .bottom-menu p {
     cursor: pointer;
-  }
+    flex: 1; /* 동일한 크기 */
+    text-align: center;
+    margin: 0 10px; /* 여백 추가 */
+    min-width: 100px; /* 최소 너비 설정 */
+
+    @media (max-width: 747px) {
+      flex: 1; /* 동일한 비율로 유지 */  }
+}
 `;
 
 export const ModalOverlay = styled.div`
@@ -572,6 +602,9 @@ export const PostWriteContainer = styled.div`
   width: 1000px;
   min-height: 500px;
   margin: 0 auto;
+  @media (max-width: 747px) {
+     width :700px ;
+    }
 
   h2 {
     margin: 40px 0 10px;

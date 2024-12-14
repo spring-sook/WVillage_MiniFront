@@ -260,8 +260,7 @@ export const Header = styled.div`
  }
 
  @media (max-width: 747px) {
-
-
+width: 100%;
 }
 `;
 

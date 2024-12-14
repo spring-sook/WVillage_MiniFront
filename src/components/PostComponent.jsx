@@ -13,7 +13,9 @@ const ViewItemContainer = styled.div`
   padding: 50px 100px;
   margin: 0 auto;
   border-bottom: 1px solid #ccc;
-
+  @media (max-width: 747px) {
+    width :700px;
+    }
   p {
     font-size: 18px;
     margin: 20px 0;
@@ -34,7 +36,9 @@ const ViewPostReview = styled.div`
   padding: 50px 100px;
   margin: 0 auto 50px;
   border-bottom: 1px solid #ccc;
-
+  @media (max-width: 747px) {
+    width :700px;
+    }
   .no-review {
     text-align: center;
   }

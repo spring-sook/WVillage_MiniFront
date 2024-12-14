@@ -15,7 +15,6 @@ export const Reserves = styled.div`
   width: 90%;
   height: 610px;
   justify-items: center;
-
 `;
 
 export const ReserveHeader = styled.div`
@@ -28,7 +27,7 @@ export const ReserveHeader = styled.div`
   font-size: 15px;
   font-weight: bold;
   @media (max-width: 747px) {
-    .sort-menu{
+    .sort-menu {
       font-size: 10px;
     }
   }
@@ -58,7 +57,6 @@ export const ReserveItemContainer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
-  
 `;
 
 export const ReserveItemThumbnail = styled.div`
@@ -248,6 +246,9 @@ export const Modal = styled.div`
       }
       &:last-child {
         background-color: #f0f0f0;
+        &:hover {
+          background-color: #d6d6d6;
+        }
       }
 
       &:hover {

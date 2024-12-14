@@ -23,6 +23,7 @@ const UserInfo = () => {
           <p>reserveMsgLent : {userInfo.reserveMsgLent}</p>
           <p>reserveMsgLented : {userInfo.reserveMsgLented}</p>
           <p>총 알림 수 : {userInfo.reserveMsgTotal}</p>
+          <p>alarmCount : {userInfo.alarmCount}</p>
         </div>
       ) : (
         <p>로그인되지 않았습니다.</p>

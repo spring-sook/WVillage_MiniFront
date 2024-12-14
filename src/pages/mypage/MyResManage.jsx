@@ -92,7 +92,11 @@ export const MyResManage = () => {
       거래완료: () =>
         posts.filter((post) => post.reserve.reserveState === "거래완료"),
       예약취소: () =>
-        posts.filter((post) => post.reserve.reserveState === "예약취소"),
+        posts.filter(
+          (post) =>
+            post.reserve.reserveState === "예약취소" ||
+            post.reserve.reserveState === "예약거절"
+        ),
     };
 
     return reserveStateMapping[selectState]?.() || [];
@@ -100,16 +104,18 @@ export const MyResManage = () => {
 
   // 상태별 액션 처리
   const handleStateAction = (item) => {
-    console.log(item.reserve.reserveState);
     if (item.reserve.reserveState === "예약대기") {
       setCurrentItem(item);
       setModalType("reservationPending");
-    } else if (item.state === "예약취소") {
-      setCancelReason(item.reason);
+    } else if (item.reserve.reserveState === "예약취소") {
+      setCancelReason(item.reserve.reserveReason);
       setModalType("reservationCancel");
-    } else if (item.state === "거래완료") {
+    } else if (item.reserve.reserveState === "거래완료") {
       setCurrentItem(item);
       setModalType("transactionComplete");
+    } else if (item.reserve.reserveState === "예약거절") {
+      setCancelReason(item.reserve.reserveReason);
+      setModalType("reservationCancel");
     }
   };
 
@@ -219,21 +225,34 @@ export const MyResManage = () => {
           ))}
         </PostsContainer> */}
         <PostsContainer>
-          {filteredData().map((post, index) => (
-            <div key={index}>
-              <ReserveItem
-                thumbnail={post.post.postThumbnail} // ReserveItem에 필요한 데이터 추가
-                title={post.post.postTitle}
-                region={post.post.postRegion}
-                location={post.post.postLocation}
-                startTime={post.reserve.reserveStart}
-                endTime={post.reserve.reserveEnd}
-                state={post.reserve.reserveState}
-                onStateClick={() => handleStateAction(post)}
-              />
-              <hr />
-            </div>
-          ))}
+          {filteredData().map((post, index) => {
+            // 현재 시간을 가져오기
+            const currentTime = new Date();
+
+            // 예약 상태가 "거래완료"이고, 시작 시간이 현재 시간보다 늦으면 상태를 "예약완료"로 변경
+            if (
+              post.reserve.reserveState === "거래완료" &&
+              new Date(post.reserve.reserveStart) > currentTime
+            ) {
+              post.reserve.reserveState = "예약완료";
+            }
+
+            return (
+              <div key={index}>
+                <ReserveItem
+                  thumbnail={post.post.postThumbnail} // ReserveItem에 필요한 데이터 추가
+                  title={post.post.postTitle}
+                  region={post.post.postRegion}
+                  location={post.post.postLocation}
+                  startTime={post.reserve.reserveStart}
+                  endTime={post.reserve.reserveEnd}
+                  state={post.reserve.reserveState}
+                  onStateClick={() => handleStateAction(post)}
+                />
+                <hr />
+              </div>
+            );
+          })}
         </PostsContainer>
       </ResManage>
 
@@ -276,7 +295,27 @@ export const MyResManage = () => {
         <Modal>
           <div className="modal-content">
             <h2>예약취소 사유</h2>
-            <p>{cancelReason}</p>
+            {cancelReason ? (
+              <div dangerouslySetInnerHTML={{ __html: cancelReason }} />
+            ) : (
+              <p>취소 사유가 작성되지 않았습니다.</p>
+            )}
+            <button onClick={closeModal} className="cancel">
+              닫기
+            </button>
+          </div>
+        </Modal>
+      )}
+      {/* 예약거절절 모달 */}
+      {modalType === "reservationCancel" && (
+        <Modal>
+          <div className="modal-content">
+            <h2>예약거절절 사유</h2>
+            {cancelReason ? (
+              <div dangerouslySetInnerHTML={{ __html: cancelReason }} />
+            ) : (
+              <p>거절 사유가 작성되지 않았습니다.</p>
+            )}
             <button onClick={closeModal} className="cancel">
               닫기
             </button>

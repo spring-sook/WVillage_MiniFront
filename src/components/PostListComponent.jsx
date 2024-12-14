@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { CategorySelect } from "./CategorySelect";
 import { PostItem } from "./PostItemComponent";
+import { useEffect, useState } from "react";
+import PostAPI from "../api/PostAPI";
 
 const UserPostContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 0.9;
-  max-width: 90%;
+  max-width: 75%;
   height: 600px;
   overflow: hidden;
-  background-color: #686a7e;
+  /* background-color: #686a7e; */
   margin: 80px 0;
 `;
 
@@ -50,7 +52,39 @@ const PostListContainer = styled.div`
   }
 `;
 
+const UserPostHeader = styled.div`
+  width: 100%;
+
+  button {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    padding: 6px 20px;
+    cursor: pointer;
+  }
+`;
+
+const UserPostBody = styled.div`
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .disablePost {
+    width: 91%;
+    height: 75%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    position: absolute;
+    top: 3%;
+    left: 5%;
+  }
+`;
+
 export const PostListComponent = ({ email }) => {
+  const [posts, setPosts] = useState([]);
+  const [order, setOrder] = useState("최신순");
   const option = [
     {
       value: "물건",
@@ -63,35 +97,69 @@ export const PostListComponent = ({ email }) => {
     },
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await PostAPI.UserPostList(email);
+      const fetchedPosts = res.data;
+      fetchedPosts.sort((a, b) => new Date(b.postDate) - new Date(a.postDate));
+      setPosts(fetchedPosts);
+    };
+    fetchData();
+  });
+
+  useEffect(() => {
+    // 정렬 함수
+    const sortPosts = () => {
+      if (order === "최신순") {
+        setPosts((prevPosts) =>
+          [...prevPosts].sort(
+            (a, b) => new Date(b.postDate) - new Date(a.postDate)
+          )
+        );
+      } else if (order === "인기순") {
+        setPosts((prevPosts) =>
+          [...prevPosts].sort((a, b) => b.postViews - a.postViews)
+        );
+      }
+    };
+
+    sortPosts();
+  }, [order]);
+
   return (
     <UserPostContainer>
-      <CategorySelect options={option} />
+      <UserPostHeader>
+        <button onClick={() => setOrder("최신순")}>최신순</button>
+        <span>|</span>
+        <button onClick={() => setOrder("인기순")}>인기순</button>
+        <CategorySelect options={option} />
+      </UserPostHeader>
       <PostListContainer>
-        {/*<PostItem>12345</PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
-
-        {/*<PostItem></PostItem>*/}
+        <UserPostBody>
+          {Array.isArray(posts) &&
+            posts.map((post, index) => {
+              return (
+                <div
+                  key={index}
+                  className="post-item-wrapper"
+                  style={{ position: "relative" }}
+                >
+                  <PostItem
+                    thumbnail={post.postThumbnail}
+                    title={post.postTitle}
+                    price={post.postPrice}
+                    postLocation={post.PostLocation}
+                    postId={post.postId}
+                    post={post}
+                    width={"210px"}
+                    height={"270px"}
+                    margin={"23px"}
+                    postDisable={post.postDisable}
+                  />
+                </div>
+              );
+            })}
+        </UserPostBody>
       </PostListContainer>
     </UserPostContainer>
   );

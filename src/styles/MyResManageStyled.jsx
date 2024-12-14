@@ -8,7 +8,7 @@ export const MyResManageContainer = styled.div`
   align-items: center;
   @media (max-width: 747px) {
     width: 100%;
-    }
+  }
 `;
 
 export const ResManage = styled.div`
@@ -27,9 +27,10 @@ export const ReserveManageHeader = styled.div`
   display: flex;
   position: relative;
   @media (max-width: 747px) {
-    .sort-menu{
+    .sort-menu {
       font-size: 10px;
-    }}
+    }
+  }
   .header-alarm {
     display: flex;
     position: absolute;
@@ -121,6 +122,9 @@ export const Modal = styled.div`
     &.cancel {
       background-color: #f0f0f0;
       color: black;
+      &:hover {
+        background-color: #d6d6d6;
+      }
     }
 
     &:hover {
@@ -147,11 +151,10 @@ export const ReviewTag = styled.span`
 `;
 export const ReservationPendingBtn = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
 
   button {
-    padding: 10px 20px;
+    padding: 10px 30px;
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;

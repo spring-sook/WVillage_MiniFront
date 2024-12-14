@@ -9,6 +9,7 @@ import { ReserveItem } from "../../components/PostItemComponent";
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import ReserveAPI from "../../api/ReserveAPI";
+import ReviewAPI from "../../api/ReviewAPI";
 import { UserContext } from "../../context/UserStore";
 
 export const MyReserve = () => {
@@ -35,11 +36,11 @@ export const MyReserve = () => {
     "분위기가 좋아요",
     "안전해요",
     "응대가 세심해요",
+    "또 거래하고 싶어요",
   ];
 
   // 나쁜 리뷰 태그 (10개)
   const badReviewTags = [
-    "또 거래하고 싶어요",
     "더러워요",
     "불친절해요",
     "낡았어요",
@@ -50,6 +51,13 @@ export const MyReserve = () => {
     "가격이 비싸요",
     "설명이 부족해요",
   ];
+
+  const allReviewTags = [...goodReviewTags, ...badReviewTags];
+
+  const taggedReviewTags = allReviewTags.reduce((acc, tag, index) => {
+    acc[`TAG_${index}`] = tag;
+    return acc;
+  }, {});
 
   useEffect(() => {
     const getMyReserves = async () => {
@@ -75,13 +83,16 @@ export const MyReserve = () => {
     getMyReserves();
   }, []);
 
-  const handleItemClick = (state, id) => {
+  const handleItemClick = async (state, id, reserveReason) => {
     if (state === "거래완료") {
       // setReserveState("complete");
-      setReserveId(id);
-      setModalType("reservationComplete");
-      setModalContent("리뷰 태그를 선택 해 주세요."); // 모달 내용 설정
-      setShowModal(true); // 모달 표시
+      const resIsReview = await ReviewAPI.IsReview(userInfo.email, id);
+      if (resIsReview.data === false) {
+        setReserveId(id);
+        setModalType("reservationComplete");
+        setModalContent("리뷰 태그를 선택 해 주세요."); // 모달 내용 설정
+        setShowModal(true); // 모달 표시
+      }
     } else if (state === "예약대기") {
       // setReserveState("wait");
       setReserveId(id);
@@ -94,6 +105,16 @@ export const MyReserve = () => {
       setModalType("reservationCancle");
       setModalContent("예약을 취소하시겠습니까?");
       setShowModal(true); // 모달 표시
+    } else if (state === "예약취소") {
+      setReserveId(id);
+      setModalType("viewCancelReason");
+      setModalContent(reserveReason);
+      setShowModal(true);
+    } else if (state === "예약거절") {
+      setReserveId(id);
+      setModalType("viewDenyReason");
+      setModalContent(reserveReason);
+      setShowModal(true);
     }
   };
   const onConfirmClick = () => {
@@ -102,14 +123,32 @@ export const MyReserve = () => {
 
   // 취소 사유 제출
   const submitCancelReason = async () => {
-    console.log("취소 사유:", cancelReason);
-    // console.log(reserveState, reserveId);
     const res = await ReserveAPI.ReserveCancel(
       "cancel",
       cancelReason.replace(/\n/g, "<br>"),
       reserveId
     );
     closeModal(); // 모달 닫기
+    window.location.reload();
+  };
+
+  // 리뷰 등록
+  const submitReview = async () => {
+    const tagNumbers = selectedTags.map((tag) => {
+      // taggedReviewTags에서 태그 번호를 찾음
+      const tagNumber = Object.keys(taggedReviewTags).find(
+        (key) => taggedReviewTags[key] === tag
+      );
+      return tagNumber; // 해당 TAG_x 번호 반환
+    });
+    // TAG 번호들을 ,로 이어붙인 문자열 생성
+    const tagIdsString = tagNumbers.join(",");
+    const resWrite = await ReviewAPI.WriteReview(
+      userInfo.email,
+      reserveId,
+      tagIdsString
+    );
+    closeModal();
   };
   const closeModal = () => {
     setShowModal(false);
@@ -219,6 +258,19 @@ export const MyReserve = () => {
         <PostsContainer>
           {posts &&
             posts
+              .map((post) => {
+                // 현재 시간을 가져오기
+                const currentTime = new Date();
+
+                // 거래완료 상태이지만 시작 시간이 현재 시간보다 늦다면 상태를 변경
+                if (
+                  post.reserve.reserveState === "거래완료" &&
+                  new Date(post.reserve.reserveStart) > currentTime
+                ) {
+                  post.reserve.reserveState = "예약완료";
+                }
+                return post;
+              })
               .filter((post) =>
                 selectState === "전체"
                   ? true
@@ -237,7 +289,8 @@ export const MyReserve = () => {
                     onStateClick={() =>
                       handleItemClick(
                         post.reserve.reserveState,
-                        post.reserve.reserveId
+                        post.reserve.reserveId,
+                        post.reserve.reserveReason
                       )
                     }
                   />
@@ -305,7 +358,7 @@ export const MyReserve = () => {
               </div>
             </div>
             <div className="modal-buttons">
-              <button onClick={closeModal}>완료</button>
+              <button onClick={submitReview}>완료</button>
               <button onClick={closeModal}>취소</button>
             </div>
           </div>
@@ -344,6 +397,36 @@ export const MyReserve = () => {
                 제출
               </button>
               <button onClick={closeModal}>취소</button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {modalType === "viewCancelReason" && showModal && (
+        <Modal>
+          <div className="modal-content">
+            <h2>취소 사유</h2>
+            {modalContent ? (
+              <div dangerouslySetInnerHTML={{ __html: modalContent }} />
+            ) : (
+              <p>취소 사유가 작성되지 않았습니다.</p>
+            )}
+            <div className="modal-buttons">
+              <button onClick={closeModal}>닫기</button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {modalType === "viewDenyReason" && showModal && (
+        <Modal>
+          <div className="modal-content">
+            <h2>거절절 사유</h2>
+            {modalContent ? (
+              <div dangerouslySetInnerHTML={{ __html: modalContent }} />
+            ) : (
+              <p>취소 사유가 작성되지 않았습니다.</p>
+            )}
+            <div className="modal-buttons">
+              <button onClick={closeModal}>닫기</button>
             </div>
           </div>
         </Modal>

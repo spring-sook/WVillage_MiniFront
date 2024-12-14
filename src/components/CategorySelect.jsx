@@ -11,7 +11,7 @@ export const CategorySelect = ({ options }) => {
     <SelectContainer>
       <Select
         variant="standard"
-        sx={{ m: 2, mr: 3, mb: 2, pl: 2, minWidth: 90 }}
+        sx={{ m: 0, mr: 4, mb: 2, pl: 2, minWidth: 100 }}
       >
         <MenuItem value="">
           <em>전체</em>

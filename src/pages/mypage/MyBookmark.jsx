@@ -58,6 +58,7 @@ export const MyBookmark = () => {
                 post={post}
                 width={"210px"}
                 height={"270px"}
+                postDisable={post.postDisable}
               />
             ))}
         </PostBody>

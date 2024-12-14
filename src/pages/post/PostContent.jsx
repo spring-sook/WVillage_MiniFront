@@ -68,6 +68,7 @@ const PostContent = () => {
         responseData.data.postEmail,
         postId
       );
+      console.log(responseBookmark.data);
       setIsBookmarked(responseBookmark.data);
       const responseImg = await PostAPI.PostImages(postId);
       setImgData(responseImg.data);
@@ -131,12 +132,18 @@ const PostContent = () => {
     setEndDate(null);
   };
   const handleBookmark = async () => {
+    console.log("북마크 상태 : ", isBookmarked);
     setIsBookmarked(!isBookmarked);
     if (!isBookmarked) {
       await PostAPI.InsertBookmark(postId, userInfo.email);
+      console.log("INSERT!!!!!!!!!");
     } else {
       await PostAPI.DeleteBookmark(postId, userInfo.email);
+      console.log("DELETE~~~~~~~");
     }
+    const responseData = await PostAPI.PostContentDetail(postId);
+    setPostData(responseData.data);
+    // window.location.reload();
   };
 
   const Modal = ({ className, message, onClose, onConfirm }) => {

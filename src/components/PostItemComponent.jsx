@@ -84,9 +84,21 @@ export const ReserveItem = ({
   thumbnail,
   title,
   region,
+  location,
+  startTime,
+  endTime,
   state,
   onStateClick,
 }) => {
+  const formatTime = (time) => {
+    if (!time) return ""; // 값이 없을 경우 빈 문자열 반환
+    const date = new Date(time);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")} ${date.getHours()}시`;
+  };
+
   return (
     <ReserveItemContainer>
       <ReserveItemThumbnail>
@@ -94,7 +106,13 @@ export const ReserveItem = ({
       </ReserveItemThumbnail>
       <ReserveItemInfo>
         <p className="reserve-item-info-title">{title || "제목 입니다."}</p>
-        <p className="reserve-item-info-region">{region || "지역 입니다."}</p>
+        <p className="reserve-item-info-region">
+          {region || "지역 입니다."}
+          {location && ` ${location}`}
+        </p>
+        <p>
+          {formatTime(startTime)} ~ {formatTime(endTime)}
+        </p>
       </ReserveItemInfo>
       <ReserveState
         state={state}

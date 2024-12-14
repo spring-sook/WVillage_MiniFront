@@ -74,7 +74,7 @@ const PostWrite = () => {
         email,
         category,
         title,
-        content,
+        content.replace(/\n/g, "<br>"),
         parseInt(price.replace(/,/g, "")),
         userInfo.areaCode,
         location,

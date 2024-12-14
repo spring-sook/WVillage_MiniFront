@@ -24,6 +24,14 @@ const ReserveAPI = {
   GetMyResManage: async (email) => {
     return await axios.get(SERVER + `/reserve/myReserveManagement/${email}`);
   },
+  ReserveCancel: async (state, reason, reserveId) => {
+    const body = {
+      reserveState: state,
+      reserveReason: reason,
+      reserveId: reserveId,
+    };
+    return await axios.post(SERVER + `/reserve/reserveCancel`, body);
+  },
 };
 
 export default ReserveAPI;

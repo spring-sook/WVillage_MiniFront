@@ -127,6 +127,7 @@ export const Modal = styled.div`
 
   h2 {
     color: #1b5e96;
+    margin-bottom: 30px;
   }
   p {
     margin: 5px;
@@ -242,6 +243,12 @@ export const Modal = styled.div`
 
       &:hover {
         opacity: 0.8;
+      }
+      &:disabled {
+        background-color: #d3d3d3; /* 회색 배경 */
+        color: #a0a0a0; /* 회색 글씨 */
+        cursor: default; /* 커서 비활성화 */
+        opacity: 0.6; /* 흐리게 */
       }
     }
   }

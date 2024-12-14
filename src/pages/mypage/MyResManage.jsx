@@ -25,7 +25,7 @@ export const MyResManage = () => {
 
   useEffect(() => {
     const getMyReserves = async () => {
-      const responseMyRes = await ReserveAPI.MyReserveList(userInfo.email);
+      const responseMyRes = await ReserveAPI.GetMyResManage(userInfo.email);
       const reserveStateMapping = {
         wait: "예약대기",
         accept: "예약완료",

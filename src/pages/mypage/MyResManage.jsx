@@ -100,7 +100,8 @@ export const MyResManage = () => {
 
   // 상태별 액션 처리
   const handleStateAction = (item) => {
-    if (item.state === "예약대기") {
+    console.log(item.reserve.reserveState);
+    if (item.reserve.reserveState === "예약대기") {
       setCurrentItem(item);
       setModalType("reservationPending");
     } else if (item.state === "예약취소") {
@@ -121,9 +122,15 @@ export const MyResManage = () => {
   };
 
   // 예약 상태 변경
-  const confirmReservation = () => {
-    console.log(`예약 ID ${currentItem.id}: 예약완료로 변경`);
+  const confirmReservation = async () => {
+    console.log(currentItem.reserve.reserveId);
+    const res = await ReserveAPI.ReserveComplete(
+      "complete",
+      currentItem.reserve.reserveId
+    );
+    console.log(`예약 ID ${currentItem.reserve.reserveId}: 예약완료로 변경`);
     closeModal();
+    window.location.reload();
   };
 
   // 예약 거절 처리
@@ -132,15 +139,18 @@ export const MyResManage = () => {
   };
 
   // 예약 거절 완료
-  const completeRejection = () => {
+  const completeRejection = async () => {
     if (rejectionReason.trim()) {
-      console.log(
-        `예약 ID ${currentItem.id}: 예약거절로 변경, 사유: ${rejectionReason}`
+      const res = await ReserveAPI.ReserveDeny(
+        "deny",
+        rejectionReason.replace(/\n/g, "<br>"),
+        currentItem.reserve.reserveId
       );
       closeModal();
     } else {
       alert("예약거절 사유를 작성해주세요.");
     }
+    window.location.reload();
   };
 
   return (
@@ -215,10 +225,11 @@ export const MyResManage = () => {
                 thumbnail={post.post.postThumbnail} // ReserveItem에 필요한 데이터 추가
                 title={post.post.postTitle}
                 region={post.post.postRegion}
+                location={post.post.postLocation}
+                startTime={post.reserve.reserveStart}
+                endTime={post.reserve.reserveEnd}
                 state={post.reserve.reserveState}
-                onStateClick={() =>
-                  handleStateAction(post.reserve.reserveState)
-                }
+                onStateClick={() => handleStateAction(post)}
               />
               <hr />
             </div>

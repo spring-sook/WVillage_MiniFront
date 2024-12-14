@@ -58,84 +58,97 @@ export const AdminProfileBox = styled.div`
 `;
 
 export const ReportUser = styled.div`
-  border: 1px solid black;
-  width: 80%;
-  height: 80vh;
-  margin-right: 20px;
-  .reportList {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-  }
-
-  .reportItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 버튼을 오른쪽 끝에 배치 */
-    border-bottom: 1px solid #eee;
-    padding: 10px 0;
-  }
-
-  .userProfile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
+    border: 1px solid black;
+    width: 80%;
+    height: 80vh;
+    margin-right: 20px;
+    overflow-y: scroll;
+    .reportList {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
     }
 
-    .userInfo {
-      display: flex;
-      flex-direction: column;
+    .reportItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* 버튼을 오른쪽 끝에 배치 */
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+    }
 
-      span {
+    .userProfile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .userInfo {
+            display: flex;
+            flex-direction: column;
+
+            span {
+                font-size: 14px;
+                color: #333;
+            }
+
+            small {
+                font-size: 12px;
+                color: #888;
+            }
+        }
+    }
+
+    .reportDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
         font-size: 14px;
-        color: #333;
-      }
+        color: #555;
+    }
 
-      small {
+    .date {
         font-size: 12px;
         color: #888;
-      }
-    }
-  }
-
-  .reportDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-
-  .date {
-    font-size: 12px;
-    color: #888;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-
-    button {
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
     }
 
-    .check {
-      background-color: #4caf50;
-      color: #fff;
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .check { /* 기본 스타일 (필요한 경우) */
+            /* background-color: #4caf50; */ /*기존 초록색 스타일 제거*/
+            color: #fff;
+        }
+
+        .wait {
+            background-color: gray;
+        }
+
+        .deny {
+            background-color: red;
+        }
+
+        .accept {
+            background-color: green;
+        }
     }
-  }
 `;
 
 export const Modal = styled.div`
@@ -151,67 +164,93 @@ export const Modal = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-
-  .modalHeader {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-
-  .reporter,
-  .reported {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-
-    img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    span {
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    h5 {
-      font-size: 16px;
-      color: #1b5e96;
-    }
-  }
-
-  .modalActions {
-    display: flex;
+    align-content: center;
     justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
 
-    button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
+    .modalHeader {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+        justify-content: center;
+        
+        .arrow{
+            color: red;
+            position: relative;
+            bottom: -80px;
+            font-size: 30px;
+        }
+    }
+    
+    .reporter{
+        padding-left: 20px;
+    }
+    
+    .reported{
+        margin-right: 20px;
+    }
+    
+
+    .reporter,
+    .reported {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+        
+        
+        .count{
+            color: crimson;
+            font-weight: bold;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        span {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        h5 {
+            font-size: 16px;
+            color: #1b5e96;
+        }
     }
 
-    .approve {
-      background-color: #4caf50;
-      color: white;
-    }
+    .modalActions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
 
-    .reject {
-      background-color: #f44336;
-      color: white;
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .approve {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .reject {
+            background-color: #f44336;
+            color: white;
+        }
     }
-  }
 `;

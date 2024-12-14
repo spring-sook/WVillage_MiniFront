@@ -7,6 +7,9 @@ import {
   ModalContent,
 } from "../../styles/AdminStyled";
 import ReportAPI from "../../api/ReportAPI";
+import {ProfileImgDownloader} from "../../components/Profile";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons/faArrowRight";
 
 export const Adminpage = () => {
   const [reports, setReports] = useState([]);
@@ -26,6 +29,21 @@ export const Adminpage = () => {
 
     fetchReports();
   }, []);
+
+
+  useEffect(() => {
+    const handleEscClose = (event) => {
+      if (event.key === "Escape" && modalOpen) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscClose); // Cleanup on unmount
+    };
+  }, [modalOpen]);
 
   const handleApprove = async (reportId) => {
     await updateReportStatus(reportId, "accept");
@@ -65,6 +83,16 @@ export const Adminpage = () => {
     setSelectedReport({...report, reportState: modalOpen ? selectedReport.reportState : "accept"});
     setModalOpen(true);
   };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedReport(null); // 선택된 report 정보도 초기화 (선택적)
+  };
+
+
+
+
+
   return (
     <AdminBox>
       <AdminProfileBox>
@@ -78,9 +106,10 @@ export const Adminpage = () => {
           {reports.map((report) => (
             <div className="reportItem" key={report.id}>
               <div className="userProfile">
-                <img
-                  src={report.reportedProfileImg}
-                  alt={`${report.reportedEmail} 프로필`}
+                <ProfileImgDownloader
+                    imgfile={report.reportedProfileImg}
+                    width="60px"
+                    height="60px"
                 />
                 <div className="userInfo">
                   <span>{report.reportedEmail}</span>
@@ -92,8 +121,15 @@ export const Adminpage = () => {
                 <p className="date">신고일: {report.reportDate}</p>
               </div>
               <div className="actions">
-                <button className="check" onClick={() => handleCheck(report)}>
-                  확인
+                <button
+                  className={`check ${report.reportState}`} // 동적 클래스 추가
+                  onClick={() => handleCheck(report)}
+                  disabled={report.reportState !== "wait"}
+                >
+                  {/* 버튼 텍스트도 상태에 따라 변경 */}
+                  {report.reportState === "wait" && "대기"}
+                  {report.reportState === "deny" && "거부됨"}
+                  {report.reportState === "accept" && "승인됨"}
                 </button>
               </div>
             </div>
@@ -104,20 +140,33 @@ export const Adminpage = () => {
       {modalOpen && selectedReport && (
         <Modal>
           <ModalContent>
+            <button className="close-modal" onClick={closeModal}
+                    style={{position: "absolute", top: "10px", right: "10px"}}>
+              X
+            </button>
             <div className="modalHeader">
-              <div className="reporter">
+            <div className="reporter">
                 <h5>신고자</h5>
-                <img
-                  src={selectedReport.reporterProfileImg}
-                  alt={`${selectedReport.reporterEmail} 프로필`}
+              <div className="count">
+                신고한 횟수 : {selectedReport.reporterCount}
+              </div>
+                <ProfileImgDownloader
+                    imgfile={selectedReport.reporterProfileImg}
+                    width="60px"
+                    height="60px"
                 />
                 <span>{selectedReport.reporterEmail}</span>
               </div>
+              <FontAwesomeIcon className="arrow" icon={faArrowRight}/>
               <div className="reported">
                 <h5>피신고자</h5>
-                <img
-                  src={selectedReport.reportedProfileImg}
-                  alt={`${selectedReport.reportedEmail} 프로필`}
+                <div className="count">
+                  신고당한 횟수 : {selectedReport.reportedCount}
+                </div>
+                <ProfileImgDownloader
+                  imgfile={selectedReport.reportedProfileImg}
+                  width="60px"
+                  height="60px"
                 />
                 <span>{selectedReport.reportedEmail}</span>
               </div>
@@ -125,13 +174,13 @@ export const Adminpage = () => {
             <div className="modalActions">
               <button
                 className="approve"
-                onClick={() => handleApprove(selectedReport.reportId)}
+                  onClick={() => handleApprove(selectedReport.reportId)}
               >
                 승인
               </button>
               <button
-                className="reject"
-                onClick={() => handleReject(selectedReport.reportId)}
+                  className="reject"
+                  onClick={() => handleReject(selectedReport.reportId)}
               >
                 거절
               </button>

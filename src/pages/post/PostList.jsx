@@ -184,6 +184,7 @@ const PostList = () => {
           </p>
           <hr />
           {/* <div className="PostFilterDatePicker"> */}
+          <div className="regiontest">
           <RegionSelect
             regionFilter={regionFilter}
             sidoOpt={sidoOpt}
@@ -197,9 +198,11 @@ const PostList = () => {
             handleRegionChange={handleRegionChange}
             setSearchArea={setSearchArea}
           />
+          </div>
           <button className="condition-search" onClick={handleSearchClick}>
             검색
           </button>
+
         </PostMainFilter>
         <PostMainList>
           <div>

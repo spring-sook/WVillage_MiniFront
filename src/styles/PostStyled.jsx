@@ -8,7 +8,10 @@ export const PostBody = styled.div`
   /* min-height: calc(100vh - ${headerHeight} - ${navHeight}); */
   min-height: 700px;
   margin: 0 2%;
-`;
+  @media (max-width: 747px) {
+    flex-direction: column;
+  }
+    `;
 
 export const PostMainFilter = styled.div`
   display: flex;
@@ -17,6 +20,9 @@ export const PostMainFilter = styled.div`
   align-items: center;
   width: 350px;
   min-width: 350px;
+  @media (max-width: 747px) {
+    width: 100%;
+  }
 
   h2 {
     margin-bottom: 20px;
@@ -100,7 +106,20 @@ export const PostMainFilter = styled.div`
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   } */
-
+.regiontest {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  @media (max-width: 747px) {
+    flex-direction: row;
+    gap: 5px;
+    margin-left: 80px;
+    .select-region{
+      width: 150px;
+    }
+  }
+}
   .select-region,
   .condition-search {
     margin-top: 2vh;
@@ -115,6 +134,7 @@ export const PostMainFilter = styled.div`
   }
   .select-region {
     padding-left: 20px;
+    
   }
 
   .condition-search {
@@ -140,7 +160,9 @@ export const PostMainList = styled.div`
   margin: 0 8% 0 2%;
   /* background-color: #cbe5fd; */
   padding: 10px;
-
+  @media (max-width: 747px) {
+    width: 100%;
+  }
   button {
     background-color: transparent;
     border: none;
@@ -175,6 +197,9 @@ export const PostDisplay = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   row-gap: 30px;
+  @media (max-width: 747px) {
+    margin-left: 10%;
+  }
 `;
 
 export const PostContentTop = styled.div`

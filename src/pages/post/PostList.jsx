@@ -205,7 +205,7 @@ const PostList = () => {
 
         </PostMainFilter>
         <PostMainList>
-          <div>
+          <div className="selectOption">
             <button onClick={() => setOrder("최신순")}>최신순</button>
             <span>|</span>
             <button onClick={() => setOrder("인기순")}>인기순</button>

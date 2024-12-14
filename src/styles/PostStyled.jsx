@@ -149,6 +149,7 @@ export const PostMainFilter = styled.div`
     &:active {
       transform: scale(0.99);
     }
+    
   }
 `;
 
@@ -198,7 +199,9 @@ export const PostDisplay = styled.div`
   flex-wrap: wrap;
   row-gap: 30px;
   @media (max-width: 747px) {
+   width: 80%;
     margin-left: 10%;
+    margin-bottom: 100px;
   }
 `;
 

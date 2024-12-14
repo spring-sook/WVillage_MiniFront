@@ -11,6 +11,9 @@ export const UserInfoFrame = styled.div`
   margin: 0 2%;
   overflow: hidden;
   gap: 20px;
+  @media(max-width: 747px) {
+    flex-direction: column;
+  }
 `;
 
 const OtherUserProfile = () => {

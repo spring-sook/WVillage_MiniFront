@@ -90,6 +90,7 @@ export const Usermy = styled.div`
     font-weight: bold;
     font-size: 18px;
     margin-top: 55%;
+    
 
     p {
       margin: 10%;
@@ -103,7 +104,63 @@ export const Usermy = styled.div`
       text-decoration: underline;
     }
   }
-  
+  @media (max-width: 747px) {
+    width:100%;
+    height: 250px;
+    margin-bottom: -80px;
+  .option {
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-around;
+    width: 100%; 
+    margin-top: 10px;
+    font-size: 16px; 
+  }
+
+  .option p {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .usermy {
+    position: absolute;
+    top: 0%;
+    left: 48%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    h4 {
+      padding-top: 10px;
+    }
+  }
+
+  .box {
+    width: 90%; /* 박스의 너비를 모바일 화면에 맞게 조정 */
+    height: auto;
+    padding: 20px;
+    border: 3px double #1b5e96;
+    border-radius: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 온도 섹션 및 프로필 이미지 크기 조정 */
+  .temp {
+    position: absolute;
+    top: -50px;
+    left: 70%;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80%;
+    font-size: 16px;
+    font-weight: bold;
+    
+  }
+  .gauge {
+    margin-left: -150px;
+  }
+}
 `;
 
 export const Modal = styled.div`

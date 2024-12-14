@@ -6,6 +6,9 @@ export const MyBookmarkContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 747px) {
+    width: 100%;
+  }
 `;
 
 export const Bookmarks = styled.div`

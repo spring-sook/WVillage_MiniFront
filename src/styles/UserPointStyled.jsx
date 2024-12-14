@@ -8,6 +8,10 @@ export const PointBox = styled.div`
   align-items: center;
   gap: 10px;
   color: #1b5e96;
+  @media (max-width: 747px) {
+    width: 100%;
+    margin-bottom: 100px;
+  }
 
   .select {
     width: 90%;
@@ -17,6 +21,10 @@ export const PointBox = styled.div`
     justify-content: center;
     align-items: center; /* 세로로 중앙 정렬 */
     gap: 10%; /* 요소들 사이의 간격을 줄임 */
+    @media (max-width: 747px) {
+    width: 100%;
+
+  }
 
     p {
       font-size: 18px;
@@ -77,6 +85,9 @@ export const ChargeBox = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: #444;
+  @media (max-width: 747px) {
+    width: 100%;
+  }
   button {
     width: 250px;
     height: 50px;

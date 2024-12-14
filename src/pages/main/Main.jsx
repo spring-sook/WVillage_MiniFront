@@ -119,6 +119,12 @@ const Main = () => {
                 slidesPerGroup={1}
                 spaceBetween={10}
                 simulateTouch={true}
+                breakpoints={{
+                  747: {
+                    slidesPerview:2,
+                    slidesPerGroup: 1,
+                  }}
+                }
               >
                 {posts.map((post, index) => (
                   <SwiperSlide key={index}>

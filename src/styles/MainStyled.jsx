@@ -35,7 +35,7 @@ export const RecommBox = styled.div`
 
 export const MainRecomm = styled.div`
   height: 450px;
-  width: 1500px;
+  width: 1900px;
   background-color: #f5f6fa;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@ export const MainRecomm = styled.div`
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
   @media (max-width: 747px) {
-    max-width: 100%;
+    width: 750px;
   }
   .swiper {
     width: 70%;
@@ -121,9 +121,7 @@ export const BoxContainer = styled.div`
   width: ${(props) =>
     props.slideWidth ||
     "auto"}; /* 이미지가 몇 개 보일지에 맞게 동적으로 조정 */
-  @media (max-width: 747px) {
-    width: ${(props) => props.slideWidth || "2"};
-  }
+
 `;
 
 export const Box = styled.div`

@@ -6,6 +6,9 @@ export const MyResManageContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 747px) {
+    width: 100%;
+    }
 `;
 
 export const ResManage = styled.div`
@@ -23,7 +26,10 @@ export const ReserveManageHeader = styled.div`
   font-size: 15px;
   display: flex;
   position: relative;
-
+  @media (max-width: 747px) {
+    .sort-menu{
+      font-size: 10px;
+    }}
   .header-alarm {
     display: flex;
     position: absolute;

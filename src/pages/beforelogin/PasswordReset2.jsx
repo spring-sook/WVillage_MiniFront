@@ -60,7 +60,6 @@ const PasswordReset2 = () => {
 
       if (response.status === 200) {
         console.log("비밀번호 변경 성공:", response.data);
-        alert("비밀번호가 성공적으로 변경되었습니다!");
         setIsModalOpen(true);
       } else {
         console.log("비밀번호 변경 실패:", response.data);

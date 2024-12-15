@@ -247,12 +247,13 @@ const Button = styled.button`
   padding: 20px;
   margin: 52px 0 20px 0;
   color: #ffffff;
-  background-color: #a2d2ff;
+  background-color: #1B5E96;
   border: none;
   border-radius: 15px;
   font-size: large;
   cursor: pointer;
+  transition: all 0.3s ease;
   &:hover {
-    background-color: #b4d8fa;
+    opacity: 0.7;
   }
 `;

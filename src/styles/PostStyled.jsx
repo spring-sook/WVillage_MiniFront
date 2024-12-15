@@ -137,12 +137,11 @@ export const PostMainFilter = styled.div`
   }
 
   .condition-search {
-    background-color: #95bfe5;
-    color: black;
-
+    background-color: #1b5e96;
+    color: white;
+transition: all 0.3s ease;
     &:hover {
-      background-color: #1b5e96;
-      color: white;
+      opacity: 0.7;
     }
 
     &:active {
@@ -180,10 +179,9 @@ export const PostMainList = styled.div`
     right: 2.5vh;
     top: 1.8vh;
     color: white;
-
+transition: all 0.3s ease;
     &:hover {
-      background-color: #95bfe5;
-    }
+opacity: 0.7;    }
   }
 `;
 
@@ -401,6 +399,10 @@ export const PostContentTop = styled.div`
     width: 100%;
     height: 10%;
     justify-content: center;
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   .post-reserve-reset-button {
@@ -414,6 +416,10 @@ export const PostContentTop = styled.div`
     margin-left: 15px;
     cursor: pointer;
     gap: 4px;
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   .post-reserve-reset-button img {
@@ -491,14 +497,14 @@ export const ReserveButton = styled.button`
   width: 80%;
   height: 100%;
   font-size: 16px;
-  background-color: #95bfe5;
+  background-color: #1b5e96;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-
+  color: white;
+transition: all 0.3s ease;
   &:hover {
-    background-color: #1b5e96;
-    color: white;
+    opacity: 0.7;
   }
 
   &:active {
@@ -593,10 +599,9 @@ export const ModalButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-
+transition: all 0.3s ease;
   &:hover {
-    background-color: #95bfe5; /* 기본 버튼 hover 색상 */
-  }
+opacity: 0.7;  }
 
   /* '확인' 버튼과 '닫기' 버튼 사이 간격 띄우기 */
   &.reserve-confirm {
@@ -606,6 +611,7 @@ export const ModalButton = styled.button`
   /* '닫기' 버튼 스타일 */
   &.reserve-close {
     background-color: #d3d3d3; /* 회색 배경 */
+    transition: all 0.3s ease;
     &:hover {
       background-color: #a1a1a1; /* hover 시 더 어두운 회색 */
     }
@@ -640,11 +646,11 @@ export const PostWriteContainer = styled.div`
     background-color: #1b5e96;
     border-radius: 5px;
     cursor: pointer;
+transition: all 0.3s ease;
   }
 
   .post-submit:hover {
-    background-color: #95bfe5;
-  }
+opacity: 0.7; }
 
   .post-submit:active {
     transform: scale(0.99);
@@ -781,10 +787,11 @@ export const Attachment = styled.div`
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+    transition: all 0.3s ease;
   }
 
   .file-upload-label:hover {
-    background-color: #95bfe5;
+    opacity: 0.7;
   }
 
   .file-upload-label:active {
@@ -825,6 +832,7 @@ export const Attachment = styled.div`
     font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   .file-list button:hover {

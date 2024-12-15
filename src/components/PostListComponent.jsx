@@ -173,4 +173,21 @@ export const PostsContainer = styled.div`
   width: 100%;
   height: 93%;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    height: 8px; /* 스크롤바 높이 (x축에서는 높이) */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #1b5e96; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥근 모서리 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 스크롤바 hover 시 색상 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f4f4f4; /* 스크롤바 트랙 배경색 */
+    border-radius: 4px; /* 트랙 둥근 모서리 */
+  }
 `;

@@ -216,6 +216,14 @@ export const BottomButtonContainer = styled.div`
       background-color: #145a86;
     }
   }
+
+  .cancel-button {
+    background-color: #ccc;
+    margin-left: 10px;
+    &:hover {
+      background-color: gray;
+    }
+  }
 `;
 
 // kh account profile 수정----------------------------

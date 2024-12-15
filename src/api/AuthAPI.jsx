@@ -79,6 +79,9 @@ const AuthAPI = {
       },
     });
   },
+  SignOut: async (email) => {
+    const response = await axios.post(SERVER + `/auth/signout/${email}`);
+  },
 };
 
 export default AuthAPI;

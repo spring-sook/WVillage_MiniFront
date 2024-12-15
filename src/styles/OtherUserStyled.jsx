@@ -303,20 +303,22 @@ export const Review = styled.div`
     justify-content: center;
     
   }
+
+      .review-tag {
+          padding: 8px 15px;
+          border: 2px solid black;
+          border-radius: 50px;
+          font-weight: bold;
+          &.good {
+              border-color: #a4d8b9;
+          }
+          &.bad {
+              border-color: #ecb1ab;
+          }
+      }
   }
 
-  .review-tag {
-    padding: 8px 15px;
-    border: 1px solid black;
-    border-radius: 50px;
-    font-weight: bold;
-    &.good {
-      border-color: #a4d8b9;
-    }
-    &.bad {
-      border-color: #ecb1ab;
-    }
-  }
+  
 
   .review-count {
     color: #555;

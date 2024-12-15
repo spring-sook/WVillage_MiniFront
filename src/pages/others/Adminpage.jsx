@@ -89,7 +89,15 @@ export const Adminpage = () => {
     setSelectedReport(null); // 선택된 report 정보도 초기화 (선택적)
   };
 
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0"); // 시간
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // 분
+    return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
+  }
 
 
 
@@ -113,12 +121,12 @@ export const Adminpage = () => {
                 />
                 <div className="userInfo">
                   <span>{report.reportedEmail}</span>
-                  <small>nick: {report.reportedNickName}</small>
+                  <small>유저명 : {report.reportedNickName}</small>
                 </div>
               </div>
               <div className="reportDetails">
                 <p className="reason">사유: {report.reportContent}</p>
-                <p className="date">신고일: {report.reportDate}</p>
+                <p className="date">신고일: {formatDate(report.reportDate)}</p>
               </div>
               <div className="actions">
                 <button

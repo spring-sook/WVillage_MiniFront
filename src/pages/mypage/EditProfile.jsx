@@ -145,13 +145,19 @@ export const EditProfile = () => {
     const fileName = file.name;
     if (file) {
       setProfileImage(fileName);
-      console.log("fileName : ", fileName);
       const uploadedUrls = await ImgUpload([fileName]);
-      console.log("file : ", file);
       const res = await AuthAPI.EditProfileImg(userInfo.email, fileName);
-      console.log(">>>>>>>>>>>>>>>>>>>", res);
+      setUserInfo({
+        ...userInfo,
+        profileImg: fileName, // fileName으로 변경
+      });
     }
   };
+
+  useEffect(() => {
+    setProfileImage(userInfo.profileImg);
+    console.log("변경됨 : ", userInfo.profileImg);
+  }, [userInfo]);
 
   // 계좌 추가하기 버튼 클릭 시 모달 열기
   const handleOpenModal = () => {
@@ -384,6 +390,7 @@ export const EditProfile = () => {
 
           <ProfileBox>
             <div className="profile-image-container">
+              {console.log("현재 프로필 이미지:", profileImage)}
               <ProfileImgDownloader
                 imgfile={profileImage}
                 width={"100%"}

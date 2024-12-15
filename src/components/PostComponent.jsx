@@ -14,8 +14,8 @@ const ViewItemContainer = styled.div`
   margin: 0 auto;
   border-bottom: 1px solid #ccc;
   @media (max-width: 747px) {
-    width :700px;
-    }
+    width: 700px;
+  }
   p {
     font-size: 18px;
     margin: 20px 0;
@@ -37,8 +37,8 @@ const ViewPostReview = styled.div`
   margin: 0 auto 50px;
   border-bottom: 1px solid #ccc;
   @media (max-width: 747px) {
-    width :700px;
-    }
+    width: 700px;
+  }
   .no-review {
     text-align: center;
   }
@@ -95,6 +95,46 @@ export const PostWriteModal = ({ onClose }) => {
           게시글을 작성하려면 모든 항목(카테고리, 가격, 상세 장소, 제목,
           첨부파일, 내용)을 채워야 합니다.
         </p>
+        <ModalButton onClick={onClose}>확인</ModalButton>
+      </ModalContainer>
+    </ModalOverlay>
+  );
+};
+
+export const PostContentConfirmModal = ({
+  onConfirm,
+  onClose,
+  StartTime,
+  EndTime,
+  Point,
+  Duration,
+}) => {
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <h3>예약을 진행하시겠습니까?</h3>
+        <p>
+          {StartTime} ~ {EndTime}
+        </p>
+        <p>계산된 포인트 : {(Duration * Point).toLocaleString()} P</p>
+        <div>
+          <ModalButton className="reserve-confirm" onClick={onConfirm}>
+            확인
+          </ModalButton>
+          <ModalButton className="reserve-close" onClick={onClose}>
+            닫기
+          </ModalButton>
+        </div>
+      </ModalContainer>
+    </ModalOverlay>
+  );
+};
+
+export const PostContentModal = ({ onClose }) => {
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <h3>예약이 완료되었습니다!</h3>
         <ModalButton onClick={onClose}>확인</ModalButton>
       </ModalContainer>
     </ModalOverlay>

@@ -11,7 +11,7 @@ export const PostBody = styled.div`
   @media (max-width: 747px) {
     flex-direction: column;
   }
-    `;
+`;
 
 export const PostMainFilter = styled.div`
   display: flex;
@@ -106,20 +106,20 @@ export const PostMainFilter = styled.div`
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   } */
-.regiontest {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  @media (max-width: 747px) {
-    flex-direction: row;
-    gap: 5px;
-    margin-left: 80px;
-    .select-region{
-      width: 150px;
+  .regiontest {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    @media (max-width: 747px) {
+      flex-direction: row;
+      gap: 5px;
+      margin-left: 80px;
+      .select-region {
+        width: 150px;
+      }
     }
   }
-}
   .select-region,
   .condition-search {
     margin-top: 2vh;
@@ -134,7 +134,6 @@ export const PostMainFilter = styled.div`
   }
   .select-region {
     padding-left: 20px;
-    
   }
 
   .condition-search {
@@ -149,7 +148,6 @@ export const PostMainFilter = styled.div`
     &:active {
       transform: scale(0.99);
     }
-    
   }
 `;
 
@@ -199,7 +197,7 @@ export const PostDisplay = styled.div`
   flex-wrap: wrap;
   row-gap: 30px;
   @media (max-width: 747px) {
-   width: 80%;
+    width: 80%;
     margin-left: 10%;
     margin-bottom: 100px;
   }
@@ -214,16 +212,16 @@ export const PostContentTop = styled.div`
   align-items: center;
   gap: 5vh;
   @media (max-width: 747px) {
-     width: 100% ;
+    width: 100%;
 
-.post-content-top-left{
-  margin-right: -50px;
-  scale: 90%;
-}
-.input-date-picker{
-  width: 80%;
-}
+    .post-content-top-left {
+      margin-right: -50px;
+      scale: 90%;
     }
+    .input-date-picker {
+      width: 80%;
+    }
+  }
   .post-content-img {
     width: 350px;
     height: 300px;
@@ -309,8 +307,8 @@ export const PostContentTop = styled.div`
       cursor: pointer;
       @media (max-width: 747px) {
         top: -60%;
-    right: -10%;
-    }
+        right: -10%;
+      }
     }
     .activate-button.disabled {
       background-color: #ccc;
@@ -522,10 +520,9 @@ export const PostContentBottom = styled.div`
   margin-top: 20px;
   /* align-items: center; */
   @media (max-width: 747px) {
-     max-width :100% ;
-     padding: 10px 20px;
-     
-    }
+    max-width: 100%;
+    padding: 10px 20px;
+  }
   .bottom-menu {
     display: flex;
     justify-content: space-between;
@@ -535,7 +532,7 @@ export const PostContentBottom = styled.div`
     margin: 0 auto;
     border-bottom: 1px solid #ccc;
     @media (max-width: 747px) {
-      max-width :100% ;
+      max-width: 100%;
       padding: 10px 20px;
     }
   }
@@ -544,7 +541,6 @@ export const PostContentBottom = styled.div`
     width: 1px;
     height: 25px;
     background-color: black;
-    
   }
 
   .bottom-menu p {
@@ -555,8 +551,9 @@ export const PostContentBottom = styled.div`
     min-width: 100px; /* 최소 너비 설정 */
 
     @media (max-width: 747px) {
-      flex: 1; /* 동일한 비율로 유지 */  }
-}
+      flex: 1; /* 동일한 비율로 유지 */
+    }
+  }
 `;
 
 export const ModalOverlay = styled.div`
@@ -576,18 +573,21 @@ export const ModalContainer = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
+  width: 500px;
   text-align: center;
 
   h3 {
     margin-bottom: 12px;
+  }
+  p {
+    margin-bottom: 6px;
   }
 `;
 
 export const ModalButton = styled.button`
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #1b5e96;
+  background-color: #1b5e96; /* 기본 버튼 색상 */
   color: white;
   border: none;
   border-radius: 5px;
@@ -595,16 +595,30 @@ export const ModalButton = styled.button`
   font-size: 16px;
 
   &:hover {
-    background-color: #95bfe5;
+    background-color: #95bfe5; /* 기본 버튼 hover 색상 */
+  }
+
+  /* '확인' 버튼과 '닫기' 버튼 사이 간격 띄우기 */
+  &.reserve-confirm {
+    margin-right: 10px; /* '확인' 버튼에 오른쪽 여백 추가 */
+  }
+
+  /* '닫기' 버튼 스타일 */
+  &.reserve-close {
+    background-color: #d3d3d3; /* 회색 배경 */
+    &:hover {
+      background-color: #a1a1a1; /* hover 시 더 어두운 회색 */
+    }
   }
 `;
+
 export const PostWriteContainer = styled.div`
   width: 1000px;
   min-height: 500px;
   margin: 0 auto;
   @media (max-width: 747px) {
-     width :700px ;
-    }
+    width: 700px;
+  }
 
   h2 {
     margin: 40px 0 10px;

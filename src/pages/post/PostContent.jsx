@@ -23,6 +23,8 @@ import {
   GenerateExcludedTimes,
   ViewItemInfo,
   ViewReview,
+  PostContentConfirmModal,
+  PostContentModal,
 } from "../../components/PostComponent";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
@@ -144,35 +146,8 @@ const PostContent = () => {
     // window.location.reload();
   };
 
-  const Modal = ({ className, message, onClose, onConfirm }) => {
-    return (
-      <div className={`modal ${className}`}>
-        <div className="modal-container">
-          <p>{message}</p>
-          <div className="modal-buttons">
-            {onConfirm ? (
-              <>
-                <button className="modal-button" onClick={onConfirm}>
-                  확인
-                </button>
-                <button className="modal-button" onClick={onClose}>
-                  닫기
-                </button>
-              </>
-            ) : (
-              <button className="modal-button" onClick={onClose}>
-                닫기
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const closeModal = () => {
     setShowModal(false);
-    window.location.reload();
   };
   const handleConfirmReservation = async () => {
     try {
@@ -422,24 +397,6 @@ const PostContent = () => {
             >
               예약하기
             </ReserveButton>
-            {showModal && (
-              <Modal
-                className="post-reserve-modal"
-                message={`예약을 진행하시겠습니까?\n예약 시작: ${startDate.toLocaleString()}\n예약 종료: ${endDate.toLocaleString()}\n계산된 금액: ${
-                  duration * (postData.postPrice || 0).toLocaleString()
-                } 포인트`}
-                onConfirm={handleConfirmReservation}
-                onClose={closeModal}
-              />
-            )}
-
-            {showCompletedModal && (
-              <Modal
-                className="post-completed-modal"
-                message="예약이 완료되었습니다!"
-                onClose={closeCompletedModal}
-              />
-            )}
           </div>
         </div>
       </PostContentTop>
@@ -470,6 +427,24 @@ const PostContent = () => {
           <ViewReview reviewData={reviewData} />
         )}
       </PostContentBottom>
+      {showModal && (
+        <PostContentConfirmModal
+          className="post-reserve-modal"
+          StartTime={startDate.toLocaleString()}
+          EndTime={endDate.toLocaleString()}
+          Point={postData.postPrice}
+          Duration={duration}
+          onConfirm={handleConfirmReservation}
+          onClose={closeModal}
+        />
+      )}
+
+      {showCompletedModal && (
+        <PostContentModal
+          className="post-completed-modal"
+          onClose={closeCompletedModal}
+        />
+      )}
       <FooterCom />
     </Container>
   );

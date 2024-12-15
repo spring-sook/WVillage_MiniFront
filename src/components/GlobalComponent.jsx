@@ -5,17 +5,18 @@ import { ProfileImgDownloader } from "./Profile";
 import { useState, useEffect, useRef, useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 import { UserContext } from "../context/UserStore";
+import UserProfileAPI from "../api/OtherUserProfileAPI";
 
 export const HeaderCom = () => {
   const [showOptions, setShowOptions] = useState(false);
   const optionsRef = useRef(null);
   const [selectedOption, setSelectedOption] = useState("전체");
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태 추가
-  const [hasNotification, setHasNotification] = useState(true); // 알림 상태
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
   const location = useLocation();
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext); // setUserInfo 추가
+  const [hasNotification, setHasNotification] = useState(false); // 초기값 false로 변경
 
   const isActive = (path, queryParams = null) => {
     const currentPath = location.pathname; // 현재 경로
@@ -68,6 +69,37 @@ export const HeaderCom = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      if (userInfo?.email) { // userInfo가 존재할 때만 API 호출
+        try{
+          const responseAlarm = await UserProfileAPI.getAlarm(userInfo.email);
+          if(responseAlarm.status === 200){
+            const alarmCount = responseAlarm.data;
+            const reserveMsgLent = alarmCount.reserveMsgLent;
+            const reserveMsgLented = alarmCount.reserveMsgLented;
+            setUserInfo((prevUserInfo) =>({ // 함수형 업데이트 사용
+              ...prevUserInfo,
+              reserveMsgLent: reserveMsgLent,
+              reserveMsgLented: reserveMsgLented,
+              reserveMsgTotal: reserveMsgLent + reserveMsgLented,
+            }));
+            setHasNotification(reserveMsgLent + reserveMsgLented > 0);
+          }else{
+            console.error("알림 요청 실패")
+          }
+
+        }catch(error){
+          console.error("알림 요청 중 오류 발생:", error);
+        }
+      }
+    };
+
+    fetchNotifications(); // 컴포넌트 마운트 시 알림 가져오기
+
+    // 의존성 배열에 userInfo.email 추가. 유저 정보가 바뀌면 다시 useEffect 실행
+  }, [userInfo]);
 
   const selectOption = (option) => {
     setSelectedOption(option); // 선택된 옵션 표시
@@ -203,9 +235,9 @@ export const HeaderCom = () => {
             height="60px"
           />
         </Link>
-        {hasNotification && (
+        {hasNotification && userInfo.reserveMsgTotal > 0 && (
           <div className="badge">{userInfo.reserveMsgTotal}</div>
-        )}{" "}
+        )}
         {/* 알림 뱃지 */}
         {showUserMenu && (
           <div className="dropdown">

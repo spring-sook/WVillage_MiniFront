@@ -7,7 +7,6 @@ import AuthAPI from "../../api/AuthAPI";
 const FindMail = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
     name: "",
     phone: "",
   });

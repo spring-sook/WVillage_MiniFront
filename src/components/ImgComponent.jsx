@@ -8,7 +8,7 @@ export const ImgUpload = async (files) => {
 
   for (const file of files) {
     // const fileRef = storageRef.child(`${userInfo.phone}_${file.name}`);
-    const fileRef = storageRef.child(file);
+    const fileRef = storageRef.child(file.name);
     console.log(file);
     fileRef
       .put(file) // 파일 업로드

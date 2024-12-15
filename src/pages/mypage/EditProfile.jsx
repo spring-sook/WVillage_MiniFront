@@ -142,14 +142,13 @@ export const EditProfile = () => {
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    const fileName = file.name;
     if (file) {
-      setProfileImage(fileName);
-      const uploadedUrls = await ImgUpload([fileName]);
-      const res = await AuthAPI.EditProfileImg(userInfo.email, fileName);
+      setProfileImage(file.name);
+      const uploadedUrls = await ImgUpload([file]);
+      const res = await AuthAPI.EditProfileImg(userInfo.email, file.name);
       setUserInfo({
         ...userInfo,
-        profileImg: fileName, // fileName으로 변경
+        profileImg: file.name, // fileName으로 변경
       });
     }
   };

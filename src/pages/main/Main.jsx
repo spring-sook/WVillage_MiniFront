@@ -169,9 +169,9 @@ const Main = () => {
           </MainBanner>
         </MainBody>
       </div>
-      <ChatWidget onClick={handleChatClick} title="채팅하기">
+      {/* <ChatWidget onClick={handleChatClick} title="채팅하기">
         <FaComments />
-      </ChatWidget>
+      </ChatWidget> */}
       <FooterCom />
     </Container>
   );

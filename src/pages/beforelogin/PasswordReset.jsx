@@ -60,17 +60,40 @@ const PasswordReset = () => {
     validateEmail(value);
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (!email || !phone) {
       alert("이메일과 전화번호를 입력해주세요.");
       return;
     }
+  
     if (!isEmailValid) {
       alert("유효한 이메일 주소를 입력해주세요.");
       return;
     }
-    navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
+  
+    try {
+      const response = await AuthAPI.requestPasswordReset(email, phone);
+  
+      if (response.isValid) {
+        // 성공 시 다음 페이지로 이동
+        navigate(`/passwordreset2?email=${encodeURIComponent(email)}`);
+      } else {
+        // 실패 시 메시지 표시
+        alert(response.message || "입력한 이메일과 전화번호가 일치하지 않습니다.");
+      }
+    } catch (error) {
+      console.error(
+        "비밀번호 재설정 요청 실패:",
+        error.response || error.message
+      );
+  
+      alert(
+        error.response?.data?.message ||
+          "비밀번호 재설정 요청 중 문제가 발생했습니다."
+      );
+    }
   };
+  
 
   return (
     <PasswordResetContainer>

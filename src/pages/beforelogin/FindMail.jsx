@@ -7,6 +7,7 @@ import AuthAPI from "../../api/AuthAPI";
 const FindMail = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    email: "",
     name: "",
     phone: "",
   });
@@ -36,9 +37,9 @@ const FindMail = () => {
       const response = await AuthAPI.FindEmail(formData.name, formData.phone);
       console.log(response);
       alert(
-        `이메일 찾기 완료! 이름: ${formData.name}, 전화번호: ${formData.phone}`
+        `이메일 찾기 완료! 이메일: ${formData.email}`
       );
-      navigate("/passwordreset");
+      navigate("/login");
     } catch (err) {
       console.error("에러 발생: ", err);
       alert("이메일 찾기에 실패했습니다. 정보를 확인해주세요.");

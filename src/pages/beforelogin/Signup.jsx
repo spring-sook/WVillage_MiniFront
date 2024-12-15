@@ -224,7 +224,7 @@ const Signup = () => {
       console.log("서버 응답:", response);
       if (response.status === 200) {
         alert("회원가입이 완료되었습니다.");
-        navigate("/main");
+        navigate("/login");
       }
     } catch (error) {
       console.error("회원가입 요청 실패:", error.response || error.message);

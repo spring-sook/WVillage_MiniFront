@@ -72,33 +72,33 @@ export const HeaderCom = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (userInfo?.email) { // userInfo가 존재할 때만 API 호출
-        try{
+      if (userInfo?.email) {
+        try {
           const responseAlarm = await UserProfileAPI.getAlarm(userInfo.email);
-          if(responseAlarm.status === 200){
+          if (responseAlarm.status === 200) {
             const alarmCount = responseAlarm.data;
             const reserveMsgLent = alarmCount.reserveMsgLent;
             const reserveMsgLented = alarmCount.reserveMsgLented;
-            setUserInfo((prevUserInfo) =>({ // 함수형 업데이트 사용
-              ...prevUserInfo,
+
+            // updateUserInfo를 사용하여 컨텍스트 업데이트
+            UserContext.updateUserInfo({
+              ...userInfo, // 기존 userInfo 정보 유지
               reserveMsgLent: reserveMsgLent,
               reserveMsgLented: reserveMsgLented,
               reserveMsgTotal: reserveMsgLent + reserveMsgLented,
-            }));
-            setHasNotification(reserveMsgLent + reserveMsgLented > 0);
-          }else{
-            console.error("알림 요청 실패")
-          }
+            });
 
-        }catch(error){
+            setHasNotification(reserveMsgLent + reserveMsgLented > 0);
+          } else {
+            console.error("알림 요청 실패");
+          }
+        } catch (error) {
           console.error("알림 요청 중 오류 발생:", error);
         }
       }
     };
 
-    fetchNotifications(); // 컴포넌트 마운트 시 알림 가져오기
-
-    // 의존성 배열에 userInfo.email 추가. 유저 정보가 바뀌면 다시 useEffect 실행
+    fetchNotifications();
   }, [userInfo]);
 
   const selectOption = (option) => {

@@ -134,7 +134,7 @@ export const PostListComponent = ({ email }) => {
         <button onClick={() => setOrder("최신순")}>최신순</button>
         <span>|</span>
         <button onClick={() => setOrder("인기순")}>인기순</button>
-        <CategorySelect options={option} />
+        {/* <CategorySelect options={option} /> */}
       </UserPostHeader>
       <PostListContainer>
         <UserPostBody>

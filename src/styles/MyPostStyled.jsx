@@ -20,7 +20,7 @@ export const Posts = styled.div`
   width: 90%;
   height: 610px;
   column-gap: 0.8%;
-  overflow-y: auto;
+
 `;
 
 export const PostHeader = styled.div`
@@ -41,7 +41,24 @@ export const PostBody = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    height: 8px; /* 스크롤바 높이 (x축에서는 높이) */
+  }
 
+  &::-webkit-scrollbar-thumb {
+    background: #1b5e96; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥근 모서리 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 스크롤바 hover 시 색상 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f4f4f4; /* 스크롤바 트랙 배경색 */
+    border-radius: 4px; /* 트랙 둥근 모서리 */
+  }
   .disablePost {
     width: 91%;
     height: 75%;

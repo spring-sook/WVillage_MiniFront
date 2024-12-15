@@ -165,6 +165,13 @@ export const InfoSection = styled.div`
         outline: none;
       }
     }
+    .select-region {
+      margin-right: 10px;
+      height: 30px;
+      width: 150px;
+      border: 1px solid #1b5e96;
+      border-radius: 50px;
+    }
   }
 
   .password-container {
@@ -536,6 +543,11 @@ export const DeleteModal = styled.div`
 // kh edit profile 수정----------------------------
 export const Region = styled.div`
   display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+
   .select-region {
     margin-right: 10px;
     height: 30px;
@@ -547,8 +559,11 @@ export const Region = styled.div`
     font-size: 15px;
     margin-right: 20px;
     font-weight: bold;
-    min-width: 90px;
+    min-width: 100px;
     text-align: right;
     padding: 5px;
+  }
+  .region-select {
+    flex: 1;
   }
 `;

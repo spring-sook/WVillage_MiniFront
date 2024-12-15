@@ -49,6 +49,7 @@ export const EditProfile = () => {
   const [searchArea, setSearchArea] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [newName, setNewName] = useState("");
 
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
@@ -247,7 +248,7 @@ export const EditProfile = () => {
                   <label>이름:</label>
                   <input
                     type="text"
-                    value={userInfo.name || ""}
+                    defaultValue={userInfo.name || ""}
                     disabled={!isEditing}
                   />
                 </div>
@@ -256,7 +257,7 @@ export const EditProfile = () => {
                   <label>닉네임:</label>
                   <input
                     type="text"
-                    value={userInfo.nickname || ""}
+                    defaultValue={userInfo.nickname || ""}
                     disabled={!isEditing}
                   />
                 </div>
@@ -265,7 +266,7 @@ export const EditProfile = () => {
                   <label>전화번호:</label>
                   <input
                     type="text"
-                    value={userInfo.phone || ""}
+                    defaultValue={userInfo.phone || ""}
                     disabled={!isEditing}
                   />
                 </div>
@@ -275,7 +276,7 @@ export const EditProfile = () => {
                   <div className="password-container">
                     <input
                       type={showPassword ? "text" : "password"}
-                      value={userInfo.password || ""}
+                      defaultValue={userInfo.password || ""}
                       disabled={!isEditing}
                     />
                     <FontAwesomeIcon
@@ -303,30 +304,32 @@ export const EditProfile = () => {
                     />
                   </div>
                 </div>
+                <div className="info-item">
+                  <label>주소: </label>
+                  {isEditing ? (
+                    <RegionSelect
+                      className="region-select"
+                      regionFilter={regionFilter}
+                      sidoOpt={sidoOpt}
+                      sigunguOpt={sigunguOpt}
+                      setSigunguOpt={setSigunguOpt}
+                      emdOpt={emdOpt}
+                      setEmdOpt={setEmdOpt}
+                      riOpt={riOpt}
+                      setRiOpt={setRiOpt}
+                      setSearchParams={setSearchParams}
+                      setRegionFilter={setRegionFilter}
+                      handleRegionChange={handleRegionChange}
+                      setSearchArea={setSearchArea}
+                    />
+                  ) : (
+                    <span className="region-select">
+                      {userInfo.filteredRegion}
+                    </span>
+                  )}
+                </div>
               </div>
             </InfoSection>
-            <Region>
-              <p>주소: </p>
-              {isEditing ? (
-                <RegionSelect
-                  regionFilter={regionFilter}
-                  sidoOpt={sidoOpt}
-                  sigunguOpt={sigunguOpt}
-                  setSigunguOpt={setSigunguOpt}
-                  emdOpt={emdOpt}
-                  setEmdOpt={setEmdOpt}
-                  riOpt={riOpt}
-                  setRiOpt={setRiOpt}
-                  setSearchParams={setSearchParams}
-                  setRegionFilter={setRegionFilter}
-                  handleRegionChange={handleRegionChange}
-                  setSearchArea={setSearchArea}
-                />
-              ) : (
-                <span>{userInfo.filteredRegion}</span>
-              )}
-            </Region>
-
             <BottomButtonContainer>
               <button onClick={toggleEditing}>
                 {isEditing ? "수정 완료" : "수정"}

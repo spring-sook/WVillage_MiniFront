@@ -24,28 +24,28 @@ export const UserStore = (props) => {
     updateUserInfo(updatedUserInfo);
   };
 
-  // useEffect(() => {
-  //   // fetchRegion은 조만간 삭제할 예정
-  //   const fetchRegion = async () => {
-  //     if (!userInfo || !userInfo.areaCode) return; // userInfo 또는 areaCode가 없으면 중단
+  useEffect(() => {
+    // fetchRegion은 조만간 삭제할 예정
+    const fetchRegion = async () => {
+      if (!userInfo || !userInfo.areaCode) return; // userInfo 또는 areaCode가 없으면 중단
 
-  //     try {
-  //       const rspRegion = await UserProfileAPI.getRegion(userInfo.areaCode);
-  //       const regionData = rspRegion.data[0];
-  //       const filteredRegion = Object.values(regionData)
-  //         .filter((value) => value && value !== "nan")
-  //         .join(" ");
+      try {
+        const rspRegion = await UserProfileAPI.getRegion(userInfo.areaCode);
+        const regionData = rspRegion.data[0];
+        const filteredRegion = Object.values(regionData)
+          .filter((value) => value && value !== "nan")
+          .join(" ");
 
-  //       // 업데이트 후 상태 확인
-  //       const updatedUserInfo = { ...userInfo, filteredRegion };
-  //       updateUserInfo(updatedUserInfo);
-  //     } catch (error) {
-  //       console.error("지역 정보를 가져오는 중 오류 발생:", error);
-  //     }
-  //   };
+        // 업데이트 후 상태 확인
+        const updatedUserInfo = { ...userInfo, filteredRegion };
+        updateUserInfo(updatedUserInfo);
+      } catch (error) {
+        console.error("지역 정보를 가져오는 중 오류 발생:", error);
+      }
+    };
 
-  //   fetchRegion();
-  // }, [userInfo?.areaCode]);
+    fetchRegion();
+  }, [userInfo?.areaCode]);
 
   return (
     <UserContext.Provider

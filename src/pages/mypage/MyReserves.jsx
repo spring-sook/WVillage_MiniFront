@@ -55,7 +55,7 @@ export const MyReserve = () => {
   const allReviewTags = [...goodReviewTags, ...badReviewTags];
 
   const taggedReviewTags = allReviewTags.reduce((acc, tag, index) => {
-    acc[`TAG_${index}`] = tag;
+    acc[`TAG_${index + 1}`] = tag;
     return acc;
   }, {});
 

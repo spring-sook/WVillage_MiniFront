@@ -15,7 +15,7 @@ export const HeaderCom = () => {
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
   const location = useLocation();
-  const { userInfo, setUserInfo } = useContext(UserContext); // setUserInfo 추가
+  const { userInfo, updateUserInfo } = useContext(UserContext); // setUserInfo 추가
   const [hasNotification, setHasNotification] = useState(false); // 초기값 false로 변경
 
   const isActive = (path, queryParams = null) => {
@@ -80,14 +80,13 @@ export const HeaderCom = () => {
             const reserveMsgLent = alarmCount.reserveMsgLent;
             const reserveMsgLented = alarmCount.reserveMsgLented;
 
-            // updateUserInfo를 사용하여 컨텍스트 업데이트
-            UserContext.updateUserInfo({
-              ...userInfo, // 기존 userInfo 정보 유지
-              reserveMsgLent: reserveMsgLent,
-              reserveMsgLented: reserveMsgLented,
+            updateUserInfo({ // useContext로 가져온 updateUserInfo를 사용!
+              ...userInfo,
+              reserveMsgLent,
+              reserveMsgLented,
               reserveMsgTotal: reserveMsgLent + reserveMsgLented,
             });
-
+            console.log("userInfo.reserveMsgTotal:", userInfo?.reserveMsgTotal); // optional chaining 추가
             setHasNotification(reserveMsgLent + reserveMsgLented > 0);
           } else {
             console.error("알림 요청 실패");
@@ -99,7 +98,7 @@ export const HeaderCom = () => {
     };
 
     fetchNotifications();
-  }, [userInfo]);
+  }, [userInfo]); //
 
   const selectOption = (option) => {
     setSelectedOption(option); // 선택된 옵션 표시

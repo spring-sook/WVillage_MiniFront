@@ -17,10 +17,17 @@ export const UserStore = (props) => {
   //   // 로컬 스토리지에서 이미지 URL을 가져와 초기값 설정
   //   return localStorage.getItem("profileImageUrl") || null;
   // });
-  const updateUserInfo = (info) => {
-    setUserInfo(info);
-    localStorage.setItem("userInfo", JSON.stringify(info)); // 로컬 스토리지에 저장
+
+  // const updateUserInfo = (info) => {
+  //   setUserInfo(info);
+  //   localStorage.setItem("userInfo", JSON.stringify(info)); // 로컬 스토리지에 저장
+  // };
+
+  const updateUserInfo = (newInfo) => {
+    setUserInfo(prevInfo => ({ ...prevInfo, ...newInfo }));
+    localStorage.setItem("userInfo", JSON.stringify(newInfo));// 함수형 업데이트 권장
   };
+
   // 포인트 업데이트 관련
   const updateUserPoints = (newPoints) => {
     const updatedUserInfo = { ...userInfo, point: newPoints };

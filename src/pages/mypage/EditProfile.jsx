@@ -30,6 +30,7 @@ import { RegionSelect } from "../../components/RegionSelect";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { ProfileImgDownloader } from "../../components/Profile";
+import { ImgUpload } from "../../components/ImgComponent";
 
 export const EditProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -139,14 +140,16 @@ export const EditProfile = () => {
     }
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
+    const fileName = file.name;
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setProfileImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setProfileImage(fileName);
+      console.log("fileName : ", fileName);
+      const uploadedUrls = await ImgUpload([fileName]);
+      console.log("file : ", file);
+      const res = await AuthAPI.EditProfileImg(userInfo.email, fileName);
+      console.log(">>>>>>>>>>>>>>>>>>>", res);
     }
   };
 

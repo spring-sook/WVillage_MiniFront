@@ -136,10 +136,8 @@ const PostContent = () => {
     setIsBookmarked(!isBookmarked);
     if (!isBookmarked) {
       await PostAPI.InsertBookmark(postId, userInfo.email);
-      console.log("INSERT!!!!!!!!!");
     } else {
       await PostAPI.DeleteBookmark(postId, userInfo.email);
-      console.log("DELETE~~~~~~~");
     }
     const responseData = await PostAPI.PostContentDetail(postId);
     setPostData(responseData.data);

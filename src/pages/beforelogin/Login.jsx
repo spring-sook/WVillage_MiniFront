@@ -64,6 +64,13 @@ const Login = () => {
         reserveMsgLented: reserveMsgLented,
         reserveMsgTotal: reserveMsgLent + reserveMsgLented,
       });
+      localStorage.setItem("userInfo", JSON.stringify(response));
+      localStorage.setItem("reserveMsgLent", reserveMsgLent);
+      localStorage.setItem("reserveMsgLented", reserveMsgLented);
+      localStorage.setItem(
+        "reserveMsgTotal",
+        reserveMsgLent + reserveMsgLented
+      );
       navigate("/main");
     } else {
       alert("이메일 또는 비밀번호가 잘못되었습니다.");

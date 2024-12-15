@@ -71,6 +71,14 @@ const AuthAPI = {
   EditProfile: async (data) => {
     const response = await axios.post(SERVER + `/auth/edit-profile`, data);
   },
+  EditProfileImg: async (email, imgUrl) => {
+    const response = await axios.post(SERVER + `/auth/editProfileImg`, null, {
+      params: {
+        email: email,
+        imgUrl: imgUrl,
+      },
+    });
+  },
 };
 
 export default AuthAPI;

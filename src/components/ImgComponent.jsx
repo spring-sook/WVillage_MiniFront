@@ -7,6 +7,8 @@ export const ImgUpload = async (files) => {
   const storageRef = storage.ref(); // Firebase Storage 참조
 
   for (const file of files) {
+    console.log("받은 files 목록", file);
+
     // const fileRef = storageRef.child(`${userInfo.phone}_${file.name}`);
     const fileRef = storageRef.child(file.name);
     console.log(file.name);

@@ -4,11 +4,7 @@ const SERVER = "http://localhost:8111";
 
 const AuthAPI = {
   login: async (email, password) => {
-    const response = await axios.post(SERVER + `/auth/login`, {
-      email,
-      password,
-    });
-    return response.data;
+    return await axios.post(SERVER + "/auth/login", { email, password });
   },
 
   FindEmail: async (name, phone) => {

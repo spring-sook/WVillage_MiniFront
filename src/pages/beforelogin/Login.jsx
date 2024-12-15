@@ -47,28 +47,24 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const response = await AuthAPI.login(email, password);
-    if (response) {
-      const responseAlarm = await UserProfileAPI.getAlarm(email);
-      const alarmCount = responseAlarm.data;
-      const reserveMsgLent = alarmCount.reserveMsgLent;
-      const reserveMsgLented = alarmCount.reserveMsgLented;
-      console.log(
-        reserveMsgLent,
-        reserveMsgLented,
-        reserveMsgLent + reserveMsgLented
-      );
-      setUserInfo({
-        ...response,
-        reserveMsgLent: reserveMsgLent,
-        reserveMsgLented: reserveMsgLented,
-        reserveMsgTotal: reserveMsgLent + reserveMsgLented,
-      });
-      navigate("/main");
-    } else {
-      alert("이메일 또는 비밀번호가 잘못되었습니다.");
+    try {
+      const response = await AuthAPI.login(email, password);
+      console.log("Response:", response); // 응답 데이터 확인
+
+      if (response.status === 200) {
+        // 로그인 성공
+        const userInfo = response.data;
+        setUserInfo(userInfo);
+        navigate("/main");
+      }
+    } catch (error) {
+      // 백엔드의 에러 메시지 표시
+      alert(error.response.data);
     }
   };
+  
+  
+  
 
   return (
     <LoginContainer>
@@ -112,7 +108,7 @@ const Login = () => {
         </InputContainer>
         <Button onClick={handleLogin}>로그인</Button>
         <TextLinksContainer>
-          <StyledLink to="/findmail">아이디 찾기</StyledLink>
+          <StyledLink to="/findmail">이메일 찾기</StyledLink>
           <Separator>|</Separator>
           <StyledLink to="/passwordreset">비밀번호 재설정</StyledLink>
           <Separator>|</Separator>

@@ -215,6 +215,7 @@ export const MyReserve = () => {
       reserveId
     );
     closeModal(); // 모달 닫기
+     setSelectedTags([]);
     window.location.reload();
   };
 

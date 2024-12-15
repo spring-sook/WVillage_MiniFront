@@ -13,16 +13,16 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const { userInfo } = useContext(UserContext);
-  const storedImageUrl = localStorage.getItem("profileImageUrl");
+  // const storedImageUrl = userInfo.profileImg;
   // const storedImageUrl = "profile_basic.png";
 
   useEffect(() => {
-    if (storedImageUrl) {
+    if (imageUrl) {
       // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
-      setImageUrl(storedImageUrl);
       setLoading(false); // 로딩 완료
     } else {
       const fileRef = ref(storage, userInfo.profileImg); // Firebase에서 이미지 경로 설정
+      console.log("여기여기요 : ", userInfo.profileImg);
 
       getDownloadURL(fileRef)
         .then((url) => {
@@ -35,7 +35,7 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
           setLoading(false); // 오류 발생 시 로딩 완료
         });
     }
-  }, [imgfile, storedImageUrl]);
+  }, [userInfo]);
 
   if (loading) {
     return <div></div>; // 로딩 중일 때 보여줄 내용

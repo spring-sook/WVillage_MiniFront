@@ -36,6 +36,15 @@ const ReportAPI = {
       throw error;
     }
   },
+  insertReport: async (reportData) => {
+    try{
+      const response = await axios.post(SERVER + `/report/insertReport`, reportData); // insertReport 엔드포인트 사용
+      return response.status === 200;
+    } catch (error){
+      console.error("신고 생성 중 오류 발생:", error);
+      throw error;
+    }
+  }
 };
 
 export default ReportAPI;

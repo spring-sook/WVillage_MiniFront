@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ProfileImgDownloader } from "./Profile";
+import {useState, useEffect} from "react";
+import {ProfileImgDownloader} from "./Profile";
 import {
   UserProfileBox,
   Button,
@@ -15,8 +15,9 @@ import fire3 from "../../src/images/fire3.jpg";
 import fire4 from "../../src/images/fire4.jpg";
 import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
+import ReportAPI from "../api/ReportAPI";
 
-export const OtherUser = ({ email }) => {
+export const OtherUser = ({email}) => {
   const [userProfile, setUserProfile] = useState(null); // 유저 프로필 정보 상태
   const [isModalOpen, setModalOpen] = useState(false);
   const [reportReason, setReportReason] = useState(""); // 신고 사유 상태
@@ -70,9 +71,11 @@ export const OtherUser = ({ email }) => {
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
+
   const handleReportChange = (event) => {
     setReportReason(event.target.value);
   };
+
   const handleReportSubmit = async () => {
     if (!reportReason || reportReason.trim() === "") {
       alert("신고 사유를 작성해 주세요.");
@@ -80,26 +83,22 @@ export const OtherUser = ({ email }) => {
     }
 
     try {
-      // 서버로 신고 정보 전송
-      const response = await fetch("/report", {
-        method: "POST",
-        body: JSON.stringify({
-          reportReporter: email, // 신고한 사람의 이메일
-          reportReported: userProfile.email, // 신고당한 사람의 이메일
-          reportContent: reportReason, // 신고 사유
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const reportData = {
+        reporterEmail: email, // 신고한 사람의 이메일 (props로 전달받은 email)
+        reportedEmail: userProfile.email, // 신고당한 사람의 이메일 (userProfile에서 가져옴)
+        reportContent: reportReason, // 신고 사유
+      };
 
-      if (response.ok) {
-        setIsReported(true); // 신고 완료 상태로 변경
+      const success = await ReportAPI.insertReport(reportData); // ReportAPI 사용 (원래 insert 용도)
+
+      if (success) {
+        setIsReported(true);
+        setReportReason(""); // 신고 완료 후 input 초기화
       } else {
         alert("신고 처리에 실패했습니다.");
       }
     } catch (error) {
-      console.error("Error during reporting:", error);
+      console.error("신고 처리 중 오류 발생:", error);
       alert("신고 처리 중 오류가 발생했습니다.");
     }
   };
@@ -135,12 +134,12 @@ export const OtherUser = ({ email }) => {
           <Review>
             <div className="container">
               {[
-                { tag: "친절해요", count: 10, id: "good" },
-                { tag: "시간엄수", count: 8, id: "good" },
-                { tag: "상품좋아요", count: 12, id: "good" },
-                { tag: "싫어요", count: 5, id: "bad" },
-                { tag: "별로에요", count: 9, id: "bad" },
-                { tag: "짜증나요", count: 7, id: "bad" },
+                {tag: "친절해요", count: 10, id: "good"},
+                {tag: "시간엄수", count: 8, id: "good"},
+                {tag: "상품좋아요", count: 12, id: "good"},
+                {tag: "싫어요", count: 5, id: "bad"},
+                {tag: "별로에요", count: 9, id: "bad"},
+                {tag: "짜증나요", count: 7, id: "bad"},
               ].map((item, index) => (
                 <div key={index} className="review-item">
                   <span className={`review-tag ${item.id}`}>{item.tag}</span>

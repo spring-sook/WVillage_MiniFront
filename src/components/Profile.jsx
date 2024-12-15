@@ -17,12 +17,11 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
   // const storedImageUrl = "profile_basic.png";
 
   useEffect(() => {
-    if (storedImageUrl) {
+    if (storedImageUrl === userInfo.profileImg) {
       // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
       setImageUrl(storedImageUrl);
       setLoading(false); // 로딩 완료
     } else {
-      // 로컬 스토리지에 이미지가 없으면 Firebase에서 가져옴
       const fileRef = ref(storage, userInfo.profileImg); // Firebase에서 이미지 경로 설정
 
       getDownloadURL(fileRef)
@@ -39,7 +38,7 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
   }, [imgfile, storedImageUrl]);
 
   if (loading) {
-    return <div>Loading...</div>; // 로딩 중일 때 보여줄 내용
+    return <div></div>; // 로딩 중일 때 보여줄 내용
   }
   // 로그아웃 시 이미지 제거: localStorage.removeItem("profileImageUrl") -- 로그인 중인지 확인해서 하면 될듯
 

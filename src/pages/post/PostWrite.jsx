@@ -147,7 +147,7 @@ const PostWrite = () => {
                 카테고리 선택
               </option>
               <option value="제품">제품</option>
-              <option value="구인">구인</option>
+              <option value="구직">구직</option>
               <option value="장소">장소</option>
             </select>
             <div className="post-write-hour">시간당</div>

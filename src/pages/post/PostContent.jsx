@@ -65,7 +65,7 @@ const PostContent = () => {
       setWriterData(responseProfile.data);
       console.log(responseProfile.data);
       const responseBookmark = await PostAPI.IsBookmarked(
-        responseData.data.postEmail,
+        userInfo.email,
         postId
       );
       console.log(responseBookmark.data);

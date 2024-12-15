@@ -113,7 +113,13 @@ export const HeaderCom = () => {
 
   return (
     <Header>
-      <Link to="/main" className="logo">
+      <Link
+        to={{
+          pathname: "/post",
+          state: { userInfo },
+        }}
+        className="logo"
+      >
         <img src={LogoImg} alt="로고" className="logo-img" />
       </Link>
       <div className="name">
@@ -136,12 +142,12 @@ export const HeaderCom = () => {
         </Link>
         <p>/</p>
         <Link
-          to="/post?category=구인"
+          to="/post?category=구직"
           className={`tag ${
-            isActive("/post", "category=구인") ? "active" : ""
+            isActive("/post", "category=구직") ? "active" : ""
           }`}
         >
-          구인
+          구직
         </Link>
         <p>/</p>
         <Link
@@ -180,7 +186,7 @@ export const HeaderCom = () => {
           <div className="options-list">
             <p onClick={() => selectOption("전체")}>전체</p>
             <p onClick={() => selectOption("제품")}>제품</p>
-            <p onClick={() => selectOption("구인")}>구인</p>
+            <p onClick={() => selectOption("구직")}>구직</p>
             <p onClick={() => selectOption("장소")}>장소</p>
           </div>
         </div>

@@ -40,7 +40,7 @@ const Signup = () => {
     confirmPassword: "",
     phone: "",
     addressType: "default",
-    address: "",
+    areaCode: "",
   });
 
   const [checkingStatus, setCheckingStatus] = useState({
@@ -90,7 +90,7 @@ const Signup = () => {
       const address = regionFilter.ri || regionFilter.emd || "";
       setFormData((prevData) => ({
         ...prevData,
-        address: address,
+        areaCode: address,
       }));
     };
     updateAddress();
@@ -224,7 +224,7 @@ const Signup = () => {
       console.log("서버 응답:", response);
       if (response.status === 200) {
         alert("회원가입이 완료되었습니다.");
-        navigate("/login");
+        navigate("/");
       }
     } catch (error) {
       console.error("회원가입 요청 실패:", error.response || error.message);

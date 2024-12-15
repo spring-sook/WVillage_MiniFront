@@ -25,9 +25,11 @@ import {
 import { UserContext } from "../../context/UserStore";
 import AccountAPI from "../../api/AccountAPI";
 import CommonAPI from "../../api/CommonAPI";
+import AuthAPI from "../../api/AuthAPI";
 import { RegionSelect } from "../../components/RegionSelect";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import { ProfileImgDownloader } from "../../components/Profile";
 
 export const EditProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,13 +37,13 @@ export const EditProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
   const [showModal, setShowModal] = useState(false); // 모달 열기/닫기
   const [showDeleteModal, setShowDeleteModal] = useState(false); // 계좌 삭제 확인 모달
   const [selectedAccount, setSelectedAccount] = useState(null); // 삭제할 계좌 정보
   const [newAccount, setNewAccount] = useState({ bank: "", accountNumber: "" }); // 새 계좌 정보
   const [accounts, setAccounts] = useState([]);
-  const { userInfo } = useContext(UserContext); // UserContext에서 userInfo 가져오기
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  const [profileImage, setProfileImage] = useState(userInfo.profileImg);
   const [sidoOpt, setSidoOpt] = useState([]);
   const [sigunguOpt, setSigunguOpt] = useState([]);
   const [emdOpt, setEmdOpt] = useState([]);
@@ -49,7 +51,11 @@ export const EditProfile = () => {
   const [searchArea, setSearchArea] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState(userInfo.name);
+  const [newNickname, setNewNickname] = useState(userInfo.nickname);
+  const [newPhone, setNewPhone] = useState(userInfo.phone);
+  const [newPassword, setNewPassword] = useState(userInfo.password);
+  const [newAreaCode, setNewAreaCode] = useState(userInfo.areaCode);
 
   const [regionFilter, setRegionFilter] = useState({
     sido: null,
@@ -95,10 +101,42 @@ export const EditProfile = () => {
       }
     };
     fetchRegionData();
+    if (regionFilter.ri) {
+      setNewAreaCode(regionFilter.ri);
+    } else if (regionFilter.emd) {
+      setNewAreaCode(regionFilter.emd);
+    } else if (regionFilter.sigungu) {
+      setNewAreaCode(regionFilter.sigungu);
+    } else if (regionFilter.sido) {
+      setNewAreaCode(regionFilter.sido);
+    }
+    console.log(newName, newNickname, newPhone, newPassword, newAreaCode);
   }, [regionFilter]);
 
-  const toggleEditing = () => {
-    setIsEditing(!isEditing);
+  const toggleEditing = async () => {
+    console.log(isEditing);
+    if (!isEditing) {
+      // 정보 수정하고있는 상태태
+      setIsEditing(!isEditing);
+    } else {
+      // 정보 수정 완료
+      if (!newPassword) {
+        alert("비밀번호호를 입력해주세요."); // 경고 메시지
+        return; // 함수 종료
+      }
+      const updatedData = {
+        email: userInfo.email,
+        name: newName || userInfo.name,
+        nickname: newNickname || userInfo.nickname,
+        phone: newPhone || userInfo.phone,
+        password: newPassword,
+        areaCode: newAreaCode || userInfo.areaCode,
+      };
+
+      const response = await AuthAPI.EditProfile(updatedData);
+      setUserInfo({ ...userInfo, ...updatedData });
+      setIsEditing(!isEditing);
+    }
   };
 
   const handleImageUpload = (e) => {
@@ -249,6 +287,7 @@ export const EditProfile = () => {
                   <input
                     type="text"
                     defaultValue={userInfo.name || ""}
+                    onChange={(e) => setNewName(e.target.value)}
                     disabled={!isEditing}
                   />
                 </div>
@@ -258,6 +297,7 @@ export const EditProfile = () => {
                   <input
                     type="text"
                     defaultValue={userInfo.nickname || ""}
+                    onChange={(e) => setNewNickname(e.target.value)}
                     disabled={!isEditing}
                   />
                 </div>
@@ -267,6 +307,7 @@ export const EditProfile = () => {
                   <input
                     type="text"
                     defaultValue={userInfo.phone || ""}
+                    onChange={(e) => setNewPhone(e.target.value)}
                     disabled={!isEditing}
                   />
                 </div>
@@ -276,7 +317,8 @@ export const EditProfile = () => {
                   <div className="password-container">
                     <input
                       type={showPassword ? "text" : "password"}
-                      defaultValue={userInfo.password || ""}
+                      defaultValue={password || ""}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       disabled={!isEditing}
                     />
                     <FontAwesomeIcon
@@ -292,7 +334,7 @@ export const EditProfile = () => {
                   <div className="password-container">
                     <input
                       type={showConfirmPassword ? "text" : "password"}
-                      value={userInfo.password || ""}
+                      defaultValue={userInfo.password || ""}
                       disabled={!isEditing}
                     />
                     <FontAwesomeIcon
@@ -339,15 +381,11 @@ export const EditProfile = () => {
 
           <ProfileBox>
             <div className="profile-image-container">
-              {profileImage ? (
-                <img
-                  src={profileImage}
-                  alt="프로필"
-                  className="profile-image"
-                />
-              ) : (
-                <FontAwesomeIcon icon={faUser} className="placeholder-icon" />
-              )}
+              <ProfileImgDownloader
+                imgfile={profileImage}
+                width={"100%"}
+                height={"100%"}
+              ></ProfileImgDownloader>
               <label htmlFor="profile-upload" className="upload-label">
                 <FontAwesomeIcon icon={faCamera} />
               </label>

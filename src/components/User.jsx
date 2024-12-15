@@ -22,8 +22,6 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
     "내 정보 수정",
   ];
 
-  const imagePath = "snow_village.webp";
-
   const temperature = (300.0 + parseInt(userInfo.score)) / 10.0;
   let temperatureImage = fire1; // 기본 이미지를 설정 (기본값)
 
@@ -46,7 +44,7 @@ export const User = ({ setSelectedMenu, selectedMenu, nickname }) => {
       <Usermy>
         <div className="usermy">
           <ProfileImgDownloader
-            imgfile={imagePath}
+            imgfile={userInfo.profileImg}
             width="120px"
             height="120px"
           />

@@ -30,7 +30,7 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
       .catch((error) => {
         console.error("이미지 가져오기 에러:", error);
       });
-  }, [userInfo.profileImg]);
+  }, [userInfo.profileImg, imgfile]);
 
   // 로그아웃 시 이미지 제거: localStorage.removeItem("profileImageUrl") -- 로그인 중인지 확인해서 하면 될듯
 

@@ -109,7 +109,7 @@ export const HeaderCom = () => {
     navigate("/");
   };
 
-  const imagePath = "snow_village.webp";
+  const imagePath = userInfo.profileImg;
 
   return (
     <Header>

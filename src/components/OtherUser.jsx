@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react";
-import {ProfileImgDownloader} from "./Profile";
+import { useState, useEffect } from "react";
+import { ProfileImgDownloader } from "./Profile";
 import {
   UserProfileBox,
   Button,
@@ -17,7 +17,7 @@ import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
 import ReportAPI from "../api/ReportAPI";
 
-export const OtherUser = ({email}) => {
+export const OtherUser = ({ email }) => {
   const [userProfile, setUserProfile] = useState(null); // 유저 프로필 정보 상태
   const [isModalOpen, setModalOpen] = useState(false);
   const [reportReason, setReportReason] = useState(""); // 신고 사유 상태
@@ -119,7 +119,7 @@ export const OtherUser = ({email}) => {
         <div className="box">
           <div className="userInfo">
             <ProfileImgDownloader
-              imgfile={userProfile.PROFILE_IMG} // DB에서 가져온 프로필 이미지
+              imgfile={userProfile.profileImg} // DB에서 가져온 프로필 이미지
               width="120px"
               height="120px"
             />
@@ -137,15 +137,29 @@ export const OtherUser = ({email}) => {
           </div>
           <Review>
             <div className="container">
-              {reviews.map((item, index) => ( // reviews 데이터 렌더링
-                <div key={index} className="review-item">
-                  <span className="review-tag"
-                        style={{borderColor: item.reviewScore > 0 ? '#a4d8b9' : item.reviewScore < 0 ? '#ecb1ab' : 'black'}}>
-                    {item.reviewContent}
-                  </span>
-                  <span className="review-count">({item.recordCount}개)</span>
-                </div>
-              ))}
+              {reviews.map(
+                (
+                  item,
+                  index // reviews 데이터 렌더링
+                ) => (
+                  <div key={index} className="review-item">
+                    <span
+                      className="review-tag"
+                      style={{
+                        borderColor:
+                          item.reviewScore > 0
+                            ? "#a4d8b9"
+                            : item.reviewScore < 0
+                            ? "#ecb1ab"
+                            : "black",
+                      }}
+                    >
+                      {item.reviewContent}
+                    </span>
+                    <span className="review-count">({item.recordCount}개)</span>
+                  </div>
+                )
+              )}
             </div>
           </Review>
           <Button onClick={toggleModal}>신고하기</Button>

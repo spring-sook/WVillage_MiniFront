@@ -80,7 +80,9 @@ const AuthAPI = {
     });
   },
   SignOut: async (email) => {
-    const response = await axios.post(SERVER + `/auth/signout/${email}`);
+    const response = await axios.post(SERVER + `/auth/signout`, null, {
+      params: { email: email },
+    });
   },
 };
 

@@ -51,10 +51,6 @@ const Main = () => {
       setCurrentIndex(currentIndex + 1);
     }
   };
-  const handleChatClick = () => {
-    alert("채팅창 열기"); // 임시 동작
-    // 실제 채팅 기능 추가 필요
-  };
   const handleBoxClick = async (post) => {
     try {
       await PostAPI.PostView(post.postId);
@@ -128,6 +124,9 @@ const Main = () => {
                   },
                   747: {
                     slidesPerView: 2,
+                  },
+                  0: {
+                    slidesPerView: 2, 
                   },
                 }}
               >

@@ -8,9 +8,6 @@ export const MainBody = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  @media (max-width: 747px) {
-    max-width: 747px;
-  }
 `;
 
 // 추천 배너
@@ -23,9 +20,7 @@ export const RecommBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  @media (max-width: 747px) {
-    max-width: 747px;
-  }
+
   h2 {
     font-size: 25px;
     color: #1b5e96;
@@ -43,9 +38,7 @@ export const MainRecomm = styled.div`
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
-  @media (max-width: 747px) {
-    width: 100%;
-  }
+  
   .swiper {
     width: 70%;
     position: relative;
@@ -130,6 +123,10 @@ export const Box = styled.div`
   box-shadow: 3px 3px 5px #707070;
   background-size: cover;
   background-position: center;
+  @media (max-width: 747px) {
+    scale: 80%;
+  margin-left: -25px;
+  }
   &:hover {
     cursor: pointer;
   }

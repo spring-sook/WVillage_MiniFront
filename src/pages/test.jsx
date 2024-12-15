@@ -1,9 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserStore";
 
 const UserInfo = () => {
   const { userInfo } = useContext(UserContext); // UserContext에서 userInfo를 가져옵니다.
   console.log(userInfo);
+  const [storedImageUrl, setStoredImageUrl] = useState(null);
+
+  useEffect(() => {
+    // 로컬 스토리지에서 이미지 URL 가져오기
+    const imageUrl = localStorage.getItem("profileImageUrl");
+    if (imageUrl) {
+      setStoredImageUrl(imageUrl);
+    }
+  }, []);
 
   // userInfo가 존재하는지 확인하고 출력
   return (
@@ -24,6 +33,18 @@ const UserInfo = () => {
           <p>reserveMsgLented : {userInfo.reserveMsgLented}</p>
           <p>총 알림 수 : {userInfo.reserveMsgTotal}</p>
           <p>alarmCount : {userInfo.alarmCount}</p>
+          {storedImageUrl ? (
+            <div>
+              <h4>프로필 이미지</h4>
+              <img
+                src={storedImageUrl}
+                alt="Profile"
+                style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+              />
+            </div>
+          ) : (
+            <p>프로필 이미지가 없습니다.</p>
+          )}
         </div>
       ) : (
         <p>로그인되지 않았습니다.</p>

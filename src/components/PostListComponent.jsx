@@ -95,7 +95,7 @@ export const PostListComponent = ({ email }) => {
       value: "장소",
     },
     {
-      value: "구인",
+      value: "구직",
     },
   ];
 

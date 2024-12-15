@@ -73,7 +73,7 @@ const PostList = () => {
 
       try {
         let response;
-        if (category !== "제품" && category !== "구인" && category !== "장소") {
+        if (category !== "제품" && category !== "구직" && category !== "장소") {
           response = await PostAPI.CommonAllList(searchArea, keyword);
         } else {
           response = await PostAPI.CommonCategoryList(
@@ -170,7 +170,7 @@ const PostList = () => {
               ? `${regionFilter.sidoName || ""} ${
                   regionFilter.sigunguName || ""
                 } ${regionFilter.emdName || ""} ${regionFilter.riName || ""}`
-              : userInfo.filteredRegion || "지역 정보 없음"}
+              : userInfo.filteredRegion || ""}
           </h2>
           {keyword ? <h3>"{keyword}" 검색 결과</h3> : null}
           <p>
@@ -185,24 +185,23 @@ const PostList = () => {
           <hr />
           {/* <div className="PostFilterDatePicker"> */}
           <div className="regiontest">
-          <RegionSelect
-            regionFilter={regionFilter}
-            sidoOpt={sidoOpt}
-            sigunguOpt={sigunguOpt}
-            setSigunguOpt={setSigunguOpt}
-            emdOpt={emdOpt}
-            setEmdOpt={setEmdOpt}
-            riOpt={riOpt}
-            setRiOpt={setRiOpt}
-            setRegionFilter={setRegionFilter}
-            handleRegionChange={handleRegionChange}
-            setSearchArea={setSearchArea}
-          />
+            <RegionSelect
+              regionFilter={regionFilter}
+              sidoOpt={sidoOpt}
+              sigunguOpt={sigunguOpt}
+              setSigunguOpt={setSigunguOpt}
+              emdOpt={emdOpt}
+              setEmdOpt={setEmdOpt}
+              riOpt={riOpt}
+              setRiOpt={setRiOpt}
+              setRegionFilter={setRegionFilter}
+              handleRegionChange={handleRegionChange}
+              setSearchArea={setSearchArea}
+            />
           </div>
           <button className="condition-search" onClick={handleSearchClick}>
             검색
           </button>
-
         </PostMainFilter>
         <PostMainList>
           <div className="selectOption">

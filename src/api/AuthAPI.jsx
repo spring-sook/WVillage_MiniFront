@@ -68,6 +68,9 @@ const AuthAPI = {
       throw error;
     }
   },
+  EditProfile: async (data) => {
+    const response = await axios.post(SERVER + `/auth/edit-profile`, data);
+  },
 };
 
 export default AuthAPI;

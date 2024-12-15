@@ -64,24 +64,6 @@ export const MyResManage = () => {
     { state: "예약취소", id: 5, reason: "여기에 취소사유 작성" },
   ];
 
-  // const filteredData = () => {
-  //   switch (selectState) {
-  //     case "전체":
-  //       return reserveData;
-  //     case "승인대기":
-  //       return reserveData.filter((item) => item.state === "예약대기");
-  //     case "승인완료":
-  //       return reserveData.filter(
-  //         (item) => item.state === "예약완료" || item.state === "예약거절"
-  //       );
-  //     case "거래완료":
-  //       return reserveData.filter((item) => item.state === "거래완료");
-  //     case "예약취소":
-  //       return reserveData.filter((item) => item.state === "예약취소");
-  //     default:
-  //       return [];
-  //   }
-  // };
   const filteredData = () => {
     const reserveStateMapping = {
       전체: () => posts,
@@ -129,14 +111,33 @@ export const MyResManage = () => {
 
   // 예약 상태 변경
   const confirmReservation = async () => {
-    console.log(currentItem.reserve.reserveId);
-    const res = await ReserveAPI.ReserveComplete(
-      "complete",
-      currentItem.reserve.reserveId
-    );
-    console.log(`예약 ID ${currentItem.reserve.reserveId}: 예약완료로 변경`);
-    closeModal();
-    window.location.reload();
+    try {
+      const res = await ReserveAPI.ReserveComplete(
+        "complete",
+        currentItem.reserve.reserveId
+      );
+
+      if (res.status === 200) { // 요청이 성공했을 경우
+        setPosts(prevPosts =>
+          prevPosts.map(post =>
+            post.reserve.reserveId === currentItem.reserve.reserveId
+              ? {
+                ...post,
+                reserve: { ...post.reserve, reserveState: "거래완료" },
+              }
+              : post
+          )
+        );
+        closeModal(); // 모달 닫기
+        setWaitCnt(prevCnt => prevCnt > 0 ? prevCnt -1 : prevCnt); // 대기중인 예약 개수 감소
+      } else{
+        console.error("예약 완료 요청 실패:", res);
+        alert("예약 완료에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("예약 완료 처리 중 오류 발생:", error);
+      alert("예약 완료 처리 중 오류가 발생했습니다.");
+    }
   };
 
   // 예약 거절 처리
@@ -147,16 +148,36 @@ export const MyResManage = () => {
   // 예약 거절 완료
   const completeRejection = async () => {
     if (rejectionReason.trim()) {
-      const res = await ReserveAPI.ReserveDeny(
-        "deny",
-        rejectionReason.replace(/\n/g, "<br>"),
-        currentItem.reserve.reserveId
-      );
-      closeModal();
+      try{
+        const res = await ReserveAPI.ReserveDeny(
+          "deny",
+          rejectionReason.replace(/\n/g, "<br>"),
+          currentItem.reserve.reserveId
+        );
+        if (res.status === 200) {
+          setPosts(prevPosts =>
+            prevPosts.map(post =>
+              post.reserve.reserveId === currentItem.reserve.reserveId
+                ? {
+                  ...post,
+                  reserve: { ...post.reserve, reserveState: "예약거절", reserveReason: rejectionReason },
+                }
+                : post
+            )
+          );
+          closeModal();
+        } else{
+          console.error("예약 거절 요청 실패:", res);
+          alert("예약 거절에 실패했습니다.");
+        }
+
+      }catch(error){
+        console.error("예약 거절 처리 중 오류 발생:", error);
+        alert("예약 거절 처리 중 오류가 발생했습니다.");
+      }
     } else {
       alert("예약거절 사유를 작성해주세요.");
     }
-    window.location.reload();
   };
 
   return (
@@ -213,17 +234,7 @@ export const MyResManage = () => {
             </span>
           </div>
         </ReserveManageHeader>
-        {/* <PostsContainer>
-          {filteredData().map((item) => (
-            <div key={item.id}>
-              <ReserveItem
-                state={item.state}
-                onClick={() => handleStateAction(item)}
-              />
-              <hr />
-            </div>
-          ))}
-        </PostsContainer> */}
+
         <PostsContainer>
           {filteredData().map((post, index) => {
             // 현재 시간을 가져오기
@@ -327,18 +338,17 @@ export const MyResManage = () => {
         <Modal>
           <div className="modal-content">
             <h2>거래완료 - 리뷰 태그</h2>
-            <p>리뷰 태그:</p>
             {/* currentItem.tags가 있을 경우, 이를 반복해서 출력 */}
-            {currentItem.tags && currentItem.tags.length > 0 ? (
-              <div>
-                {currentItem.tags.map((tag, index) => (
+            {currentItem.review.tagWithScore && currentItem.review.tagWithScore.length > 0 ? (
+              <div className="review-tags">
+                {currentItem.review.tagWithScore.map((tagWithScore, index) => (
                   <ReviewTag
                     key={index}
                     className={`${
-                      tag === "친절" ? "good-review" : "bad-review"
+                      tagWithScore.reviewScore > 0 ? "good-review" : "bad-review"
                     }`} // tag 값에 따라 스타일을 다르게 적용할 수 있습니다.
                   >
-                    {tag}
+                    {tagWithScore.reviewContent}
                   </ReviewTag>
                 ))}
               </div>

@@ -233,7 +233,8 @@ export const Modal = styled.div`
     display: flex;
     justify-content: center;
     gap: 20px;
-
+      
+      
     button {
       padding: 10px 20px;
       border-radius: 10px;
@@ -271,4 +272,15 @@ export const ModalOverlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* 반투명한 회색 */
   z-index: 998; /* Modal보다 낮은 z-index */
+`;
+
+
+export const ReviewTag = styled.span` /* 스타일 컴포넌트 분리 */
+    padding: 8px 15px;
+    border: 1px solid black;
+    border-radius: 50px;
+    font-weight: bold;
+    &.good-review { border-color: #a4d8b9; }
+    &.bad-review { border-color: #ecb1ab; }
+    &.selected {background-color: lightgray;}
 `;

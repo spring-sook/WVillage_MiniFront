@@ -95,7 +95,15 @@ export const Modal = styled.div`
     justify-content: center;
   }
 
-  textarea {
+    .review-tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+        textarea {
     width: 100%;
     height: 80px;
     margin-top: 10px;
@@ -142,11 +150,11 @@ export const ReviewTag = styled.span`
   transition: all 0.2s ease;
 
   &.good-review {
-    border: 1px solid #a4d8b9;
+    border: 2px solid #a4d8b9;
   }
 
   &.bad-review {
-    border: 1px solid #ecb1ab;
+    border: 2px solid #ecb1ab;
   }
 `;
 export const ReservationPendingBtn = styled.div`

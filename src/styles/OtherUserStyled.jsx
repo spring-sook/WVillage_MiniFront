@@ -10,7 +10,7 @@ export const UserProfileBox = styled.div`
   align-items: center;
   text-align: center;
   position: relative;
-
+  
   .userInfo {
     position: absolute;
     top: 1%;
@@ -220,6 +220,9 @@ export const Review = styled.div`
     width: 100%;
     align-items: center;
     margin-left: -10px;
+    @media (max-width: 747px){
+    flex-direction: column;
+  }
   }
 
   .review-tag {

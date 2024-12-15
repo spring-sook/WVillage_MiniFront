@@ -327,6 +327,7 @@ export const Footer = styled.div`
   }
   @media (max-width: 747px) {
     display: none; /* 모바일 화면에서 푸터 숨기기 */
+    
   }
 `;
 

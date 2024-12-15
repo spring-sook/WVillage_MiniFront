@@ -44,7 +44,7 @@ export const MainRecomm = styled.div`
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
   @media (max-width: 747px) {
-    width: 747px;
+    width: 100%;
   }
   .swiper {
     width: 70%;
@@ -234,6 +234,7 @@ export const MainBanner = styled.div`
     }
   }
   @media (max-width: 747px) {
+    margin-bottom: 10px;
     .explain {
       width: 300px;
     }

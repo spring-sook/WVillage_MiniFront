@@ -154,8 +154,6 @@ export const Usermy = styled.div`
     height: 50px;
     width: 80%;
     font-size: 16px;
-    font-weight: bold;
-    
   }
   .gauge {
     margin-left: -150px;

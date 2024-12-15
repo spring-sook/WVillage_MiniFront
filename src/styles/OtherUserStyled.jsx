@@ -113,6 +113,50 @@ export const UserProfileBox = styled.div`
       text-decoration: underline;
     }
   }
+  @media (max-width: 747px) {
+    width:100%;
+    height: 250px;
+    margin-bottom: -80px;
+  .userInfo {
+    position: absolute;
+    top: -50%;
+    left: 48%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    h4 {
+      padding-top: 10px;
+    }
+  }
+
+  .box {
+    margin-top: 100px;
+    width: 90%; /* 박스의 너비를 모바일 화면에 맞게 조정 */
+    height: 180px;
+    padding: 20px;
+    border: 3px double #1b5e96;
+    border-radius: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 온도 섹션 및 프로필 이미지 크기 조정 */
+  .temp {
+    position: absolute;
+    top: -50px;
+    left: 30%;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 80%;
+    font-size: 16px;
+    font-weight: bold;
+    .gauge {
+    margin-left: -150px;
+  }
+  }
+
+}
 `;
 export const Button = styled.button`
   display: flex;
@@ -203,6 +247,10 @@ export const TextArea = styled.textarea`
 `;
 
 export const Review = styled.div`
+@media (max-width: 747px) {
+  width: 100%;
+  overflow-x: auto;
+}
   .container {
     height: 330px;
     width: 250px;
@@ -212,6 +260,13 @@ export const Review = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     gap: 15px;
+    @media (max-width: 747px) {
+      height: 100px;
+      gap: 0px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .review-item {
@@ -222,6 +277,9 @@ export const Review = styled.div`
     margin-left: -10px;
     @media (max-width: 747px){
     flex-direction: column;
+    width:50%;
+    justify-content: center;
+    
   }
   }
 

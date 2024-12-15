@@ -13,6 +13,9 @@ const UserPostContainer = styled.div`
   overflow: hidden;
   /* background-color: #686a7e; */
   margin: 80px 0;
+  @media (max-width: 747px) {
+    max-width: 100%;
+  }
 `;
 
 const PostListContainer = styled.div`
@@ -25,7 +28,6 @@ const PostListContainer = styled.div`
   margin-left: 20px;
 
   /* 전체 스크롤바 */
-
   &::-webkit-scrollbar {
     width: 12px; /* 세로 스크롤바의 너비 */
     height: 12px; /* 가로 스크롤바의 높이 */

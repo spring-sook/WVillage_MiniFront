@@ -170,7 +170,10 @@ export const Button = styled.button`
   font-size: 15px;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
-
+  @media (max-width: 747px) {
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
   &:hover {
     background-color: rgba(255, 120, 117, 0.7);
   }
@@ -249,7 +252,25 @@ export const TextArea = styled.textarea`
 export const Review = styled.div`
 @media (max-width: 747px) {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    height: 8px; /* 스크롤바 높이 (x축에서는 높이) */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #1b5e96; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥근 모서리 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 스크롤바 hover 시 색상 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f4f4f4; /* 스크롤바 트랙 배경색 */
+    border-radius: 4px; /* 트랙 둥근 모서리 */
+  }
 }
   .container {
     height: 330px;
@@ -266,6 +287,7 @@ export const Review = styled.div`
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      
     }
   }
 

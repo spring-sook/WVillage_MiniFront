@@ -122,7 +122,7 @@ export const EditProfile = () => {
     } else {
       // 정보 수정 완료
       if (!newPassword) {
-        alert("비밀번호호를 입력해주세요."); // 경고 메시지
+        alert("비밀번호를 입력해주세요."); // 경고 메시지
         return; // 함수 종료
       }
       const updatedData = {
@@ -140,18 +140,33 @@ export const EditProfile = () => {
     }
   };
 
+  const handleOnClose = () => {
+    setNewName(userInfo.name || "");
+    setNewNickname(userInfo.nickname || "");
+    setNewPhone(userInfo.phone || "");
+    setNewPassword("");
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+    setIsEditing(!isEditing);
+  };
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    const fileName = file.name;
     if (file) {
-      setProfileImage(fileName);
-      console.log("fileName : ", fileName);
-      const uploadedUrls = await ImgUpload([fileName]);
-      console.log("file : ", file);
-      const res = await AuthAPI.EditProfileImg(userInfo.email, fileName);
-      console.log(">>>>>>>>>>>>>>>>>>>", res);
+      setProfileImage(file.name);
+      const uploadedUrls = await ImgUpload([file]);
+      const res = await AuthAPI.EditProfileImg(userInfo.email, file.name);
+      setUserInfo({
+        ...userInfo,
+        profileImg: file.name, // fileName으로 변경
+      });
     }
   };
+
+  useEffect(() => {
+    setProfileImage(userInfo.profileImg);
+    console.log("변경됨 : ", userInfo.profileImg);
+  }, [userInfo]);
 
   // 계좌 추가하기 버튼 클릭 시 모달 열기
   const handleOpenModal = () => {
@@ -379,11 +394,17 @@ export const EditProfile = () => {
               <button onClick={toggleEditing}>
                 {isEditing ? "수정 완료" : "수정"}
               </button>
+              {isEditing ? (
+                <button className="cancel-button" onClick={handleOnClose}>
+                  취소
+                </button>
+              ) : null}
             </BottomButtonContainer>
           </Edit>
 
           <ProfileBox>
             <div className="profile-image-container">
+              {console.log("현재 프로필 이미지:", profileImage)}
               <ProfileImgDownloader
                 imgfile={profileImage}
                 width={"100%"}
@@ -486,14 +507,21 @@ export const EditProfile = () => {
             </p>
             <button
               className="delete-button"
-              onClick={() => {
-                if (
-                  window.confirm(
-                    "정말로 회원 탈퇴를 진행하시겠습니까? 탈퇴 후에는 복구할 수 없습니다."
-                  )
-                ) {
-                  alert("회원탈퇴가 완료되었습니다.");
-                  // 회원탈퇴 API 호출 로직 추가
+              onClick={async () => {
+                const isConfirmed = window.confirm(
+                  "정말로 회원 탈퇴를 진행하시겠습니까? 탈퇴 후에는 복구할 수 없습니다."
+                );
+                if (isConfirmed) {
+                  try {
+                    await AuthAPI.SignOut(userInfo.email); // SignOut 함수 호출
+                    alert("회원탈퇴가 완료되었습니다.");
+                    // 추가적인 처리: 로그아웃, 페이지 이동 등
+                  } catch (error) {
+                    console.error("회원탈퇴 중 에러 발생:", error);
+                    alert(
+                      "회원탈퇴 처리 중 문제가 발생했습니다. 다시 시도해주세요."
+                    );
+                  }
                 }
               }}
             >

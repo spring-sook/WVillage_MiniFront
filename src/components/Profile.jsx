@@ -13,33 +13,25 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const { userInfo } = useContext(UserContext);
-  const storedImageUrl = localStorage.getItem("profileImageUrl");
+  // const storedImageUrl = userInfo.profileImg;
   // const storedImageUrl = "profile_basic.png";
 
   useEffect(() => {
-    if (storedImageUrl) {
-      // 로컬 스토리지에 이미지 URL이 있으면 그걸 사용
-      setImageUrl(storedImageUrl);
-      setLoading(false); // 로딩 완료
-    } else {
-      const fileRef = ref(storage, userInfo.profileImg); // Firebase에서 이미지 경로 설정
+    const filePath = imgfile || "profile_basic.png";
+    console.log(filePath);
+    const fileRef = ref(storage, filePath);
+    //const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
 
-      getDownloadURL(fileRef)
-        .then((url) => {
-          setImageUrl(url);
-          localStorage.setItem("profileImageUrl", url);
-          setLoading(false); // 로딩 완료
-        })
-        .catch((error) => {
-          console.error("Error fetching image:", error);
-          setLoading(false); // 오류 발생 시 로딩 완료
-        });
-    }
-  }, [imgfile, storedImageUrl]);
+    getDownloadURL(fileRef)
+      .then((url) => {
+        setImageUrl(url); // 이미지 URL을 상태에 저장
+        console.log(url);
+      })
+      .catch((error) => {
+        console.error("이미지 가져오기 에러:", error);
+      });
+  }, [userInfo.profileImg, imgfile]);
 
-  if (loading) {
-    return <div></div>; // 로딩 중일 때 보여줄 내용
-  }
   // 로그아웃 시 이미지 제거: localStorage.removeItem("profileImageUrl") -- 로그인 중인지 확인해서 하면 될듯
 
   return (

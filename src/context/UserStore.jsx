@@ -6,7 +6,6 @@ export const UserContext = createContext(null);
 export const UserStore = (props) => {
   const [userInfo, setUserInfo] = useState(() => {
     try {
-      // 로컬 스토리지에서 이전 사용자 정보 가져오기
       const savedUserInfo = localStorage.getItem("userInfo");
       return savedUserInfo ? JSON.parse(savedUserInfo) : null; // 없으면 null 반환
     } catch (error) {
@@ -14,10 +13,10 @@ export const UserStore = (props) => {
       return null; // 오류 발생 시 기본값 null 반환
     }
   });
-  const [storedImageUrl, setStoredImageUrl] = useState(() => {
-    // 로컬 스토리지에서 이미지 URL을 가져와 초기값 설정
-    return localStorage.getItem("profileImageUrl") || null;
-  });
+  // const [storedImageUrl, setStoredImageUrl] = useState(() => {
+  //   // 로컬 스토리지에서 이미지 URL을 가져와 초기값 설정
+  //   return localStorage.getItem("profileImageUrl") || null;
+  // });
   const updateUserInfo = (info) => {
     setUserInfo(info);
     localStorage.setItem("userInfo", JSON.stringify(info)); // 로컬 스토리지에 저장
@@ -57,7 +56,6 @@ export const UserStore = (props) => {
         userInfo,
         setUserInfo: updateUserInfo,
         updateUserPoints,
-        storedImageUrl,
       }}
     >
       {props.children}

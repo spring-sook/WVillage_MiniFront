@@ -23,6 +23,7 @@ export const OtherUser = ({email}) => {
   const [reportReason, setReportReason] = useState(""); // 신고 사유 상태
   const [isReported, setIsReported] = useState(false); // 신고 완료 여부 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
+  const [reviews, setReviews] = useState([]); // 리뷰 데이터 상태
 
   // API 호출: 상대 유저 정보를 가져오기
   useEffect(() => {
@@ -32,6 +33,9 @@ export const OtherUser = ({email}) => {
         const response = await UserProfileAPI.getOtherUserProfile(email); // API 호출
         setUserProfile(response.data); // 상태에 유저 정보 저장
         console.log(">>>", response.data);
+
+        const reviewsResponse = await UserProfileAPI.getReviewList(email); // 리뷰 데이터 가져오기
+        setReviews(reviewsResponse.data);
       } catch (error) {
         console.error("유저 정보를 가져오는 데 실패했습니다.", error);
       } finally {
@@ -133,17 +137,13 @@ export const OtherUser = ({email}) => {
           </div>
           <Review>
             <div className="container">
-              {[
-                {tag: "친절해요", count: 10, id: "good"},
-                {tag: "시간엄수", count: 8, id: "good"},
-                {tag: "상품좋아요", count: 12, id: "good"},
-                {tag: "싫어요", count: 5, id: "bad"},
-                {tag: "별로에요", count: 9, id: "bad"},
-                {tag: "짜증나요", count: 7, id: "bad"},
-              ].map((item, index) => (
+              {reviews.map((item, index) => ( // reviews 데이터 렌더링
                 <div key={index} className="review-item">
-                  <span className={`review-tag ${item.id}`}>{item.tag}</span>
-                  <span className="review-count">({item.count}개)</span>
+                  <span className="review-tag"
+                        style={{borderColor: item.reviewScore > 0 ? '#a4d8b9' : item.reviewScore < 0 ? '#ecb1ab' : 'black'}}>
+                    {item.reviewContent}
+                  </span>
+                  <span className="review-count">({item.recordCount}개)</span>
                 </div>
               ))}
             </div>

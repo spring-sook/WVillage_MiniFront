@@ -35,11 +35,11 @@ export const RecommBox = styled.div`
 
 export const MainRecomm = styled.div`
   height: 450px;
-  width: 1900px;
+  width: 100%;
   background-color: #f5f6fa;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   overflow: hidden; /* 자식 요소가 화면을 넘지 않도록 */
   margin-top: -20px;
@@ -49,7 +49,7 @@ export const MainRecomm = styled.div`
   .swiper {
     width: 70%;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
 `;
 
@@ -57,11 +57,12 @@ export const SlickBtnContainer = styled.div`
   display: flex;
   position: absolute;
   top: 120px;
+  left: 10%;
   width: 80%;
   height: 200px;
   justify-content: space-between;
   align-items: center;
-  z-index: 5;
+  z-index: 1;
 `;
 
 export const SlickBtn = styled.button`
@@ -119,7 +120,6 @@ export const BoxContainer = styled.div`
   width: ${(props) =>
     props.slideWidth ||
     "auto"}; /* 이미지가 몇 개 보일지에 맞게 동적으로 조정 */
-
 `;
 
 export const Box = styled.div`

@@ -120,11 +120,16 @@ const Main = () => {
                 spaceBetween={10}
                 simulateTouch={true}
                 breakpoints={{
+                  1770: {
+                    slidesPerView: 4,
+                  },
+                  1345: {
+                    slidesPerView: 3,
+                  },
                   747: {
-                    slidesPerview:2,
-                    slidesPerGroup: 1,
-                  }}
-                }
+                    slidesPerView: 2,
+                  },
+                }}
               >
                 {posts.map((post, index) => (
                   <SwiperSlide key={index}>

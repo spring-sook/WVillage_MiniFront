@@ -101,6 +101,19 @@ export const PostWriteModal = ({ onClose }) => {
   );
 };
 
+export const PostContentNoPointModal = ({ onConfirm }) => {
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <h3>잔여 포인트가 부족합니다.</h3>
+        <ModalButton className="reserve-confirm" onClick={onConfirm}>
+          확인
+        </ModalButton>
+      </ModalContainer>
+    </ModalOverlay>
+  );
+};
+
 export const PostContentConfirmModal = ({
   onConfirm,
   onClose,

@@ -45,6 +45,11 @@ const ReserveAPI = {
     };
     return await axios.post(SERVER + `/reserve/reserveEnd`, body);
   },
+  RemainPoints: async (email) => {
+    return await axios.get(SERVER + `/reserve/remainPoints`, {
+      params: { email: email },
+    });
+  },
 };
 
 export default ReserveAPI;

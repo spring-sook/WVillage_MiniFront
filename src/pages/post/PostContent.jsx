@@ -25,6 +25,7 @@ import {
   ViewReview,
   PostContentConfirmModal,
   PostContentModal,
+  PostContentNoPointModal,
 } from "../../components/PostComponent";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
@@ -54,6 +55,7 @@ const PostContent = () => {
   const [reserveTimes, setReserveTimes] = useState([]);
   const [excludeTimes, setExcludeTimes] = useState([]);
   const [selectedTab, setSelectedTab] = useState("제품 상세 정보");
+  const [showNoPointModal, setShowNoPointModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
 
@@ -144,6 +146,23 @@ const PostContent = () => {
     const responseData = await PostAPI.PostContentDetail(postId);
     setPostData(responseData.data);
     // window.location.reload();
+  };
+
+  const handleRemainPoints = async () => {
+    const remains = await ReserveAPI.RemainPoints(userInfo.email);
+    console.log("잔액 : ", remains.data);
+    console.log(duration * postData.postPrice);
+    if (parseInt(remains.data) >= duration * postData.postPrice) {
+      console.log(duration * postData.postPrice);
+      console.log("이거 안먹어??", parseInt(remains.data));
+      setShowModal(true);
+    } else {
+      console.log("여기로 오는거지 지금?");
+      setShowNoPointModal(true);
+    }
+  };
+  const handleConfirmNoPoint = () => {
+    setShowNoPointModal(false);
   };
 
   const closeModal = () => {
@@ -393,7 +412,7 @@ const PostContent = () => {
           <div className="post-reserve-button">
             <ReserveButton
               disabled={!endDate || postData.postDisable}
-              onClick={() => setShowModal(true)}
+              onClick={handleRemainPoints}
             >
               예약하기
             </ReserveButton>
@@ -427,6 +446,9 @@ const PostContent = () => {
           <ViewReview reviewData={reviewData} />
         )}
       </PostContentBottom>
+      {showNoPointModal && (
+        <PostContentNoPointModal onConfirm={handleConfirmNoPoint} />
+      )}
       {showModal && (
         <PostContentConfirmModal
           className="post-reserve-modal"

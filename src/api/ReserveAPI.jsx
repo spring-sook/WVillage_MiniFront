@@ -29,6 +29,14 @@ const ReserveAPI = {
     };
     return await axios.post(SERVER + `/reserve/reserveCancel`, body);
   },
+  ReserveAccept: async (state, reserveId, point) => {
+    const body = {
+      reserveState: state,
+      reserveId: reserveId,
+      reserveTotalPrice: point,
+    };
+    return await axios.post(SERVER + `/reserve/reserveAccept`, body);
+  },
   ReserveComplete: async (state, reserveId) => {
     const body = {
       reserveState: state,

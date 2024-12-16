@@ -112,25 +112,31 @@ export const MyResManage = () => {
   // 예약 상태 변경
   const confirmReservation = async () => {
     try {
-      const res = await ReserveAPI.ReserveComplete(
-        "complete",
-        currentItem.reserve.reserveId
+      const diffInMilliseconds =
+        new Date(currentItem.reserve.reserveEnd) -
+        new Date(currentItem.reserve.reserveStart);
+      const diffInHours = diffInMilliseconds / (1000 * 60 * 60);
+      const res = await ReserveAPI.ReserveAccept(
+        "accept",
+        currentItem.reserve.reserveId,
+        currentItem.post.postPrice * diffInHours
       );
 
-      if (res.status === 200) { // 요청이 성공했을 경우
-        setPosts(prevPosts =>
-          prevPosts.map(post =>
+      if (res.status === 200) {
+        // 요청이 성공했을 경우
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
             post.reserve.reserveId === currentItem.reserve.reserveId
               ? {
-                ...post,
-                reserve: { ...post.reserve, reserveState: "거래완료" },
-              }
+                  ...post,
+                  reserve: { ...post.reserve, reserveState: "거래완료" },
+                }
               : post
           )
         );
         closeModal(); // 모달 닫기
-        setWaitCnt(prevCnt => prevCnt > 0 ? prevCnt -1 : prevCnt); // 대기중인 예약 개수 감소
-      } else{
+        setWaitCnt((prevCnt) => (prevCnt > 0 ? prevCnt - 1 : prevCnt)); // 대기중인 예약 개수 감소
+      } else {
         console.error("예약 완료 요청 실패:", res);
         alert("예약 완료에 실패했습니다.");
       }
@@ -148,30 +154,33 @@ export const MyResManage = () => {
   // 예약 거절 완료
   const completeRejection = async () => {
     if (rejectionReason.trim()) {
-      try{
+      try {
         const res = await ReserveAPI.ReserveDeny(
           "deny",
           rejectionReason.replace(/\n/g, "<br>"),
           currentItem.reserve.reserveId
         );
         if (res.status === 200) {
-          setPosts(prevPosts =>
-            prevPosts.map(post =>
+          setPosts((prevPosts) =>
+            prevPosts.map((post) =>
               post.reserve.reserveId === currentItem.reserve.reserveId
                 ? {
-                  ...post,
-                  reserve: { ...post.reserve, reserveState: "예약거절", reserveReason: rejectionReason },
-                }
+                    ...post,
+                    reserve: {
+                      ...post.reserve,
+                      reserveState: "예약거절",
+                      reserveReason: rejectionReason,
+                    },
+                  }
                 : post
             )
           );
           closeModal();
-        } else{
+        } else {
           console.error("예약 거절 요청 실패:", res);
           alert("예약 거절에 실패했습니다.");
         }
-
-      }catch(error){
+      } catch (error) {
         console.error("예약 거절 처리 중 오류 발생:", error);
         alert("예약 거절 처리 중 오류가 발생했습니다.");
       }
@@ -339,13 +348,16 @@ export const MyResManage = () => {
           <div className="modal-content">
             <h2>거래완료 - 리뷰 태그</h2>
             {/* currentItem.tags가 있을 경우, 이를 반복해서 출력 */}
-            {currentItem.review.tagWithScore && currentItem.review.tagWithScore.length > 0 ? (
+            {currentItem.review.tagWithScore &&
+            currentItem.review.tagWithScore.length > 0 ? (
               <div className="review-tags">
                 {currentItem.review.tagWithScore.map((tagWithScore, index) => (
                   <ReviewTag
                     key={index}
                     className={`${
-                      tagWithScore.reviewScore > 0 ? "good-review" : "bad-review"
+                      tagWithScore.reviewScore > 0
+                        ? "good-review"
+                        : "bad-review"
                     }`} // tag 값에 따라 스타일을 다르게 적용할 수 있습니다.
                   >
                     {tagWithScore.reviewContent}

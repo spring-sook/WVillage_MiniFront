@@ -7,7 +7,6 @@ export const ImgUpload = async (files) => {
   const storageRef = storage.ref(); // Firebase Storage 참조
 
   for (const file of files) {
-    // const fileRef = storageRef.child(`${userInfo.phone}_${file.name}`);
     const fileRef = storageRef.child(file.name);
     console.log(file);
     fileRef
@@ -35,7 +34,6 @@ export const ImgDownloader = ({ imgfile, width, height, postDisable }) => {
   useEffect(() => {
     const filePath = imgfile || "profile_basic.png"; // imgfile이 없으면 기본값 설정
     const fileRef = ref(storage, filePath);
-    //const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
 
     getDownloadURL(fileRef)
       .then((url) => {

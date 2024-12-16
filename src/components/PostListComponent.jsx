@@ -11,7 +11,6 @@ const UserPostContainer = styled.div`
   max-width: 75%;
   height: 600px;
   overflow: hidden;
-  /* background-color: #686a7e; */
   margin: 80px 0;
   @media (max-width: 747px) {
     max-width: 100%;

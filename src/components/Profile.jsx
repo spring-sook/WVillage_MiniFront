@@ -20,7 +20,6 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
     const filePath = imgfile || "profile_basic.png";
     console.log(filePath);
     const fileRef = ref(storage, filePath);
-    //const fileRef = ref(storage, imgfile); // Firebase에서 이미지 경로 설정
 
     getDownloadURL(fileRef)
       .then((url) => {
@@ -31,8 +30,6 @@ export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
         console.error("이미지 가져오기 에러:", error);
       });
   }, [userInfo.profileImg, imgfile]);
-
-  // 로그아웃 시 이미지 제거: localStorage.removeItem("profileImageUrl") -- 로그인 중인지 확인해서 하면 될듯
 
   return (
     <>

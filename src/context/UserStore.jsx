@@ -13,10 +13,7 @@ export const UserStore = (props) => {
       return null; // 오류 발생 시 기본값 null 반환
     }
   });
-  // const [storedImageUrl, setStoredImageUrl] = useState(() => {
-  //   // 로컬 스토리지에서 이미지 URL을 가져와 초기값 설정
-  //   return localStorage.getItem("profileImageUrl") || null;
-  // });
+
   const updateUserInfo = (info) => {
     setUserInfo(info);
     localStorage.setItem("userInfo", JSON.stringify(info)); // 로컬 스토리지에 저장

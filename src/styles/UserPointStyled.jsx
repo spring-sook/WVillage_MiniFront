@@ -22,9 +22,8 @@ export const PointBox = styled.div`
     align-items: center; /* 세로로 중앙 정렬 */
     gap: 10%; /* 요소들 사이의 간격을 줄임 */
     @media (max-width: 747px) {
-    width: 100%;
-
-  }
+      width: 100%;
+    }
 
     p {
       font-size: 18px;

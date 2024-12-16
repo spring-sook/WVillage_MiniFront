@@ -12,8 +12,6 @@ import { useContext, useEffect, useState } from "react";
 import UserProfileAPI from "../../api/OtherUserProfileAPI";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
-import { useLocation, useNavigate } from "react-router-dom";
-
 const PostWrite = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -26,9 +24,6 @@ const PostWrite = () => {
   const [content, setContent] = useState("");
   const [showModal, setShowModal] = useState(false);
   const { userInfo } = useContext(UserContext);
-  // const navigate = useNavigate();
-  // const locationState = useLocation();
-  // const previousPage = locationState.state?.from || "/main";
 
   useEffect(() => {
     const getRegion = async () => {

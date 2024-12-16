@@ -1,5 +1,4 @@
 import {
-  UserMain,
   PointBox,
   ButtonContainer,
   AccountContainer,
@@ -293,4 +292,3 @@ export const UserPoint = () => {
     </>
   );
 };
-

@@ -7,7 +7,6 @@ import {
 } from "../../styles/MyReserveStyled";
 import { PostsContainer } from "../../components/PostListComponent";
 import { ReserveItem } from "../../components/PostItemComponent";
-import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import ReserveAPI from "../../api/ReserveAPI";
 import ReviewAPI from "../../api/ReviewAPI";
@@ -144,7 +143,7 @@ export const MyReserve = () => {
               userInfo.email
             );
             const targetPost = responseMyRes.data.find(
-              (post) => post.reserve.reserveId == id
+              (post) => post.reserve.reserveId === id
             );
             if (targetPost && targetPost.review) {
               setExistingReview(targetPost.review);

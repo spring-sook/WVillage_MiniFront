@@ -11,7 +11,6 @@ import { UserContext } from "../context/UserStore";
 
 export const ProfileImgDownloader = ({ imgfile, width, height, backColor }) => {
   const [imageUrl, setImageUrl] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { userInfo } = useContext(UserContext);
   // const storedImageUrl = userInfo.profileImg;
   // const storedImageUrl = "profile_basic.png";

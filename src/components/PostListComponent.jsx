@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CategorySelect } from "./CategorySelect";
 import { PostItem } from "./PostItemComponent";
 import { useEffect, useState } from "react";
 import PostAPI from "../api/PostAPI";

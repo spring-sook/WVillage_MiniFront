@@ -55,15 +55,6 @@ export const MyResManage = () => {
   // 대기 수가 변경될때마다 전체변수에 반영되야되는데, 그럴라면.. 로그인 했을때 그냥 개수 받아오는 로직 하나 짜는게 나을듯.
   // 로그인하고 userInfo에 넣어두기
 
-  // 상태별 데이터 필터링
-  const reserveData = [
-    { state: "예약대기", id: 1 },
-    { state: "예약완료", id: 2 },
-    { state: "예약거절", id: 3 },
-    { state: "거래완료", id: 4, tags: ["친절", "빠른 처리", "상태 좋음"] },
-    { state: "예약취소", id: 5, reason: "여기에 취소사유 작성" },
-  ];
-
   const filteredData = () => {
     const reserveStateMapping = {
       전체: () => posts,

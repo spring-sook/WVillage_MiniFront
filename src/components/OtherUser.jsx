@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import { ProfileImgDownloader } from "./Profile";
 import {
   UserProfileBox,
@@ -16,6 +16,7 @@ import fire4 from "../../src/images/fire4.jpg";
 import fire5 from "../../src/images/fire5.jpg";
 import fire6 from "../../src/images/fire6.jpg";
 import ReportAPI from "../api/ReportAPI";
+import {UserContext} from "../context/UserStore";
 
 export const OtherUser = ({ email }) => {
   const [userProfile, setUserProfile] = useState(null); // 유저 프로필 정보 상태
@@ -24,6 +25,7 @@ export const OtherUser = ({ email }) => {
   const [isReported, setIsReported] = useState(false); // 신고 완료 여부 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [reviews, setReviews] = useState([]); // 리뷰 데이터 상태
+  const { userInfo } = useContext(UserContext);
 
   // API 호출: 상대 유저 정보를 가져오기
   useEffect(() => {
@@ -88,10 +90,13 @@ export const OtherUser = ({ email }) => {
 
     try {
       const reportData = {
-        reporterEmail: email, // 신고한 사람의 이메일 (props로 전달받은 email)
+        reporterEmail: userInfo.email, // 신고한 사람의 이메일 (props로 전달받은 email)
         reportedEmail: userProfile.email, // 신고당한 사람의 이메일 (userProfile에서 가져옴)
         reportContent: reportReason, // 신고 사유
       };
+
+      console.log(reportData.reporterEmail);
+      console.log(reportData.reportedEmail);
 
       const success = await ReportAPI.insertReport(reportData); // ReportAPI 사용 (원래 insert 용도)
 

@@ -174,7 +174,8 @@ const PostContent = () => {
         postId,
         userInfo.email,
         startDate,
-        endDate
+        endDate,
+        duration * postData.postPrice
       );
       console.log(responseReserve);
 

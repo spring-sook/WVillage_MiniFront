@@ -5,32 +5,38 @@ import {
   Modal,
   ReviewTag,
 } from "../../styles/MyReserveStyled";
-import {PostsContainer} from "../../components/PostListComponent";
-import {ReserveItem} from "../../components/PostItemComponent";
-import {useParams} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import { PostsContainer } from "../../components/PostListComponent";
+import { ReserveItem } from "../../components/PostItemComponent";
+import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import ReserveAPI from "../../api/ReserveAPI";
 import ReviewAPI from "../../api/ReviewAPI";
-import {UserContext} from "../../context/UserStore";
-
+import { UserContext } from "../../context/UserStore";
 
 // 공통 모달 컴포넌트
 const CommonModal = ({
-                       title,
-                       content,
-                       onConfirm,
-                       onCancel,
-                       confirmText = "확인",
-                       cancelText = "취소",
-                       textarea = false,
-                       onChange,
-                       value
-                     }) => (
+  title,
+  content,
+  onConfirm,
+  onCancel,
+  confirmText = "확인",
+  cancelText = "취소",
+  textarea = false,
+  onChange,
+  value,
+}) => (
   <Modal>
     <div className="modal-content">
       <h2>{title}</h2>
-      {textarea ? (<textarea value={value} onChange={onChange} style={{width: "100%", height: "100px"}}/>) : (
-        <div style={{whiteSpace: "pre-line"}}>{content}</div>)}
+      {textarea ? (
+        <textarea
+          value={value}
+          onChange={onChange}
+          style={{ width: "100%", height: "100px" }}
+        />
+      ) : (
+        <div style={{ whiteSpace: "pre-line" }}>{content}</div>
+      )}
       <div className="modal-buttons">
         {onConfirm && <button onClick={onConfirm}>{confirmText}</button>}
         <button onClick={onCancel}>{cancelText}</button>
@@ -40,7 +46,7 @@ const CommonModal = ({
 );
 
 export const MyReserve = () => {
-  const {userInfo} = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   const [selectState, setSelectState] = useState("전체");
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -110,38 +116,47 @@ export const MyReserve = () => {
         setPosts(transformedData);
         console.log("예약 : ", transformedData);
       } catch (error) {
-        console.log("예약 불러오기 오류 : ", error)
+        console.log("예약 불러오기 오류 : ", error);
       }
     };
     getMyReserves();
   }, []);
 
   const handleItemClick = async (state, id, reserveReason, review) => {
-    setModalData({id, reason: reserveReason, type: state}); // 공통적으로 modalData 설정
+    setModalData({ id, reason: reserveReason, type: state }); // 공통적으로 modalData 설정
 
     if (state === "거래완료") {
-      if (review && review.reviewId) { // review가 존재할 경우 (handleItemClick1의 로직)
+      if (review && review.reviewId) {
+        // review가 존재할 경우 (handleItemClick1의 로직)
         setExistingReview(review);
-      } else { // review가 없을 경우 (handleItemClick의 일부 로직)
+      } else {
+        // review가 없을 경우 (handleItemClick의 일부 로직)
         const resIsReview = await ReviewAPI.IsReview(userInfo.email, id);
-        if (resIsReview.data === false) { //DB에 리뷰 자체가 존재하지 않을 경우
+        if (resIsReview.data === false) {
+          //DB에 리뷰 자체가 존재하지 않을 경우
           setReserveId(id);
           setModalType("reservationComplete");
           setModalContent("리뷰 태그를 선택 해 주세요.");
-        } else { //DB에 리뷰는 존재하지만 front로 review가 넘어오지 않았을 경우 (혹시 모를 에러 방지)
+        } else {
+          //DB에 리뷰는 존재하지만 front로 review가 넘어오지 않았을 경우 (혹시 모를 에러 방지)
           try {
-            const responseMyRes = await ReserveAPI.MyReserveList(userInfo.email);
-            const targetPost = responseMyRes.data.find((post) => post.reserve.reserveId == id)
+            const responseMyRes = await ReserveAPI.MyReserveList(
+              userInfo.email
+            );
+            const targetPost = responseMyRes.data.find(
+              (post) => post.reserve.reserveId == id
+            );
             if (targetPost && targetPost.review) {
-              setExistingReview(targetPost.review)
+              setExistingReview(targetPost.review);
             }
           } catch (e) {
             console.error("리뷰 정보를 가져오는데 실패했습니다.", e);
-            setModalContent("리뷰 정보를 불러오는 데 실패했습니다.")
+            setModalContent("리뷰 정보를 불러오는 데 실패했습니다.");
           }
         }
       }
-    } else if (state === "예약대기" || state === "예약완료") { // handleItemClick의 다른 상태 처리 로직 통합
+    } else if (state === "예약대기" || state === "예약완료") {
+      // handleItemClick의 다른 상태 처리 로직 통합
       setReserveId(id);
       setModalType("reservationCancle");
       setModalContent("예약을 취소하시겠습니까?");
@@ -215,7 +230,7 @@ export const MyReserve = () => {
       reserveId
     );
     closeModal(); // 모달 닫기
-     setSelectedTags([]);
+    setSelectedTags([]);
     window.location.reload();
   };
 
@@ -268,27 +283,42 @@ export const MyReserve = () => {
             <Modal>
               <div className="modal-content">
                 <h2>이미 작성된 리뷰</h2>
-                {existingReview.reviewContent && <p style={{whiteSpace: "pre-line"}}>{existingReview.reviewContent}</p>}
-                {existingReview.reviewTagContent && existingReview.reviewTagContent.length > 0 && (
-                  <div className="review-tags">
-                    {existingReview.reviewTagContent.map((tag, index) => (
-                      <ReviewTag key={index} className={goodReviewTags.includes(tag) ? "good-review" : "bad-review"}>
-                        {tag}
-                      </ReviewTag>
-                    ))}
-                  </div>
+                {existingReview.reviewContent && (
+                  <p style={{ whiteSpace: "pre-line" }}>
+                    {existingReview.reviewContent}
+                  </p>
                 )}
+                {existingReview.reviewTagContent &&
+                  existingReview.reviewTagContent.length > 0 && (
+                    <div className="review-tags">
+                      {existingReview.reviewTagContent.map((tag, index) => (
+                        <ReviewTag
+                          key={index}
+                          className={
+                            goodReviewTags.includes(tag)
+                              ? "good-review"
+                              : "bad-review"
+                          }
+                        >
+                          {tag}
+                        </ReviewTag>
+                      ))}
+                    </div>
+                  )}
                 <div className="modal-buttons">
-                  <button className="close"
-                          onClick={handleModalClose}
-                          style={{background : "#1b5e96"}}>
+                  <button
+                    className="close"
+                    onClick={handleModalClose}
+                    style={{ background: "#1b5e96" }}
+                  >
                     닫기
                   </button>
                 </div>
               </div>
             </Modal>
           );
-        } else { // 리뷰 작성 UI
+        } else {
+          // 리뷰 작성 UI
           return (
             <Modal>
               <div className="modal-content">
@@ -296,23 +326,36 @@ export const MyReserve = () => {
                 <p>※태그는 최대 6개까지 선택 가능합니다.</p>
                 <div className="review-type-buttons">
                   <button
-                    className={selectedReviewType === "좋은 리뷰" ? "selected" : ""}
+                    className={
+                      selectedReviewType === "좋은 리뷰" ? "selected" : ""
+                    }
                     onClick={() => switchReviewType("좋은 리뷰")}
                   >
                     좋은 리뷰
                   </button>
                   <button
-                    className={selectedReviewType === "나쁜 리뷰" ? "selected" : ""}
+                    className={
+                      selectedReviewType === "나쁜 리뷰" ? "selected" : ""
+                    }
                     onClick={() => switchReviewType("나쁜 리뷰")}
                   >
                     나쁜 리뷰
                   </button>
                 </div>
                 <div className="review-tags">
-                  {(selectedReviewType === "좋은 리뷰" ? goodReviewTags : badReviewTags).map((tag) => (
+                  {(selectedReviewType === "좋은 리뷰"
+                    ? goodReviewTags
+                    : badReviewTags
+                  ).map((tag) => (
                     <ReviewTag
                       key={tag}
-                      className={`review-tag ${selectedTags.includes(tag) ? "selected" : ""} ${selectedReviewType === "좋은 리뷰" ? "good-review" : "bad-review"}`}
+                      className={`review-tag ${
+                        selectedTags.includes(tag) ? "selected" : ""
+                      } ${
+                        selectedReviewType === "좋은 리뷰"
+                          ? "good-review"
+                          : "bad-review"
+                      }`}
                       onClick={() => toggleTag(tag)}
                     >
                       {tag}
@@ -325,7 +368,11 @@ export const MyReserve = () => {
                     {selectedTags.map((tag, index) => (
                       <ReviewTag
                         key={index}
-                        className={`tag ${goodReviewTags.includes(tag) ? "good-review" : "bad-review"} ${selectedTags.includes(tag) ? "selected" : ""}`}
+                        className={`tag ${
+                          goodReviewTags.includes(tag)
+                            ? "good-review"
+                            : "bad-review"
+                        } ${selectedTags.includes(tag) ? "selected" : ""}`}
                         onClick={() => toggleTag(tag)}
                       >
                         {tag}
@@ -334,7 +381,12 @@ export const MyReserve = () => {
                   </div>
                 </div>
                 <div className="modal-buttons">
-                  <button onClick={submitReview} disabled={selectedTags.length === 0}>완료</button>
+                  <button
+                    onClick={submitReview}
+                    disabled={selectedTags.length === 0}
+                  >
+                    완료
+                  </button>
                   <button onClick={handleModalClose}>취소</button>
                 </div>
               </div>
@@ -479,7 +531,7 @@ export const MyReserve = () => {
                       )
                     }
                   />
-                  <hr/>
+                  <hr />
                 </div>
               ))}
         </PostsContainer>
@@ -573,7 +625,7 @@ export const MyReserve = () => {
               placeholder="취소 사유를 입력하세요."
               value={cancelReason}
               onChange={(e) => setCancelReason(e.target.value)}
-              style={{width: "100%", height: "100px"}}
+              style={{ width: "100%", height: "100px" }}
             />
             <div className="modal-buttons">
               <button
@@ -592,7 +644,7 @@ export const MyReserve = () => {
           <div className="modal-content">
             <h2>취소 사유</h2>
             {modalContent ? (
-              <div dangerouslySetInnerHTML={{__html: modalContent}}/>
+              <div dangerouslySetInnerHTML={{ __html: modalContent }} />
             ) : (
               <p>취소 사유가 작성되지 않았습니다.</p>
             )}
@@ -607,7 +659,7 @@ export const MyReserve = () => {
           <div className="modal-content">
             <h2>거절 사유</h2>
             {modalContent ? (
-              <div dangerouslySetInnerHTML={{__html: modalContent}}/>
+              <div dangerouslySetInnerHTML={{ __html: modalContent }} />
             ) : (
               <p>취소 사유가 작성되지 않았습니다.</p>
             )}

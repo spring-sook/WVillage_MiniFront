@@ -134,10 +134,6 @@ export const MyResManage = () => {
               : post
           )
         );
-        setUserInfo((prevUserInfo) => ({
-          ...prevUserInfo,
-          point: prevUserInfo.point + totalPoints, // 포인트 반영
-        }));
         closeModal(); // 모달 닫기
         setWaitCnt((prevCnt) => (prevCnt > 0 ? prevCnt - 1 : prevCnt)); // 대기중인 예약 개수 감소
       } else {

@@ -68,39 +68,7 @@ const Main = () => {
           <RecommBox>
             <h2>인기 게시물</h2>
 
-            {/* 왼쪽 버튼 */}
-            {/* <Button
-              left
-              onClick={goToPrevious}
-              disabled={currentIndex === -2} // 왼쪽 끝일 때 비활성화
-            >
-              ◀
-            </Button> */}
 
-            {/* <MainRecomm>
-              <BoxContainer
-                slideWidth={`${posts.length * (boxWidth + margin)}px`}
-                style={{
-                  transform: `translateX(${
-                    currentIndex * (boxWidth + margin)
-                  }px)`,
-                }}
-              >
-                {posts.map((post, index) => (
-                  <Box key={index} onClick={() => handleBoxClick(post)}>
-                    <ImgDownloader
-                      imgfile={post.postThumbnail}
-                      width="100%" // Box에 맞춰 크기 조정
-                      height="82%" // 높이를 80%로 설정
-                    />
-                    <div className="post-info">
-                      <h3>{post.postTitle}</h3>
-                      <p>{post.postRegion}</p>
-                    </div>
-                  </Box>
-                ))}
-              </BoxContainer>
-            </MainRecomm> */}
             <MainRecomm>
               <Swiper
                 className="swiper"
@@ -152,13 +120,6 @@ const Main = () => {
               </SlickBtnContainer>
             </MainRecomm>
 
-            {/* 오른쪽 버튼 */}
-            {/* <Button
-              onClick={goToNext}
-              disabled={currentIndex === posts.length - 6}
-            >
-              ▶
-            </Button> */}
           </RecommBox>
           <MainBanner>
             <div className="catch">
@@ -168,9 +129,7 @@ const Main = () => {
           </MainBanner>
         </MainBody>
       </div>
-      {/* <ChatWidget onClick={handleChatClick} title="채팅하기">
-        <FaComments />
-      </ChatWidget> */}
+
       <FooterCom />
     </Container>
   );

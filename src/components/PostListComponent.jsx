@@ -85,17 +85,6 @@ const UserPostBody = styled.div`
 export const PostListComponent = ({ email }) => {
   const [posts, setPosts] = useState([]);
   const [order, setOrder] = useState("최신순");
-  const option = [
-    {
-      value: "물건",
-    },
-    {
-      value: "장소",
-    },
-    {
-      value: "구직",
-    },
-  ];
 
   useEffect(() => {
     const fetchData = async () => {

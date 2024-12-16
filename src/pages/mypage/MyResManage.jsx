@@ -13,7 +13,7 @@ import { UserContext } from "../../context/UserStore";
 import ReserveAPI from "../../api/ReserveAPI";
 
 export const MyResManage = () => {
-  const { userInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const [selectState, setSelectState] = useState("전체");
   const [modalType, setModalType] = useState(null);
   const [currentItem, setCurrentItem] = useState(null); // 현재 선택한 예약 데이터
@@ -121,6 +121,10 @@ export const MyResManage = () => {
         currentItem.reserve.reserveId,
         currentItem.post.postPrice * diffInHours
       );
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        point: prevUserInfo.point - currentItem.post.postPrice * diffInHours, // 포인트 반영
+      }));
 
       if (res.status === 200) {
         // 요청이 성공했을 경우

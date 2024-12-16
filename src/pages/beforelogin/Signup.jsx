@@ -78,7 +78,7 @@ const Signup = () => {
           responseRegion = await CommonAPI.GetRegionFilter(regionFilter.sido);
           setSigunguOpt(responseRegion.data);
         } else {
-          return;
+
         }
       } catch (error) {
         console.error("Error fetching region data: ", error);

@@ -47,6 +47,7 @@ const Main = () => {
         <MainBody>
           <RecommBox>
             <h2>인기 게시물</h2>
+
             <MainRecomm>
               <Swiper
                 className="swiper"
@@ -106,6 +107,7 @@ const Main = () => {
           </MainBanner>
         </MainBody>
       </div>
+
       <FooterCom />
     </Container>
   );

@@ -299,7 +299,7 @@ export const Review = styled.div`
     margin-left: -10px;
     @media (max-width: 747px){
     flex-direction: column;
-    width:50%;
+    width:80%;
     justify-content: center;
     
   }

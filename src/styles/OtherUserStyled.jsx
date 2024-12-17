@@ -10,7 +10,7 @@ export const UserProfileBox = styled.div`
   align-items: center;
   text-align: center;
   position: relative;
-  
+
   .userInfo {
     position: absolute;
     top: 1%;
@@ -114,49 +114,48 @@ export const UserProfileBox = styled.div`
     }
   }
   @media (max-width: 747px) {
-    width:100%;
+    width: 100%;
     height: 250px;
     margin-bottom: -80px;
-  .userInfo {
-    position: absolute;
-    top: -50%;
-    left: 48%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    h4 {
-      padding-top: 10px;
+    .userInfo {
+      position: absolute;
+      top: -50%;
+      left: 48%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      h4 {
+        padding-top: 10px;
+      }
+    }
+
+    .box {
+      margin-top: 100px;
+      width: 90%; /* 박스의 너비를 모바일 화면에 맞게 조정 */
+      height: 180px;
+      padding: 20px;
+      border: 3px double #1b5e96;
+      border-radius: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 온도 섹션 및 프로필 이미지 크기 조정 */
+    .temp {
+      position: absolute;
+      top: -50px;
+      left: 30%;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 80%;
+      font-size: 16px;
+      font-weight: bold;
+      .gauge {
+        margin-left: -150px;
+      }
     }
   }
-
-  .box {
-    margin-top: 100px;
-    width: 90%; /* 박스의 너비를 모바일 화면에 맞게 조정 */
-    height: 180px;
-    padding: 20px;
-    border: 3px double #1b5e96;
-    border-radius: 30px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* 온도 섹션 및 프로필 이미지 크기 조정 */
-  .temp {
-    position: absolute;
-    top: -50px;
-    left: 30%;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 80%;
-    font-size: 16px;
-    font-weight: bold;
-    .gauge {
-    margin-left: -150px;
-  }
-  }
-
-}
 `;
 export const Button = styled.button`
   display: flex;
@@ -250,28 +249,28 @@ export const TextArea = styled.textarea`
 `;
 
 export const Review = styled.div`
-@media (max-width: 747px) {
-  width: 100%;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  &::-webkit-scrollbar {
-    height: 8px; /* 스크롤바 높이 (x축에서는 높이) */
-  }
+  @media (max-width: 747px) {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    &::-webkit-scrollbar {
+      height: 8px; /* 스크롤바 높이 (x축에서는 높이) */
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background: #1b5e96; /* 스크롤바 색상 */
-    border-radius: 4px; /* 스크롤바 둥근 모서리 */
-  }
+    &::-webkit-scrollbar-thumb {
+      background: #1b5e96; /* 스크롤바 색상 */
+      border-radius: 4px; /* 스크롤바 둥근 모서리 */
+    }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555; /* 스크롤바 hover 시 색상 */
-  }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; /* 스크롤바 hover 시 색상 */
+    }
 
-  &::-webkit-scrollbar-track {
-    background: #f4f4f4; /* 스크롤바 트랙 배경색 */
-    border-radius: 4px; /* 트랙 둥근 모서리 */
+    &::-webkit-scrollbar-track {
+      background: #f4f4f4; /* 스크롤바 트랙 배경색 */
+      border-radius: 4px; /* 트랙 둥근 모서리 */
+    }
   }
-}
   .container {
     height: 330px;
     width: 250px;
@@ -287,7 +286,6 @@ export const Review = styled.div`
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      
     }
   }
 
@@ -297,28 +295,25 @@ export const Review = styled.div`
     width: 100%;
     align-items: center;
     margin-left: -10px;
-    @media (max-width: 747px){
-    flex-direction: column;
-    width:80%;
-    justify-content: center;
-    
-  }
+    @media (max-width: 747px) {
+      flex-direction: column;
+      width: 90%;
+      justify-content: center;
+    }
 
-      .review-tag {
-          padding: 8px 15px;
-          border: 2px solid black;
-          border-radius: 50px;
-          font-weight: bold;
-          &.good {
-              border-color: #a4d8b9;
-          }
-          &.bad {
-              border-color: #ecb1ab;
-          }
+    .review-tag {
+      padding: 8px 15px;
+      border: 2px solid black;
+      border-radius: 50px;
+      font-weight: bold;
+      &.good {
+        border-color: #a4d8b9;
       }
+      &.bad {
+        border-color: #ecb1ab;
+      }
+    }
   }
-
-  
 
   .review-count {
     color: #555;

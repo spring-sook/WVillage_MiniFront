@@ -126,7 +126,7 @@ const Main = () => {
                     slidesPerView: 2,
                   },
                   0: {
-                    slidesPerView: 2, 
+                    slidesPerView: 2,
                   },
                 }}
               >

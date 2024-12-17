@@ -67,45 +67,6 @@ export const PostMainFilter = styled.div`
     top: 3px;
     margin-left: 2px;
   }
-
-  /* .div-datepicker {
-    display: flex;
-    flex-direction: column;
-    width: 95%;
-    margin-top: 2.5%;
-  }
-
-  .input-date-picker {
-    // DatePicker
-    width: 100%;
-    caret-color: transparent;
-  }
-
-  .react-datepicker {
-    // 달력 통으로
-    display: flex;
-    position: absolute;
-    left: -50px;
-  }
-
-  .react-datepicker__day--outside-month {
-    // 오늘 이전 날들은 선택 불가
-    color: #a8a8a8;
-    pointer-events: none;
-  }
-
-  .input-date-picker {
-    // 시작일, 종료일 input
-    height: 35px;
-    margin-top: 2vh;
-    text-align: center;
-    color: #777;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  } */
   .regiontest {
     display: flex;
     flex-direction: column;
@@ -139,7 +100,7 @@ export const PostMainFilter = styled.div`
   .condition-search {
     background-color: #1b5e96;
     color: white;
-transition: all 0.3s ease;
+    transition: all 0.3s ease;
     &:hover {
       opacity: 0.7;
     }
@@ -179,9 +140,10 @@ export const PostMainList = styled.div`
     right: 2.5vh;
     top: 1.8vh;
     color: white;
-transition: all 0.3s ease;
+    transition: all 0.3s ease;
     &:hover {
-opacity: 0.7;    }
+      opacity: 0.7;
+    }
   }
 `;
 
@@ -502,7 +464,7 @@ export const ReserveButton = styled.button`
   border-radius: 20px;
   cursor: pointer;
   color: white;
-transition: all 0.3s ease;
+  transition: all 0.3s ease;
   &:hover {
     opacity: 0.7;
   }
@@ -599,9 +561,10 @@ export const ModalButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-transition: all 0.3s ease;
+  transition: all 0.3s ease;
   &:hover {
-opacity: 0.7;  }
+    opacity: 0.7;
+  }
 
   /* '확인' 버튼과 '닫기' 버튼 사이 간격 띄우기 */
   &.reserve-confirm {
@@ -646,11 +609,12 @@ export const PostWriteContainer = styled.div`
     background-color: #1b5e96;
     border-radius: 5px;
     cursor: pointer;
-transition: all 0.3s ease;
+    transition: all 0.3s ease;
   }
 
   .post-submit:hover {
-opacity: 0.7; }
+    opacity: 0.7;
+  }
 
   .post-submit:active {
     transform: scale(0.99);

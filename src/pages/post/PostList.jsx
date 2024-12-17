@@ -8,7 +8,7 @@ import {
   PostDisplay,
 } from "../../styles/PostStyled";
 import { HeaderCom, FooterCom } from "../../components/GlobalComponent";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 import PostAPI from "../../api/PostAPI";
 import CommonAPI from "../../api/CommonAPI";
@@ -18,10 +18,6 @@ import { RegionSelect } from "../../components/RegionSelect";
 const PostList = () => {
   const navigate = useNavigate();
   const { userInfo } = useContext(UserContext);
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const [searchParams] = useSearchParams();
   const location = useLocation();
   const [category, setCategory] = useState("");
   const [keyword, setKeyword] = useState("");
@@ -50,12 +46,7 @@ const PostList = () => {
 
     setCategory(urlCategory);
     setKeyword(urlKeyword);
-    // console.log("변경된 category : ", urlCategory);
-    // console.log("변경된 keyword : ", urlKeyword);
   }, [location.search, location.category]);
-  // const searchKeyword = searchParams.get("search");
-  // const queryParams = new URLSearchParams(location.search);
-  // const category = queryParams.get("category");
   useEffect(() => {
     setSearchArea(
       regionFilter.ri ||

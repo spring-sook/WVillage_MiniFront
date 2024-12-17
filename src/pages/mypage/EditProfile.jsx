@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faLock,
-  faEye,
-  faEyeSlash,
-  faCamera,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faCamera } from "@fortawesome/free-solid-svg-icons";
 import {
   ParentContainer,
   MenuContainer,
@@ -20,7 +14,6 @@ import {
   EditAccount,
   DeleteButtonContainer,
   DeleteAccountContainer,
-  Region,
 } from "../../styles/EditProfileStyled";
 import { UserContext } from "../../context/UserStore";
 import AccountAPI from "../../api/AccountAPI";

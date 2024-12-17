@@ -78,7 +78,6 @@ const Signup = () => {
           responseRegion = await CommonAPI.GetRegionFilter(regionFilter.sido);
           setSigunguOpt(responseRegion.data);
         } else {
-          return;
         }
       } catch (error) {
         console.error("Error fetching region data: ", error);
@@ -497,12 +496,6 @@ const Input = styled.input`
     border-color: #007bff;
     box-shadow: 0 0 3px rgba(183, 0, 255, 0.4);
   }
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 15px;
-  margin-top: 10px;
 `;
 
 const Button = styled.button`

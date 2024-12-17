@@ -34,9 +34,9 @@ const FindMail = () => {
     }
     try {
       const response = await AuthAPI.FindEmail(formData.name, formData.phone);
-      console.log(response);
+      console.log(response.data);
       alert(
-        `이메일 찾기 완료! 이메일: ${formData.email}`
+        `이메일 찾기 완료! 이메일: ${response.data.data}`
       );
       navigate("/login");
     } catch (err) {

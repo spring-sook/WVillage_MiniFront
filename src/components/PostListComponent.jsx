@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CategorySelect } from "./CategorySelect";
 import { PostItem } from "./PostItemComponent";
 import { useEffect, useState } from "react";
 import PostAPI from "../api/PostAPI";
@@ -11,7 +10,6 @@ const UserPostContainer = styled.div`
   max-width: 75%;
   height: 600px;
   overflow: hidden;
-  /* background-color: #686a7e; */
   margin: 80px 0;
   @media (max-width: 747px) {
     max-width: 100%;
@@ -87,17 +85,6 @@ const UserPostBody = styled.div`
 export const PostListComponent = ({ email }) => {
   const [posts, setPosts] = useState([]);
   const [order, setOrder] = useState("최신순");
-  const option = [
-    {
-      value: "물건",
-    },
-    {
-      value: "장소",
-    },
-    {
-      value: "구직",
-    },
-  ];
 
   useEffect(() => {
     const fetchData = async () => {

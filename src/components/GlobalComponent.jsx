@@ -15,7 +15,7 @@ export const HeaderCom = () => {
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 메뉴 표시 상태
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달 상태
   const location = useLocation();
-  const { userInfo, setUserInfo } = useContext(UserContext); // setUserInfo 추가
+  const { userInfo } = useContext(UserContext); // setUserInfo 추가
   const [hasNotification, setHasNotification] = useState(false); // 초기값 false로 변경
 
   const isActive = (path, queryParams = null) => {

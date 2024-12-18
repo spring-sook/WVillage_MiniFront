@@ -15,7 +15,7 @@ import PostAPI from "../../api/PostAPI";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import { SlickBtnContainer, SlickBtn } from "../../styles/MainStyled";
 
 const Main = () => {

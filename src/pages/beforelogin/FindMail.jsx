@@ -34,10 +34,7 @@ const FindMail = () => {
     }
     try {
       const response = await AuthAPI.FindEmail(formData.name, formData.phone);
-      console.log(response.data);
-      alert(
-        `이메일 찾기 완료! 이메일: ${response.data.data}`
-      );
+      alert(`이메일 찾기 완료! 이메일: ${response}`);
       navigate("/login");
     } catch (err) {
       console.error("에러 발생: ", err);
@@ -189,7 +186,7 @@ const Button = styled.button`
   padding: 20px;
   margin: 60px 0 20px 0;
   color: #ffffff;
-  background-color: #1B5E96;
+  background-color: #1b5e96;
   border: none;
   border-radius: 15px;
   font-size: large;

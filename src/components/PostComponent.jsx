@@ -42,6 +42,12 @@ const ViewPostReview = styled.div`
   .no-review {
     text-align: center;
   }
+  .review-tag {
+    border: 1px solid red;
+    margin: 10px;
+    padding: 5px;
+    display: inline-block;
+  }
 `;
 
 export const GenerateExcludedTimes = (startDate, endDate) => {
@@ -77,8 +83,21 @@ export const ViewReview = (reviewData) => {
   console.log("데이터 넘김 : ", reviewData);
   return (
     <ViewPostReview>
-      {reviewData.data ? (
-        <div>여기는 사용자 리뷰:</div>
+      {reviewData.reviewData && reviewData.reviewData.length > 0 ? (
+        reviewData.reviewData.map((review, index) => (
+          <div key={index}>
+            <p>작성자: {review.reviewEmail}</p>
+            {review.reviewTagContent && review.reviewTagContent.length > 0 ? (
+              review.reviewTagContent.map((reviewContent, tagIndex) => (
+                <span key={tagIndex} className="review-tag">
+                  {reviewContent}
+                </span>
+              ))
+            ) : (
+              <p>태그가 없습니다.</p>
+            )}
+          </div>
+        ))
       ) : (
         <div className="no-review">리뷰가 없습니다.</div>
       )}

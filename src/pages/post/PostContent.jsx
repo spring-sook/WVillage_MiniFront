@@ -78,6 +78,7 @@ const PostContent = () => {
       setImgData(responseImg.data);
       const reponseReview = await ReviewAPI.PostReview(postId);
       setReviewData(reponseReview.data);
+      console.log(">>>>>>>>>>", reponseReview.data);
       const responseReserve = await ReserveAPI.GetPostReserve(postId);
       setReserveData(responseReserve.data);
     };
